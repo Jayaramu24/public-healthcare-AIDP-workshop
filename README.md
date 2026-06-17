@@ -1,4 +1,4 @@
-# Public Healthcare Lakehouse Analytics Workshop
+# Public Healthcare AIDP Workshop
 
 ![Workshop preview](assets/public-health-dashboard-preview.png)
 

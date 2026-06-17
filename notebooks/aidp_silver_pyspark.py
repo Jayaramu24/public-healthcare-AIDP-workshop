@@ -1,4 +1,4 @@
-# Public Healthcare Lakehouse Analytics Workshop
+# Public Healthcare AIDP Workshop
 # Silver notebook: Bronze Delta tables -> typed, conformed Silver Delta tables in AIDP.
 #
 # Run `aidp_bronze_pyspark.py` first so the Bronze tables exist.

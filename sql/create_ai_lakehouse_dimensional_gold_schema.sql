@@ -1,4 +1,4 @@
--- Public Healthcare Lakehouse Analytics Workshop
+-- Public Healthcare AIDP Workshop
 -- Recommended AI Lakehouse Gold dimensional schema
 --
 -- Shape: snowflake / fact constellation.

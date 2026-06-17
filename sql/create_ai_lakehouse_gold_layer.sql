@@ -1,4 +1,4 @@
--- Public Healthcare Lakehouse Analytics Workshop
+-- Public Healthcare AIDP Workshop
 -- Flat AI Lakehouse Gold mart setup
 --
 -- NOTE: The recommended workshop Gold model is the dimensional snowflake

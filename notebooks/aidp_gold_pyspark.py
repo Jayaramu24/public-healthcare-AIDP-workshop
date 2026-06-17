@@ -1,4 +1,4 @@
-# Public Healthcare Lakehouse Analytics Workshop
+# Public Healthcare AIDP Workshop
 # Gold notebook: Silver Delta tables -> Gold-serving stage files for AI Lakehouse and OAC.
 #
 # Run `aidp_silver_pyspark.py` first so the Silver tables exist.

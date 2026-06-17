@@ -1,4 +1,4 @@
-# Public Healthcare Lakehouse Analytics Workshop
+# Public Healthcare AIDP Workshop
 # Bronze notebook: simplified raw sources -> Bronze Delta tables in AIDP.
 #
 # Update the bucket and namespace placeholders before running in Oracle AI Data Platform.

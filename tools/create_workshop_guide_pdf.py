@@ -207,7 +207,7 @@ def draw_page(canvas, doc) -> None:
         canvas.line(doc.leftMargin, height - 0.48 * inch, width - doc.rightMargin, height - 0.48 * inch)
         canvas.setFillColor(MUTED)
         canvas.setFont("Helvetica", 7.5)
-        canvas.drawString(doc.leftMargin, height - 0.36 * inch, "Metro Public Health Authority Workshop Guide")
+        canvas.drawString(doc.leftMargin, height - 0.36 * inch, "Public Healthcare AIDP Workshop Guide")
         canvas.drawRightString(width - doc.rightMargin, height - 0.36 * inch, "Synthetic data only")
         canvas.setStrokeColor(LINE)
         canvas.setLineWidth(0.5)
@@ -220,7 +220,7 @@ def draw_page(canvas, doc) -> None:
 
 def add_cover(story: list, styles: dict[str, ParagraphStyle]) -> None:
     story.append(Spacer(1, 1.55 * inch))
-    story.append(Paragraph("Public Healthcare Lakehouse Analytics Workshop", styles["cover_title"]))
+    story.append(Paragraph("Public Healthcare AIDP Workshop", styles["cover_title"]))
     story.append(
         Paragraph(
             "Execution team guide for a public healthcare lakehouse workshop using Oracle AI Data Platform, Autonomous AI Lakehouse, Oracle Analytics Cloud, spatial analytics, document chat, and optional real-time labs.",
@@ -361,7 +361,7 @@ def build_pdf() -> None:
         rightMargin=0.68 * inch,
         topMargin=0.72 * inch,
         bottomMargin=0.66 * inch,
-        title="Public Healthcare Lakehouse Analytics Workshop Guide",
+        title="Public Healthcare AIDP Workshop Guide",
         author="Metro Public Health Authority Workshop Kit",
         subject="Oracle AI Data Platform and AI Lakehouse public healthcare workshop",
     )

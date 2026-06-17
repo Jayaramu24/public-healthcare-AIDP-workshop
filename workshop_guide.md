@@ -1,4 +1,4 @@
-# Accelerate Public Healthcare Analytics with Generative AI, AI Data Platform, and Autonomous AI Lakehouse
+# Public Healthcare AIDP Workshop
 
 ## About This Workshop
 

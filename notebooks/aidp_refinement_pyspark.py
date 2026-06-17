@@ -1,4 +1,4 @@
-# Public Healthcare Lakehouse Analytics Workshop
+# Public Healthcare AIDP Workshop
 # AIDP medallion notebook: simplified raw sources -> Bronze -> Silver -> AI Lakehouse Gold
 #
 # Preferred workshop flow:
