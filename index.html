@@ -1,0 +1,2705 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Public Healthcare Lakehouse Analytics Workshop</title>
+    <meta
+      name="description"
+      content="A LiveLabs-style workshop page for public healthcare lakehouse analytics with Oracle AI Data Platform, Autonomous AI Lakehouse, and Oracle Analytics Cloud."
+    />
+    <style>
+      :root {
+        --ink: #182321;
+        --muted: #566460;
+        --line: #d9e4df;
+        --surface: #ffffff;
+        --soft: #f4f8f6;
+        --deep: #143735;
+        --deep-2: #244f49;
+        --oracle: #c83232;
+        --coral: #e15f3f;
+        --amber: #f4a62a;
+        --green: #0f766e;
+        --mint: #34a853;
+        --blue: #2f6fb2;
+        --sky: #7fb8dd;
+        --shadow: 0 18px 42px rgba(18, 35, 32, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--soft);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+        letter-spacing: 0;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(20, 55, 53, 0.94);
+        color: #ffffff;
+        backdrop-filter: blur(12px);
+      }
+
+      .nav {
+        width: min(1180px, calc(100% - 40px));
+        min-height: 66px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 760;
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 6px;
+        background:
+          linear-gradient(90deg, transparent 38%, white 38% 62%, transparent 62%),
+          linear-gradient(0deg, transparent 38%, white 38% 62%, transparent 62%),
+          var(--oracle);
+        flex: 0 0 auto;
+      }
+
+      .brand span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 0.92rem;
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus {
+        color: #ffffff;
+      }
+
+      .hero {
+        min-height: 76svh;
+        display: grid;
+        align-items: end;
+        color: #ffffff;
+        background:
+          linear-gradient(90deg, rgba(7, 24, 22, 0.86), rgba(7, 24, 22, 0.48) 54%, rgba(7, 24, 22, 0.26)),
+          linear-gradient(0deg, rgba(7, 24, 22, 0.52), rgba(7, 24, 22, 0.05) 46%),
+          url("assets/public-health-dashboard-preview.png") center / cover no-repeat;
+      }
+
+      .hero-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 116px 0 70px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        color: #f7d4c8;
+        font-size: 0.93rem;
+        font-weight: 760;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 44px;
+        height: 3px;
+        background: var(--coral);
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 860px;
+        margin-bottom: 22px;
+        font-size: 3.8rem;
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 760px;
+        margin-bottom: 28px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.12rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid rgba(255, 255, 255, 0.48);
+        border-radius: 6px;
+        color: #ffffff;
+        font-weight: 760;
+      }
+
+      .button.primary {
+        border-color: var(--coral);
+        background: var(--coral);
+      }
+
+      .button.dark {
+        border-color: var(--deep);
+        background: var(--deep);
+      }
+
+      .button.light {
+        border-color: var(--line);
+        color: var(--ink);
+        background: #ffffff;
+      }
+
+      .button:hover,
+      .button:focus {
+        transform: translateY(-1px);
+      }
+
+      main {
+        overflow: hidden;
+      }
+
+      .band {
+        padding: 72px 0;
+      }
+
+      .band.white {
+        background: #ffffff;
+      }
+
+      .band.deep {
+        background: var(--deep);
+        color: #ffffff;
+      }
+
+      .wrap {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .section-head {
+        max-width: 780px;
+        margin-bottom: 32px;
+      }
+
+      .section-label {
+        margin-bottom: 10px;
+        color: var(--oracle);
+        font-size: 0.88rem;
+        font-weight: 780;
+      }
+
+      .deep .section-label {
+        color: #ffc0ad;
+      }
+
+      h2 {
+        margin-bottom: 14px;
+        font-size: 2rem;
+        line-height: 1.16;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .deep .lead,
+      .deep p {
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .stat {
+        min-height: 116px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 10px 22px rgba(18, 35, 32, 0.06);
+      }
+
+      .stat strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--green);
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--muted);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 26px;
+        align-items: start;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      .panel-pad {
+        padding: 26px;
+      }
+
+      .use-case-list {
+        display: grid;
+        gap: 14px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .use-case-list li {
+        display: grid;
+        grid-template-columns: 14px 1fr;
+        gap: 12px;
+        color: var(--muted);
+      }
+
+      .use-case-list li::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        margin-top: 7px;
+        border-radius: 2px;
+        background: var(--coral);
+      }
+
+      .architecture {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+      }
+
+      .solution-diagram {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(130px, 1fr) 30px) minmax(130px, 1fr);
+        gap: 0;
+        align-items: stretch;
+        margin-bottom: 24px;
+      }
+
+      .solution-node {
+        min-height: 222px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .solution-node strong {
+        display: block;
+        margin-bottom: 10px;
+        color: #ffffff;
+        font-size: 0.96rem;
+        line-height: 1.22;
+      }
+
+      .solution-node span {
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.86rem;
+      }
+
+      .solution-node small {
+        display: inline-flex;
+        align-self: flex-start;
+        margin-top: 18px;
+        padding: 5px 8px;
+        border-radius: 4px;
+        background: rgba(244, 166, 42, 0.18);
+        color: #ffd699;
+        font-size: 0.78rem;
+        font-weight: 780;
+      }
+
+      .solution-node.raw {
+        border-top: 4px solid var(--coral);
+      }
+
+      .solution-node.bronze {
+        border-top: 4px solid #b87333;
+      }
+
+      .solution-node.silver {
+        border-top: 4px solid #cfd8dc;
+      }
+
+      .solution-node.gold {
+        border-top: 4px solid var(--amber);
+      }
+
+      .solution-node.serve {
+        border-top: 4px solid var(--sky);
+      }
+
+      .solution-node.insight {
+        border-top: 4px solid var(--mint);
+      }
+
+      .solution-arrow {
+        position: relative;
+        min-height: 222px;
+      }
+
+      .solution-arrow::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 7px;
+        right: 10px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.45);
+      }
+
+      .solution-arrow::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 6px);
+        right: 4px;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid rgba(255, 255, 255, 0.6);
+        border-right: 2px solid rgba(255, 255, 255, 0.6);
+        transform: rotate(45deg);
+      }
+
+      .solution-support {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .support-item {
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 4px solid var(--coral);
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.94rem;
+      }
+
+      .medallion-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .schema-map {
+        display: grid;
+        grid-template-columns: 0.95fr 1.1fr 0.95fr;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .schema-panel {
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .schema-panel h3 {
+        margin-bottom: 12px;
+        font-size: 1rem;
+      }
+
+      .schema-panel ul {
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.88rem;
+        list-style: none;
+      }
+
+      .schema-panel li {
+        padding: 7px 9px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .medallion-card {
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .medallion-card h3 {
+        margin-bottom: 10px;
+        font-size: 1.02rem;
+      }
+
+      .medallion-card p {
+        margin-bottom: 12px;
+        font-size: 0.94rem;
+      }
+
+      .medallion-card ul {
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.9rem;
+        list-style: none;
+      }
+
+      .medallion-card li {
+        position: relative;
+        padding-left: 16px;
+      }
+
+      .medallion-card li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        background: var(--amber);
+      }
+
+      .medallion-canvas {
+        margin-bottom: 24px;
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+      }
+
+      .medallion-canvas svg {
+        display: block;
+        width: 1560px;
+        max-width: none;
+        height: auto;
+      }
+
+      .legend-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .legend-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.88rem;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+      }
+
+      .oac-shell {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f5f6f8;
+        box-shadow: var(--shadow);
+      }
+
+      .oac-topbar {
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 0 20px;
+        background: #312d2a;
+        color: #ffffff;
+      }
+
+      .oac-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 74px;
+        height: 26px;
+        border-radius: 14px;
+        background: var(--oracle);
+        font-size: 0.78rem;
+        font-weight: 780;
+      }
+
+      .oac-title {
+        flex: 1;
+        font-weight: 760;
+      }
+
+      .oac-status {
+        padding: 5px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 0.78rem;
+      }
+
+      .oac-body {
+        display: grid;
+        grid-template-columns: 232px 1fr;
+        min-height: 760px;
+      }
+
+      .oac-sidebar {
+        padding: 18px 14px;
+        border-right: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      .oac-tab {
+        display: block;
+        width: 100%;
+        margin-bottom: 6px;
+        padding: 11px 12px;
+        border-radius: 8px;
+        color: #344054;
+        font-size: 0.88rem;
+      }
+
+      .oac-tab.active {
+        background: #fff1ef;
+        color: #9b2f24;
+        font-weight: 780;
+      }
+
+      .filter-label {
+        margin: 16px 8px 8px;
+        color: #98a2b3;
+        font-size: 0.72rem;
+        font-weight: 780;
+        text-transform: uppercase;
+      }
+
+      .filter-box {
+        margin: 0 0 10px;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: #475467;
+        font-size: 0.82rem;
+      }
+
+      .filter-box label,
+      .filter-box span {
+        display: block;
+        margin-bottom: 5px;
+        color: #667085;
+        font-size: 0.72rem;
+        font-weight: 760;
+      }
+
+      .filter-box select,
+      .filter-box input {
+        width: 100%;
+        min-height: 32px;
+        border: 1px solid #e4e7ec;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #344054;
+        font: inherit;
+      }
+
+      .filter-reset {
+        width: 100%;
+        min-height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #f9fafb;
+        color: #344054;
+        font-weight: 760;
+        cursor: pointer;
+      }
+
+      .oac-main {
+        padding: 22px;
+        min-width: 0;
+      }
+
+      .dashboard-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .dashboard-tab {
+        min-height: 38px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: #344054;
+        font-size: 0.82rem;
+        font-weight: 760;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .dashboard-tab.active {
+        border-color: #f0a59b;
+        background: #fff1ef;
+        color: #9b2f24;
+      }
+
+      .oac-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .oac-head h3 {
+        margin: 0;
+        font-size: 1.45rem;
+      }
+
+      .oac-sub {
+        margin-top: 5px;
+        color: #667085;
+        font-size: 0.84rem;
+      }
+
+      .oac-action {
+        padding: 9px 11px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: #344054;
+        font-size: 0.82rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .wire-kpis,
+      .wire-grid-3,
+      .wire-grid-2 {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .wire-kpis {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .wire-grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .wire-grid-2 {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      }
+
+      .wire-card {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+      }
+
+      .wire-kpi {
+        min-height: 104px;
+        padding: 14px;
+        border-left: 4px solid var(--blue);
+      }
+
+      .wire-kpi.red {
+        border-left-color: var(--oracle);
+      }
+
+      .wire-kpi.green {
+        border-left-color: var(--mint);
+      }
+
+      .wire-kpi.amber {
+        border-left-color: var(--amber);
+      }
+
+      .wire-kpi.purple {
+        border-left-color: #6f42c1;
+      }
+
+      .wire-kpi .label {
+        color: #667085;
+        font-size: 0.76rem;
+        font-weight: 760;
+      }
+
+      .wire-kpi .value {
+        margin-top: 7px;
+        font-size: 1.35rem;
+        font-weight: 820;
+      }
+
+      .wire-kpi .delta {
+        margin-top: 6px;
+        color: #667085;
+        font-size: 0.76rem;
+      }
+
+      .wire-panel {
+        min-height: 268px;
+        padding: 15px;
+      }
+
+      .wire-panel h4 {
+        margin: 0 0 6px;
+        font-size: 0.98rem;
+      }
+
+      .dashboard-panel {
+        display: none;
+      }
+
+      .dashboard-panel.active {
+        display: block;
+      }
+
+      .wire-hint {
+        margin-bottom: 10px;
+        color: #667085;
+        font-size: 0.76rem;
+      }
+
+      .bar-chart,
+      .donut-chart,
+      .line-chart {
+        position: relative;
+        height: 190px;
+        border: 1px solid #eef1f4;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #ffffff, #fbfbfd);
+      }
+
+      .bar-chart {
+        display: flex;
+        align-items: end;
+        gap: 12px;
+        padding: 22px 20px 28px;
+      }
+
+      .bar-chart i {
+        flex: 1;
+        min-width: 12px;
+        border-radius: 5px 5px 0 0;
+        background: var(--oracle);
+      }
+
+      .donut-chart::before {
+        content: "";
+        position: absolute;
+        width: 116px;
+        height: 116px;
+        left: 28px;
+        top: 34px;
+        border-radius: 50%;
+        background: conic-gradient(var(--oracle) 0 34%, var(--blue) 34% 58%, var(--mint) 58% 78%, var(--amber) 78% 100%);
+      }
+
+      .donut-chart::after {
+        content: "";
+        position: absolute;
+        width: 62px;
+        height: 62px;
+        left: 55px;
+        top: 61px;
+        border-radius: 50%;
+        background: #ffffff;
+      }
+
+      .donut-legend {
+        position: absolute;
+        left: 170px;
+        top: 34px;
+        right: 18px;
+        display: grid;
+        gap: 10px;
+        color: #475467;
+        font-size: 0.78rem;
+      }
+
+      .donut-legend span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .donut-legend i {
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+      }
+
+      .line-chart svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .wire-table {
+        overflow: hidden;
+      }
+
+      .wire-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.78rem;
+      }
+
+      .wire-table th,
+      .wire-table td {
+        padding: 9px 10px;
+        border-bottom: 1px solid #eef1f4;
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .wire-table th {
+        background: #f9fafb;
+        color: #475467;
+      }
+
+      .badge {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 780;
+      }
+
+      .badge.high {
+        background: #ffe3df;
+        color: #a33929;
+      }
+
+      .badge.medium {
+        background: #fff4d6;
+        color: #8a5b00;
+      }
+
+      .badge.low {
+        background: #e7f6ec;
+        color: #1b6b31;
+      }
+
+      .metric-list {
+        display: grid;
+        gap: 9px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .metric-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 0;
+        border-bottom: 1px solid #eef1f4;
+        color: #475467;
+        font-size: 0.82rem;
+      }
+
+      .metric-list strong {
+        color: #182321;
+      }
+
+      .mini-map {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(2, 92px);
+        gap: 8px;
+        min-height: 196px;
+      }
+
+      .map-district {
+        position: relative;
+        padding: 10px;
+        border: 1px solid #d0d5dd;
+        border-radius: 10px;
+        background: #e7f6ec;
+        color: #243b35;
+        overflow: hidden;
+      }
+
+      .map-district strong,
+      .map-district span {
+        position: relative;
+        z-index: 1;
+        display: block;
+      }
+
+      .map-district span {
+        margin-top: 5px;
+        font-size: 0.76rem;
+      }
+
+      .map-district::after {
+        content: "";
+        position: absolute;
+        inset: auto 10px 10px auto;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.55);
+      }
+
+      .chat-console {
+        display: grid;
+        gap: 10px;
+      }
+
+      .chat-question-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+      }
+
+      .chat-question-row input {
+        min-width: 0;
+        min-height: 38px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: inherit;
+      }
+
+      .chat-question-row button,
+      .suggestion-button {
+        min-height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        color: #344054;
+        font-weight: 760;
+        cursor: pointer;
+      }
+
+      .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .suggestion-button {
+        padding: 0 10px;
+        font-size: 0.78rem;
+      }
+
+      .answer-box {
+        min-height: 132px;
+        padding: 13px;
+        border: 1px solid #e4e7ec;
+        border-radius: 8px;
+        background: #f9fafb;
+        color: #344054;
+        font-size: 0.9rem;
+      }
+
+      .stream-path {
+        display: grid;
+        gap: 10px;
+      }
+
+      .stream-step {
+        padding: 12px;
+        border: 1px solid #e4e7ec;
+        border-left: 4px solid var(--blue);
+        border-radius: 8px;
+        background: #ffffff;
+        color: #475467;
+        font-size: 0.82rem;
+      }
+
+      .step {
+        min-height: 166px;
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        margin-bottom: 18px;
+        border-radius: 6px;
+        background: var(--amber);
+        color: #132321;
+        font-weight: 820;
+      }
+
+      .step h3 {
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+      }
+
+      .step p {
+        margin-bottom: 0;
+        font-size: 0.94rem;
+      }
+
+      .labs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .lab-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 14px 30px rgba(18, 35, 32, 0.08);
+      }
+
+      .lab-top {
+        padding: 20px 20px 0;
+      }
+
+      .lab-kicker {
+        margin-bottom: 12px;
+        color: var(--oracle);
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      .lab-card h3 {
+        margin-bottom: 12px;
+        font-size: 1.18rem;
+        line-height: 1.25;
+      }
+
+      .lab-card p {
+        color: var(--muted);
+      }
+
+      .lab-card ul {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0 20px 22px;
+        color: var(--muted);
+        list-style: none;
+      }
+
+      .lab-card li {
+        padding-left: 18px;
+        position: relative;
+      }
+
+      .lab-card li::before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        background: var(--green);
+      }
+
+      .asset-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .asset {
+        min-height: 154px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .asset h3 {
+        margin-bottom: 10px;
+        font-size: 1.04rem;
+      }
+
+      .asset p {
+        min-height: 48px;
+        margin-bottom: 16px;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      .asset a {
+        color: var(--green);
+        font-weight: 780;
+      }
+
+      .checklist {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 34px;
+        align-items: start;
+      }
+
+      .checks {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .checks li {
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 4px solid var(--amber);
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.07);
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .footer {
+        padding: 30px 0;
+        border-top: 1px solid var(--line);
+        background: #ffffff;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .footer-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      @media (max-width: 980px) {
+        .nav {
+          width: min(100% - 28px, 780px);
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero-inner,
+        .wrap,
+        .footer-inner {
+          width: min(100% - 28px, 780px);
+        }
+
+        h1 {
+          font-size: 2.75rem;
+        }
+
+        .stats,
+        .labs,
+        .asset-grid,
+        .architecture,
+        .solution-diagram,
+        .solution-support,
+        .schema-map,
+        .medallion-details,
+        .grid-2,
+        .checklist {
+          grid-template-columns: 1fr;
+        }
+
+        .solution-diagram {
+          gap: 10px;
+        }
+
+        .solution-node {
+          min-height: auto;
+        }
+
+        .solution-arrow {
+          min-height: 34px;
+        }
+
+        .solution-arrow::before {
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          right: auto;
+          width: 2px;
+          height: auto;
+        }
+
+        .solution-arrow::after {
+          top: auto;
+          right: auto;
+          bottom: 5px;
+          left: calc(50% - 6px);
+          transform: rotate(135deg);
+        }
+
+        .step,
+        .lab-card {
+          min-height: auto;
+        }
+
+        .oac-body {
+          grid-template-columns: 1fr;
+        }
+
+        .oac-sidebar {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .wire-kpis {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .wire-grid-3,
+        .wire-grid-2 {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .dashboard-tabs {
+          padding-bottom: 8px;
+        }
+
+        .oac-head {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .hero {
+          min-height: 74svh;
+        }
+
+        .hero-inner {
+          padding: 92px 0 44px;
+        }
+
+        h1 {
+          font-size: 2.12rem;
+        }
+
+        h2 {
+          font-size: 1.58rem;
+        }
+
+        .hero-copy,
+        .lead {
+          font-size: 1rem;
+        }
+
+        .band {
+          padding: 52px 0;
+        }
+
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .footer-inner {
+          flex-direction: column;
+        }
+
+        .oac-topbar {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 12px;
+        }
+
+        .oac-body {
+          min-height: auto;
+        }
+
+        .oac-main {
+          padding: 14px;
+        }
+
+        .wire-kpis {
+          grid-template-columns: 1fr;
+        }
+
+        .chat-question-row,
+        .mini-map {
+          grid-template-columns: 1fr;
+        }
+
+        .mini-map {
+          grid-template-rows: none;
+        }
+
+        .donut-legend {
+          position: static;
+          padding: 128px 16px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Workshop navigation">
+        <a class="brand" href="#top" aria-label="Public Healthcare Lakehouse Analytics Workshop home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Metro Public Health Authority</span>
+        </a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#labs">Labs</a>
+          <a href="#dashboards">Dashboards</a>
+          <a href="#assets">Assets</a>
+          <a href="#execution">Execution</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="Public Healthcare Lakehouse Analytics Workshop">
+        <div class="hero-inner">
+          <div class="eyebrow">LiveLabs-style workshop kit</div>
+          <h1>Public Healthcare Lakehouse Analytics Workshop</h1>
+          <p class="hero-copy">
+            Build an end-to-end lakehouse analytics pipeline for a public healthcare network using synthetic operations,
+            claims, disbursement, membership, provider accreditation, immunization, surveillance, and service-quality data.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="workshop_guide.md">Start workshop</a>
+            <a class="button" href="workshop_guide.pdf">Download PDF guide</a>
+            <a class="button" href="../public_healthcare_lakehouse_workshop.zip">Download kit</a>
+            <a class="button" href="data_dictionary.md">View data dictionary</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white" id="about">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="section-label">About this workshop</div>
+            <h2>Accelerate public-health decisions from raw files to executive dashboards.</h2>
+            <p class="lead">
+              Participants create a lakehouse workflow for Metro Public Health Authority, a fictional public healthcare
+              organization serving five districts through hospitals, urgent-care centers, and community clinics.
+            </p>
+          </div>
+          <div class="stats" aria-label="Workshop facts">
+            <div class="stat"><strong>3 hrs</strong><span>Core execution time, plus optional real-time labs</span></div>
+            <div class="stat"><strong>70+</strong><span>Packaged data, document, vector, SQL, and notebook assets</span></div>
+            <div class="stat"><strong>13+</strong><span>Page playbook for vector search and grounded chat</span></div>
+            <div class="stat"><strong>0 PHI</strong><span>Aggregate demo data only</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="wrap grid-2">
+          <div class="section-head">
+            <div class="section-label">Business use case</div>
+            <h2>Prioritize care access, claims, disbursement, membership, provider oversight, staffing, outreach, and quality.</h2>
+            <p class="lead">
+              MPHA leadership needs a shared view of facility pressure, immunization equity, respiratory surveillance,
+              claims, public-program payments, membership eligibility, provider accreditation, and quality events so teams
+              can act before financial, access, or service risk escalates.
+            </p>
+          </div>
+          <div class="panel panel-pad">
+            <ul class="use-case-list">
+              <li>Identify facilities exceeding wait-time or occupancy targets.</li>
+              <li>Compare public-health pressure across districts and reporting weeks.</li>
+              <li>Track immunization campaign reach by district and age group.</li>
+              <li>Connect respiratory positivity trends to emergency demand.</li>
+              <li>Surface service-quality events that need faster closure.</li>
+              <li>Spot claims denial patterns and disbursement exceptions by coverage program.</li>
+              <li>Monitor membership renewal risk and high-risk member segments.</li>
+              <li>Review provider accreditation scores, corrective actions, and expiry risk.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="band deep" id="architecture">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="section-label">Architecture</div>
+            <h2>Medallion architecture from raw data to business insights.</h2>
+            <p class="lead">
+              Raw files land unchanged, AI Data Platform creates Bronze and Silver Delta layers, and the Gold business
+              layer is set up in AI Lakehouse as a dimensional snowflake schema for OAC dashboards and generative summaries.
+            </p>
+          </div>
+          <div class="medallion-canvas" aria-label="Detailed medallion flow diagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 920" role="img" aria-labelledby="medallion-title medallion-desc">
+              <title id="medallion-title">Public healthcare medallion architecture</title>
+              <desc id="medallion-desc">Raw healthcare data flows into Bronze and Silver layers in AI Data Platform, then into a Gold snowflake schema in AI Lakehouse and OAC business insights.</desc>
+              <defs>
+                <marker id="flowArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#475569"></path>
+                </marker>
+                <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#64748B" flood-opacity="0.25"></feDropShadow>
+                </filter>
+              </defs>
+              <rect x="0" y="0" width="1560" height="920" fill="#ffffff"></rect>
+              <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Public Healthcare Medallion Flow: Raw → Bronze → Silver → Gold → Insights</text>
+              <text x="36" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">AIDP owns Bronze and Silver Delta transformations for CSV, JSON, GeoJSON, and document chunks. Autonomous AI Lakehouse owns a Gold snowflake schema for OAC dashboards, spatial insight, and chat.</text>
+              <rect x="30" y="92" width="740" height="770" rx="14" fill="#f8fafc" stroke="#dbe3ec"></rect>
+              <text x="46" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#475569">ORACLE AI DATA PLATFORM</text>
+              <rect x="805" y="92" width="360" height="770" rx="14" fill="#fff7ed" stroke="#fed7aa"></rect>
+              <text x="822" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#9a3412">AUTONOMOUS AI LAKEHOUSE GOLD</text>
+              <rect x="1200" y="92" width="326" height="770" rx="14" fill="#f0f9ff" stroke="#bae6fd"></rect>
+              <text x="1218" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#075985">ORACLE ANALYTICS CLOUD</text>
+
+              <text x="56" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#a16207">BRONZE</text>
+              <text x="402" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#64748b">SILVER</text>
+              <text x="833" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#b45309">GOLD</text>
+              <text x="1226" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#2f6fb2">BUSINESS INSIGHTS</text>
+
+              <path d="M 328 218 C 356 218, 356 218, 390 218" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 328 338 C 356 338, 356 338, 390 338" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 328 458 C 356 458, 356 458, 390 458" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 328 578 C 356 578, 356 578, 390 578" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 328 698 C 356 698, 356 698, 390 698" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 706 218 C 756 218, 756 252, 816 252" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 706 338 C 756 338, 756 252, 816 252" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 706 458 C 756 458, 756 394, 816 394" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 706 578 C 756 578, 756 394, 816 394" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 706 698 C 756 698, 756 675, 816 675" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 1134 252 C 1166 252, 1166 235, 1210 235" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 1134 394 C 1166 394, 1166 376, 1210 376" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 1134 536 C 1166 536, 1166 520, 1210 520" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+              <path d="M 1134 675 C 1166 675, 1166 665, 1210 665" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
+
+              <g font-family="Arial, Helvetica, sans-serif">
+                <rect x="56" y="176" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="56" y="176" width="272" height="28" rx="11" fill="#a16207"></rect>
+                <text x="68" y="195" font-size="13" font-weight="700" fill="#ffffff">bronze_facilities</text>
+                <text x="68" y="224" font-size="11" fill="#0f172a">Columns: 10 | New: 0 | As-is: 10</text>
+                <text x="68" y="246" font-size="10" fill="#475569">Facility master, capacity, wait targets, geography</text>
+
+                <rect x="56" y="296" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="56" y="296" width="272" height="28" rx="11" fill="#a16207"></rect>
+                <text x="68" y="315" font-size="13" font-weight="700" fill="#ffffff">bronze_district_health_profile</text>
+                <text x="68" y="344" font-size="11" fill="#0f172a">Columns: 7 | New: 0 | As-is: 7</text>
+                <text x="68" y="366" font-size="10" fill="#475569">District population and need indicators</text>
+
+                <rect x="56" y="416" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="56" y="416" width="272" height="28" rx="11" fill="#a16207"></rect>
+                <text x="68" y="435" font-size="13" font-weight="700" fill="#ffffff">bronze_facility_operations_daily</text>
+                <text x="68" y="464" font-size="11" fill="#0f172a">Columns: 13 | New: 0 | As-is: 13</text>
+                <text x="68" y="486" font-size="10" fill="#475569">Visits, waits, occupancy, staff hours, satisfaction</text>
+
+                <rect x="56" y="536" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="56" y="536" width="272" height="28" rx="11" fill="#a16207"></rect>
+                <text x="68" y="555" font-size="13" font-weight="700" fill="#ffffff">bronze_population_health_weekly</text>
+                <text x="68" y="584" font-size="11" fill="#0f172a">Columns: 8 | New: 0 | As-is: 8</text>
+                <text x="68" y="606" font-size="10" fill="#475569">Campaign appointments, no-shows, walk-ins, doses</text>
+
+                <rect x="56" y="656" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="56" y="656" width="272" height="28" rx="11" fill="#a16207"></rect>
+                <text x="68" y="675" font-size="13" font-weight="700" fill="#ffffff">bronze_multiformat_sources</text>
+                <text x="68" y="704" font-size="11" fill="#0f172a">5 CSV + 1 JSONL + 1 GeoJSON + 1 DOCX</text>
+                <text x="68" y="726" font-size="10" fill="#475569">Claims, membership, disbursement, accreditation, spatial, JSON, document</text>
+
+                <rect x="400" y="176" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="400" y="176" width="306" height="28" rx="11" fill="#64748b"></rect>
+                <text x="412" y="195" font-size="13" font-weight="700" fill="#ffffff">silver_dim_facility</text>
+                <text x="412" y="224" font-size="11" fill="#0f172a">Columns: 15 | New/derived: 5 | Updated: 10</text>
+                <text x="412" y="246" font-size="10" fill="#475569">Facility + district reference conformed for reuse</text>
+
+                <rect x="400" y="296" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="400" y="296" width="306" height="28" rx="11" fill="#64748b"></rect>
+                <text x="412" y="315" font-size="13" font-weight="700" fill="#ffffff">silver_facility_day</text>
+                <text x="412" y="344" font-size="11" fill="#0f172a">Columns: 19 | New/derived: 5 | Updated: 14</text>
+                <text x="412" y="366" font-size="10" fill="#475569">Typed operations with wait variance and risk flags</text>
+
+                <rect x="400" y="416" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="400" y="416" width="306" height="28" rx="11" fill="#64748b"></rect>
+                <text x="412" y="435" font-size="13" font-weight="700" fill="#ffffff">silver_immunization_week</text>
+                <text x="412" y="464" font-size="11" fill="#0f172a">Columns: 10 | New/derived: 2 | Updated: 8</text>
+                <text x="412" y="486" font-size="10" fill="#475569">Completion and campaign no-show rates</text>
+
+                <rect x="400" y="536" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="400" y="536" width="306" height="28" rx="11" fill="#64748b"></rect>
+                <text x="412" y="555" font-size="13" font-weight="700" fill="#ffffff">silver_district_health_week</text>
+                <text x="412" y="584" font-size="11" fill="#0f172a">Columns: 15 | New/derived: 4 | Updated: 11</text>
+                <text x="412" y="606" font-size="10" fill="#475569">Joined immunization, surveillance, and community need</text>
+
+                <rect x="400" y="656" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="400" y="656" width="306" height="28" rx="11" fill="#64748b"></rect>
+                <text x="412" y="675" font-size="13" font-weight="700" fill="#ffffff">silver_quality_spatial_document</text>
+                <text x="412" y="704" font-size="11" fill="#0f172a">Typed event, spatial, and document context</text>
+                <text x="412" y="726" font-size="10" fill="#475569">Quality events, GeoJSON features, vector chunks</text>
+
+                <rect x="826" y="190" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="826" y="190" width="308" height="30" rx="11" fill="#b45309"></rect>
+                <text x="838" y="210" font-size="13" font-weight="700" fill="#ffffff">dim_date + dim_facility + dim_district</text>
+                <text x="838" y="242" font-size="11" fill="#0f172a">Shared date and location dimensions</text>
+                <text x="838" y="264" font-size="10" fill="#475569">Facility snowflakes to district through district_key</text>
+                <text x="838" y="282" font-size="10" fill="#64748b">Autonomous AI Lakehouse Gold dimensions</text>
+
+                <rect x="826" y="332" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="826" y="332" width="308" height="30" rx="11" fill="#b45309"></rect>
+                <text x="838" y="352" font-size="13" font-weight="700" fill="#ffffff">fact_facility_access_daily</text>
+                <text x="838" y="384" font-size="11" fill="#0f172a">Keys: date, facility, pressure band</text>
+                <text x="838" y="406" font-size="10" fill="#475569">Daily waits, occupancy, staffing, satisfaction, risk</text>
+                <text x="838" y="424" font-size="10" fill="#64748b">Facility-day fact table</text>
+
+                <rect x="826" y="474" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="826" y="474" width="308" height="30" rx="11" fill="#b45309"></rect>
+                <text x="838" y="494" font-size="13" font-weight="700" fill="#ffffff">fact_public_health + fact_immunization</text>
+                <text x="838" y="526" font-size="11" fill="#0f172a">Keys: date, district, age group, pressure band</text>
+                <text x="838" y="548" font-size="10" fill="#475569">Pressure, positivity, completion, no-show, doses</text>
+                <text x="838" y="566" font-size="10" fill="#64748b">District-week and equity facts</text>
+
+                <rect x="826" y="616" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="826" y="616" width="308" height="30" rx="11" fill="#b45309"></rect>
+                <text x="838" y="636" font-size="13" font-weight="700" fill="#ffffff">quality, spatial, payer, provider, event, doc facts</text>
+                <text x="838" y="668" font-size="11" fill="#0f172a">Keys: shared conformed dimensions</text>
+                <text x="838" y="690" font-size="10" fill="#475569">Claims, disbursement, membership, accreditation, chat context</text>
+                <text x="838" y="708" font-size="10" fill="#64748b">Fact constellation for OAC semantic model</text>
+
+                <rect x="1210" y="194" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="1210" y="194" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
+                <text x="1222" y="213" font-size="13" font-weight="700" fill="#ffffff">Executive Overview</text>
+                <text x="1222" y="244" font-size="11" fill="#0f172a">KPI tiles, district pressure, capacity signals</text>
+                <text x="1222" y="266" font-size="10" fill="#475569">Audience: public-health leadership</text>
+
+                <rect x="1210" y="336" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="1210" y="336" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
+                <text x="1222" y="355" font-size="13" font-weight="700" fill="#ffffff">Access and Capacity</text>
+                <text x="1222" y="386" font-size="11" fill="#0f172a">Wait variance, occupancy, overtime, risk</text>
+                <text x="1222" y="408" font-size="10" fill="#475569">Audience: operations teams</text>
+
+                <rect x="1210" y="478" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="1210" y="478" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
+                <text x="1222" y="497" font-size="13" font-weight="700" fill="#ffffff">Immunization Equity</text>
+                <text x="1222" y="528" font-size="11" fill="#0f172a">Completion, no-show, age-band coverage</text>
+                <text x="1222" y="550" font-size="10" fill="#475569">Audience: campaign and outreach teams</text>
+
+                <rect x="1210" y="620" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
+                <rect x="1210" y="620" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
+                <text x="1222" y="639" font-size="13" font-weight="700" fill="#ffffff">Generative Actions</text>
+                <text x="1222" y="670" font-size="11" fill="#0f172a">Summaries for payer, provider, staffing, outreach, quality</text>
+                <text x="1222" y="692" font-size="10" fill="#475569">Audience: incident and planning leads</text>
+              </g>
+
+              <text x="56" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#475569">Legend:</text>
+              <rect x="112" y="814" width="14" height="14" rx="3" fill="#fef3c7" stroke="#a16207"></rect>
+              <text x="134" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Bronze preserves source values + ingestion metadata</text>
+              <rect x="412" y="814" width="14" height="14" rx="3" fill="#f1f5f9" stroke="#64748b"></rect>
+              <text x="434" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Silver cleans, conforms, validates, and derives reusable measures</text>
+              <rect x="820" y="814" width="14" height="14" rx="3" fill="#ffedd5" stroke="#b45309"></rect>
+              <text x="842" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Gold is served from AI Lakehouse as shared dimensions plus business facts</text>
+            </svg>
+          </div>
+          <div class="legend-row" aria-label="Diagram legend">
+            <span class="legend-pill"><span class="legend-dot" style="background:#a16207"></span>Bronze: raw Delta in AIDP</span>
+            <span class="legend-pill"><span class="legend-dot" style="background:#64748b"></span>Silver: conformed Delta in AIDP</span>
+            <span class="legend-pill"><span class="legend-dot" style="background:#b45309"></span>Gold: snowflake schema in AI Lakehouse</span>
+            <span class="legend-pill"><span class="legend-dot" style="background:#2f6fb2"></span>OAC: dashboards and insight actions</span>
+          </div>
+          <div class="schema-map" aria-label="Gold snowflake schema map">
+            <div class="schema-panel">
+              <h3>Shared Dimensions</h3>
+              <ul>
+                <li>dim_date</li>
+                <li>dim_district</li>
+                <li>dim_facility → dim_district</li>
+                <li>dim_age_group</li>
+                <li>dim_pressure_band</li>
+                <li>dim_document_chunk</li>
+                <li>dim_coverage_program + dim_claim_type</li>
+                <li>dim_member_segment + dim_accreditation_status</li>
+              </ul>
+            </div>
+            <div class="schema-panel">
+              <h3>Business Facts</h3>
+              <ul>
+                <li>fact_facility_access_daily</li>
+                <li>fact_district_public_health_weekly</li>
+                <li>fact_immunization_equity_weekly</li>
+                <li>fact_quality_event_summary</li>
+                <li>fact_spatial_access_insight</li>
+                <li>fact_capacity_event + fact_stream_wait_time_minute</li>
+                <li>fact_claims_monthly + fact_disbursement_monthly</li>
+                <li>fact_membership_snapshot + fact_provider_accreditation</li>
+              </ul>
+            </div>
+            <div class="schema-panel">
+              <h3>OAC Star Views</h3>
+              <ul>
+                <li>mpha_oac_star_access_capacity</li>
+                <li>mpha_oac_star_public_health_pressure</li>
+                <li>mpha_oac_star_immunization_equity</li>
+                <li>mpha_oac_star_spatial_access</li>
+                <li>mpha_oac_star_document_chat_context</li>
+                <li>mpha_oac_star_claims + disbursements</li>
+                <li>mpha_oac_star_membership + provider_accreditation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="medallion-details" aria-label="Medallion data and logic">
+            <div class="medallion-card">
+              <h3>Bronze data and logic</h3>
+              <p>Created in AIDP from the raw object-storage landing zone.</p>
+              <ul>
+                <li>Tables: CSV operations, claims, disbursement, membership, provider accreditation, JSON capacity events, GeoJSON spatial features, and playbook chunks.</li>
+                <li>Logic: preserve raw values, nested payloads, geometry, source file, ingest batch, timestamp, and reject only unreadable rows.</li>
+              </ul>
+            </div>
+            <div class="medallion-card">
+              <h3>Silver data and logic</h3>
+              <p>Created in AIDP as conformed, validated Delta tables.</p>
+              <ul>
+                <li>Tables: facility, daily operations, immunization, district health, quality, claims, disbursement, membership, accreditation, capacity event, spatial, and playbook tables.</li>
+                <li>Logic: parse dates and JSON, extract GeoJSON features, validate rates and amounts, join program and member segments, deduplicate keys, and calculate operational flags.</li>
+              </ul>
+            </div>
+            <div class="medallion-card">
+              <h3>Gold data and logic</h3>
+              <p>Created in AI Lakehouse as shared dimensions, fact tables, bridge tables, and OAC-ready star views.</p>
+              <ul>
+                <li>Tables: shared dimensions, coverage program, claim type, member segment, accreditation status, business facts, and chat bridge tables.</li>
+                <li>Logic: reuse conformed dimensions, publish payer/provider fact tables, expose star views, and preserve flat marts only for quick validation.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="solution-support" aria-label="Architecture support capabilities">
+            <div class="support-item">Data quality checks protect dates, rates, occupancy values, and row-count expectations.</div>
+            <div class="support-item">AIDP owns Bronze and Silver transformation logic; AI Lakehouse owns the Gold snowflake schema and OAC star views.</div>
+            <div class="support-item">Synthetic claim and membership identifiers keep the workshop free of names, addresses, medical-record numbers, and PHI.</div>
+          </div>
+          <div class="architecture">
+            <div class="step">
+              <span class="step-num">1</span>
+              <h3>Raw Landing</h3>
+              <p>Upload five CSV sources, one JSONL source, one GeoJSON source, and one document into the landing area.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">2</span>
+              <h3>Bronze in AIDP</h3>
+              <p>Convert raw files to schema-preserving Delta tables with ingest metadata.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">3</span>
+              <h3>Silver in AIDP</h3>
+              <p>Clean, validate, deduplicate, conform references, and calculate row-level flags.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">4</span>
+              <h3>Gold in AI Lakehouse</h3>
+              <p>Publish shared dimensions, business facts, bridge tables, KPI summaries, and OAC-ready star views.</p>
+            </div>
+            <div class="step">
+              <span class="step-num">5</span>
+              <h3>Business Insights</h3>
+              <p>Use OAC and generative prompts to drive staffing, outreach, and quality actions.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white" id="labs">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="section-label">Workshop outline</div>
+            <h2>Core labs plus optional real-time analytics extensions.</h2>
+          </div>
+          <div class="labs">
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Lab 1 · 45 minutes</div>
+                <h3>Create the healthcare lakehouse</h3>
+                <p>Prepare the environment, upload raw MPHA operations and payer/provider datasets, and profile the source files.</p>
+              </div>
+              <ul>
+                <li>Create an object storage folder.</li>
+                <li>Upload five CSV files, one JSONL file, one GeoJSON file, and one DOCX file.</li>
+                <li>Confirm claims, disbursement, membership, and accreditation row counts.</li>
+                <li>Read and validate row counts.</li>
+              </ul>
+            </article>
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Lab 2 · 75 minutes</div>
+                <h3>Build Bronze and Silver in AIDP</h3>
+                <p>Use Spark and Delta Lake to ingest raw data, conform references, validate fields, and derive reusable measures.</p>
+              </div>
+              <ul>
+                <li>Create Bronze Delta tables.</li>
+                <li>Create Silver conformed tables.</li>
+                <li>Stage dimensional Gold facts, dimensions, spatial, event, and document-chat outputs.</li>
+              </ul>
+            </article>
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Lab 3 · 60 minutes</div>
+                <h3>Set up dimensional Gold and gather insights</h3>
+                <p>Create the AI Lakehouse snowflake schema, build OAC canvases, and generate leadership narratives.</p>
+              </div>
+              <ul>
+                <li>Load Gold dimensions and facts.</li>
+                <li>Create interactive OAC tabs and filters.</li>
+                <li>Summarize actions from metrics and playbook chunks.</li>
+              </ul>
+            </article>
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Optional Lab 4 · 45-60 minutes</div>
+                <h3>Real-time analytics with GoldenGate</h3>
+                <p>Capture source operational changes and publish real-time Gold serving objects.</p>
+              </div>
+              <ul>
+                <li>Configure source change capture.</li>
+                <li>Deliver CDC to stream, storage, or AI Lakehouse staging.</li>
+                <li>Feed the real-time OAC dashboard tab.</li>
+              </ul>
+            </article>
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Optional Lab 5 · 45-60 minutes</div>
+                <h3>Stream analytics with Kafka via AIDP</h3>
+                <p>Process wait-time telemetry through a streaming medallion flow.</p>
+              </div>
+              <ul>
+                <li>Publish Kafka-compatible wait-time events.</li>
+                <li>Create streaming Bronze, Silver, and Gold layers.</li>
+                <li>Monitor live pressure bands in OAC.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="dashboards">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="section-label">Interactive OAC dashboard wireframe</div>
+            <h2>Gold-layer dashboards shaped like an Oracle Analytics workbook.</h2>
+            <p class="lead">
+              The OAC experience uses Gold serving objects from AI Lakehouse and provides working filters across
+              executive, operations, immunization, surveillance, payer/provider oversight, spatial, document-chat, and real-time dashboard tabs.
+            </p>
+          </div>
+          <div class="oac-shell" aria-label="Oracle Analytics dashboard wireframe">
+            <div class="oac-topbar">
+              <div class="oac-logo">ORACLE</div>
+              <div class="oac-title">MPHA Dimensional Gold Dashboards</div>
+              <div class="oac-status" id="oacStatus">Gold snowflake | Interactive preview</div>
+            </div>
+            <div class="oac-body">
+              <aside class="oac-sidebar" aria-label="Dashboard filters">
+                <div class="filter-label">Global Filters</div>
+                <div class="filter-box">
+                  <label for="filterDistrict">District</label>
+                  <select id="filterDistrict">
+                    <option value="All">All</option>
+                    <option value="North Borough">North Borough</option>
+                    <option value="East River">East River</option>
+                    <option value="Central City">Central City</option>
+                    <option value="South Lakes">South Lakes</option>
+                    <option value="West Hills">West Hills</option>
+                  </select>
+                </div>
+                <div class="filter-box">
+                  <label for="filterFacilityType">Facility type</label>
+                  <select id="filterFacilityType">
+                    <option value="All">All</option>
+                    <option value="Hospital">Hospital</option>
+                    <option value="Urgent Care">Urgent Care</option>
+                    <option value="Community Clinic">Community Clinic</option>
+                  </select>
+                </div>
+                <div class="filter-box">
+                  <label for="filterPeriod">Period</label>
+                  <select id="filterPeriod">
+                    <option value="H1">Jan-Jun 2025</option>
+                    <option value="Jun">June 2025</option>
+                    <option value="Latest">Latest reporting week</option>
+                  </select>
+                </div>
+                <div class="filter-label">Risk Filters</div>
+                <div class="filter-box">
+                  <label for="filterPressure">Pressure band</label>
+                  <select id="filterPressure">
+                    <option value="All">All</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Watch">Watch</option>
+                  </select>
+                </div>
+                <div class="filter-box">
+                  <label for="filterAge">Age group</label>
+                  <select id="filterAge">
+                    <option value="All">All</option>
+                    <option value="0-17">0-17</option>
+                    <option value="18-49">18-49</option>
+                    <option value="50-64">50-64</option>
+                    <option value="65+">65+</option>
+                  </select>
+                </div>
+                <button class="filter-reset" id="resetFilters" type="button">Reset filters</button>
+              </aside>
+              <div class="oac-main">
+                <div class="dashboard-tabs" role="tablist" aria-label="Dashboard tabs">
+                  <button class="dashboard-tab active" type="button" data-tab="executive">Executive Overview</button>
+                  <button class="dashboard-tab" type="button" data-tab="access">Access and Capacity</button>
+                  <button class="dashboard-tab" type="button" data-tab="immunization">Immunization Equity</button>
+                  <button class="dashboard-tab" type="button" data-tab="surveillance">Surveillance and Quality</button>
+                  <button class="dashboard-tab" type="button" data-tab="spatial">Spatial Insights</button>
+                  <button class="dashboard-tab" type="button" data-tab="chat">Chat with Data and Documents</button>
+                  <button class="dashboard-tab" type="button" data-tab="realtime">Real-Time Operations</button>
+                  <button class="dashboard-tab" type="button" data-tab="payer">Claims, Disbursement, Membership & Accreditation</button>
+                </div>
+                <div class="oac-head">
+                  <div>
+                    <h3 id="dashboardTitle">Executive Overview</h3>
+                    <div class="oac-sub" id="dashboardSubtitle">Gold snowflake: shared dimensions, business facts, and OAC-ready star views.</div>
+                  </div>
+                  <div class="oac-action" id="filterSummary">All districts | All facility types</div>
+                </div>
+                <div class="wire-kpis">
+                  <div class="wire-card wire-kpi blue">
+                    <div class="label">Outpatient Visits</div>
+                    <div class="value" id="kpiVisits">641K</div>
+                    <div class="delta" id="kpiVisitsDelta">Facility-day fact</div>
+                  </div>
+                  <div class="wire-card wire-kpi red">
+                    <div class="label">Avg ED Wait</div>
+                    <div class="value" id="kpiWait">67 min</div>
+                    <div class="delta">Target variance visible</div>
+                  </div>
+                  <div class="wire-card wire-kpi amber">
+                    <div class="label">High Occupancy Days</div>
+                    <div class="value" id="kpiOccupancy">219</div>
+                    <div class="delta">Capacity action queue</div>
+                  </div>
+                  <div class="wire-card wire-kpi green">
+                    <div class="label">Doses Administered</div>
+                    <div class="value" id="kpiDoses">114K</div>
+                    <div class="delta" id="kpiDosesDelta">Campaign equity mart</div>
+                  </div>
+                  <div class="wire-card wire-kpi purple">
+                    <div class="label">Peak Pressure Index</div>
+                    <div class="value" id="kpiPressure">68.5</div>
+                    <div class="delta">District weekly mart</div>
+                  </div>
+                </div>
+
+                <section class="dashboard-panel active" data-panel="executive">
+                  <div class="wire-grid-3">
+                    <div class="wire-card wire-panel">
+                      <h4>Public-Health Pressure by District</h4>
+                      <div class="wire-hint">Fact public health joined to district and pressure band</div>
+                      <div class="bar-chart" id="pressureBars" aria-label="Public health pressure chart"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Access Risk Mix</h4>
+                      <div class="wire-hint">Facility access fact joined to facility and district dimensions</div>
+                      <div class="donut-chart" aria-hidden="true">
+                        <div class="donut-legend" id="riskLegend"></div>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Occupancy and Overtime Trend</h4>
+                      <div class="wire-hint">Daily capacity and staffing view</div>
+                      <div class="line-chart" aria-hidden="true">
+                        <svg viewBox="0 0 360 190" preserveAspectRatio="none">
+                          <path d="M28 150 L332 150" stroke="#e4e7ec" stroke-width="2"></path>
+                          <path d="M28 132 C70 115, 98 126, 130 94 S202 88, 238 62 S292 82, 332 54" fill="none" stroke="#c74634" stroke-width="4"></path>
+                          <path d="M28 142 C74 134, 106 120, 140 112 S204 96, 244 98 S292 86, 332 76" fill="none" stroke="#2f6fb2" stroke-width="4"></path>
+                          <circle cx="238" cy="62" r="5" fill="#c74634"></circle>
+                          <circle cx="332" cy="76" r="5" fill="#2f6fb2"></circle>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Facility Action Queue</h4>
+                      <div class="wire-hint">Capacity, wait-time, quality, and outreach interventions</div>
+                      <div class="wire-table">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>Facility / District</th>
+                              <th>Signal</th>
+                              <th>Fact Measure</th>
+                              <th>Priority</th>
+                              <th>Recommended Action</th>
+                            </tr>
+                          </thead>
+                          <tbody id="actionRows"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Generative Insight Draft</h4>
+                      <div class="wire-hint">Narrative generated from dimensional Gold star views</div>
+                      <p class="lead" id="executiveNarrative" style="font-size:0.94rem"></p>
+                      <div class="filter-box"><span>Prompt</span>Summarize top pressure areas and recommended actions.</div>
+                      <div class="filter-box"><span>Source</span>MPHA_OAC_EXECUTIVE_OVERVIEW + MPHA_OAC_SPATIAL_ACCESS</div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="access">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Access Risk by Facility</h4>
+                      <div class="wire-hint">Filter-aware facility fact and dimensions</div>
+                      <div class="bar-chart" id="facilityRiskBars" aria-label="Access risk by facility"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Capacity Indicators</h4>
+                      <div class="wire-hint">Average values after filters</div>
+                      <ul class="metric-list" id="capacityMetrics"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-card wire-panel">
+                    <h4>Access and Capacity Table</h4>
+                    <div class="wire-table">
+                      <table>
+                        <thead><tr><th>Facility</th><th>District</th><th>Type</th><th>ED wait</th><th>Occupancy</th><th>Risk</th><th>Band</th></tr></thead>
+                        <tbody id="accessRows"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="immunization">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Completion Rate by District</h4>
+                      <div class="wire-hint">Immunization fact joined to age and district dimensions</div>
+                      <div class="bar-chart" id="immunizationBars" aria-label="Immunization completion by district"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Equity Notes</h4>
+                      <div class="wire-hint">Age group filter applies to the notes</div>
+                      <ul class="metric-list" id="immunizationNotes"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-card wire-panel">
+                    <h4>Campaign Table</h4>
+                    <div class="wire-table">
+                      <table>
+                        <thead><tr><th>District</th><th>Age group</th><th>Doses</th><th>Completion</th><th>No-show</th><th>Action</th></tr></thead>
+                        <tbody id="immunizationRows"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="surveillance">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Respiratory Pressure Trend</h4>
+                      <div class="wire-hint">District weekly fact joined to date, district, and pressure dimensions</div>
+                      <div class="line-chart" aria-hidden="true">
+                        <svg viewBox="0 0 360 190" preserveAspectRatio="none">
+                          <path d="M28 148 L332 148" stroke="#e4e7ec" stroke-width="2"></path>
+                          <path id="surveillanceLineA" d="M28 126 C74 118, 106 92, 140 104 S204 76, 244 80 S292 54, 332 48" fill="none" stroke="#c74634" stroke-width="4"></path>
+                          <path id="surveillanceLineB" d="M28 138 C74 132, 106 124, 140 116 S204 112, 244 98 S292 92, 332 82" fill="none" stroke="#2f6fb2" stroke-width="4"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Quality Closure Summary</h4>
+                      <div class="wire-hint">Quality event fact joined to facility and event dimensions</div>
+                      <ul class="metric-list" id="qualityMetrics"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-card wire-panel">
+                    <h4>Surveillance and Quality Action Queue</h4>
+                    <div class="wire-table">
+                      <table>
+                        <thead><tr><th>District</th><th>Signal</th><th>Measure</th><th>Priority</th><th>Action</th></tr></thead>
+                        <tbody id="surveillanceRows"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="spatial">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>District Spatial Access Map</h4>
+                      <div class="wire-hint">Raw GeoJSON to spatial access fact and district dimension</div>
+                      <div class="mini-map" id="spatialMap" aria-label="Spatial access map preview"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Spatial Business Insight</h4>
+                      <div class="wire-hint">Uses residents per facility plus pressure index</div>
+                      <ul class="metric-list" id="spatialMetrics"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-card wire-panel">
+                    <h4>Mobile Clinic Candidate Table</h4>
+                    <div class="wire-table">
+                      <table>
+                        <thead><tr><th>District</th><th>Residents / facility</th><th>Avg distance</th><th>Pressure</th><th>Recommendation</th></tr></thead>
+                        <tbody id="spatialRows"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="chat">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Chat with Data and Documents</h4>
+                      <div class="wire-hint">Uses star views plus vectorized playbook chunks</div>
+                      <div class="chat-console">
+                        <div class="chat-question-row">
+                          <input id="chatQuestion" value="Which districts should receive mobile clinic sessions this week?" />
+                          <button id="askButton" type="button">Ask</button>
+                        </div>
+                        <div class="suggestions">
+                          <button class="suggestion-button" type="button" data-question="Which districts should receive mobile clinic sessions this week?">Mobile clinics</button>
+                          <button class="suggestion-button" type="button" data-question="What should we do when ED wait variance and occupancy rise together?">Capacity action</button>
+                          <button class="suggestion-button" type="button" data-question="How should respiratory positivity influence outreach?">Respiratory outreach</button>
+                        </div>
+                        <div class="answer-box" id="chatAnswer"></div>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Retrieved Context</h4>
+                      <div class="wire-hint">Document and structured Gold context</div>
+                      <ul class="metric-list" id="retrievedContext"></ul>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="realtime">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Real-Time Analytics Paths</h4>
+                      <div class="wire-hint">Optional labs for CDC and streaming</div>
+                      <div class="stream-path">
+                        <div class="stream-step"><strong>GoldenGate CDC:</strong> source operational changes to AI Lakehouse staging and OAC real-time objects.</div>
+                        <div class="stream-step"><strong>Kafka via AIDP:</strong> wait-time events to streaming Bronze, Silver, and minute-level Gold aggregates.</div>
+                        <div class="stream-step"><strong>OAC:</strong> Real-Time Operations tab filtered by district and pressure band.</div>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Latest Capacity Events</h4>
+                      <div class="wire-hint">JSON capacity event sample</div>
+                      <ul class="metric-list" id="realtimeMetrics"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-card wire-panel">
+                    <h4>Streaming Event Table</h4>
+                    <div class="wire-table">
+                      <table>
+                        <thead><tr><th>Facility</th><th>District</th><th>Wait</th><th>Occupancy</th><th>Queue</th><th>Band</th></tr></thead>
+                        <tbody id="realtimeRows"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dashboard-panel" data-panel="payer">
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Claim Denial Rate by District</h4>
+                      <div class="wire-hint">Claims fact joined to coverage program, claim type, district, and date dimensions</div>
+                      <div class="bar-chart" id="payerClaimsBars" aria-label="Claim denial rate by district"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Disbursement and Membership Summary</h4>
+                      <div class="wire-hint">Disbursement and membership facts sharing district and program dimensions</div>
+                      <ul class="metric-list" id="payerMetrics"></ul>
+                    </div>
+                  </div>
+                  <div class="wire-grid-2">
+                    <div class="wire-card wire-panel">
+                      <h4>Claims, Disbursement and Membership Table</h4>
+                      <div class="wire-table">
+                        <table>
+                          <thead><tr><th>District</th><th>Claims</th><th>Denial</th><th>Disbursed</th><th>Renewals Due</th><th>High-Risk Members</th></tr></thead>
+                          <tbody id="payerRows"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Provider Accreditation Watchlist</h4>
+                      <div class="wire-table">
+                        <table>
+                          <thead><tr><th>Provider</th><th>District</th><th>Status</th><th>Score</th><th>Actions</th><th>Expiry</th><th>Risk</th></tr></thead>
+                          <tbody id="providerRows"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="assets">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="section-label">Workshop assets</div>
+            <h2>Everything needed for execution and validation.</h2>
+          </div>
+          <div class="asset-grid">
+            <div class="asset">
+              <h3>Guide</h3>
+              <p>Full hands-on lab narrative, objectives, outcomes, prompts, and downloadable PDF.</p>
+              <a href="workshop_guide.md">Open guide</a>
+            </div>
+            <div class="asset">
+              <h3>PDF guide</h3>
+              <p>Professionally formatted execution-team PDF version of the workshop guide.</p>
+              <a href="workshop_guide.pdf">Download PDF guide</a>
+            </div>
+            <div class="asset">
+              <h3>Raw data</h3>
+              <p>Five CSV, one JSONL, one GeoJSON, and one DOCX source assets for ingestion.</p>
+              <a href="data/raw/facility_provider_master.csv">Open raw folder sample</a>
+            </div>
+            <div class="asset">
+              <h3>Payer and provider datasets</h3>
+              <p>Claims, disbursement, membership, and provider accreditation source files plus Gold summaries.</p>
+              <a href="data/raw/claims_membership_disbursement.csv">Open claims sample</a>
+            </div>
+            <div class="asset">
+              <h3>Spatial data</h3>
+              <p>GeoJSON facility points, district polygons, and catchments for map insights.</p>
+              <a href="data/raw_spatial/healthcare_service_areas.geojson">Open spatial sample</a>
+            </div>
+            <div class="asset">
+              <h3>Playbook document</h3>
+              <p>13-page synthetic operating playbook for vector search and grounded chat.</p>
+              <a href="documents/MPHA_Winter_Respiratory_Response_Playbook.docx">Open playbook</a>
+            </div>
+            <div class="asset">
+              <h3>Document chat context</h3>
+              <p>Generated Gold document chunks and embeddings derived from the single playbook document.</p>
+              <a href="data/gold/gold_document_chat_context.csv">Open document context</a>
+            </div>
+            <div class="asset">
+              <h3>Gold snowflake data</h3>
+              <p>AI Lakehouse-ready dimensions, fact tables, and bridge tables for OAC, including payer/provider facts.</p>
+              <a href="data/gold_dimensional/fact_claims_monthly.csv">Open claims fact sample</a>
+            </div>
+            <div class="asset">
+              <h3>Medallion design</h3>
+              <p>Bronze, Silver, and Gold layer data contracts and transformation logic.</p>
+              <a href="medallion_architecture.md">Open medallion design</a>
+            </div>
+            <div class="asset">
+              <h3>SQL</h3>
+              <p>AI Lakehouse dimensional Gold setup, load examples, OAC star views, and validation queries.</p>
+              <a href="sql/create_ai_lakehouse_dimensional_gold_schema.sql">Open dimensional setup</a>
+            </div>
+            <div class="asset">
+              <h3>Notebooks</h3>
+              <p>Split PySpark scripts for Bronze ingestion, Silver refinement, and Gold staging in AI Data Platform.</p>
+              <a href="notebooks/aidp_bronze_pyspark.py">Open Bronze notebook</a>
+              <a href="notebooks/aidp_silver_pyspark.py">Open Silver notebook</a>
+              <a href="notebooks/aidp_gold_pyspark.py">Open Gold notebook</a>
+            </div>
+            <div class="asset">
+              <h3>Dashboard spec</h3>
+              <p>OAC canvas layout, measures, filters, and natural-language prompts.</p>
+              <a href="dashboard_spec.md">Open dashboard spec</a>
+            </div>
+            <div class="asset">
+              <h3>Optional labs</h3>
+              <p>GoldenGate real-time analytics and Kafka-compatible streaming via AIDP.</p>
+              <a href="optional_labs/real_time_analytics_golden_gate.md">Open optional lab</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band deep" id="execution">
+        <div class="wrap checklist">
+          <div>
+            <div class="section-label">Execution team checklist</div>
+            <h2>Ready for facilitation, rehearsal, or conversion into LiveLabs.</h2>
+            <p>
+              The package is designed for workshop owners who need to stage cloud resources, validate data movement,
+              and brief facilitators on the healthcare scenario before delivery.
+            </p>
+            <div class="actions">
+              <a class="button primary" href="manifest.json">Open manifest</a>
+              <a class="button" href="README.md">Open README</a>
+            </div>
+          </div>
+          <ul class="checks">
+            <li>Confirm target OCI tenancy has Object Storage, AI Data Platform, Autonomous AI Lakehouse, and OAC access.</li>
+            <li>Upload `data/raw`, `data/raw_json`, `data/raw_spatial`, and `documents` files to the landing zone and update the AIDP notebook paths.</li>
+            <li>Verify the five CSV files, one JSONL file, one GeoJSON file, and one DOCX file are present before running AIDP refinement.</li>
+            <li>Run the Bronze notebook, then the Silver notebook, then the Gold notebook to stage the business-serving layer.</li>
+            <li>Stage `data/gold_dimensional` outputs, then run `create_ai_lakehouse_dimensional_gold_schema.sql` in AI Lakehouse.</li>
+            <li>Validate Gold, spatial, document-chat, and OAC views with the sample analytics queries.</li>
+            <li>Create OAC canvases from the Gold layer and test the dashboard filters, payer/provider view, spatial view, and grounded chat prompts.</li>
+            <li>Choose whether to rehearse optional GoldenGate or Kafka/AIDP real-time analytics labs.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>Public Healthcare Lakehouse Analytics Workshop · Synthetic data only</span>
+        <span>Release 1.0 · Built for execution-team review</span>
+      </div>
+    </footer>
+    <script>
+      const districtData = [
+        { district: "North Borough", visits: 116000, edWait: 61, highDays: 32, doses: 21800, pressure: 38.2, completion: 0.43, noShow: 0.079, positivity: 0.081, respiratory: 31, residents: 92000, distance: 1.37, band: "Medium", spatial: "Maintain standard catchment monitoring" },
+        { district: "East River", visits: 149000, edWait: 78, highDays: 61, doses: 24400, pressure: 52.4, completion: 0.39, noShow: 0.097, positivity: 0.121, respiratory: 47, residents: 110750, distance: 1.2, band: "High", spatial: "Prioritize mobile clinic sessions and outreach routing" },
+        { district: "Central City", visits: 184000, edWait: 70, highDays: 58, doses: 32800, pressure: 47.8, completion: 0.41, noShow: 0.088, positivity: 0.103, respiratory: 52, residents: 156400, distance: 0.94, band: "High", spatial: "Prioritize mobile clinic sessions and outreach routing" },
+        { district: "South Lakes", visits: 105000, edWait: 55, highDays: 28, doses: 19900, pressure: 34.3, completion: 0.46, noShow: 0.071, positivity: 0.074, respiratory: 29, residents: 84700, distance: 1.75, band: "Watch", spatial: "Maintain standard catchment monitoring" },
+        { district: "West Hills", visits: 87000, edWait: 49, highDays: 18, doses: 15200, pressure: 31.9, completion: 0.48, noShow: 0.068, positivity: 0.069, respiratory: 22, residents: 71850, distance: 1.64, band: "Watch", spatial: "Maintain standard catchment monitoring" }
+      ];
+
+      const facilityData = [
+        { facility: "North Borough General Hospital", district: "North Borough", type: "Hospital", visits: 72000, edWait: 68, occupancy: 0.86, risk: 42, highDays: 25, queue: 34, band: "Medium", action: "Add discharge huddles and monitor ED flex staffing" },
+        { facility: "Northgate Community Clinic", district: "North Borough", type: "Community Clinic", visits: 44000, edWait: 0, occupancy: 0.0, risk: 29, highDays: 0, queue: 0, band: "Watch", action: "Add reminder outreach for missed appointments" },
+        { facility: "East River Medical Center", district: "East River", type: "Hospital", visits: 99000, edWait: 83, occupancy: 0.94, risk: 64, highDays: 51, queue: 58, band: "High", action: "Add flex staffing and redirect non-urgent visits" },
+        { facility: "Riverside Urgent Care", district: "East River", type: "Urgent Care", visits: 50000, edWait: 54, occupancy: 0.62, risk: 38, highDays: 10, queue: 21, band: "Medium", action: "Open same-day urgent clinic slots" },
+        { facility: "Central City Health Campus", district: "Central City", type: "Hospital", visits: 132000, edWait: 77, occupancy: 0.91, risk: 57, highDays: 48, queue: 49, band: "High", action: "Extend respiratory clinic sessions" },
+        { facility: "Downtown Preventive Health Center", district: "Central City", type: "Community Clinic", visits: 52000, edWait: 0, occupancy: 0.0, risk: 35, highDays: 0, queue: 0, band: "Medium", action: "Add older resident outreach and walk-in hours" },
+        { facility: "South Lakes Regional Hospital", district: "South Lakes", type: "Hospital", visits: 76000, edWait: 58, occupancy: 0.82, risk: 37, highDays: 24, queue: 29, band: "Medium", action: "Review discharge coordination backlog" },
+        { facility: "Lakeview Community Clinic", district: "South Lakes", type: "Community Clinic", visits: 29000, edWait: 0, occupancy: 0.0, risk: 22, highDays: 0, queue: 0, band: "Watch", action: "Maintain routine preventive-care schedule" },
+        { facility: "West Hills Hospital", district: "West Hills", type: "Hospital", visits: 58000, edWait: 52, occupancy: 0.74, risk: 31, highDays: 17, queue: 22, band: "Watch", action: "Monitor weekend ED wait variance" },
+        { facility: "Hillcrest Urgent Care", district: "West Hills", type: "Urgent Care", visits: 29000, edWait: 37, occupancy: 0.55, risk: 25, highDays: 1, queue: 14, band: "Watch", action: "Maintain standard urgent-care coverage" }
+      ];
+
+      const payerData = [
+        { district: "North Borough", claims: 255, denied: 15, denialRate: 0.059, paymentYield: 0.713, disbursed: 116321.54, pending: 46, failed: 10, avgCycle: 16.1, members: 117, renewals: 30, highRiskMembers: 15, band: "Watch" },
+        { district: "East River", claims: 287, denied: 37, denialRate: 0.129, paymentYield: 0.795, disbursed: 122862.78, pending: 36, failed: 6, avgCycle: 16.8, members: 127, renewals: 27, highRiskMembers: 24, band: "High" },
+        { district: "Central City", claims: 413, denied: 42, denialRate: 0.102, paymentYield: 0.687, disbursed: 174006.60, pending: 59, failed: 16, avgCycle: 17.0, members: 208, renewals: 50, highRiskMembers: 35, band: "High" },
+        { district: "South Lakes", claims: 264, denied: 14, denialRate: 0.053, paymentYield: 0.663, disbursed: 132995.28, pending: 44, failed: 4, avgCycle: 16.7, members: 114, renewals: 29, highRiskMembers: 18, band: "Watch" },
+        { district: "West Hills", claims: 181, denied: 13, denialRate: 0.072, paymentYield: 0.807, disbursed: 107564.41, pending: 33, failed: 8, avgCycle: 16.3, members: 84, renewals: 17, highRiskMembers: 14, band: "Medium" }
+      ];
+
+      const providerData = [
+        { facility: "North Borough General Hospital", district: "North Borough", type: "Hospital", status: "Accredited", score: 93.4, actions: 0, expiry: 221, band: "Medium" },
+        { facility: "Northgate Community Clinic", district: "North Borough", type: "Community Clinic", status: "Accredited", score: 92.6, actions: 0, expiry: 244, band: "Medium" },
+        { facility: "East River Medical Center", district: "East River", type: "Hospital", status: "Corrective Action", score: 75.5, actions: 4, expiry: 87, band: "High" },
+        { facility: "Riverside Urgent Care", district: "East River", type: "Urgent Care", status: "Provisional", score: 83.6, actions: 2, expiry: 200, band: "Medium" },
+        { facility: "Central City Health Campus", district: "Central City", type: "Hospital", status: "Provisional", score: 83.7, actions: 2, expiry: 223, band: "Medium" },
+        { facility: "Downtown Preventive Health Center", district: "Central City", type: "Community Clinic", status: "Provisional", score: 81.4, actions: 2, expiry: 246, band: "High" },
+        { facility: "South Lakes Regional Hospital", district: "South Lakes", type: "Hospital", status: "Accredited", score: 96.5, actions: 0, expiry: 359, band: "Medium" },
+        { facility: "Lakeview Community Clinic", district: "South Lakes", type: "Community Clinic", status: "Accredited", score: 93.2, actions: 0, expiry: 382, band: "Watch" },
+        { facility: "West Hills Hospital", district: "West Hills", type: "Hospital", status: "Accredited", score: 91.9, actions: 1, expiry: 360, band: "Medium" },
+        { facility: "Hillcrest Urgent Care", district: "West Hills", type: "Urgent Care", status: "Accredited", score: 88.2, actions: 1, expiry: 383, band: "Medium" }
+      ];
+
+      const immunizationAge = {
+        "0-17": 0.18,
+        "18-49": 0.34,
+        "50-64": 0.22,
+        "65+": 0.26,
+        All: 1
+      };
+
+      const tabMeta = {
+        executive: ["Executive Overview", "Gold snowflake: shared dimensions, business facts, and OAC-ready star views."],
+        access: ["Access and Capacity", "Facility-day fact joined to date, facility, district, and pressure-band dimensions."],
+        immunization: ["Immunization Equity", "Immunization fact joined to date, district, and age-group dimensions."],
+        surveillance: ["Surveillance and Quality", "District health and quality facts joined to conformed dimensions."],
+        spatial: ["Spatial Insights", "Raw GeoJSON becomes a spatial access fact joined to district and pressure dimensions."],
+        chat: ["Chat with Data and Documents", "Chat bridge table links prompts to vectorized playbook chunk dimensions."],
+        realtime: ["Real-Time Operations", "Optional GoldenGate and Kafka/AIDP paths for near-real-time operating signals."],
+        payer: ["Claims, Disbursement, Membership & Accreditation", "Claims, disbursement, membership, and provider accreditation facts reuse shared Gold dimensions."]
+      };
+
+      const chatExamples = [
+        {
+          key: "mobile",
+          answer: "East River and Central City are the strongest mobile-clinic candidates because they combine high pressure with more than 100,000 residents per facility. The playbook's Spatial Response Model recommends mobile outreach when catchment coverage and district pressure are both constrained.",
+          context: ["Page 4 - Immunization Equity Play", "Page 6 - Spatial Response Model", "Gold spatial access insights"]
+        },
+        {
+          key: "occupancy",
+          answer: "When ED wait variance and occupancy rise together, the playbook recommends flex clinical staffing, discharge coordination, diversion monitoring, and same-day clinic capacity for non-urgent demand. East River Medical Center and Central City Health Campus are the current filtered examples.",
+          context: ["Page 3 - Access and Capacity Play", "Page 11 - Thresholds and Escalation", "Gold facility access daily"]
+        },
+        {
+          key: "respiratory",
+          answer: "Rising respiratory positivity should trigger targeted communications and extended respiratory assessment sessions when paired with ED pressure. The dashboard pairs positivity, respiratory ED visits, no-show rate, and district pressure before recommending outreach.",
+          context: ["Page 5 - Respiratory Surveillance Play", "Page 10 - Chat with Data and Documents", "Gold district public health weekly"]
+        }
+      ];
+
+      const $ = (id) => document.getElementById(id);
+      const fmtK = (value) => `${Math.round(value / 1000)}K`;
+      const fmtMoneyK = (value) => `$${Math.round(value / 1000)}K`;
+      const avg = (rows, key) => rows.length ? rows.reduce((sum, row) => sum + row[key], 0) / rows.length : 0;
+      const sum = (rows, key) => rows.reduce((total, row) => total + row[key], 0);
+
+      function filters() {
+        return {
+          district: $("filterDistrict").value,
+          type: $("filterFacilityType").value,
+          pressure: $("filterPressure").value,
+          age: $("filterAge").value,
+          period: $("filterPeriod").value
+        };
+      }
+
+      function filteredDistricts() {
+        const f = filters();
+        return districtData.filter((row) => (f.district === "All" || row.district === f.district) && (f.pressure === "All" || row.band === f.pressure));
+      }
+
+      function filteredFacilities() {
+        const f = filters();
+        return facilityData.filter((row) =>
+          (f.district === "All" || row.district === f.district) &&
+          (f.type === "All" || row.type === f.type) &&
+          (f.pressure === "All" || row.band === f.pressure)
+        );
+      }
+
+      function filteredPayerRows() {
+        const f = filters();
+        return payerData.filter((row) =>
+          (f.district === "All" || row.district === f.district) &&
+          (f.pressure === "All" || row.band === f.pressure)
+        );
+      }
+
+      function filteredProviders() {
+        const f = filters();
+        return providerData.filter((row) =>
+          (f.district === "All" || row.district === f.district) &&
+          (f.type === "All" || row.type === f.type) &&
+          (f.pressure === "All" || row.band === f.pressure)
+        );
+      }
+
+      function badge(band) {
+        const cls = band === "High" ? "high" : band === "Medium" ? "medium" : "low";
+        return `<span class="badge ${cls}">${band}</span>`;
+      }
+
+      function rowsOrFallback(rows, fallback) {
+        return rows.length ? rows : fallback;
+      }
+
+      function renderBars(id, rows, key, color) {
+        const chart = $(id);
+        const data = rowsOrFallback(rows, districtData);
+        const max = Math.max(...data.map((row) => row[key]), 1);
+        chart.innerHTML = data.map((row) => {
+          const height = Math.max(8, Math.round((row[key] / max) * 92));
+          const label = row.district || row.facility;
+          return `<i title="${label}: ${row[key]}" style="height:${height}%; background:${color}"></i>`;
+        }).join("");
+      }
+
+      function renderKpis() {
+        const dRows = filteredDistricts();
+        const fRows = filteredFacilities();
+        const ageFactor = immunizationAge[filters().age] || 1;
+        $("kpiVisits").textContent = fmtK(sum(fRows, "visits"));
+        $("kpiWait").textContent = `${Math.round(avg(fRows.filter((row) => row.edWait > 0), "edWait") || 0)} min`;
+        $("kpiOccupancy").textContent = sum(fRows, "highDays");
+        $("kpiDoses").textContent = fmtK(sum(dRows, "doses") * ageFactor);
+        $("kpiPressure").textContent = (Math.max(...rowsOrFallback(dRows, districtData).map((row) => row.pressure))).toFixed(1);
+        $("filterSummary").textContent = `${filters().district} districts | ${filters().type} facility types`;
+        $("oacStatus").textContent = `Gold snowflake | ${dRows.length} districts | ${fRows.length} facilities`;
+      }
+
+      function renderExecutive() {
+        const dRows = filteredDistricts();
+        const fRows = filteredFacilities();
+        renderBars("pressureBars", dRows, "pressure", "#c74634");
+        const high = fRows.filter((row) => row.band === "High").length;
+        const med = fRows.filter((row) => row.band === "Medium").length;
+        const watch = fRows.filter((row) => row.band === "Watch").length;
+        $("riskLegend").innerHTML = [
+          `<span><i style="background:#c74634"></i>High risk facilities (${high})</span>`,
+          `<span><i style="background:#2f6fb2"></i>Moderate facilities (${med})</span>`,
+          `<span><i style="background:#2b8a3e"></i>Watch list (${watch})</span>`
+        ].join("");
+        $("actionRows").innerHTML = rowsOrFallback(fRows, facilityData).slice(0, 5).map((row) => `
+          <tr>
+            <td>${row.facility}<br><span style="color:#667085">${row.district}</span></td>
+            <td>${row.edWait ? "ED wait + occupancy" : "Preventive access"}</td>
+            <td>Access risk ${row.risk}</td>
+            <td>${badge(row.band)}</td>
+            <td>${row.action}</td>
+          </tr>
+        `).join("");
+        const lead = rowsOrFallback(dRows, districtData).sort((a, b) => b.pressure - a.pressure)[0];
+        $("executiveNarrative").textContent = `${lead.district} has the strongest current pressure signal in the selected view. Combine staffing actions with ${lead.spatial.toLowerCase()} and use the playbook context for grounded recommendations.`;
+      }
+
+      function renderAccess() {
+        const rows = rowsOrFallback(filteredFacilities(), facilityData);
+        renderBars("facilityRiskBars", rows, "risk", "#2f6fb2");
+        $("capacityMetrics").innerHTML = [
+          `<li><span>Average access risk</span><strong>${avg(rows, "risk").toFixed(1)}</strong></li>`,
+          `<li><span>Average occupancy</span><strong>${(avg(rows, "occupancy") * 100).toFixed(1)}%</strong></li>`,
+          `<li><span>High-pressure facilities</span><strong>${rows.filter((row) => row.band === "High").length}</strong></li>`,
+          `<li><span>Total queue depth</span><strong>${sum(rows, "queue")}</strong></li>`
+        ].join("");
+        $("accessRows").innerHTML = rows.map((row) => `
+          <tr><td>${row.facility}</td><td>${row.district}</td><td>${row.type}</td><td>${row.edWait} min</td><td>${(row.occupancy * 100).toFixed(0)}%</td><td>${row.risk}</td><td>${badge(row.band)}</td></tr>
+        `).join("");
+      }
+
+      function renderImmunization() {
+        const rows = rowsOrFallback(filteredDistricts(), districtData);
+        const factor = immunizationAge[filters().age] || 1;
+        renderBars("immunizationBars", rows.map((row) => ({ ...row, completionPct: Math.round(row.completion * 100) })), "completionPct", "#2b8a3e");
+        $("immunizationNotes").innerHTML = [
+          `<li><span>Selected age group</span><strong>${filters().age}</strong></li>`,
+          `<li><span>Doses in view</span><strong>${fmtK(sum(rows, "doses") * factor)}</strong></li>`,
+          `<li><span>Average no-show</span><strong>${(avg(rows, "noShow") * 100).toFixed(1)}%</strong></li>`,
+          `<li><span>Outreach priority</span><strong>${rows.some((row) => row.noShow > 0.09) ? "Reminder campaign" : "Routine follow-up"}</strong></li>`
+        ].join("");
+        $("immunizationRows").innerHTML = rows.map((row) => `
+          <tr><td>${row.district}</td><td>${filters().age}</td><td>${fmtK(row.doses * factor)}</td><td>${(row.completion * 100).toFixed(1)}%</td><td>${(row.noShow * 100).toFixed(1)}%</td><td>${row.noShow > 0.09 ? "Target reminders" : "Monitor"}</td></tr>
+        `).join("");
+      }
+
+      function renderSurveillance() {
+        const rows = rowsOrFallback(filteredDistricts(), districtData);
+        $("qualityMetrics").innerHTML = [
+          `<li><span>Average positivity</span><strong>${(avg(rows, "positivity") * 100).toFixed(1)}%</strong></li>`,
+          `<li><span>Respiratory ED visits</span><strong>${sum(rows, "respiratory")}</strong></li>`,
+          `<li><span>Quality SLA focus</span><strong>${rows.some((row) => row.band === "High") ? "Escalate" : "Monitor"}</strong></li>`,
+          `<li><span>Review cadence</span><strong>${rows.some((row) => row.band === "High") ? "Daily" : "Weekly"}</strong></li>`
+        ].join("");
+        $("surveillanceRows").innerHTML = rows.map((row) => `
+          <tr><td>${row.district}</td><td>Respiratory + quality</td><td>${(row.positivity * 100).toFixed(1)}% positivity</td><td>${badge(row.band)}</td><td>${row.band === "High" ? "Extend respiratory sessions" : "Continue surveillance"}</td></tr>
+        `).join("");
+      }
+
+      function renderSpatial() {
+        const rows = rowsOrFallback(filteredDistricts(), districtData);
+        const maxResidents = Math.max(...districtData.map((row) => row.residents));
+        $("spatialMap").innerHTML = districtData.map((row) => {
+          const active = rows.some((item) => item.district === row.district);
+          const hue = row.band === "High" ? "#ffd7d0" : row.band === "Medium" ? "#fff0c2" : "#dff3e7";
+          const opacity = active ? 1 : 0.28;
+          return `<div class="map-district" style="background:${hue}; opacity:${opacity}" title="${row.district}: ${row.spatial}"><strong>${row.district}</strong><span>${Math.round(row.residents / 1000)}K residents/facility</span></div>`;
+        }).join("");
+        const lead = rows.slice().sort((a, b) => b.residents - a.residents)[0];
+        $("spatialMetrics").innerHTML = [
+          `<li><span>Top access constraint</span><strong>${lead.district}</strong></li>`,
+          `<li><span>Residents per facility</span><strong>${Math.round(lead.residents / 1000)}K</strong></li>`,
+          `<li><span>Distance signal</span><strong>${lead.distance.toFixed(2)} km</strong></li>`,
+          `<li><span>Spatial action</span><strong>${lead.spatial.includes("Prioritize") ? "Mobile clinic" : "Monitor"}</strong></li>`
+        ].join("");
+        $("spatialRows").innerHTML = rows.map((row) => `
+          <tr><td>${row.district}</td><td>${Math.round(row.residents).toLocaleString()}</td><td>${row.distance.toFixed(2)} km</td><td>${row.pressure.toFixed(1)}</td><td>${row.spatial}</td></tr>
+        `).join("");
+      }
+
+      function renderChat() {
+        const question = $("chatQuestion").value.toLowerCase();
+        let example = chatExamples[0];
+        if (question.includes("occupancy") || question.includes("wait")) example = chatExamples[1];
+        if (question.includes("respiratory") || question.includes("positivity")) example = chatExamples[2];
+        const focus = rowsOrFallback(filteredDistricts(), districtData).sort((a, b) => b.pressure - a.pressure)[0];
+        $("chatAnswer").textContent = `${example.answer} Current filter context: ${focus.district}, pressure ${focus.pressure.toFixed(1)}, residents per facility ${Math.round(focus.residents).toLocaleString()}.`;
+        $("retrievedContext").innerHTML = [
+          ...example.context.map((item) => `<li><span>Retrieved</span><strong>${item}</strong></li>`),
+          `<li><span>Structured context</span><strong>${focus.district} Gold metrics</strong></li>`
+        ].join("");
+      }
+
+      function renderRealtime() {
+        const rows = rowsOrFallback(filteredFacilities(), facilityData).sort((a, b) => b.queue - a.queue);
+        $("realtimeMetrics").innerHTML = [
+          `<li><span>High-pressure events</span><strong>${rows.filter((row) => row.band === "High").length}</strong></li>`,
+          `<li><span>Average live wait</span><strong>${Math.round(avg(rows.filter((row) => row.edWait > 0), "edWait") || 0)} min</strong></li>`,
+          `<li><span>Peak queue depth</span><strong>${Math.max(...rows.map((row) => row.queue))}</strong></li>`,
+          `<li><span>Lab assets</span><strong>GoldenGate + Kafka/AIDP</strong></li>`
+        ].join("");
+        $("realtimeRows").innerHTML = rows.slice(0, 7).map((row) => `
+          <tr><td>${row.facility}</td><td>${row.district}</td><td>${row.edWait} min</td><td>${(row.occupancy * 100).toFixed(0)}%</td><td>${row.queue}</td><td>${badge(row.band)}</td></tr>
+        `).join("");
+      }
+
+      function renderPayer() {
+        const payerRows = rowsOrFallback(filteredPayerRows(), payerData);
+        const providerRows = rowsOrFallback(filteredProviders(), providerData)
+          .slice()
+          .sort((a, b) => (b.band === "High") - (a.band === "High") || b.actions - a.actions || a.expiry - b.expiry);
+        renderBars("payerClaimsBars", payerRows.map((row) => ({ ...row, denialPct: Number((row.denialRate * 100).toFixed(1)) })), "denialPct", "#c74634");
+        const totalClaims = sum(payerRows, "claims");
+        const weightedDenials = totalClaims ? sum(payerRows, "denied") / totalClaims : 0;
+        const totalMembers = sum(payerRows, "members");
+        const renewalRisk = totalMembers ? sum(payerRows, "renewals") / totalMembers : 0;
+        $("payerMetrics").innerHTML = [
+          `<li><span>Claims submitted</span><strong>${totalClaims.toLocaleString()}</strong></li>`,
+          `<li><span>Weighted denial rate</span><strong>${(weightedDenials * 100).toFixed(1)}%</strong></li>`,
+          `<li><span>Total disbursed</span><strong>${fmtMoneyK(sum(payerRows, "disbursed"))}</strong></li>`,
+          `<li><span>Renewal risk</span><strong>${(renewalRisk * 100).toFixed(1)}%</strong></li>`,
+          `<li><span>High accreditation risk</span><strong>${providerRows.filter((row) => row.band === "High").length}</strong></li>`
+        ].join("");
+        $("payerRows").innerHTML = payerRows.map((row) => `
+          <tr>
+            <td>${row.district}</td>
+            <td>${row.claims.toLocaleString()}</td>
+            <td>${(row.denialRate * 100).toFixed(1)}%</td>
+            <td>${fmtMoneyK(row.disbursed)}</td>
+            <td>${row.renewals}</td>
+            <td>${row.highRiskMembers}</td>
+          </tr>
+        `).join("");
+        $("providerRows").innerHTML = providerRows.map((row) => `
+          <tr>
+            <td>${row.facility}</td>
+            <td>${row.district}</td>
+            <td>${row.status}</td>
+            <td>${row.score.toFixed(1)}</td>
+            <td>${row.actions}</td>
+            <td>${row.expiry} days</td>
+            <td>${badge(row.band)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function renderAll() {
+        const activeTab = document.querySelector(".dashboard-tab.active")?.dataset.tab || "executive";
+        $("dashboardTitle").textContent = tabMeta[activeTab][0];
+        $("dashboardSubtitle").textContent = tabMeta[activeTab][1];
+        renderKpis();
+        renderExecutive();
+        renderAccess();
+        renderImmunization();
+        renderSurveillance();
+        renderSpatial();
+        renderChat();
+        renderRealtime();
+        renderPayer();
+      }
+
+      document.querySelectorAll(".dashboard-tab").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".dashboard-tab").forEach((item) => item.classList.remove("active"));
+          document.querySelectorAll(".dashboard-panel").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          document.querySelector(`[data-panel="${button.dataset.tab}"]`).classList.add("active");
+          renderAll();
+        });
+      });
+
+      ["filterDistrict", "filterFacilityType", "filterPeriod", "filterPressure", "filterAge"].forEach((id) => {
+        $(id).addEventListener("change", renderAll);
+      });
+
+      $("resetFilters").addEventListener("click", () => {
+        $("filterDistrict").value = "All";
+        $("filterFacilityType").value = "All";
+        $("filterPeriod").value = "H1";
+        $("filterPressure").value = "All";
+        $("filterAge").value = "All";
+        renderAll();
+      });
+
+      $("askButton").addEventListener("click", renderChat);
+      document.querySelectorAll(".suggestion-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          $("chatQuestion").value = button.dataset.question;
+          renderChat();
+        });
+      });
+
+      renderAll();
+    </script>
+  </body>
+</html>

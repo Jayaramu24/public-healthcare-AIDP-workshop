@@ -1,0 +1,306 @@
+snapshot_date,district_id,program_code,coverage_program,age_group,risk_segment,chronic_condition_flag,member_count,active_members,renewal_due_members,suspended_members,renewal_due_60_days,high_risk_members
+2025-06-30,D01,CCS,Chronic Care Support,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,0-17,Moderate,N,2,2,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,18-49,High,Y,1,1,0,0,1,1
+2025-06-30,D01,CCS,Chronic Care Support,18-49,Low,N,3,3,0,0,1,0
+2025-06-30,D01,CCS,Chronic Care Support,18-49,Low,Y,1,1,0,0,1,0
+2025-06-30,D01,CCS,Chronic Care Support,18-49,Moderate,N,1,1,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,18-49,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,50-64,High,Y,1,1,0,0,0,1
+2025-06-30,D01,CCS,Chronic Care Support,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,50-64,Moderate,N,2,2,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,50-64,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,65+,Low,N,2,2,0,0,0,0
+2025-06-30,D01,CCS,Chronic Care Support,65+,Moderate,N,2,2,0,0,2,0
+2025-06-30,D01,ECP,Essential Care Plan,0-17,High,Y,2,2,0,0,0,2
+2025-06-30,D01,ECP,Essential Care Plan,0-17,Low,N,5,5,0,0,3,0
+2025-06-30,D01,ECP,Essential Care Plan,0-17,Low,Y,3,1,2,0,0,0
+2025-06-30,D01,ECP,Essential Care Plan,0-17,Moderate,N,3,2,1,0,1,0
+2025-06-30,D01,ECP,Essential Care Plan,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D01,ECP,Essential Care Plan,18-49,High,Y,3,3,0,0,0,3
+2025-06-30,D01,ECP,Essential Care Plan,18-49,Low,N,7,5,1,1,1,0
+2025-06-30,D01,ECP,Essential Care Plan,18-49,Low,Y,4,4,0,0,2,0
+2025-06-30,D01,ECP,Essential Care Plan,18-49,Moderate,N,4,2,2,0,1,0
+2025-06-30,D01,ECP,Essential Care Plan,50-64,High,Y,1,1,0,0,1,1
+2025-06-30,D01,ECP,Essential Care Plan,50-64,Low,N,5,4,1,0,0,0
+2025-06-30,D01,ECP,Essential Care Plan,50-64,Moderate,N,1,1,0,0,0,0
+2025-06-30,D01,ECP,Essential Care Plan,65+,High,Y,2,2,0,0,0,2
+2025-06-30,D01,ECP,Essential Care Plan,65+,Low,N,3,2,1,0,2,0
+2025-06-30,D01,ECP,Essential Care Plan,65+,Moderate,N,3,2,1,0,1,0
+2025-06-30,D01,MCH,Maternal and Child Health,0-17,Low,N,3,2,0,1,1,0
+2025-06-30,D01,MCH,Maternal and Child Health,0-17,Moderate,N,3,1,1,1,1,0
+2025-06-30,D01,MCH,Maternal and Child Health,0-17,Moderate,Y,2,2,0,0,1,0
+2025-06-30,D01,MCH,Maternal and Child Health,18-49,High,Y,1,1,0,0,1,1
+2025-06-30,D01,MCH,Maternal and Child Health,18-49,Low,N,1,1,0,0,0,0
+2025-06-30,D01,MCH,Maternal and Child Health,18-49,Moderate,N,4,4,0,0,0,0
+2025-06-30,D01,MCH,Maternal and Child Health,18-49,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D01,MCH,Maternal and Child Health,50-64,High,Y,1,0,1,0,0,1
+2025-06-30,D01,MCH,Maternal and Child Health,65+,Low,N,1,0,1,0,0,0
+2025-06-30,D01,MCH,Maternal and Child Health,65+,Moderate,N,2,2,0,0,1,0
+2025-06-30,D01,SAP,Senior Access Plan,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D01,SAP,Senior Access Plan,0-17,Low,Y,1,1,0,0,0,0
+2025-06-30,D01,SAP,Senior Access Plan,0-17,Moderate,N,1,1,0,0,1,0
+2025-06-30,D01,SAP,Senior Access Plan,0-17,Moderate,Y,1,0,0,1,1,0
+2025-06-30,D01,SAP,Senior Access Plan,18-49,High,Y,2,1,1,0,1,2
+2025-06-30,D01,SAP,Senior Access Plan,18-49,Low,N,2,2,0,0,1,0
+2025-06-30,D01,SAP,Senior Access Plan,18-49,Low,Y,1,0,1,0,0,0
+2025-06-30,D01,SAP,Senior Access Plan,18-49,Moderate,N,3,1,2,0,1,0
+2025-06-30,D01,SAP,Senior Access Plan,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D01,SAP,Senior Access Plan,65+,Low,N,5,5,0,0,1,0
+2025-06-30,D01,SAP,Senior Access Plan,65+,Low,Y,2,1,1,0,0,0
+2025-06-30,D01,SAP,Senior Access Plan,65+,Moderate,N,2,0,1,1,1,0
+2025-06-30,D01,SAP,Senior Access Plan,65+,Moderate,Y,3,3,0,0,0,0
+2025-06-30,D01,WFP,Worker Family Plan,0-17,High,Y,1,1,0,0,0,1
+2025-06-30,D01,WFP,Worker Family Plan,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D01,WFP,Worker Family Plan,18-49,Low,N,1,0,1,0,0,0
+2025-06-30,D01,WFP,Worker Family Plan,50-64,Low,N,2,2,0,0,0,0
+2025-06-30,D01,WFP,Worker Family Plan,50-64,Moderate,N,1,0,1,0,0,0
+2025-06-30,D01,WFP,Worker Family Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D02,CCS,Chronic Care Support,0-17,High,Y,3,2,1,0,0,3
+2025-06-30,D02,CCS,Chronic Care Support,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D02,CCS,Chronic Care Support,18-49,Low,N,6,4,1,1,2,0
+2025-06-30,D02,CCS,Chronic Care Support,18-49,Moderate,N,1,1,0,0,0,0
+2025-06-30,D02,CCS,Chronic Care Support,50-64,High,Y,1,1,0,0,0,1
+2025-06-30,D02,CCS,Chronic Care Support,50-64,Low,N,1,0,1,0,1,0
+2025-06-30,D02,CCS,Chronic Care Support,50-64,Low,Y,1,0,0,1,0,0
+2025-06-30,D02,CCS,Chronic Care Support,50-64,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D02,CCS,Chronic Care Support,65+,High,Y,3,3,0,0,1,3
+2025-06-30,D02,CCS,Chronic Care Support,65+,Low,N,1,0,1,0,0,0
+2025-06-30,D02,CCS,Chronic Care Support,65+,Moderate,N,2,2,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,0-17,Low,N,3,3,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,0-17,Low,Y,1,0,1,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,0-17,Moderate,N,1,1,0,0,1,0
+2025-06-30,D02,ECP,Essential Care Plan,18-49,High,Y,3,1,2,0,0,3
+2025-06-30,D02,ECP,Essential Care Plan,18-49,Low,N,5,5,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,18-49,Low,Y,1,1,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,18-49,Moderate,N,3,3,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,18-49,Moderate,Y,2,2,0,0,1,0
+2025-06-30,D02,ECP,Essential Care Plan,50-64,Low,N,6,6,0,0,2,0
+2025-06-30,D02,ECP,Essential Care Plan,50-64,Moderate,N,3,3,0,0,1,0
+2025-06-30,D02,ECP,Essential Care Plan,50-64,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D02,ECP,Essential Care Plan,65+,Low,N,5,5,0,0,0,0
+2025-06-30,D02,ECP,Essential Care Plan,65+,Moderate,N,2,2,0,0,0,0
+2025-06-30,D02,MCH,Maternal and Child Health,0-17,High,Y,2,2,0,0,0,2
+2025-06-30,D02,MCH,Maternal and Child Health,0-17,Low,N,3,3,0,0,1,0
+2025-06-30,D02,MCH,Maternal and Child Health,0-17,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D02,MCH,Maternal and Child Health,18-49,High,Y,3,3,0,0,0,3
+2025-06-30,D02,MCH,Maternal and Child Health,18-49,Low,N,6,6,0,0,2,0
+2025-06-30,D02,MCH,Maternal and Child Health,18-49,Low,Y,2,2,0,0,1,0
+2025-06-30,D02,MCH,Maternal and Child Health,18-49,Moderate,N,4,2,2,0,2,0
+2025-06-30,D02,MCH,Maternal and Child Health,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D02,MCH,Maternal and Child Health,50-64,Moderate,N,1,0,1,0,0,0
+2025-06-30,D02,MCH,Maternal and Child Health,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D02,MCH,Maternal and Child Health,65+,Low,Y,1,1,0,0,0,0
+2025-06-30,D02,MCH,Maternal and Child Health,65+,Moderate,N,3,3,0,0,2,0
+2025-06-30,D02,MCH,Maternal and Child Health,65+,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D02,SAP,Senior Access Plan,0-17,High,Y,1,0,1,0,0,1
+2025-06-30,D02,SAP,Senior Access Plan,0-17,Low,N,3,3,0,0,1,0
+2025-06-30,D02,SAP,Senior Access Plan,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D02,SAP,Senior Access Plan,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D02,SAP,Senior Access Plan,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D02,SAP,Senior Access Plan,18-49,Low,N,1,0,1,0,0,0
+2025-06-30,D02,SAP,Senior Access Plan,18-49,Moderate,N,4,2,1,1,2,0
+2025-06-30,D02,SAP,Senior Access Plan,50-64,High,Y,1,1,0,0,1,1
+2025-06-30,D02,SAP,Senior Access Plan,50-64,Low,N,4,4,0,0,1,0
+2025-06-30,D02,SAP,Senior Access Plan,65+,High,Y,2,1,1,0,0,2
+2025-06-30,D02,SAP,Senior Access Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D02,SAP,Senior Access Plan,65+,Low,Y,1,1,0,0,1,0
+2025-06-30,D02,SAP,Senior Access Plan,65+,Moderate,N,2,1,1,0,1,0
+2025-06-30,D02,WFP,Worker Family Plan,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,18-49,High,Y,1,0,0,1,0,1
+2025-06-30,D02,WFP,Worker Family Plan,18-49,Low,N,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,18-49,Low,Y,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,18-49,Moderate,N,3,2,1,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,18-49,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,50-64,Low,N,2,1,1,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,50-64,Moderate,N,1,1,0,0,1,0
+2025-06-30,D02,WFP,Worker Family Plan,65+,High,Y,1,0,1,0,0,1
+2025-06-30,D02,WFP,Worker Family Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,65+,Low,Y,2,1,1,0,0,0
+2025-06-30,D02,WFP,Worker Family Plan,65+,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,0-17,High,Y,2,2,0,0,0,2
+2025-06-30,D03,CCS,Chronic Care Support,0-17,Low,N,3,3,0,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,0-17,Low,Y,1,1,0,0,0,0
+2025-06-30,D03,CCS,Chronic Care Support,0-17,Moderate,N,2,1,1,0,0,0
+2025-06-30,D03,CCS,Chronic Care Support,18-49,High,Y,8,5,2,1,1,8
+2025-06-30,D03,CCS,Chronic Care Support,18-49,Low,N,5,5,0,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,18-49,Low,Y,2,2,0,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,18-49,Moderate,N,3,2,0,1,1,0
+2025-06-30,D03,CCS,Chronic Care Support,50-64,High,Y,2,2,0,0,1,2
+2025-06-30,D03,CCS,Chronic Care Support,50-64,Low,N,2,2,0,0,0,0
+2025-06-30,D03,CCS,Chronic Care Support,50-64,Low,Y,2,2,0,0,0,0
+2025-06-30,D03,CCS,Chronic Care Support,50-64,Moderate,N,5,3,2,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,50-64,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D03,CCS,Chronic Care Support,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D03,CCS,Chronic Care Support,65+,Low,N,3,2,1,0,0,0
+2025-06-30,D03,CCS,Chronic Care Support,65+,Moderate,N,1,1,0,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,0-17,Low,N,4,3,1,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,0-17,Low,Y,1,1,0,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,0-17,Moderate,N,2,2,0,0,0,0
+2025-06-30,D03,ECP,Essential Care Plan,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D03,ECP,Essential Care Plan,18-49,High,Y,4,2,1,1,1,4
+2025-06-30,D03,ECP,Essential Care Plan,18-49,Low,N,9,6,0,3,1,0
+2025-06-30,D03,ECP,Essential Care Plan,18-49,Low,Y,3,3,0,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,18-49,Moderate,N,5,2,3,0,2,0
+2025-06-30,D03,ECP,Essential Care Plan,18-49,Moderate,Y,2,2,0,0,0,0
+2025-06-30,D03,ECP,Essential Care Plan,50-64,Low,N,5,5,0,0,4,0
+2025-06-30,D03,ECP,Essential Care Plan,50-64,Low,Y,4,2,2,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,50-64,Moderate,N,4,4,0,0,3,0
+2025-06-30,D03,ECP,Essential Care Plan,65+,High,Y,2,1,0,1,0,2
+2025-06-30,D03,ECP,Essential Care Plan,65+,Low,N,7,4,1,2,1,0
+2025-06-30,D03,ECP,Essential Care Plan,65+,Low,Y,2,2,0,0,0,0
+2025-06-30,D03,ECP,Essential Care Plan,65+,Moderate,N,5,5,0,0,1,0
+2025-06-30,D03,ECP,Essential Care Plan,65+,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D03,MCH,Maternal and Child Health,0-17,High,Y,2,1,0,1,2,2
+2025-06-30,D03,MCH,Maternal and Child Health,0-17,Low,N,7,6,0,1,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,0-17,Low,Y,3,3,0,0,0,0
+2025-06-30,D03,MCH,Maternal and Child Health,0-17,Moderate,N,3,3,0,0,0,0
+2025-06-30,D03,MCH,Maternal and Child Health,18-49,High,Y,2,2,0,0,0,2
+2025-06-30,D03,MCH,Maternal and Child Health,18-49,Low,N,5,2,2,1,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,18-49,Moderate,N,3,3,0,0,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,18-49,Moderate,Y,2,2,0,0,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,50-64,Low,N,3,2,1,0,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,50-64,Moderate,N,4,3,1,0,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,50-64,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D03,MCH,Maternal and Child Health,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D03,MCH,Maternal and Child Health,65+,Low,N,7,7,0,0,2,0
+2025-06-30,D03,SAP,Senior Access Plan,0-17,High,Y,2,2,0,0,1,2
+2025-06-30,D03,SAP,Senior Access Plan,0-17,Low,N,1,1,0,0,1,0
+2025-06-30,D03,SAP,Senior Access Plan,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D03,SAP,Senior Access Plan,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D03,SAP,Senior Access Plan,18-49,High,Y,4,4,0,0,1,4
+2025-06-30,D03,SAP,Senior Access Plan,18-49,Low,N,5,4,1,0,3,0
+2025-06-30,D03,SAP,Senior Access Plan,18-49,Low,Y,2,2,0,0,0,0
+2025-06-30,D03,SAP,Senior Access Plan,18-49,Moderate,N,4,4,0,0,1,0
+2025-06-30,D03,SAP,Senior Access Plan,18-49,Moderate,Y,1,0,0,1,1,0
+2025-06-30,D03,SAP,Senior Access Plan,50-64,High,Y,3,2,1,0,1,3
+2025-06-30,D03,SAP,Senior Access Plan,50-64,Low,N,4,3,0,1,0,0
+2025-06-30,D03,SAP,Senior Access Plan,50-64,Moderate,N,1,1,0,0,0,0
+2025-06-30,D03,SAP,Senior Access Plan,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D03,SAP,Senior Access Plan,65+,Low,N,5,3,2,0,1,0
+2025-06-30,D03,SAP,Senior Access Plan,65+,Moderate,N,3,2,1,0,0,0
+2025-06-30,D03,SAP,Senior Access Plan,65+,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D03,WFP,Worker Family Plan,0-17,Low,N,4,3,0,1,0,0
+2025-06-30,D03,WFP,Worker Family Plan,0-17,Moderate,N,2,2,0,0,0,0
+2025-06-30,D03,WFP,Worker Family Plan,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D03,WFP,Worker Family Plan,18-49,Low,N,4,2,2,0,0,0
+2025-06-30,D03,WFP,Worker Family Plan,18-49,Moderate,N,3,3,0,0,0,0
+2025-06-30,D03,WFP,Worker Family Plan,50-64,Low,N,4,2,2,0,1,0
+2025-06-30,D03,WFP,Worker Family Plan,50-64,Moderate,Y,1,1,0,0,1,0
+2025-06-30,D03,WFP,Worker Family Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D03,WFP,Worker Family Plan,65+,Moderate,N,2,2,0,0,1,0
+2025-06-30,D04,CCS,Chronic Care Support,0-17,High,Y,1,1,0,0,0,1
+2025-06-30,D04,CCS,Chronic Care Support,0-17,Low,N,1,0,1,0,0,0
+2025-06-30,D04,CCS,Chronic Care Support,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D04,CCS,Chronic Care Support,18-49,Low,N,3,2,1,0,1,0
+2025-06-30,D04,CCS,Chronic Care Support,18-49,Moderate,N,3,2,1,0,1,0
+2025-06-30,D04,CCS,Chronic Care Support,18-49,Moderate,Y,2,2,0,0,0,0
+2025-06-30,D04,CCS,Chronic Care Support,50-64,High,Y,3,1,2,0,1,3
+2025-06-30,D04,CCS,Chronic Care Support,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D04,CCS,Chronic Care Support,65+,High,Y,2,1,1,0,0,2
+2025-06-30,D04,CCS,Chronic Care Support,65+,Low,N,2,2,0,0,1,0
+2025-06-30,D04,CCS,Chronic Care Support,65+,Low,Y,1,1,0,0,0,0
+2025-06-30,D04,CCS,Chronic Care Support,65+,Moderate,N,1,0,1,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,0-17,Low,N,1,1,0,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,0-17,Low,Y,1,1,0,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,0-17,Moderate,N,2,1,1,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,0-17,Moderate,Y,3,2,1,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D04,ECP,Essential Care Plan,18-49,Low,N,8,6,2,0,2,0
+2025-06-30,D04,ECP,Essential Care Plan,18-49,Low,Y,2,0,2,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,18-49,Moderate,N,3,3,0,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,18-49,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,50-64,High,Y,1,0,0,1,0,1
+2025-06-30,D04,ECP,Essential Care Plan,50-64,Low,N,4,4,0,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,50-64,Low,Y,1,1,0,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,50-64,Moderate,N,4,4,0,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D04,ECP,Essential Care Plan,65+,Low,N,2,2,0,0,0,0
+2025-06-30,D04,ECP,Essential Care Plan,65+,Low,Y,1,1,0,0,1,0
+2025-06-30,D04,ECP,Essential Care Plan,65+,Moderate,Y,1,0,1,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,0-17,Low,N,6,6,0,0,1,0
+2025-06-30,D04,MCH,Maternal and Child Health,0-17,Low,Y,1,1,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,0-17,Moderate,N,3,3,0,0,2,0
+2025-06-30,D04,MCH,Maternal and Child Health,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D04,MCH,Maternal and Child Health,18-49,Low,N,1,1,0,0,1,0
+2025-06-30,D04,MCH,Maternal and Child Health,18-49,Moderate,N,4,3,1,0,3,0
+2025-06-30,D04,MCH,Maternal and Child Health,18-49,Moderate,Y,2,2,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,50-64,Moderate,N,1,1,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,65+,Low,N,2,2,0,0,0,0
+2025-06-30,D04,MCH,Maternal and Child Health,65+,Moderate,N,1,1,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,0-17,High,Y,2,2,0,0,0,2
+2025-06-30,D04,SAP,Senior Access Plan,0-17,Moderate,N,1,0,1,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,0-17,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,18-49,Low,Y,1,1,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,18-49,Moderate,N,2,2,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,18-49,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,50-64,Low,N,1,1,0,0,1,0
+2025-06-30,D04,SAP,Senior Access Plan,65+,High,Y,3,3,0,0,1,3
+2025-06-30,D04,SAP,Senior Access Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,65+,Moderate,N,3,2,1,0,0,0
+2025-06-30,D04,SAP,Senior Access Plan,65+,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D04,WFP,Worker Family Plan,0-17,High,Y,1,1,0,0,1,1
+2025-06-30,D04,WFP,Worker Family Plan,0-17,Low,N,1,1,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,0-17,Low,Y,1,1,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,0-17,Moderate,N,1,1,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,18-49,Low,N,3,3,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,18-49,Low,Y,2,1,1,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,18-49,Moderate,N,1,1,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,50-64,Low,N,2,1,1,0,0,0
+2025-06-30,D04,WFP,Worker Family Plan,50-64,Moderate,N,2,2,0,0,1,0
+2025-06-30,D04,WFP,Worker Family Plan,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D05,CCS,Chronic Care Support,0-17,High,Y,2,0,2,0,0,2
+2025-06-30,D05,CCS,Chronic Care Support,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D05,CCS,Chronic Care Support,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,CCS,Chronic Care Support,18-49,High,Y,1,1,0,0,1,1
+2025-06-30,D05,CCS,Chronic Care Support,18-49,Low,N,4,4,0,0,1,0
+2025-06-30,D05,CCS,Chronic Care Support,18-49,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,CCS,Chronic Care Support,18-49,Moderate,Y,3,2,1,0,0,0
+2025-06-30,D05,CCS,Chronic Care Support,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D05,CCS,Chronic Care Support,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,0-17,High,Y,3,2,1,0,1,3
+2025-06-30,D05,ECP,Essential Care Plan,0-17,Low,N,3,2,0,1,0,0
+2025-06-30,D05,ECP,Essential Care Plan,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,0-17,Moderate,Y,1,0,1,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,18-49,Low,N,1,1,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,18-49,Moderate,N,4,3,0,1,1,0
+2025-06-30,D05,ECP,Essential Care Plan,50-64,Low,N,2,2,0,0,1,0
+2025-06-30,D05,ECP,Essential Care Plan,50-64,Low,Y,2,2,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,50-64,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,65+,High,Y,3,2,1,0,1,3
+2025-06-30,D05,ECP,Essential Care Plan,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D05,ECP,Essential Care Plan,65+,Low,Y,1,0,0,1,0,0
+2025-06-30,D05,ECP,Essential Care Plan,65+,Moderate,N,1,1,0,0,1,0
+2025-06-30,D05,MCH,Maternal and Child Health,0-17,High,Y,1,1,0,0,0,1
+2025-06-30,D05,MCH,Maternal and Child Health,0-17,Low,N,3,1,2,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,0-17,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,18-49,Moderate,N,1,1,0,0,1,0
+2025-06-30,D05,MCH,Maternal and Child Health,50-64,Low,N,1,1,0,0,1,0
+2025-06-30,D05,MCH,Maternal and Child Health,50-64,Low,Y,1,0,1,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,50-64,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,50-64,Moderate,Y,1,1,0,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,65+,Low,N,1,1,0,0,0,0
+2025-06-30,D05,MCH,Maternal and Child Health,65+,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,0-17,Low,N,1,1,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,0-17,Low,Y,1,1,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,18-49,High,Y,1,1,0,0,0,1
+2025-06-30,D05,SAP,Senior Access Plan,18-49,Low,N,1,1,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,18-49,Low,Y,1,1,0,0,1,0
+2025-06-30,D05,SAP,Senior Access Plan,18-49,Moderate,N,1,1,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,18-49,Moderate,Y,2,2,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,50-64,Low,N,2,2,0,0,1,0
+2025-06-30,D05,SAP,Senior Access Plan,65+,Low,N,2,2,0,0,0,0
+2025-06-30,D05,SAP,Senior Access Plan,65+,Moderate,N,4,3,0,1,1,0
+2025-06-30,D05,WFP,Worker Family Plan,0-17,High,Y,2,1,1,0,1,2
+2025-06-30,D05,WFP,Worker Family Plan,0-17,Moderate,N,2,2,0,0,0,0
+2025-06-30,D05,WFP,Worker Family Plan,18-49,Low,N,2,1,1,0,1,0
+2025-06-30,D05,WFP,Worker Family Plan,18-49,Moderate,N,2,2,0,0,0,0
+2025-06-30,D05,WFP,Worker Family Plan,50-64,Low,N,1,1,0,0,0,0
+2025-06-30,D05,WFP,Worker Family Plan,50-64,Moderate,N,2,2,0,0,2,0
+2025-06-30,D05,WFP,Worker Family Plan,65+,High,Y,1,1,0,0,0,1
+2025-06-30,D05,WFP,Worker Family Plan,65+,Low,N,1,0,1,0,1,0
+2025-06-30,D05,WFP,Worker Family Plan,65+,Moderate,N,4,4,0,0,0,0

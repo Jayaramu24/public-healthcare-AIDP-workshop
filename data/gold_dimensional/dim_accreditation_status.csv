@@ -1,0 +1,9 @@
+accreditation_status_key,accreditation_body,accreditation_status,accreditation_level,specialty_scope
+1,Emergency Care Accreditation Council,Accredited,Level B,"Urgent care, triage safety, diagnostics, referral management"
+2,Emergency Care Accreditation Council,Provisional,Level C,"Urgent care, triage safety, diagnostics, referral management"
+3,National Health Standards Board,Accredited,Level A,"Acute care, emergency, inpatient quality, discharge safety"
+4,National Health Standards Board,Accredited,Level B,"Acute care, emergency, inpatient quality, discharge safety"
+5,National Health Standards Board,Corrective Action,Conditional,"Acute care, emergency, inpatient quality, discharge safety"
+6,National Health Standards Board,Provisional,Level C,"Acute care, emergency, inpatient quality, discharge safety"
+7,Public Clinic Quality Commission,Accredited,Level A,"Primary care, preventive services, outreach, chronic care"
+8,Public Clinic Quality Commission,Provisional,Level C,"Primary care, preventive services, outreach, chronic care"

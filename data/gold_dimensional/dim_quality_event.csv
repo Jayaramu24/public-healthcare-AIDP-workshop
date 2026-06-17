@@ -1,0 +1,15 @@
+quality_event_key,event_type,severity
+1,Diagnostic Delay,High
+2,Diagnostic Delay,Low
+3,Diagnostic Delay,Medium
+4,Discharge Coordination,High
+5,Discharge Coordination,Low
+6,Discharge Coordination,Medium
+7,Medication Delay,High
+8,Medication Delay,Low
+9,Medication Delay,Medium
+10,Patient Complaint,High
+11,Patient Complaint,Low
+12,Patient Complaint,Medium
+13,Referral Backlog,Low
+14,Referral Backlog,Medium

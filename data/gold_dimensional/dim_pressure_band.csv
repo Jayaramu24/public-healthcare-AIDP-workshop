@@ -1,0 +1,4 @@
+pressure_band_key,pressure_band,lower_bound,upper_bound,description
+1,Watch,0,34.999,Routine monitoring
+2,Medium,35,49.999,Operational watch list
+3,High,50,100,Leadership action recommended

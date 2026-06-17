@@ -1,0 +1,6 @@
+district_id,district_name,total_outpatient_visits,total_emergency_arrivals,avg_ed_wait_minutes,avg_outpatient_wait_minutes,avg_bed_occupancy_rate,high_occupancy_days,total_overtime_hours,avg_access_risk_score
+D01,North Borough,92069,16957,35.0,27.6,0.4027,2,381.9,25.4
+D02,East River,117951,38785,68.2,28.1,0.6347,4,656.1,36.7
+D03,Central City,132216,27286,37.3,27.8,0.4037,0,600.7,30.6
+D04,South Lakes,98017,19203,35.8,27.6,0.4086,4,594.9,23.7
+D05,West Hills,74856,25160,59.6,25.6,0.6295,5,322.6,23.0

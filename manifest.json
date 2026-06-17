@@ -1,0 +1,262 @@
+{
+  "dataset_name": "Metro Public Health Authority Synthetic Lakehouse Dataset",
+  "seed": 4278,
+  "period": {
+    "start": "2025-01-01",
+    "end": "2025-06-30"
+  },
+  "privacy_note": "Synthetic data only. Claims and membership rows use synthetic identifiers and coarse service categories; no names, addresses, medical record numbers, exact birth dates, or PHI are included.",
+  "source_contract": "Five CSV datasets, one JSONL event dataset, one GeoJSON spatial dataset, and one DOCX playbook document.",
+  "files": [
+    {
+      "path": "workshop_guide.pdf",
+      "rows": 12,
+      "grain": "PDF page"
+    },
+    {
+      "path": "data/raw/district_health_profile.csv",
+      "rows": 5,
+      "grain": "district"
+    },
+    {
+      "path": "data/raw/facility_provider_master.csv",
+      "rows": 10,
+      "grain": "facility-provider"
+    },
+    {
+      "path": "data/raw/facility_operations_daily.csv",
+      "rows": 1810,
+      "grain": "facility-day with quality-event measures"
+    },
+    {
+      "path": "data/raw/population_health_weekly.csv",
+      "rows": 780,
+      "grain": "district-week-age group with surveillance measures"
+    },
+    {
+      "path": "data/raw/claims_membership_disbursement.csv",
+      "rows": 1400,
+      "grain": "synthetic claim transaction with membership and disbursement attributes"
+    },
+    {
+      "path": "data/raw_json/facility_capacity_events.jsonl",
+      "rows": 80,
+      "grain": "facility capacity event"
+    },
+    {
+      "path": "data/raw_spatial/healthcare_service_areas.geojson",
+      "rows": 25,
+      "grain": "combined district, facility, and catchment spatial feature"
+    },
+    {
+      "path": "documents/MPHA_Winter_Respiratory_Response_Playbook.docx",
+      "rows": 13,
+      "grain": "document page minimum"
+    },
+    {
+      "path": "data/curated/dim_facility.csv",
+      "rows": 10,
+      "grain": "facility"
+    },
+    {
+      "path": "data/curated/fact_facility_day.csv",
+      "rows": 1810,
+      "grain": "facility-day"
+    },
+    {
+      "path": "data/curated/fact_immunization_week.csv",
+      "rows": 780,
+      "grain": "district-week-age group"
+    },
+    {
+      "path": "data/curated/fact_district_health_week.csv",
+      "rows": 130,
+      "grain": "district-week"
+    },
+    {
+      "path": "data/gold/gold_facility_access_daily.csv",
+      "rows": 1810,
+      "grain": "facility-day"
+    },
+    {
+      "path": "data/gold/gold_district_public_health_weekly.csv",
+      "rows": 130,
+      "grain": "district-week"
+    },
+    {
+      "path": "data/gold/gold_immunization_equity_weekly.csv",
+      "rows": 780,
+      "grain": "district-week-age group"
+    },
+    {
+      "path": "data/gold/gold_quality_event_summary.csv",
+      "rows": 93,
+      "grain": "facility-severity-event type"
+    },
+    {
+      "path": "data/gold/gold_executive_overview.csv",
+      "rows": 5,
+      "grain": "district"
+    },
+    {
+      "path": "data/gold/gold_spatial_access_insights.csv",
+      "rows": 5,
+      "grain": "district spatial access insight"
+    },
+    {
+      "path": "data/gold/gold_capacity_event_latest.csv",
+      "rows": 80,
+      "grain": "facility capacity event"
+    },
+    {
+      "path": "data/gold/gold_document_chat_context.csv",
+      "rows": 12,
+      "grain": "document chunk serving context"
+    },
+    {
+      "path": "data/gold/gold_stream_wait_time_minute.csv",
+      "rows": 120,
+      "grain": "streaming wait-time minute"
+    },
+    {
+      "path": "data/gold/gold_claims_summary.csv",
+      "rows": 622,
+      "grain": "district-month-program-claim type summary"
+    },
+    {
+      "path": "data/gold/gold_disbursement_summary.csv",
+      "rows": 291,
+      "grain": "district-month-program-payee type summary"
+    },
+    {
+      "path": "data/gold/gold_membership_summary.csv",
+      "rows": 305,
+      "grain": "district-program-member segment snapshot"
+    },
+    {
+      "path": "data/gold/gold_provider_accreditation_summary.csv",
+      "rows": 10,
+      "grain": "facility-provider accreditation snapshot"
+    },
+    {
+      "path": "data/gold_dimensional/dim_date.csv",
+      "rows": 874,
+      "grain": "shared date dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_district.csv",
+      "rows": 5,
+      "grain": "district dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_facility.csv",
+      "rows": 10,
+      "grain": "facility dimension snowflaked to district"
+    },
+    {
+      "path": "data/gold_dimensional/dim_age_group.csv",
+      "rows": 6,
+      "grain": "age group dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_quality_event.csv",
+      "rows": 14,
+      "grain": "quality event type and severity dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_pressure_band.csv",
+      "rows": 3,
+      "grain": "pressure band dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_document_chunk.csv",
+      "rows": 12,
+      "grain": "document chunk dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_coverage_program.csv",
+      "rows": 5,
+      "grain": "coverage program dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_claim_type.csv",
+      "rows": 6,
+      "grain": "claim type dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_member_segment.csv",
+      "rows": 20,
+      "grain": "member segment dimension"
+    },
+    {
+      "path": "data/gold_dimensional/dim_accreditation_status.csv",
+      "rows": 8,
+      "grain": "accreditation status dimension"
+    },
+    {
+      "path": "data/gold_dimensional/fact_facility_access_daily.csv",
+      "rows": 1810,
+      "grain": "facility-day fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_district_public_health_weekly.csv",
+      "rows": 130,
+      "grain": "district-week fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_immunization_equity_weekly.csv",
+      "rows": 780,
+      "grain": "district-week-age group fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_quality_event_summary.csv",
+      "rows": 93,
+      "grain": "facility-quality event fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_spatial_access_insight.csv",
+      "rows": 5,
+      "grain": "district spatial insight fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_capacity_event.csv",
+      "rows": 80,
+      "grain": "capacity event fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_stream_wait_time_minute.csv",
+      "rows": 120,
+      "grain": "streaming wait-time fact"
+    },
+    {
+      "path": "data/gold_dimensional/bridge_chat_topic_chunk.csv",
+      "rows": 6,
+      "grain": "chat topic to document chunk bridge"
+    },
+    {
+      "path": "data/gold_dimensional/fact_claims_monthly.csv",
+      "rows": 622,
+      "grain": "monthly claims fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_disbursement_monthly.csv",
+      "rows": 291,
+      "grain": "monthly disbursement fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_membership_snapshot.csv",
+      "rows": 305,
+      "grain": "membership snapshot fact"
+    },
+    {
+      "path": "data/gold_dimensional/fact_provider_accreditation.csv",
+      "rows": 10,
+      "grain": "provider accreditation fact"
+    },
+    {
+      "path": "data/streaming/wait_time_events.jsonl",
+      "rows": 120,
+      "grain": "streaming wait-time event"
+    }
+  ]
+}

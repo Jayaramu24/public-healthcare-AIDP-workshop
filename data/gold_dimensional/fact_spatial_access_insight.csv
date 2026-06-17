@@ -1,0 +1,6 @@
+district_key,pressure_band_key,facility_count,residents_per_facility,avg_distance_to_facility_km,public_health_pressure_index,high_pressure_facilities,spatial_business_insight
+1,1,2,92000.0,1.37,32.3,None,Maintain standard catchment monitoring
+2,2,2,110750.0,1.2,41.0,None,Prioritize mobile clinic sessions and outreach routing
+3,2,2,156400.0,0.94,37.4,None,Prioritize mobile clinic sessions and outreach routing
+4,1,2,84700.0,1.75,34.3,None,Maintain standard catchment monitoring
+5,1,2,71850.0,1.64,33.6,None,Maintain standard catchment monitoring

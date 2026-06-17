@@ -1,0 +1,6 @@
+district_id,district_name,population,facility_count,residents_per_facility,avg_distance_to_facility_km,public_health_pressure_index,high_pressure_facilities,spatial_business_insight
+D01,North Borough,184000,2,92000.0,1.37,32.3,None,Maintain standard catchment monitoring
+D02,East River,221500,2,110750.0,1.2,41.0,None,Prioritize mobile clinic sessions and outreach routing
+D03,Central City,312800,2,156400.0,0.94,37.4,None,Prioritize mobile clinic sessions and outreach routing
+D04,South Lakes,169400,2,84700.0,1.75,34.3,None,Maintain standard catchment monitoring
+D05,West Hills,143700,2,71850.0,1.64,33.6,None,Maintain standard catchment monitoring
