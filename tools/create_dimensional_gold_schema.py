@@ -142,14 +142,15 @@ def main() -> None:
     dim_facility = []
     for idx, row in enumerate(sorted(raw_facilities, key=lambda r: r["facility_id"]), start=1):
         facility_key_by_id[row["facility_id"]] = idx
+        district_name = next(item["district_name"] for item in raw_community if item["district_id"] == row["district_id"])
         dim_facility.append(
             {
                 "facility_key": idx,
                 "facility_id": row["facility_id"],
                 "facility_name": row["facility_name"],
                 "facility_type": row["facility_type"],
-                "district_key": district_key_by_id[row["district_id"]],
                 "district_id": row["district_id"],
+                "district_name": district_name,
                 "latitude": row["latitude"],
                 "longitude": row["longitude"],
                 "licensed_beds": row["licensed_beds"],
@@ -293,6 +294,7 @@ def main() -> None:
             {
                 "date_key": date_key(row["service_date"]),
                 "facility_key": facility_key_by_id[row["facility_id"]],
+                "district_key": district_key_by_id[row["district_id"]],
                 "pressure_band_key": pressure_band_key(float(row["access_risk_score"])),
                 "outpatient_visits": row["outpatient_visits"],
                 "emergency_arrivals": row["emergency_arrivals"],
@@ -354,6 +356,7 @@ def main() -> None:
         fact_quality_event_summary.append(
             {
                 "facility_key": facility_key_by_id[row["facility_id"]],
+                "district_key": district_key_by_id[row["district_id"]],
                 "quality_event_key": quality_key_by_combo[(row["event_type"], row["severity"])],
                 "event_count": row["event_count"],
                 "avg_days_to_close": row["avg_days_to_close"],
@@ -384,6 +387,7 @@ def main() -> None:
                 "event_date_key": date_key(row["event_timestamp"]),
                 "event_timestamp": row["event_timestamp"],
                 "facility_key": facility_key_by_id[row["facility_id"]],
+                "district_key": district_key_by_id[row["district_id"]],
                 "pressure_band_key": pressure_band_key_from_label(row["capacity_pressure_band"]),
                 "current_occupancy_rate": row["current_occupancy_rate"],
                 "waiting_room_count": row["waiting_room_count"],
@@ -401,6 +405,7 @@ def main() -> None:
                 "event_date_key": date_key(row["event_minute"]),
                 "event_minute": row["event_minute"],
                 "facility_key": facility_key_by_id[row["facility_id"]],
+                "district_key": district_key_by_id[row["district_id"]],
                 "pressure_band_key": pressure_band_key_from_label(row["pressure_band"]),
                 "avg_wait_minutes": row["avg_wait_minutes"],
                 "max_wait_minutes": row["max_wait_minutes"],
@@ -488,6 +493,7 @@ def main() -> None:
                 "last_survey_date_key": date_key(row["last_survey_date"]),
                 "expiry_date_key": date_key(row["expiry_date"]),
                 "facility_key": facility_key_by_id[row["facility_id"]],
+                "district_key": district_key_by_id[row["district_id"]],
                 "accreditation_status_key": accreditation_status_key_by_combo[
                     (
                         row["accreditation_body"],

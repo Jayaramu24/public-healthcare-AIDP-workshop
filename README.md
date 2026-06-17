@@ -45,7 +45,7 @@ Then open `http://127.0.0.1:8765/`.
 - A professionally formatted PDF guide for offline delivery
 - A compact raw source set with healthcare-relevant business flavor
 - Separate Bronze, Silver, and Gold Spark notebooks for AIDP
-- A Gold dimensional model designed for AI Lakehouse and OAC
+- A Gold star schema designed for AI Lakehouse and OAC
 - Interactive dashboard mockups, spatial insight examples, and vector-chat patterns
 - Optional extension labs for GoldenGate and Kafka-compatible streaming
 
@@ -87,7 +87,7 @@ The workshop uses a classic medallion progression with Oracle AI Data Platform d
 - Use shared dimensions and facts for OAC and AI workloads
 - Support executive, operational, spatial, and document-assisted analytics
 
-The recommended Gold layer is a dimensional star / snowflake design with shared conformed dimensions and business-serving views:
+The recommended Gold layer is a dimensional star schema with shared conformed dimensions and business-serving views:
 
 - `dim_date`
 - `dim_district`
@@ -100,6 +100,8 @@ The recommended Gold layer is a dimensional star / snowflake design with shared 
 - `fact_disbursement`
 - `fact_operations`
 - `fact_population_health`
+
+Facility-grain facts also carry `district_key`, so OAC joins directly from facts to both `dim_facility` and `dim_district` without dimension-to-dimension dependencies.
 
 Reference material:
 

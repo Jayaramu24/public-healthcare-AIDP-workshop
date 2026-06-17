@@ -1,7 +1,7 @@
 -- Public Healthcare AIDP Workshop
 -- Flat AI Lakehouse Gold mart setup
 --
--- NOTE: The recommended workshop Gold model is the dimensional snowflake
+-- NOTE: The recommended workshop Gold model is the dimensional star
 -- schema in sql/create_ai_lakehouse_dimensional_gold_schema.sql. This file is
 -- retained as a simpler flat-mart compatibility path for validation and
 -- comparison.

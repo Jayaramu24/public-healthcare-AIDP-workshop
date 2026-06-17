@@ -151,7 +151,7 @@
     {
       "path": "data/gold_dimensional/dim_facility.csv",
       "rows": 10,
-      "grain": "facility dimension snowflaked to district"
+      "grain": "facility dimension for direct fact-to-dimension star joins"
     },
     {
       "path": "data/gold_dimensional/dim_age_group.csv",

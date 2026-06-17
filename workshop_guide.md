@@ -4,7 +4,7 @@
 
 Public healthcare organizations need to balance service access, clinical capacity, staffing, immunization campaigns, claims adjudication, public-program disbursement, membership eligibility, provider accreditation, and emerging public-health risks. In this workshop, you will build a lakehouse analytics pipeline for Metro Public Health Authority (MPHA), a fictional public healthcare network serving five districts through hospitals, urgent-care centers, and community clinics.
 
-You will load synthetic healthcare operations data, refine it through a medallion architecture using Spark and Delta Lake in Oracle AI Data Platform, serve the Gold business layer through a dimensional snowflake schema in Autonomous AI Lakehouse, and build dashboards in Oracle Analytics Cloud (OAC). The final dashboard helps leaders identify where service pressure is rising, where access is uneven, and which facilities or districts need operational intervention.
+You will load synthetic healthcare operations data, refine it through a medallion architecture using Spark and Delta Lake in Oracle AI Data Platform, serve the Gold business layer through a dimensional star schema in Autonomous AI Lakehouse, and build dashboards in Oracle Analytics Cloud (OAC). The final dashboard helps leaders identify where service pressure is rising, where access is uneven, and which facilities or districts need operational intervention.
 
 ## Business Use Case
 
@@ -43,7 +43,7 @@ MPHA leadership wants a daily and weekly decision-support view that answers:
 1. Raw CSV, JSONL, GeoJSON, document, and optional streaming sample files are uploaded to object storage as the immutable landing zone.
 2. AI Data Platform creates the **Bronze** layer as schema-preserving Delta tables with ingestion metadata.
 3. AI Data Platform creates the **Silver** layer as conformed Delta tables with typed fields, quality rules, reference joins, spatial feature extraction, document chunk metadata, and derived operational flags.
-4. Autonomous AI Lakehouse hosts the **Gold** layer as a snowflake / fact constellation schema with shared dimensions, business facts, spatial planning insights, document-chat context, real-time event summaries, and OAC-ready views.
+4. Autonomous AI Lakehouse hosts the **Gold** layer as a star schema with shared dimensions, business facts, spatial planning insights, document-chat context, real-time event summaries, and OAC-ready views.
 5. OAC connects to the Gold layer and presents dashboard tabs, filters, spatial insights, and grounded chat with data and documents for public-health leaders.
 
 ## Lab 1 - Create a Healthcare Lakehouse with AI Data Platform
@@ -135,7 +135,7 @@ Silver is the conformed analytics layer. It applies business quality rules while
 
 ### Gold Layer in Autonomous AI Lakehouse
 
-Gold is the business serving layer. The recommended model is a dimensional snowflake schema in Autonomous AI Lakehouse so OAC connects to shared, reusable dimensions and facts rather than notebook outputs or isolated flat files.
+Gold is the business serving layer. The recommended model is a dimensional star schema in Autonomous AI Lakehouse so OAC connects to shared, reusable dimensions and facts rather than notebook outputs or isolated flat files.
 
 The package also includes flat Gold mart samples in `data/gold/` for quick validation, but the workshop execution path should use `data/gold_dimensional/` and `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
 
@@ -145,7 +145,7 @@ The package also includes flat Gold mart samples in `data/gold/` for quick valid
 | --- | --- | --- |
 | `mpha_dim_date` | Date | Shared service date, week start, month, quarter, and year attributes. |
 | `mpha_dim_district` | District | District population, deprivation, elderly share, chronic-condition share, and income context. |
-| `mpha_dim_facility` | Facility | Facility master data, coordinates, licensed beds, wait targets, and `district_key`. |
+| `mpha_dim_facility` | Facility | Facility master data, district identifiers, coordinates, licensed beds, and wait targets. |
 | `mpha_dim_age_group` | Age band | Immunization age-group sorting and labels. |
 | `mpha_dim_quality_event` | Event type and severity | Conformed quality event category and severity attributes. |
 | `mpha_dim_pressure_band` | Pressure band | Watch, Medium, and High operating bands reused by multiple facts. |
@@ -159,20 +159,20 @@ The package also includes flat Gold mart samples in `data/gold/` for quick valid
 
 | Fact | Grain | Main dimensions | Business purpose |
 | --- | --- | --- | --- |
-| `mpha_fact_facility_access_daily` | Facility-day | Date, Facility, Pressure Band | Daily access, wait, capacity, staffing, satisfaction, and access risk. |
+| `mpha_fact_facility_access_daily` | Facility-day | Date, Facility, District, Pressure Band | Daily access, wait, capacity, staffing, satisfaction, and access risk. |
 | `mpha_fact_district_public_health_weekly` | District-week | Date, District, Pressure Band | Public-health pressure, immunization completion, no-show, positivity, and respiratory ED demand. |
 | `mpha_fact_immunization_equity_weekly` | District-week-age group | Date, District, Age Group | Campaign reach and equity analysis by district and age group. |
-| `mpha_fact_quality_event_summary` | Facility-event type-severity | Facility, Quality Event | Service-quality volume, closure time, SLA breach, and readmission indicators. |
+| `mpha_fact_quality_event_summary` | Facility-event type-severity | Facility, District, Quality Event | Service-quality volume, closure time, SLA breach, and readmission indicators. |
 | `mpha_fact_spatial_access_insight` | District | District, Pressure Band | Residents per facility, distance, pressure, and mobile-clinic planning recommendations. |
-| `mpha_fact_capacity_event` | Facility-event | Date, Facility, Pressure Band | JSON capacity-event signals for real-time operations views. |
-| `mpha_fact_stream_wait_time_minute` | Facility-minute | Date, Facility, Pressure Band | Optional Kafka/AIDP streaming wait-time metrics. |
+| `mpha_fact_capacity_event` | Facility-event | Date, Facility, District, Pressure Band | JSON capacity-event signals for real-time operations views. |
+| `mpha_fact_stream_wait_time_minute` | Facility-minute | Date, Facility, District, Pressure Band | Optional Kafka/AIDP streaming wait-time metrics. |
 | `mpha_bridge_chat_topic_chunk` | Question-chunk | Document Chunk | Bridge table linking chat prompts to retrieved playbook chunks. |
 | `mpha_fact_claims_monthly` | District-month-program-claim type | Date, District, Coverage Program, Claim Type | Claims volume, approval, denial, pending, payment yield, and processing time. |
 | `mpha_fact_disbursement_monthly` | District-month-program-payee type | Date, District, Coverage Program | Public-program disbursement count, amount, pending, failed, and payment-cycle metrics. |
 | `mpha_fact_membership_snapshot` | District-program-member segment snapshot | Date, District, Coverage Program, Member Segment | Membership, active eligibility, renewals due, suspended members, and high-risk members. |
-| `mpha_fact_provider_accreditation` | Facility-provider accreditation snapshot | Date, Facility, Accreditation Status, Pressure Band | Accreditation score, corrective actions, days to expiry, and accreditation risk band. |
+| `mpha_fact_provider_accreditation` | Facility-provider accreditation snapshot | Date, Facility, District, Accreditation Status, Pressure Band | Accreditation score, corrective actions, days to expiry, and accreditation risk band. |
 
-This is a snowflake because facility attributes roll up to district through `mpha_dim_facility.district_key`, while district-grain facts join directly to `mpha_dim_district`.
+This is a star schema because the fact tables carry the foreign keys needed for analysis directly. Facility-grain facts join straight to both `mpha_dim_facility` and `mpha_dim_district`, while district-grain facts join directly to `mpha_dim_district`.
 
 | Flat compatibility object | Grain | Business purpose |
 | --- | --- | --- |

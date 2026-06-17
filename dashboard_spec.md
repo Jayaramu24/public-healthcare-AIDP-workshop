@@ -44,16 +44,24 @@ Connect OAC to Autonomous AI Lakehouse and expose the recommended dimensional Go
 
 - `MPHA_FACT_FACILITY_ACCESS_DAILY.date_key` to `MPHA_DIM_DATE.date_key`
 - `MPHA_FACT_FACILITY_ACCESS_DAILY.facility_key` to `MPHA_DIM_FACILITY.facility_key`
-- `MPHA_DIM_FACILITY.district_key` to `MPHA_DIM_DISTRICT.district_key`
+- `MPHA_FACT_FACILITY_ACCESS_DAILY.district_key` to `MPHA_DIM_DISTRICT.district_key`
 - `MPHA_FACT_DISTRICT_PUBLIC_HEALTH_WEEKLY.district_key` to `MPHA_DIM_DISTRICT.district_key`
 - `MPHA_FACT_IMMUNIZATION_EQUITY_WEEKLY.age_group_key` to `MPHA_DIM_AGE_GROUP.age_group_key`
+- `MPHA_FACT_QUALITY_EVENT_SUMMARY.facility_key` to `MPHA_DIM_FACILITY.facility_key`
+- `MPHA_FACT_QUALITY_EVENT_SUMMARY.district_key` to `MPHA_DIM_DISTRICT.district_key`
 - `MPHA_FACT_QUALITY_EVENT_SUMMARY.quality_event_key` to `MPHA_DIM_QUALITY_EVENT.quality_event_key`
 - `MPHA_FACT_SPATIAL_ACCESS_INSIGHT.pressure_band_key` to `MPHA_DIM_PRESSURE_BAND.pressure_band_key`
+- `MPHA_FACT_CAPACITY_EVENT.facility_key` to `MPHA_DIM_FACILITY.facility_key`
+- `MPHA_FACT_CAPACITY_EVENT.district_key` to `MPHA_DIM_DISTRICT.district_key`
+- `MPHA_FACT_STREAM_WAIT_TIME_MINUTE.facility_key` to `MPHA_DIM_FACILITY.facility_key`
+- `MPHA_FACT_STREAM_WAIT_TIME_MINUTE.district_key` to `MPHA_DIM_DISTRICT.district_key`
 - `MPHA_BRIDGE_CHAT_TOPIC_CHUNK.document_chunk_key` to `MPHA_DIM_DOCUMENT_CHUNK.document_chunk_key`
 - `MPHA_FACT_CLAIMS_MONTHLY.program_key` to `MPHA_DIM_COVERAGE_PROGRAM.program_key`
 - `MPHA_FACT_CLAIMS_MONTHLY.claim_type_key` to `MPHA_DIM_CLAIM_TYPE.claim_type_key`
 - `MPHA_FACT_DISBURSEMENT_MONTHLY.program_key` to `MPHA_DIM_COVERAGE_PROGRAM.program_key`
 - `MPHA_FACT_MEMBERSHIP_SNAPSHOT.member_segment_key` to `MPHA_DIM_MEMBER_SEGMENT.member_segment_key`
+- `MPHA_FACT_PROVIDER_ACCREDITATION.facility_key` to `MPHA_DIM_FACILITY.facility_key`
+- `MPHA_FACT_PROVIDER_ACCREDITATION.district_key` to `MPHA_DIM_DISTRICT.district_key`
 - `MPHA_FACT_PROVIDER_ACCREDITATION.accreditation_status_key` to `MPHA_DIM_ACCREDITATION_STATUS.accreditation_status_key`
 - `MPHA_FACT_PROVIDER_ACCREDITATION.pressure_band_key` to `MPHA_DIM_PRESSURE_BAND.pressure_band_key`
 
@@ -63,7 +71,7 @@ For dashboard authors who prefer one dataset per canvas, use the `MPHA_OAC_STAR_
 
 Purpose: Give public-health leadership a quick view of operational pressure.
 
-Wireframe style: Use the interactive OAC-style layout shown in `index.html#dashboards`: dark top bar, horizontal dashboard tabs, left filter rail, KPI row, chart panels, action table, spatial map view, document-chat panel, and generative insight panel.
+Wireframe style: Use the interactive OAC-style layout shown in `index.html#dashboards`: dark top bar, horizontal dashboard tabs, top filter strip, KPI row, chart panels, action table, spatial map view, and a right-side Assistant rail with the prompt bar anchored at the bottom.
 
 Visuals:
 

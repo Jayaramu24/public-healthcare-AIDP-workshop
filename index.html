@@ -1422,6 +1422,703 @@
           padding: 128px 16px 0;
         }
       }
+
+      .oac-shell {
+        border-radius: 6px;
+        background: #f3f4f6;
+        height: 980px;
+      }
+
+      .oac-topbar {
+        justify-content: space-between;
+        min-height: 52px;
+        background: #2f3136;
+      }
+
+      .oac-nav,
+      .oac-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .oac-title-block {
+        display: grid;
+        gap: 2px;
+      }
+
+      .oac-title {
+        font-size: 0.95rem;
+        font-weight: 760;
+      }
+
+      .oac-status {
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.72rem;
+      }
+
+      .top-icon,
+      .edit-button {
+        min-width: 32px;
+        min-height: 32px;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.84);
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .top-icon:hover,
+      .edit-button:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .edit-button {
+        min-width: 52px;
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+
+      .oac-body {
+        grid-template-columns: minmax(0, 1fr) 430px;
+        height: calc(980px - 52px);
+        min-height: 0;
+      }
+
+      .oac-main {
+        padding: 0 0 22px;
+        background: #f6f7f9;
+        overflow: auto;
+      }
+
+      .oac-filter-hint {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 40px;
+        padding: 0 14px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #ffffff;
+        color: #667085;
+        font-size: 0.86rem;
+      }
+
+      .oac-filter-hint span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        border: 1px solid #98a2b3;
+        border-radius: 999px;
+        color: #344054;
+        font-size: 0.9rem;
+        line-height: 1;
+      }
+
+      .oac-filter-strip {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #ffffff;
+      }
+
+      .filter-box {
+        margin: 0;
+        padding: 10px 12px;
+        border: 1px solid #d9dee6;
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .filter-box label,
+      .filter-box span {
+        margin-bottom: 7px;
+        color: #344054;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .filter-box select,
+      .filter-box input {
+        min-height: 34px;
+        border-color: #d0d5dd;
+      }
+
+      .filter-action-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .filter-reset {
+        min-height: 34px;
+      }
+
+      .dashboard-tabs {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+        margin: 0;
+        padding: 0 14px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #ffffff;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        scroll-padding-inline: 14px;
+        white-space: nowrap;
+      }
+
+      .dashboard-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .dashboard-tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        background: transparent;
+        color: #475467;
+        font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1.15;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .dashboard-tab.active {
+        border-bottom-color: #1f2937;
+        background: transparent;
+        color: #1f2937;
+      }
+
+      .dashboard-tab:hover {
+        background: #f8fafc;
+      }
+
+      .oac-head,
+      .wire-kpis,
+      .dashboard-panel {
+        margin-left: 14px;
+        margin-right: 14px;
+      }
+
+      .oac-head {
+        margin-top: 14px;
+        margin-bottom: 14px;
+      }
+
+      .wire-kpis {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+      }
+
+      .wire-card {
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(16, 24, 40, 0.06);
+      }
+
+      .wire-kpi {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-height: 94px;
+        border-left-width: 0;
+        border-top: 3px solid var(--blue);
+      }
+
+      .wire-kpi.red {
+        border-top-color: var(--oracle);
+      }
+
+      .wire-kpi.green {
+        border-top-color: var(--mint);
+      }
+
+      .wire-kpi.amber {
+        border-top-color: var(--amber);
+      }
+
+      .wire-kpi.purple {
+        border-top-color: #6f42c1;
+      }
+
+      .wire-kpi.teal {
+        border-top-color: #0f766e;
+      }
+
+      .wire-grid-3 {
+        grid-template-columns: 1.2fr 1fr 0.9fr;
+      }
+
+      .wire-grid-2 {
+        grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+      }
+
+      .wire-panel {
+        display: flex;
+        flex-direction: column;
+        min-height: 280px;
+      }
+
+      .wire-kpi .label {
+        min-height: 2rem;
+        line-height: 1.3;
+      }
+
+      .wire-kpi .value {
+        line-height: 1.1;
+      }
+
+      .wire-kpi .delta {
+        min-height: 1rem;
+        line-height: 1.3;
+      }
+
+      .wire-panel h4 {
+        min-height: 2.5rem;
+        line-height: 1.3;
+      }
+
+      .wire-hint {
+        min-height: 2rem;
+        line-height: 1.35;
+      }
+
+      .bar-chart {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(58px, 1fr));
+        align-items: end;
+        gap: 10px;
+        padding: 14px 14px 12px;
+      }
+
+      .chart-bar {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 8px;
+        height: 100%;
+        min-width: 0;
+      }
+
+      .chart-bar-value {
+        color: #344054;
+        font-size: 0.72rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+      }
+
+      .chart-bar-figure {
+        display: block;
+        width: min(42px, 100%);
+        min-height: 10px;
+        margin: 0 auto;
+        border-radius: 6px 6px 0 0;
+        box-shadow: inset 0 -1px 0 rgba(16, 24, 40, 0.1);
+      }
+
+      .chart-bar-label {
+        color: #667085;
+        font-size: 0.68rem;
+        line-height: 1.25;
+        text-align: center;
+        word-break: break-word;
+        text-wrap: balance;
+      }
+
+      .donut-chart {
+        display: grid;
+        grid-template-columns: 138px minmax(0, 1fr);
+        align-items: center;
+        gap: 18px;
+        padding: 16px 18px;
+      }
+
+      .donut-chart::before {
+        left: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .donut-chart::after {
+        left: 51px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .donut-legend {
+        position: static;
+        right: auto;
+        left: auto;
+        top: auto;
+        align-self: center;
+      }
+
+      .donut-legend span {
+        min-height: 20px;
+        line-height: 1.3;
+      }
+
+      .oac-assistant {
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #e5e7eb;
+        background: #f7f5f2;
+        min-height: 0;
+      }
+
+      .assistant-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 52px;
+        padding: 0 16px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #f7f5f2;
+      }
+
+      .assistant-tabs-top,
+      .assistant-tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .assistant-tab {
+        min-height: 40px;
+        padding: 0 2px;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        background: transparent;
+        color: #475467;
+        font-size: 0.83rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .assistant-tab.active {
+        border-bottom-color: #1f2937;
+        color: #1f2937;
+      }
+
+      .assistant-body {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        padding: 24px 18px 14px;
+        overflow: hidden;
+      }
+
+      .assistant-pattern {
+        position: absolute;
+        inset: 18px 18px auto 18px;
+        height: 62%;
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at 18px 18px, rgba(210, 207, 200, 0.55) 0 1px, transparent 1px 100%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(247, 245, 242, 0));
+        background-size: 18px 18px, 100% 100%;
+        opacity: 0.7;
+      }
+
+      .assistant-card {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        padding: 16px;
+        border: 1px solid #ebe4dc;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06);
+      }
+
+      .assistant-label {
+        margin-bottom: 10px;
+        color: #667085;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .assistant-card h4 {
+        margin: 0 0 8px;
+        font-size: 0.98rem;
+      }
+
+      .assistant-card p {
+        margin: 0 0 12px;
+        color: #475467;
+        font-size: 0.86rem;
+      }
+
+      .assistant-metrics li {
+        font-size: 0.76rem;
+      }
+
+      .assistant-suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 16px 12px;
+      }
+
+      .assistant-input-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        padding: 0 16px 16px;
+      }
+
+      .assistant-input-row input {
+        min-width: 0;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 1px solid #98b7de;
+        border-radius: 8px;
+        background: #ffffff;
+        font: inherit;
+      }
+
+      .assistant-input-row button {
+        min-height: 44px;
+        min-width: 72px;
+        border: 1px solid #98b7de;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #344054;
+        font-weight: 760;
+        cursor: pointer;
+      }
+
+      .map-canvas {
+        min-height: 318px;
+        border: 1px solid #eef1f4;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #fbfdff, #f5f7fb);
+        padding: 12px;
+      }
+
+      .map-svg {
+        width: 100%;
+        height: 250px;
+        display: block;
+      }
+
+      .district-shape {
+        stroke: #ffffff;
+        stroke-width: 2.5;
+        cursor: pointer;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .district-shape.active {
+        stroke: #1f2937;
+        stroke-width: 3;
+      }
+
+      .district-label {
+        fill: #243b35;
+        font-size: 12px;
+        font-weight: 700;
+        pointer-events: none;
+      }
+
+      .district-sub {
+        fill: #475467;
+        font-size: 10px;
+        pointer-events: none;
+      }
+
+      .facility-marker {
+        fill: #102a43;
+        stroke: #ffffff;
+        stroke-width: 2;
+      }
+
+      .mobile-marker {
+        fill: #c74634;
+        stroke: #ffffff;
+        stroke-width: 3;
+      }
+
+      .map-legend-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+        color: #475467;
+        font-size: 0.72rem;
+      }
+
+      .map-legend-row span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .map-legend-swatch {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+      }
+
+      @media (max-width: 1280px) {
+        .oac-shell {
+          height: auto;
+        }
+
+        .oac-body {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .oac-assistant {
+          min-height: 420px;
+          border-left: 0;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        .wire-kpis {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 980px) {
+        .oac-filter-strip {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dashboard-tabs {
+          padding: 0 10px;
+        }
+
+        .dashboard-tab {
+          padding: 0 12px;
+          font-size: 0.78rem;
+        }
+
+        .wire-grid-3,
+        .wire-grid-2 {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .wire-panel h4,
+        .wire-hint {
+          min-height: 0;
+        }
+
+        .bar-chart {
+          grid-auto-flow: column;
+          grid-auto-columns: minmax(44px, 1fr);
+          grid-template-columns: none;
+          overflow-x: auto;
+          overflow-y: hidden;
+          justify-items: center;
+          padding: 14px 12px 10px;
+          scrollbar-width: none;
+        }
+
+        .bar-chart::-webkit-scrollbar {
+          display: none;
+        }
+
+        .donut-chart {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          gap: 8px;
+          padding: 18px 16px 16px;
+        }
+
+        .donut-chart::before {
+          left: 50%;
+          top: 18px;
+          transform: translateX(-50%);
+        }
+
+        .donut-chart::after {
+          left: 50%;
+          top: 45px;
+          transform: translateX(-50%);
+        }
+
+        .donut-legend {
+          width: 100%;
+          margin-top: 126px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .oac-topbar {
+          padding: 12px;
+        }
+
+        .oac-nav,
+        .oac-toolbar {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .oac-title-block {
+          flex: 1;
+        }
+
+        .oac-filter-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .wire-kpis {
+          grid-template-columns: 1fr;
+        }
+
+        .oac-head {
+          flex-direction: column;
+        }
+
+        .wire-kpi .label,
+        .wire-kpi .delta {
+          min-height: 0;
+        }
+
+        .wire-panel h4 {
+          font-size: 0.94rem;
+        }
+
+        .wire-hint,
+        .chart-bar-label {
+          font-size: 0.74rem;
+        }
+
+        .assistant-suggestions,
+        .assistant-input-row {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .map-canvas {
+          min-height: 286px;
+        }
+
+        .map-svg {
+          height: 220px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1512,13 +2209,13 @@
             <h2>Medallion architecture from raw data to business insights.</h2>
             <p class="lead">
               Raw files land unchanged, AI Data Platform creates Bronze and Silver Delta layers, and the Gold business
-              layer is set up in AI Lakehouse as a dimensional snowflake schema for OAC dashboards and generative summaries.
+              layer is set up in AI Lakehouse as a dimensional star schema for OAC dashboards and generative summaries.
             </p>
           </div>
           <div class="medallion-canvas" aria-label="Detailed medallion flow diagram">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 920" role="img" aria-labelledby="medallion-title medallion-desc">
               <title id="medallion-title">Public healthcare medallion architecture</title>
-              <desc id="medallion-desc">Raw healthcare data flows into Bronze and Silver layers in AI Data Platform, then into a Gold snowflake schema in AI Lakehouse and OAC business insights.</desc>
+              <desc id="medallion-desc">Raw healthcare data flows into Bronze and Silver layers in AI Data Platform, then into a Gold star schema in AI Lakehouse and OAC business insights.</desc>
               <defs>
                 <marker id="flowArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
                   <path d="M0,0 L0,6 L9,3 z" fill="#475569"></path>
@@ -1529,7 +2226,7 @@
               </defs>
               <rect x="0" y="0" width="1560" height="920" fill="#ffffff"></rect>
               <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Public Healthcare Medallion Flow: Raw → Bronze → Silver → Gold → Insights</text>
-              <text x="36" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">AIDP owns Bronze and Silver Delta transformations for CSV, JSON, GeoJSON, and document chunks. Autonomous AI Lakehouse owns a Gold snowflake schema for OAC dashboards, spatial insight, and chat.</text>
+              <text x="36" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">AIDP owns Bronze and Silver Delta transformations for CSV, JSON, GeoJSON, and document chunks. Autonomous AI Lakehouse owns a Gold star schema for OAC dashboards, spatial insight, and chat.</text>
               <rect x="30" y="92" width="740" height="770" rx="14" fill="#f8fafc" stroke="#dbe3ec"></rect>
               <text x="46" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#475569">ORACLE AI DATA PLATFORM</text>
               <rect x="805" y="92" width="360" height="770" rx="14" fill="#fff7ed" stroke="#fed7aa"></rect>
@@ -1622,7 +2319,7 @@
                 <rect x="826" y="190" width="308" height="30" rx="11" fill="#b45309"></rect>
                 <text x="838" y="210" font-size="13" font-weight="700" fill="#ffffff">dim_date + dim_facility + dim_district</text>
                 <text x="838" y="242" font-size="11" fill="#0f172a">Shared date and location dimensions</text>
-                <text x="838" y="264" font-size="10" fill="#475569">Facility snowflakes to district through district_key</text>
+                <text x="838" y="264" font-size="10" fill="#475569">Facility-grain facts carry district_key for direct star joins</text>
                 <text x="838" y="282" font-size="10" fill="#64748b">Autonomous AI Lakehouse Gold dimensions</text>
 
                 <rect x="826" y="332" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
@@ -1683,16 +2380,16 @@
           <div class="legend-row" aria-label="Diagram legend">
             <span class="legend-pill"><span class="legend-dot" style="background:#a16207"></span>Bronze: raw Delta in AIDP</span>
             <span class="legend-pill"><span class="legend-dot" style="background:#64748b"></span>Silver: conformed Delta in AIDP</span>
-            <span class="legend-pill"><span class="legend-dot" style="background:#b45309"></span>Gold: snowflake schema in AI Lakehouse</span>
+            <span class="legend-pill"><span class="legend-dot" style="background:#b45309"></span>Gold: star schema in AI Lakehouse</span>
             <span class="legend-pill"><span class="legend-dot" style="background:#2f6fb2"></span>OAC: dashboards and insight actions</span>
           </div>
-          <div class="schema-map" aria-label="Gold snowflake schema map">
+          <div class="schema-map" aria-label="Gold star schema map">
             <div class="schema-panel">
               <h3>Shared Dimensions</h3>
               <ul>
                 <li>dim_date</li>
                 <li>dim_district</li>
-                <li>dim_facility → dim_district</li>
+                <li>dim_facility</li>
                 <li>dim_age_group</li>
                 <li>dim_pressure_band</li>
                 <li>dim_document_chunk</li>
@@ -1703,14 +2400,14 @@
             <div class="schema-panel">
               <h3>Business Facts</h3>
               <ul>
-                <li>fact_facility_access_daily</li>
+                <li>fact_facility_access_daily + district_key</li>
                 <li>fact_district_public_health_weekly</li>
                 <li>fact_immunization_equity_weekly</li>
-                <li>fact_quality_event_summary</li>
+                <li>fact_quality_event_summary + district_key</li>
                 <li>fact_spatial_access_insight</li>
-                <li>fact_capacity_event + fact_stream_wait_time_minute</li>
+                <li>fact_capacity_event + fact_stream_wait_time_minute + district_key</li>
                 <li>fact_claims_monthly + fact_disbursement_monthly</li>
-                <li>fact_membership_snapshot + fact_provider_accreditation</li>
+                <li>fact_membership_snapshot + fact_provider_accreditation + district_key</li>
               </ul>
             </div>
             <div class="schema-panel">
@@ -1754,7 +2451,7 @@
           </div>
           <div class="solution-support" aria-label="Architecture support capabilities">
             <div class="support-item">Data quality checks protect dates, rates, occupancy values, and row-count expectations.</div>
-            <div class="support-item">AIDP owns Bronze and Silver transformation logic; AI Lakehouse owns the Gold snowflake schema and OAC star views.</div>
+            <div class="support-item">AIDP owns Bronze and Silver transformation logic; AI Lakehouse owns the Gold star schema and OAC star views.</div>
             <div class="support-item">Synthetic claim and membership identifiers keep the workshop free of names, addresses, medical-record numbers, and PHI.</div>
           </div>
           <div class="architecture">
@@ -1823,7 +2520,7 @@
               <div class="lab-top">
                 <div class="lab-kicker">Lab 3 · 60 minutes</div>
                 <h3>Set up dimensional Gold and gather insights</h3>
-                <p>Create the AI Lakehouse snowflake schema, build OAC canvases, and generate leadership narratives.</p>
+                <p>Create the AI Lakehouse star schema, build OAC canvases, and generate leadership narratives.</p>
               </div>
               <ul>
                 <li>Load Gold dimensions and facts.</li>
@@ -1871,64 +2568,78 @@
           </div>
           <div class="oac-shell" aria-label="Oracle Analytics dashboard wireframe">
             <div class="oac-topbar">
-              <div class="oac-logo">ORACLE</div>
-              <div class="oac-title">MPHA Dimensional Gold Dashboards</div>
-              <div class="oac-status" id="oacStatus">Gold snowflake | Interactive preview</div>
+              <div class="oac-nav">
+                <button class="top-icon" type="button" aria-label="Back">&larr;</button>
+                <div class="oac-title-block">
+                  <div class="oac-title">PublicHealthcareAIDPWorkbook</div>
+                  <div class="oac-status" id="oacStatus">Gold star schema | Interactive preview</div>
+                </div>
+              </div>
+              <div class="oac-toolbar" aria-label="Workbook actions">
+                <button class="top-icon" type="button" aria-label="Undo">&#8630;</button>
+                <button class="top-icon" type="button" aria-label="Redo">&#8631;</button>
+                <button class="top-icon" type="button" aria-label="Comment">&#128172;</button>
+                <button class="top-icon" type="button" aria-label="Insights">&#10022;</button>
+                <button class="top-icon" type="button" aria-label="Share">&#8599;</button>
+                <button class="edit-button" type="button">Edit</button>
+              </div>
             </div>
             <div class="oac-body">
-              <aside class="oac-sidebar" aria-label="Dashboard filters">
-                <div class="filter-label">Global Filters</div>
-                <div class="filter-box">
-                  <label for="filterDistrict">District</label>
-                  <select id="filterDistrict">
-                    <option value="All">All</option>
-                    <option value="North Borough">North Borough</option>
-                    <option value="East River">East River</option>
-                    <option value="Central City">Central City</option>
-                    <option value="South Lakes">South Lakes</option>
-                    <option value="West Hills">West Hills</option>
-                  </select>
-                </div>
-                <div class="filter-box">
-                  <label for="filterFacilityType">Facility type</label>
-                  <select id="filterFacilityType">
-                    <option value="All">All</option>
-                    <option value="Hospital">Hospital</option>
-                    <option value="Urgent Care">Urgent Care</option>
-                    <option value="Community Clinic">Community Clinic</option>
-                  </select>
-                </div>
-                <div class="filter-box">
-                  <label for="filterPeriod">Period</label>
-                  <select id="filterPeriod">
-                    <option value="H1">Jan-Jun 2025</option>
-                    <option value="Jun">June 2025</option>
-                    <option value="Latest">Latest reporting week</option>
-                  </select>
-                </div>
-                <div class="filter-label">Risk Filters</div>
-                <div class="filter-box">
-                  <label for="filterPressure">Pressure band</label>
-                  <select id="filterPressure">
-                    <option value="All">All</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Watch">Watch</option>
-                  </select>
-                </div>
-                <div class="filter-box">
-                  <label for="filterAge">Age group</label>
-                  <select id="filterAge">
-                    <option value="All">All</option>
-                    <option value="0-17">0-17</option>
-                    <option value="18-49">18-49</option>
-                    <option value="50-64">50-64</option>
-                    <option value="65+">65+</option>
-                  </select>
-                </div>
-                <button class="filter-reset" id="resetFilters" type="button">Reset filters</button>
-              </aside>
               <div class="oac-main">
+                <div class="oac-filter-hint"><span>+</span> Click here to add a filter</div>
+                <div class="oac-filter-strip" aria-label="Dashboard filters">
+                  <div class="filter-box">
+                    <label for="filterDistrict">District</label>
+                    <select id="filterDistrict">
+                      <option value="All">All</option>
+                      <option value="North Borough">North Borough</option>
+                      <option value="East River">East River</option>
+                      <option value="Central City">Central City</option>
+                      <option value="South Lakes">South Lakes</option>
+                      <option value="West Hills">West Hills</option>
+                    </select>
+                  </div>
+                  <div class="filter-box">
+                    <label for="filterFacilityType">Facility Type</label>
+                    <select id="filterFacilityType">
+                      <option value="All">All</option>
+                      <option value="Hospital">Hospital</option>
+                      <option value="Urgent Care">Urgent Care</option>
+                      <option value="Community Clinic">Community Clinic</option>
+                    </select>
+                  </div>
+                  <div class="filter-box">
+                    <label for="filterPressure">Pressure Band</label>
+                    <select id="filterPressure">
+                      <option value="All">All</option>
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Watch">Watch</option>
+                    </select>
+                  </div>
+                  <div class="filter-box">
+                    <label for="filterAge">Age Group</label>
+                    <select id="filterAge">
+                      <option value="All">All</option>
+                      <option value="0-17">0-17</option>
+                      <option value="18-49">18-49</option>
+                      <option value="50-64">50-64</option>
+                      <option value="65+">65+</option>
+                    </select>
+                  </div>
+                  <div class="filter-box">
+                    <label for="filterPeriod">Reporting Period</label>
+                    <select id="filterPeriod">
+                      <option value="H1">Jan-Jun 2025</option>
+                      <option value="Jun">June 2025</option>
+                      <option value="Latest">Latest reporting week</option>
+                    </select>
+                  </div>
+                  <div class="filter-box filter-action-box">
+                    <label>&nbsp;</label>
+                    <button class="filter-reset" id="resetFilters" type="button">Reset</button>
+                  </div>
+                </div>
                 <div class="dashboard-tabs" role="tablist" aria-label="Dashboard tabs">
                   <button class="dashboard-tab active" type="button" data-tab="executive">Executive Overview</button>
                   <button class="dashboard-tab" type="button" data-tab="access">Access and Capacity</button>
@@ -1942,7 +2653,7 @@
                 <div class="oac-head">
                   <div>
                     <h3 id="dashboardTitle">Executive Overview</h3>
-                    <div class="oac-sub" id="dashboardSubtitle">Gold snowflake: shared dimensions, business facts, and OAC-ready star views.</div>
+                    <div class="oac-sub" id="dashboardSubtitle">Gold star schema: facts join directly to conformed dimensions and OAC-ready star views.</div>
                   </div>
                   <div class="oac-action" id="filterSummary">All districts | All facility types</div>
                 </div>
@@ -1970,7 +2681,12 @@
                   <div class="wire-card wire-kpi purple">
                     <div class="label">Peak Pressure Index</div>
                     <div class="value" id="kpiPressure">68.5</div>
-                    <div class="delta">District weekly mart</div>
+                    <div class="delta">District weekly fact</div>
+                  </div>
+                  <div class="wire-card wire-kpi teal">
+                    <div class="label">Providers at Risk</div>
+                    <div class="value" id="kpiAccreditation">3</div>
+                    <div class="delta">Accreditation watchlist</div>
                   </div>
                 </div>
 
@@ -2114,7 +2830,7 @@
                     <div class="wire-card wire-panel">
                       <h4>District Spatial Access Map</h4>
                       <div class="wire-hint">Raw GeoJSON to spatial access fact and district dimension</div>
-                      <div class="mini-map" id="spatialMap" aria-label="Spatial access map preview"></div>
+                      <div class="map-canvas" id="spatialMap" aria-label="Spatial access map preview"></div>
                     </div>
                     <div class="wire-card wire-panel">
                       <h4>Spatial Business Insight</h4>
@@ -2136,20 +2852,9 @@
                 <section class="dashboard-panel" data-panel="chat">
                   <div class="wire-grid-2">
                     <div class="wire-card wire-panel">
-                      <h4>Chat with Data and Documents</h4>
-                      <div class="wire-hint">Uses star views plus vectorized playbook chunks</div>
-                      <div class="chat-console">
-                        <div class="chat-question-row">
-                          <input id="chatQuestion" value="Which districts should receive mobile clinic sessions this week?" />
-                          <button id="askButton" type="button">Ask</button>
-                        </div>
-                        <div class="suggestions">
-                          <button class="suggestion-button" type="button" data-question="Which districts should receive mobile clinic sessions this week?">Mobile clinics</button>
-                          <button class="suggestion-button" type="button" data-question="What should we do when ED wait variance and occupancy rise together?">Capacity action</button>
-                          <button class="suggestion-button" type="button" data-question="How should respiratory positivity influence outreach?">Respiratory outreach</button>
-                        </div>
-                        <div class="answer-box" id="chatAnswer"></div>
-                      </div>
+                      <h4>Grounded Assistant Answer</h4>
+                      <div class="wire-hint">Prompt entry stays in the right-side assistant rail across all workbook tabs</div>
+                      <div class="answer-box" id="chatAnswer"></div>
                     </div>
                     <div class="wire-card wire-panel">
                       <h4>Retrieved Context</h4>
@@ -2222,6 +2927,37 @@
                   </div>
                 </section>
               </div>
+              <aside class="oac-assistant" aria-label="Assistant panel">
+                <div class="assistant-head">
+                  <div class="assistant-tabs-top">
+                    <button class="assistant-tab" type="button">Watchlists</button>
+                    <button class="assistant-tab active" type="button">Assistant</button>
+                  </div>
+                  <div class="assistant-tools">
+                    <button class="top-icon" type="button" aria-label="Refresh assistant">&#8635;</button>
+                    <button class="top-icon" type="button" aria-label="Expand assistant">&#9633;</button>
+                    <button class="top-icon" type="button" aria-label="Close assistant">&times;</button>
+                  </div>
+                </div>
+                <div class="assistant-body">
+                  <div class="assistant-pattern" aria-hidden="true"></div>
+                  <div class="assistant-card">
+                    <div class="assistant-label">Grounded assistant</div>
+                    <h4 id="assistantCardTitle">Welcome to the MPHA assistant</h4>
+                    <p id="assistantCardBody">Ask about access, claims, spatial planning, or the operating playbook. Responses stay grounded in Gold metrics and retrieved document chunks.</p>
+                    <ul class="metric-list assistant-metrics" id="assistantContext"></ul>
+                  </div>
+                </div>
+                <div class="assistant-suggestions">
+                  <button class="suggestion-button" type="button" data-question="Which districts should receive mobile clinic sessions this week?">Mobile clinics</button>
+                  <button class="suggestion-button" type="button" data-question="What should we do when ED wait variance and occupancy rise together?">Capacity action</button>
+                  <button class="suggestion-button" type="button" data-question="How should respiratory positivity influence outreach?">Respiratory outreach</button>
+                </div>
+                <div class="assistant-input-row">
+                  <input id="chatQuestion" value="Which districts should receive mobile clinic sessions this week?" placeholder="Ask a question..." />
+                  <button id="askButton" type="button">Ask</button>
+                </div>
+              </aside>
             </div>
           </div>
         </div>
@@ -2270,7 +3006,7 @@
               <a href="data/gold/gold_document_chat_context.csv">Open document context</a>
             </div>
             <div class="asset">
-              <h3>Gold snowflake data</h3>
+              <h3>Gold star data</h3>
               <p>AI Lakehouse-ready dimensions, fact tables, and bridge tables for OAC, including payer/provider facts.</p>
               <a href="data/gold_dimensional/fact_claims_monthly.csv">Open claims fact sample</a>
             </div>
@@ -2382,6 +3118,14 @@
         { facility: "Hillcrest Urgent Care", district: "West Hills", type: "Urgent Care", status: "Accredited", score: 88.2, actions: 1, expiry: 383, band: "Medium" }
       ];
 
+      const districtMapShapes = {
+        "North Borough": { points: "74,52 182,40 236,84 214,170 104,160 62,102", label: [150, 102], facilities: [[126, 118], [188, 94]], mobile: [212, 142] },
+        "East River": { points: "244,82 360,66 432,120 410,214 292,206 226,144", label: [330, 134], facilities: [[312, 152], [376, 124]], mobile: [402, 188] },
+        "Central City": { points: "170,182 292,170 372,232 342,338 216,352 144,274", label: [254, 260], facilities: [[232, 244], [292, 278]], mobile: [318, 314] },
+        "South Lakes": { points: "104,360 246,340 296,430 228,526 96,500 70,408", label: [180, 430], facilities: [[156, 446], [226, 404]], mobile: [250, 486] },
+        "West Hills": { points: "308,352 442,332 516,414 488,526 348,526 286,430", label: [404, 430], facilities: [[374, 446], [438, 404]], mobile: [472, 484] }
+      };
+
       const immunizationAge = {
         "0-17": 0.18,
         "18-49": 0.34,
@@ -2391,11 +3135,11 @@
       };
 
       const tabMeta = {
-        executive: ["Executive Overview", "Gold snowflake: shared dimensions, business facts, and OAC-ready star views."],
-        access: ["Access and Capacity", "Facility-day fact joined to date, facility, district, and pressure-band dimensions."],
+        executive: ["Executive Overview", "Gold star schema: facts join directly to conformed dimensions and OAC-ready star views."],
+        access: ["Access and Capacity", "Facility-day fact joins directly to date, facility, district, and pressure-band dimensions."],
         immunization: ["Immunization Equity", "Immunization fact joined to date, district, and age-group dimensions."],
         surveillance: ["Surveillance and Quality", "District health and quality facts joined to conformed dimensions."],
-        spatial: ["Spatial Insights", "Raw GeoJSON becomes a spatial access fact joined to district and pressure dimensions."],
+        spatial: ["Spatial Insights", "Raw GeoJSON becomes a map-based spatial access fact joined to district and pressure dimensions."],
         chat: ["Chat with Data and Documents", "Chat bridge table links prompts to vectorized playbook chunk dimensions."],
         realtime: ["Real-Time Operations", "Optional GoldenGate and Kafka/AIDP paths for near-real-time operating signals."],
         payer: ["Claims, Disbursement, Membership & Accreditation", "Claims, disbursement, membership, and provider accreditation facts reuse shared Gold dimensions."]
@@ -2424,6 +3168,11 @@
       const fmtMoneyK = (value) => `$${Math.round(value / 1000)}K`;
       const avg = (rows, key) => rows.length ? rows.reduce((sum, row) => sum + row[key], 0) / rows.length : 0;
       const sum = (rows, key) => rows.reduce((total, row) => total + row[key], 0);
+      let assistantHasPrompt = false;
+
+      function activeTabKey() {
+        return document.querySelector(".dashboard-tab.active")?.dataset.tab || "executive";
+      }
 
       function filters() {
         return {
@@ -2475,6 +3224,33 @@
         return rows.length ? rows : fallback;
       }
 
+      function bandFill(band) {
+        if (band === "High") return "#de8b80";
+        if (band === "Medium") return "#f4c56f";
+        return "#9ed1b1";
+      }
+
+      function compactBarLabel(label) {
+        return String(label)
+          .replace("North Borough", "North")
+          .replace("East River", "East")
+          .replace("Central City", "Central")
+          .replace("South Lakes", "South")
+          .replace("West Hills", "West")
+          .replace("Community Clinic", "Clinic")
+          .replace("Urgent Care", "Urgent Care")
+          .replace("Medical Center", "Med Center")
+          .replace("Health Campus", "Health")
+          .replace("General Hospital", "General")
+          .replace("Children's Hospital", "Children's");
+      }
+
+      function formatBarMetric(key, value) {
+        if (key === "pressure" || key === "risk") return Number(value).toFixed(1);
+        if (key.endsWith("Pct")) return `${Number(value).toFixed(1)}%`;
+        return Number(value).toLocaleString();
+      }
+
       function renderBars(id, rows, key, color) {
         const chart = $(id);
         const data = rowsOrFallback(rows, districtData);
@@ -2482,21 +3258,29 @@
         chart.innerHTML = data.map((row) => {
           const height = Math.max(8, Math.round((row[key] / max) * 92));
           const label = row.district || row.facility;
-          return `<i title="${label}: ${row[key]}" style="height:${height}%; background:${color}"></i>`;
+          return `
+            <div class="chart-bar" title="${label}: ${formatBarMetric(key, row[key])}">
+              <span class="chart-bar-value">${formatBarMetric(key, row[key])}</span>
+              <i class="chart-bar-figure" style="height:${height}%; background:${color}"></i>
+              <span class="chart-bar-label">${compactBarLabel(label)}</span>
+            </div>
+          `;
         }).join("");
       }
 
       function renderKpis() {
         const dRows = filteredDistricts();
         const fRows = filteredFacilities();
+        const pRows = filteredProviders();
         const ageFactor = immunizationAge[filters().age] || 1;
         $("kpiVisits").textContent = fmtK(sum(fRows, "visits"));
         $("kpiWait").textContent = `${Math.round(avg(fRows.filter((row) => row.edWait > 0), "edWait") || 0)} min`;
         $("kpiOccupancy").textContent = sum(fRows, "highDays");
         $("kpiDoses").textContent = fmtK(sum(dRows, "doses") * ageFactor);
         $("kpiPressure").textContent = (Math.max(...rowsOrFallback(dRows, districtData).map((row) => row.pressure))).toFixed(1);
-        $("filterSummary").textContent = `${filters().district} districts | ${filters().type} facility types`;
-        $("oacStatus").textContent = `Gold snowflake | ${dRows.length} districts | ${fRows.length} facilities`;
+        $("kpiAccreditation").textContent = rowsOrFallback(pRows, providerData).filter((row) => row.band === "High").length;
+        $("filterSummary").textContent = `District: ${filters().district} | Facility: ${filters().type} | Pressure: ${filters().pressure}`;
+        $("oacStatus").textContent = `Gold star schema | ${dRows.length} districts | ${fRows.length} facilities`;
       }
 
       function renderExecutive() {
@@ -2568,13 +3352,38 @@
 
       function renderSpatial() {
         const rows = rowsOrFallback(filteredDistricts(), districtData);
-        const maxResidents = Math.max(...districtData.map((row) => row.residents));
-        $("spatialMap").innerHTML = districtData.map((row) => {
-          const active = rows.some((item) => item.district === row.district);
-          const hue = row.band === "High" ? "#ffd7d0" : row.band === "Medium" ? "#fff0c2" : "#dff3e7";
-          const opacity = active ? 1 : 0.28;
-          return `<div class="map-district" style="background:${hue}; opacity:${opacity}" title="${row.district}: ${row.spatial}"><strong>${row.district}</strong><span>${Math.round(row.residents / 1000)}K residents/facility</span></div>`;
-        }).join("");
+        const activeDistricts = new Set(rows.map((row) => row.district));
+        $("spatialMap").innerHTML = `
+          <svg class="map-svg" viewBox="0 0 560 560" role="img" aria-label="District access map">
+            ${districtData.map((row) => {
+              const shape = districtMapShapes[row.district];
+              const active = activeDistricts.has(row.district);
+              const opacity = active ? 1 : 0.24;
+              return `
+                <g data-map-district="${row.district}">
+                  <polygon class="district-shape ${active ? "active" : ""}" points="${shape.points}" fill="${bandFill(row.band)}" opacity="${opacity}"></polygon>
+                  <text class="district-label" x="${shape.label[0]}" y="${shape.label[1]}" text-anchor="middle" opacity="${opacity}">${row.district}</text>
+                  <text class="district-sub" x="${shape.label[0]}" y="${shape.label[1] + 16}" text-anchor="middle" opacity="${opacity}">${row.pressure.toFixed(1)} pressure</text>
+                  ${shape.facilities.map(([x, y]) => `<circle class="facility-marker" cx="${x}" cy="${y}" r="6" opacity="${opacity}"></circle>`).join("")}
+                  ${row.spatial.includes("Prioritize") ? `<circle class="mobile-marker" cx="${shape.mobile[0]}" cy="${shape.mobile[1]}" r="10" opacity="${opacity}"></circle>` : ""}
+                </g>
+              `;
+            }).join("")}
+          </svg>
+          <div class="map-legend-row">
+            <span><i class="map-legend-swatch" style="background:#de8b80"></i>High pressure district</span>
+            <span><i class="map-legend-swatch" style="background:#f4c56f"></i>Medium pressure district</span>
+            <span><i class="map-legend-swatch" style="background:#9ed1b1"></i>Watch district</span>
+            <span><i class="map-legend-swatch" style="background:#c74634"></i>Mobile clinic trigger</span>
+          </div>
+        `;
+        document.querySelectorAll("[data-map-district]").forEach((node) => {
+          node.addEventListener("click", () => {
+            const district = node.getAttribute("data-map-district");
+            $("filterDistrict").value = $("filterDistrict").value === district ? "All" : district;
+            renderAll();
+          });
+        });
         const lead = rows.slice().sort((a, b) => b.residents - a.residents)[0];
         $("spatialMetrics").innerHTML = [
           `<li><span>Top access constraint</span><strong>${lead.district}</strong></li>`,
@@ -2587,16 +3396,51 @@
         `).join("");
       }
 
+      function renderAssistantWelcome(activeTab) {
+        const focus = rowsOrFallback(filteredDistricts(), districtData).slice().sort((a, b) => b.pressure - a.pressure)[0];
+        const welcomeCopy = {
+          executive: "Use the assistant to turn the executive workbook into a short action summary for public-health leadership.",
+          access: "Ask which facilities need intervention first and the assistant will ground the answer in wait, occupancy, and staffing signals.",
+          immunization: "Use the assistant to compare age-group completion gaps and turn them into outreach actions.",
+          surveillance: "Ask for operational impact when respiratory positivity and service-quality signals rise together.",
+          spatial: "Ask which districts should receive mobile clinics and use the map to focus the filter context.",
+          chat: "Ask about the playbook and the assistant will combine retrieved document chunks with Gold metrics.",
+          realtime: "Ask how GoldenGate and Kafka-compatible streaming change the operating picture minute by minute.",
+          payer: "Ask about claims leakage, disbursement exceptions, renewal risk, and provider accreditation exposure."
+        };
+        $("assistantCardTitle").textContent = `${tabMeta[activeTab][0]} assistant`;
+        $("assistantCardBody").textContent = welcomeCopy[activeTab];
+        $("assistantContext").innerHTML = [
+          `<li><span>Current district focus</span><strong>${focus.district}</strong></li>`,
+          `<li><span>Pressure in view</span><strong>${focus.pressure.toFixed(1)}</strong></li>`,
+          `<li><span>Star serving model</span><strong>Facts join directly to district and facility dimensions</strong></li>`
+        ].join("");
+        $("chatAnswer").textContent = "Ask a question from the assistant rail on the right. Suggested prompts stay grounded in Gold metrics, the spatial map, and the MPHA playbook.";
+        $("retrievedContext").innerHTML = [
+          `<li><span>Prepared context</span><strong>${focus.district} district Gold metrics</strong></li>`,
+          `<li><span>Prepared context</span><strong>Latest star-schema dashboard filters</strong></li>`,
+          `<li><span>Prepared context</span><strong>Relevant playbook chunks load on demand</strong></li>`
+        ].join("");
+      }
+
       function renderChat() {
         const question = $("chatQuestion").value.toLowerCase();
         let example = chatExamples[0];
         if (question.includes("occupancy") || question.includes("wait")) example = chatExamples[1];
         if (question.includes("respiratory") || question.includes("positivity")) example = chatExamples[2];
         const focus = rowsOrFallback(filteredDistricts(), districtData).sort((a, b) => b.pressure - a.pressure)[0];
-        $("chatAnswer").textContent = `${example.answer} Current filter context: ${focus.district}, pressure ${focus.pressure.toFixed(1)}, residents per facility ${Math.round(focus.residents).toLocaleString()}.`;
+        const leadFacility = rowsOrFallback(filteredFacilities(), facilityData).slice().sort((a, b) => b.risk - a.risk)[0];
+        $("chatAnswer").textContent = `${example.answer} Current filter context: ${focus.district}, pressure ${focus.pressure.toFixed(1)}, lead facility ${leadFacility.facility}, residents per facility ${Math.round(focus.residents).toLocaleString()}, and average distance ${focus.distance.toFixed(2)} km.`;
         $("retrievedContext").innerHTML = [
           ...example.context.map((item) => `<li><span>Retrieved</span><strong>${item}</strong></li>`),
           `<li><span>Structured context</span><strong>${focus.district} Gold metrics</strong></li>`
+        ].join("");
+        $("assistantCardTitle").textContent = `Answer for ${tabMeta[activeTabKey()][0]}`;
+        $("assistantCardBody").textContent = example.answer;
+        $("assistantContext").innerHTML = [
+          `<li><span>Focus district</span><strong>${focus.district}</strong></li>`,
+          `<li><span>Lead facility</span><strong>${leadFacility.facility}</strong></li>`,
+          `<li><span>Grounding</span><strong>${example.context[example.context.length - 1]}</strong></li>`
         ].join("");
       }
 
@@ -2654,7 +3498,7 @@
       }
 
       function renderAll() {
-        const activeTab = document.querySelector(".dashboard-tab.active")?.dataset.tab || "executive";
+        const activeTab = activeTabKey();
         $("dashboardTitle").textContent = tabMeta[activeTab][0];
         $("dashboardSubtitle").textContent = tabMeta[activeTab][1];
         renderKpis();
@@ -2663,9 +3507,13 @@
         renderImmunization();
         renderSurveillance();
         renderSpatial();
-        renderChat();
         renderRealtime();
         renderPayer();
+        if (assistantHasPrompt) {
+          renderChat();
+        } else {
+          renderAssistantWelcome(activeTab);
+        }
       }
 
       document.querySelectorAll(".dashboard-tab").forEach((button) => {
@@ -2691,10 +3539,14 @@
         renderAll();
       });
 
-      $("askButton").addEventListener("click", renderChat);
+      $("askButton").addEventListener("click", () => {
+        assistantHasPrompt = true;
+        renderChat();
+      });
       document.querySelectorAll(".suggestion-button").forEach((button) => {
         button.addEventListener("click", () => {
           $("chatQuestion").value = button.dataset.question;
+          assistantHasPrompt = true;
           renderChat();
         });
       });

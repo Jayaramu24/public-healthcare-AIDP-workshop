@@ -57,9 +57,9 @@ Recommended storage: Delta tables in AIDP under `mpha/silver/`.
 
 ## Gold Layer in Autonomous AI Lakehouse
 
-Gold is the business-serving layer. The recommended design is a dimensional snowflake / fact constellation schema created in Autonomous AI Lakehouse using `sql/create_ai_lakehouse_dimensional_gold_schema.sql` after AIDP stages Gold outputs to Object Storage.
+Gold is the business-serving layer. The recommended design is a dimensional star schema created in Autonomous AI Lakehouse using `sql/create_ai_lakehouse_dimensional_gold_schema.sql` after AIDP stages Gold outputs to Object Storage.
 
-The package keeps the original flat Gold marts in `data/gold/` for quick validation, but the OAC semantic model should use the dimensional outputs in `data/gold_dimensional/`.
+The package keeps the original flat Gold marts in `data/gold/` for quick validation, but the OAC semantic model should use the dimensional star outputs in `data/gold_dimensional/`.
 
 ### Dimensional Gold Model
 
@@ -92,9 +92,11 @@ Facts and bridge tables:
 - `mpha_fact_membership_snapshot`
 - `mpha_fact_provider_accreditation`
 
-Snowflake relationship:
+Star-schema relationship:
 
-`mpha_fact_facility_access_daily -> mpha_dim_facility -> mpha_dim_district`
+`mpha_fact_facility_access_daily -> mpha_dim_facility`
+
+`mpha_fact_facility_access_daily -> mpha_dim_district`
 
 District-grain facts join directly to `mpha_dim_district`; all dated facts reuse `mpha_dim_date`; multiple facts reuse `mpha_dim_pressure_band`.
 
@@ -160,3 +162,4 @@ The Gold layer is designed to answer:
 - Where are public-program disbursements pending or failing by funding source?
 - Which districts have the most renewal-due or high-risk members?
 - Which providers need accreditation corrective-action follow-up or expiry review?
+- Facility-grain facts such as access, quality, capacity-event, streaming, and provider-accreditation facts carry `district_key` directly so OAC joins straight from facts to conformed dimensions.

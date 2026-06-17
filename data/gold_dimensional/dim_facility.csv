@@ -1,11 +1,11 @@
-facility_key,facility_id,facility_name,facility_type,district_key,district_id,latitude,longitude,licensed_beds,baseline_daily_visits,target_ed_wait_minutes,target_outpatient_wait_minutes
-1,F001,North Borough General Hospital,Hospital,1,D01,40.8122,-73.9448,220,330,55,24
-2,F002,Northgate Community Clinic,Community Clinic,1,D01,40.8329,-73.9272,0,165,0,22
-3,F003,East River Medical Center,Hospital,2,D02,40.7161,-73.8957,310,420,60,26
-4,F004,Riverside Urgent Care,Urgent Care,2,D02,40.7034,-73.8727,24,210,38,20
-5,F005,Central City Health Campus,Hospital,3,D03,40.7549,-73.984,410,520,58,25
-6,F006,Downtown Preventive Health Center,Community Clinic,3,D03,40.7391,-73.9922,0,190,0,21
-7,F007,South Lakes Regional Hospital,Hospital,4,D04,40.6528,-73.9561,260,365,56,25
-8,F008,Lakeview Community Clinic,Community Clinic,4,D04,40.6259,-73.9344,0,155,0,20
-9,F009,West Hills Hospital,Hospital,5,D05,40.7838,-74.0272,180,255,52,23
-10,F010,Hillcrest Urgent Care,Urgent Care,5,D05,40.7614,-74.0526,18,145,34,19
+facility_key,facility_id,facility_name,facility_type,district_id,district_name,latitude,longitude,licensed_beds,baseline_daily_visits,target_ed_wait_minutes,target_outpatient_wait_minutes
+1,F001,North Borough General Hospital,Hospital,D01,North Borough,40.8122,-73.9448,220,330,55,24
+2,F002,Northgate Community Clinic,Community Clinic,D01,North Borough,40.8329,-73.9272,0,165,0,22
+3,F003,East River Medical Center,Hospital,D02,East River,40.7161,-73.8957,310,420,60,26
+4,F004,Riverside Urgent Care,Urgent Care,D02,East River,40.7034,-73.8727,24,210,38,20
+5,F005,Central City Health Campus,Hospital,D03,Central City,40.7549,-73.984,410,520,58,25
+6,F006,Downtown Preventive Health Center,Community Clinic,D03,Central City,40.7391,-73.9922,0,190,0,21
+7,F007,South Lakes Regional Hospital,Hospital,D04,South Lakes,40.6528,-73.9561,260,365,56,25
+8,F008,Lakeview Community Clinic,Community Clinic,D04,South Lakes,40.6259,-73.9344,0,155,0,20
+9,F009,West Hills Hospital,Hospital,D05,West Hills,40.7838,-74.0272,180,255,52,23
+10,F010,Hillcrest Urgent Care,Urgent Care,D05,West Hills,40.7614,-74.0526,18,145,34,19

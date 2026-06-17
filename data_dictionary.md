@@ -182,7 +182,7 @@ The recommended workshop serving model is the dimensional Gold schema in `data/g
 | --- | --- | --- |
 | `data/gold_dimensional/dim_date.csv` | Date | Shared date dimension with calendar year, quarter, month, week start, day name, and week-start flag. |
 | `data/gold_dimensional/dim_district.csv` | District | District attributes including population, deprivation, elderly share, chronic-condition share, and income. |
-| `data/gold_dimensional/dim_facility.csv` | Facility | Facility attributes including type, coordinates, licensed beds, wait targets, and `district_key`. |
+| `data/gold_dimensional/dim_facility.csv` | Facility | Facility attributes including type, district identifiers, coordinates, licensed beds, and wait targets. |
 | `data/gold_dimensional/dim_age_group.csv` | Age group | Immunization age-band labels and sort order. |
 | `data/gold_dimensional/dim_quality_event.csv` | Event type and severity | Conformed quality event category and severity. |
 | `data/gold_dimensional/dim_pressure_band.csv` | Pressure band | Watch, Medium, and High operating pressure bands. |
@@ -196,22 +196,22 @@ The recommended workshop serving model is the dimensional Gold schema in `data/g
 
 | File | Grain | Main keys |
 | --- | --- | --- |
-| `data/gold_dimensional/fact_facility_access_daily.csv` | Facility-day | `date_key`, `facility_key`, `pressure_band_key` |
+| `data/gold_dimensional/fact_facility_access_daily.csv` | Facility-day | `date_key`, `facility_key`, `district_key`, `pressure_band_key` |
 | `data/gold_dimensional/fact_district_public_health_weekly.csv` | District-week | `week_start_date_key`, `district_key`, `pressure_band_key` |
 | `data/gold_dimensional/fact_immunization_equity_weekly.csv` | District-week-age group | `week_start_date_key`, `district_key`, `age_group_key` |
-| `data/gold_dimensional/fact_quality_event_summary.csv` | Facility-quality event | `facility_key`, `quality_event_key` |
+| `data/gold_dimensional/fact_quality_event_summary.csv` | Facility-quality event | `facility_key`, `district_key`, `quality_event_key` |
 | `data/gold_dimensional/fact_spatial_access_insight.csv` | District | `district_key`, `pressure_band_key` |
-| `data/gold_dimensional/fact_capacity_event.csv` | Facility-event | `event_date_key`, `facility_key`, `pressure_band_key` |
-| `data/gold_dimensional/fact_stream_wait_time_minute.csv` | Facility-minute | `event_date_key`, `facility_key`, `pressure_band_key` |
+| `data/gold_dimensional/fact_capacity_event.csv` | Facility-event | `event_date_key`, `facility_key`, `district_key`, `pressure_band_key` |
+| `data/gold_dimensional/fact_stream_wait_time_minute.csv` | Facility-minute | `event_date_key`, `facility_key`, `district_key`, `pressure_band_key` |
 | `data/gold_dimensional/bridge_chat_topic_chunk.csv` | Chat question to document chunk | `document_chunk_key` |
 | `data/gold_dimensional/fact_claims_monthly.csv` | District-month-program-claim type | `service_month_date_key`, `district_key`, `program_key`, `claim_type_key` |
 | `data/gold_dimensional/fact_disbursement_monthly.csv` | District-month-program-payee type | `disbursement_month_date_key`, `district_key`, `program_key` |
 | `data/gold_dimensional/fact_membership_snapshot.csv` | District-program-member segment snapshot | `snapshot_date_key`, `district_key`, `program_key`, `member_segment_key` |
-| `data/gold_dimensional/fact_provider_accreditation.csv` | Facility-provider accreditation snapshot | `snapshot_date_key`, `facility_key`, `accreditation_status_key`, `pressure_band_key` |
+| `data/gold_dimensional/fact_provider_accreditation.csv` | Facility-provider accreditation snapshot | `snapshot_date_key`, `facility_key`, `district_key`, `accreditation_status_key`, `pressure_band_key` |
 
 ### Dimensional Model Notes
 
-- The schema is a snowflake because `fact_facility_access_daily` joins to `dim_facility`, and `dim_facility` rolls up to `dim_district`.
+- The schema is a star because facility-grain facts carry `district_key` directly and join straight to conformed dimensions without dimension-to-dimension joins.
 - District-grain facts join directly to `dim_district`.
 - Date, pressure band, and document chunk dimensions are shared across use cases.
 - The model also behaves as a fact constellation because several business processes reuse common dimensions.

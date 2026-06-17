@@ -1,11 +1,11 @@
 -- Public Healthcare AIDP Workshop
 -- Recommended AI Lakehouse Gold dimensional schema
 --
--- Shape: snowflake / fact constellation.
--- Shared dimensions are reused across multiple facts. Facility snowflakes to
--- District through DIM_FACILITY.DISTRICT_KEY, while district-grain facts join
--- directly to DIM_DISTRICT. This gives OAC a stable semantic layer while
--- keeping the original flat Gold marts available as compatibility samples.
+-- Shape: star schema.
+-- Shared dimensions are reused across multiple facts, and facility-grain facts
+-- carry DISTRICT_KEY directly so OAC joins facts straight to conformed
+-- dimensions without dimension-to-dimension dependencies. This keeps the
+-- original flat Gold marts available as compatibility samples.
 --
 -- AIDP stages dimensional Gold outputs under:
 --   oci://<bucket>@<namespace>/mpha/gold_dimensional/<object_name>/
@@ -44,8 +44,8 @@ CREATE TABLE mpha_dim_facility (
   facility_id VARCHAR2(10),
   facility_name VARCHAR2(120),
   facility_type VARCHAR2(40),
-  district_key NUMBER,
   district_id VARCHAR2(10),
+  district_name VARCHAR2(80),
   latitude NUMBER,
   longitude NUMBER,
   licensed_beds NUMBER,
@@ -122,6 +122,7 @@ CREATE TABLE mpha_dim_accreditation_status (
 CREATE TABLE mpha_fact_facility_access_daily (
   date_key NUMBER,
   facility_key NUMBER,
+  district_key NUMBER,
   pressure_band_key NUMBER,
   outpatient_visits NUMBER,
   emergency_arrivals NUMBER,
@@ -171,6 +172,7 @@ CREATE TABLE mpha_fact_immunization_equity_weekly (
 
 CREATE TABLE mpha_fact_quality_event_summary (
   facility_key NUMBER,
+  district_key NUMBER,
   quality_event_key NUMBER,
   event_count NUMBER,
   avg_days_to_close NUMBER,
@@ -193,6 +195,7 @@ CREATE TABLE mpha_fact_capacity_event (
   event_date_key NUMBER,
   event_timestamp TIMESTAMP,
   facility_key NUMBER,
+  district_key NUMBER,
   pressure_band_key NUMBER,
   current_occupancy_rate NUMBER,
   waiting_room_count NUMBER,
@@ -206,6 +209,7 @@ CREATE TABLE mpha_fact_stream_wait_time_minute (
   event_date_key NUMBER,
   event_minute TIMESTAMP,
   facility_key NUMBER,
+  district_key NUMBER,
   pressure_band_key NUMBER,
   avg_wait_minutes NUMBER,
   max_wait_minutes NUMBER,
@@ -270,6 +274,7 @@ CREATE TABLE mpha_fact_provider_accreditation (
   last_survey_date_key NUMBER,
   expiry_date_key NUMBER,
   facility_key NUMBER,
+  district_key NUMBER,
   accreditation_status_key NUMBER,
   pressure_band_key NUMBER,
   provider_id VARCHAR2(20),
@@ -485,7 +490,7 @@ SELECT
 FROM mpha_fact_facility_access_daily f
 JOIN mpha_dim_date d ON f.date_key = d.date_key
 JOIN mpha_dim_facility fac ON f.facility_key = fac.facility_key
-JOIN mpha_dim_district dis ON fac.district_key = dis.district_key
+JOIN mpha_dim_district dis ON f.district_key = dis.district_key
 JOIN mpha_dim_pressure_band pb ON f.pressure_band_key = pb.pressure_band_key;
 
 CREATE OR REPLACE VIEW mpha_oac_star_public_health_pressure AS
@@ -545,7 +550,7 @@ SELECT
   f.avoidable_readmission_events
 FROM mpha_fact_quality_event_summary f
 JOIN mpha_dim_facility fac ON f.facility_key = fac.facility_key
-JOIN mpha_dim_district dis ON fac.district_key = dis.district_key
+JOIN mpha_dim_district dis ON f.district_key = dis.district_key
 JOIN mpha_dim_quality_event qe ON f.quality_event_key = qe.quality_event_key;
 
 CREATE OR REPLACE VIEW mpha_oac_star_spatial_access AS
@@ -581,7 +586,7 @@ SELECT
   f.ambulance_diversion_status
 FROM mpha_fact_capacity_event f
 JOIN mpha_dim_facility fac ON f.facility_key = fac.facility_key
-JOIN mpha_dim_district dis ON fac.district_key = dis.district_key
+JOIN mpha_dim_district dis ON f.district_key = dis.district_key
 JOIN mpha_dim_pressure_band pb ON f.pressure_band_key = pb.pressure_band_key;
 
 CREATE OR REPLACE VIEW mpha_oac_star_document_chat_context AS
@@ -697,6 +702,6 @@ JOIN mpha_dim_date snap ON f.snapshot_date_key = snap.date_key
 JOIN mpha_dim_date survey ON f.last_survey_date_key = survey.date_key
 JOIN mpha_dim_date expiry ON f.expiry_date_key = expiry.date_key
 JOIN mpha_dim_facility fac ON f.facility_key = fac.facility_key
-JOIN mpha_dim_district dis ON fac.district_key = dis.district_key
+JOIN mpha_dim_district dis ON f.district_key = dis.district_key
 JOIN mpha_dim_accreditation_status acc ON f.accreditation_status_key = acc.accreditation_status_key
 JOIN mpha_dim_pressure_band pb ON f.pressure_band_key = pb.pressure_band_key;
