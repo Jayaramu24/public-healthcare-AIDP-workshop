@@ -310,6 +310,8 @@ def parse_markdown_to_story(text: str, story: list, styles: dict[str, ParagraphS
             flush_paragraph()
             level = len(heading.group(1))
             title = heading.group(2).strip()
+            if level == 2 and title.startswith("Lab 3 - "):
+                story.append(PageBreak())
             if level == 1:
                 story.append(Paragraph(inline_markdown(title), styles["h1"]))
             elif level == 2:
