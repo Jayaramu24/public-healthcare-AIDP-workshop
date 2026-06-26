@@ -52,6 +52,23 @@ To keep execution responsibilities clear during the workshop:
 - **Admin step** means the facilitator, environment owner, or platform administrator performs the action once for the shared workshop environment.
 - **Participant step** means each participant or team performs the action in their own hands-on flow.
 
+### Who Does What
+
+**Admin / facilitator responsibilities**
+
+- provision shared AIDP, AI Lakehouse, and OAC resources
+- create shared users, connections, catalogs, and datasets
+- preload any assets or datasets that should not be repeated by every participant
+- enable assistant, governance, or optional shared services where needed
+
+**Participant responsibilities**
+
+- sign in to the prepared environment
+- run notebooks and validate outputs
+- load or validate their own workshop data where requested
+- build workbook content and complete guided or DIY exercises
+- test optional ML and agent labs when included
+
 ## Lab 1 - Create a Healthcare Lakehouse with AI Data Platform
 
 ### Objectives
@@ -79,35 +96,37 @@ Upload these additional source files:
 - `data/raw_spatial/healthcare_service_areas.geojson`
 - `documents/MPHA_Winter_Respiratory_Response_Playbook.docx`
 
-### Lab 1 exercise steps
+### Admin Steps
 
-1. **Admin step:** Provision or confirm the Oracle AI Data Platform instance.
+Participants: you can skip this section and join once the facilitator confirms the shared environment is ready.
+
+1. Provision or confirm the Oracle AI Data Platform instance.
    - Open `Analytics & AI`, then `AI Data Platform`.
    - Click `Create AI Data Platform` if the shared workshop environment does not already exist.
    - Use workshop-friendly names such as `mpha-aidp` for the instance and `mpha-workshop-ws` for the default workspace.
    - Choose `Standard` for simpler workshop setup, or `Advanced` if your tenancy requires finer policy control.
    - Apply the generated policy statements in the correct tenancy or compartment, then complete provisioning.
-2. **Admin step:** Assign workshop access using AIDP roles.
+2. Assign workshop access using AIDP roles.
    - Open `Roles`.
    - Grant facilitator accounts the admin or workspace-admin role required for setup.
    - Grant participant accounts builder-level access for notebooks, workspace usage, and catalog access.
    - Validate that a facilitator can see the workspace, catalogs, and compute choices.
-3. **Admin step:** Create the shared workshop workspace if you are not using the default one.
+3. Create the shared workshop workspace if you are not using the default one.
    - Open `Workspaces` and click `Create`.
    - Use a name such as `mpha-core-workshop`.
    - Set the default catalog to the shared standard catalog that will hold the healthcare landing volumes.
-4. **Admin step:** Create the shared Spark compute cluster.
+4. Create the shared Spark compute cluster.
    - Open `Compute` and click `Create`.
    - Use a name such as `mpha-spark-cluster`.
    - Select the `Spark` runtime.
    - If available, start with `Quickstart`.
    - Size the driver and workers for workshop execution rather than production-scale tuning.
    - Enable autoscaling if your team prefers elastic usage.
-5. **Admin step:** Create the standard catalog and landing schema for Object Storage-backed data.
+5. Create the standard catalog and landing schema for Object Storage-backed data.
    - Open `Master Catalog`.
    - Create a standard catalog such as `MPHA_WORKSHOP_CAT`.
    - Create a schema such as `mpha_landing`.
-6. **Admin step:** Create the external volumes used by the workshop.
+6. Create the external volumes used by the workshop.
    - In the `mpha_landing` schema, create external volumes for:
      - `mpha/raw/`
      - `mpha/raw_json/`
@@ -118,34 +137,37 @@ Upload these additional source files:
      - `mpha/gold_stage/`
      - `mpha/vector/`
    - For each one, open the schema `Volume` tab, click `Create Volume`, choose `External`, and point it to the correct compartment, bucket, and folder.
-7. **Admin step:** Create the external Autonomous AI Lakehouse catalog for Gold publishing and validation.
+7. Create the external Autonomous AI Lakehouse catalog for Gold publishing and validation.
    - In `Master Catalog`, click `Create Catalog`.
    - Set `Catalog Type` to `External`.
    - Choose the connection type for Autonomous AI Lakehouse.
    - Use either wallet-based access or direct instance-based connectivity, depending on your environment.
    - Test and save the catalog with a name such as `MPHA_AILH_CAT`.
-8. **Admin step:** Set up the shared notebook structure in AIDP.
+8. Set up the shared notebook structure in AIDP.
    - Create folders such as `01_bronze`, `02_silver`, `03_gold`, `04_ml`, `05_agent`, and `shared_assets`.
    - Upload or create the starter notebooks:
      - `aidp_bronze_pyspark.py`
      - `aidp_silver_pyspark.py`
      - `aidp_gold_pyspark.py`
-9. **Participant step:** Sign in to the workshop workspace and confirm that you can see the shared folders, catalogs, and Spark cluster.
-10. **Participant step:** Upload the raw datasets if the facilitator has not preloaded them.
+
+### Participant Steps
+
+1. Sign in to the workshop workspace and confirm that you can see the shared folders, catalogs, and Spark cluster.
+2. Upload the raw datasets if the facilitator has not preloaded them.
    - Create or verify the object storage folders:
      - `mpha/raw/`
      - `mpha/raw_json/`
      - `mpha/raw_spatial/`
      - `mpha/documents/`
    - Upload the five CSV files, one JSONL file, one GeoJSON file, and one DOCX file.
-11. **Participant step:** Open the Bronze notebook in the `01_bronze` folder and attach the shared Spark cluster.
-12. **Participant step:** Use `notebooks/aidp_bronze_pyspark.py` as the starter notebook and set:
+3. Open the Bronze notebook in the `01_bronze` folder and attach the shared Spark cluster.
+4. Use `notebooks/aidp_bronze_pyspark.py` as the starter notebook and set:
    - `raw_base`
    - `raw_json_base`
    - `raw_spatial_base`
    - `document_base`
    - `bronze_base`
-13. **Participant step:** Read each raw source and confirm the row counts match `manifest.json`.
+5. Read each raw source and confirm the row counts match `manifest.json`.
 
 ### Expected Outcome
 
@@ -166,11 +188,16 @@ Reference blog for the Lab 1 setup pattern:
 - Extract spatial features from GeoJSON and prepare a spatial access insight.
 - Prepare playbook document chunks for vector search and grounded chat.
 
-### Notebook sequence
+### Admin Notes
 
-1. **Participant step:** Run `notebooks/aidp_bronze_pyspark.py` to write raw-preserving Bronze Delta tables.
-2. **Participant step:** Run `notebooks/aidp_silver_pyspark.py` to type, validate, and conform the healthcare data into Silver Delta tables.
-3. **Admin step (optional):** Keep `notebooks/aidp_refinement_pyspark.py` only as a legacy combined reference if a facilitator wants one file instead of the split flow.
+Participants: you can ignore this unless the facilitator asks you to use the legacy combined notebook.
+
+1. Keep `notebooks/aidp_refinement_pyspark.py` only as a legacy combined reference if a facilitator wants one file instead of the split flow.
+
+### Participant Steps
+
+1. Run `notebooks/aidp_bronze_pyspark.py` to write raw-preserving Bronze Delta tables.
+2. Run `notebooks/aidp_silver_pyspark.py` to type, validate, and conform the healthcare data into Silver Delta tables.
 
 ### Bronze Layer in AIDP
 
@@ -348,16 +375,18 @@ You have Bronze and Silver Delta layers in AI Data Platform and a dimensional Go
 - Create a native multi-canvas OAC workbook using freeform layout and dashboard filter controls.
 - Enable OAC Assistant correctly at the dataset level and use it only for claims-dataset questions.
 
-### Lab 3 exercise steps
+### Admin Steps
 
-1. **Admin step:** Create or confirm the shared Autonomous AI Lakehouse instance.
+Participants: you can skip this section and join once the facilitator confirms that the shared Lakehouse and OAC setup is ready.
+
+1. Create or confirm the shared Autonomous AI Lakehouse instance.
    - In OCI, open `Oracle AI Database`, then `Autonomous AI Database`.
    - Click `Create Autonomous AI Database` if the workshop Lakehouse instance does not already exist.
    - Enter the display name and database name for the shared workshop instance.
    - Choose the workload type `Lakehouse`.
    - Select the database version, ECPU size, storage, and network access settings required for the workshop.
    - Wait until the instance shows as available before continuing.
-2. **Admin step:** Create the workshop users in the Autonomous AI Lakehouse UI before participants begin SQL validation or OAC connectivity checks.
+2. Create the workshop users in the Autonomous AI Lakehouse UI before participants begin SQL validation or OAC connectivity checks.
    - Open the target `Autonomous AI Lakehouse` instance and launch `Database Actions`.
    - Sign in as `ADMIN`.
    - Open the left navigation, then go to `Administration -> Database Users`.
@@ -370,55 +399,58 @@ You have Bronze and Silver Delta layers in AI Data Platform and a dimensional Go
    - Open the `Granted Roles` tab and grant `DWROLE`, plus `CONNECT` if your tenancy standard still expects it.
    - Confirm the users are `REST Enabled`.
    - Copy the Database Actions URL from the user card and share it with the participant together with the username and temporary password.
-3. **Participant step:** Sign in to Database Actions with the assigned workshop user and run `select user from dual;` in `SQL` to confirm that you land in the expected schema.
-4. **Participant step:** Run `notebooks/aidp_gold_pyspark.py` after the Silver notebook completes.
-5. **Participant step:** Set the `silver_base` and `gold_stage_base` paths to your object storage locations.
-6. **Participant step:** Stage Gold-serving outputs for claims, facility access, and the supporting dimensions used by both stars.
-7. **Participant step:** Load the dimensional Gold schema with `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
-   - Run the DDL and load statements in `Database Actions -> SQL`.
-   - Use the schema assigned for the Gold-serving exercise, such as `MPHA_GOLD_OWNER` for the instructor-led path or a team schema if you want each table of participants to load independently.
-8. **Admin step:** Create the shared OAC connection if one does not already exist.
+3. Create the shared OAC connection if one does not already exist.
    - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
    - Use `TLS` for wallet-free connectivity or `Mutual TLS` if your environment requires a wallet upload.
-9. **Admin step:** Create the shared instructor-led claims dataset.
+4. Create the shared instructor-led claims dataset.
    - Create a dataset from the Lakehouse connection.
    - Drag `mpha_fact_claims_monthly` to the Join Diagram first.
    - Drag `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type` next.
    - Right-click the fact table and select `Preserve Grain`.
    - Save the dataset with a clear name such as `MPHA_Claims_Star_DS`.
    - Fast-track alternative: use `MPHA_OAC_STAR_CLAIMS` if the team prefers a one-table dataset.
-10. **Participant step:** Open the shared claims dataset and create the workbook.
-11. **Participant step:** Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
-12. **Participant step:** Create calculations in `My Calculations` only if the dataset does not already expose:
+5. Enable OAC Assistant at the dataset level if it is not already enabled.
+   - Return to the dataset home card.
+   - Open `Actions -> Inspect -> Search`.
+   - Set `Index Dataset For` to `Assistant and Homepage`.
+   - Click `Save`, then `Run Now`.
+
+### Participant Steps
+
+1. Sign in to Database Actions with the assigned workshop user and run `select user from dual;` in `SQL` to confirm that you land in the expected schema.
+2. Run `notebooks/aidp_gold_pyspark.py` after the Silver notebook completes.
+3. Set the `silver_base` and `gold_stage_base` paths to your object storage locations.
+4. Stage Gold-serving outputs for claims, facility access, and the supporting dimensions used by both stars.
+5. Load the dimensional Gold schema with `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
+   - Run the DDL and load statements in `Database Actions -> SQL`.
+   - Use the schema assigned for the Gold-serving exercise, such as `MPHA_GOLD_OWNER` for the instructor-led path or a team schema if you want each table of participants to load independently.
+6. Open the shared claims dataset and create the workbook.
+7. Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
+8. Create calculations in `My Calculations` only if the dataset does not already expose:
    - Claim Denial Rate
    - Payment Yield
    - Approval Rate
    - Pending Rate
-13. **Participant step:** Build the KPI band with native OAC tiles.
+9. Build the KPI band with native OAC tiles.
    - Drag `claims_submitted` to the canvas to create the first tile.
    - Drag up to four more measures onto the same tile.
    - Create a second tile for a sixth KPI such as `avg_processing_days`.
-14. **Participant step:** Add a `Dashboard Filter` control with:
+10. Add a `Dashboard Filter` control with:
    - Reporting Period
    - District
    - Coverage Program
    - Claim Type
    - Funding Source
-15. **Participant step:** Add the core visuals:
+11. Add the core visuals:
    - district claims chart
    - monthly paid-amount trend
    - district summary table
-16. **Participant step:** Create the additional canvases in `Freeform` layout:
+12. Create the additional canvases in `Freeform` layout:
    - `Denial Analysis`
    - `Program Performance`
    - `Claim Type Mix`
-17. **Participant step:** Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
-18. **Admin step:** Enable OAC Assistant at the dataset level if it is not already enabled.
-   - Return to the dataset home card.
-   - Open `Actions -> Inspect -> Search`.
-   - Set `Index Dataset For` to `Assistant and Homepage`.
-   - Click `Save`, then `Run Now`.
-19. **Participant step:** Reopen the workbook and use `Assistant` for claims-dataset questions only.
+13. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
+14. Reopen the workbook and use `Assistant` for claims-dataset questions only.
 
 Recommended workshop pattern:
 
@@ -500,7 +532,18 @@ Important boundary:
 - Build the Facility Access Daily star schema without step-by-step dashboard instructions.
 - Create a participant-owned OAC dashboard from the facility access fact and its dimensions.
 
-### DIY build target
+### Admin Notes
+
+Participants: the facilitator only needs to step in here if the shared Facility Access Daily dataset or connection has already been prepared for you.
+
+### Participant Steps
+
+1. Build the Facility Access Daily star schema using the same dimensional pattern used in the guided claims flow.
+2. Use the prepared fact and dimension targets below as your design objective.
+3. Create your own participant-owned OAC dashboard using the facility access fact and its dimensions.
+4. Decide which filters, KPIs, and visual interactions best support an operator workflow.
+
+### DIY Build Target
 
 - Fact: `mpha_fact_facility_access_daily`
 - Dimensions:
@@ -509,7 +552,7 @@ Important boundary:
   - `mpha_dim_district`
   - `mpha_dim_pressure_band`
 
-### Participant challenge prompts
+### Participant Challenge Prompts
 
 - Build a facility dashboard that answers which facilities are missing wait-time targets.
 - Show occupancy, staffing pressure, and access risk by facility and district.
@@ -544,7 +587,14 @@ Use `optional_labs/claims_denial_risk_scoring.md` and `data/gold/gold_claims_den
 - Produce a score that estimates which district-program-claim-type combinations are most likely to need manual review.
 - Publish compact scoring outputs that can be added to the Claims star schema story in OAC.
 
-### Step-by-step approach
+### Admin Preparation
+
+Participants: you can skip this section if the facilitator has already prepared the ML folder, cluster, and source objects.
+
+1. Confirm that the claims-serving Gold outputs, spatial insight outputs, and provider-accreditation outputs are available.
+2. Confirm that the shared Spark cluster and the `04_ml` folder are ready for participant use.
+
+### Participant Steps
 
 1. Create a Spark notebook in the `04_ml` folder and attach the workshop Spark cluster.
 2. Use `notebooks/aidp_ml_claims_denial_risk_pyspark.py` as the starter ML notebook.
@@ -578,20 +628,27 @@ Use `optional_labs/claims_policy_copilot_agent.md`, `documents/MPHA_Winter_Respi
 - Query curated Claims star schema data with a SQL tool.
 - Ground policy and operating answers with the vectorized playbook through a RAG tool.
 
-### Step-by-step approach
+### Admin Preparation
+
+Participants: you can skip this section if the facilitator has already prepared the claims-serving scope, the policy document location, and the Generative AI Agents compartment access.
 
 1. Confirm the claims-serving Gold objects are queryable in Autonomous AI Lakehouse.
-2. Place the MPHA playbook in Object Storage and, if needed, prepare a PDF or text copy for ingestion.
-3. Create a knowledge base in OCI Generative AI Agents using the playbook source.
-4. Create the `MPHA_Claims_Policy_Copilot` agent shell.
-5. Add a SQL tool that is limited to the approved claims, disbursement, membership, accreditation, and optional scoring tables.
-6. Add a RAG tool connected to the playbook knowledge base.
-7. Create an endpoint for interactive testing.
-8. Test three question types:
+2. Confirm the playbook document is available in Object Storage.
+3. Confirm the facilitator can access OCI Generative AI Agents in the correct compartment.
+
+### Participant Steps
+
+1. Place the MPHA playbook in Object Storage and, if needed, prepare a PDF or text copy for ingestion.
+2. Create a knowledge base in OCI Generative AI Agents using the playbook source.
+3. Create the `MPHA_Claims_Policy_Copilot` agent shell.
+4. Add a SQL tool that is limited to the approved claims, disbursement, membership, accreditation, and optional scoring tables.
+5. Add a RAG tool connected to the playbook knowledge base.
+6. Create an endpoint for interactive testing.
+7. Test three question types:
    - SQL-only
    - policy-only
    - combined claims-and-policy
-9. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
+8. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
 
 ### Expected Outcome
 
@@ -599,10 +656,14 @@ You can explain a practical agent pattern for this workshop: AI Data Platform pr
 
 ## Optional Lab 7 - Governance and Operationalization
 
-- Add data quality checks for missing dates, invalid rates, and impossible occupancy values.
-- Schedule the Bronze, Silver, and Gold Spark jobs.
-- Create OAC alerts for high occupancy or high pressure index.
-- Document the synthetic-data privacy boundary for demo and training usage.
+### Admin Steps
+
+Participants: this is primarily a facilitator or platform-owner extension lab.
+
+1. Add data quality checks for missing dates, invalid rates, and impossible occupancy values.
+2. Schedule the Bronze, Silver, and Gold Spark jobs.
+3. Create OAC alerts for high occupancy or high pressure index.
+4. Document the synthetic-data privacy boundary for demo and training usage.
 
 ## Success Criteria
 
