@@ -40,11 +40,10 @@ gold_facility_access_daily = (
     )
 )
 
-gold_district_public_health_weekly = silver_district_health_week.join(
-    silver_district.select("district_id", "district_name"),
-    "district_id",
-    "left",
-)
+# `silver_district_health_week` already carries district attributes from the
+# Silver-layer conformance join, so keep it as-is and avoid reintroducing
+# duplicate columns such as `district_name`.
+gold_district_public_health_weekly = silver_district_health_week
 
 gold_immunization_equity_weekly = silver_population_health_week.join(
     silver_district.select("district_id", "district_name", "deprivation_index", "elderly_pct"),
