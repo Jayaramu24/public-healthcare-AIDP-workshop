@@ -5,6 +5,7 @@
 
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
+from pyspark.sql.types import ArrayType, MapType, StructType
 
 
 silver_base = "oci://<bucket>@<namespace>/mpha/silver"
@@ -17,7 +18,11 @@ def read_delta(name):
 
 
 def write_stage_csv(frame, name):
-    frame.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{gold_stage_base}/{name}")
+    csv_ready = frame
+    for field in csv_ready.schema.fields:
+        if isinstance(field.dataType, (ArrayType, MapType, StructType)):
+            csv_ready = csv_ready.withColumn(field.name, F.to_json(F.col(field.name)))
+    csv_ready.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{gold_stage_base}/{name}")
 
 
 silver_district = read_delta("silver_district")
