@@ -29,6 +29,8 @@ The end-to-end flow moves from raw operational data into a medallion architectur
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
 5. Use the Gold schema SQL in AI Lakehouse:
+   - [sql/create_ai_lakehouse_claims_star_schema.sql](sql/create_ai_lakehouse_claims_star_schema.sql)
+   - [sql/create_ai_lakehouse_facilities_star_schema.sql](sql/create_ai_lakehouse_facilities_star_schema.sql)
    - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
 
 ## AIDP Setup Order
@@ -115,6 +117,8 @@ The Claims star schema is the provided OAC reference workbook. The Facility Acce
 Reference material:
 
 - [medallion_architecture.md](medallion_architecture.md)
+- [sql/create_ai_lakehouse_claims_star_schema.sql](sql/create_ai_lakehouse_claims_star_schema.sql)
+- [sql/create_ai_lakehouse_facilities_star_schema.sql](sql/create_ai_lakehouse_facilities_star_schema.sql)
 - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
 - [data/gold_dimensional/](data/gold_dimensional/)
 

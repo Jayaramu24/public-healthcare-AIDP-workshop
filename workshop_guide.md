@@ -267,7 +267,11 @@ Use the Bronze-to-Silver flow as the common modeling foundation before the works
 
 Gold is the business serving layer. The recommended model is a dimensional star in Autonomous AI Lakehouse so OAC connects to shared, reusable dimensions and facts rather than notebook outputs or isolated flat files.
 
-The package also includes flat Gold mart samples in `data/gold/` for quick validation, but the workshop execution path should use `data/gold_dimensional/` and `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
+The package also includes flat Gold mart samples in `data/gold/` for quick validation, but the workshop execution path should use `data/gold_dimensional/` together with the split AI Lakehouse SQL scripts:
+
+- `sql/create_ai_lakehouse_claims_star_schema.sql` for the instructor-led Claims star schema
+- `sql/create_ai_lakehouse_facilities_star_schema.sql` for the Facility Access Daily and facilities/public-health path
+- `sql/create_ai_lakehouse_dimensional_gold_schema.sql` only when the facilitator wants the combined all-in-one script
 
 ### Gold branch used in the workshop
 
@@ -362,7 +366,10 @@ This is a star schema because the fact tables carry the foreign keys needed for 
 - Normalize membership by program, age group, risk segment, chronic-condition flag, and renewal status.
 - Normalize provider accreditation by facility, body, status, level, score, corrective actions, and expiry risk.
 - Build or stage dimensional Gold outputs under `data/gold_dimensional/`.
-- Load the dimensional Gold schema in Autonomous AI Lakehouse using `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
+- Load the dimensional Gold schema in Autonomous AI Lakehouse using the split SQL files for the relevant path:
+  - `sql/create_ai_lakehouse_claims_star_schema.sql`
+  - `sql/create_ai_lakehouse_facilities_star_schema.sql`
+  - keep `sql/create_ai_lakehouse_dimensional_gold_schema.sql` as the combined fallback script
 - Use `sql/create_ai_lakehouse_gold_layer.sql` only if a facilitator wants the simpler flat-mart path for comparison.
 
 ### Expected Outcome
@@ -478,6 +485,9 @@ Quick validation pack:
 Alternative loading path:
 
 - If the facilitator prefers a SQL-driven load instead of the direct AIDP catalog write, use `notebooks/aidp_gold_pyspark.py` to stage outputs and then run `sql/create_ai_lakehouse_dimensional_gold_schema.sql` in Database Actions.
+- To avoid workshop confusion, prefer:
+  - `sql/create_ai_lakehouse_claims_star_schema.sql` for the instructor-led Claims path
+  - `sql/create_ai_lakehouse_facilities_star_schema.sql` for the Facility Access Daily path
 
 Recommended workshop pattern:
 
