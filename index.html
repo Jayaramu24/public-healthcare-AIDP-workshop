@@ -487,6 +487,87 @@
         background: rgba(255, 255, 255, 0.07);
       }
 
+      .star-schema-block {
+        margin-bottom: 28px;
+      }
+
+      .star-schema-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      .star-schema-head h3 {
+        margin: 0;
+        font-size: 1.06rem;
+      }
+
+      .star-schema-head p {
+        margin: 6px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.92rem;
+      }
+
+      .star-schema-note {
+        flex: 0 0 300px;
+        padding: 11px 13px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-left: 4px solid var(--amber);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.88rem;
+      }
+
+      .star-schema-scroll-hint {
+        margin-bottom: 10px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.82rem;
+      }
+
+      .star-schema-canvas {
+        margin-bottom: 14px;
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+      }
+
+      .star-schema-canvas svg {
+        display: block;
+        width: 1540px;
+        max-width: none;
+        height: auto;
+      }
+
+      .star-caption-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .star-caption {
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .star-caption strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #ffffff;
+        font-size: 0.9rem;
+      }
+
+      .star-caption span {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.84rem;
+      }
+
       .medallion-card {
         padding: 18px;
         border: 1px solid rgba(255, 255, 255, 0.16);
@@ -544,6 +625,637 @@
         width: 1560px;
         max-width: none;
         height: auto;
+      }
+
+      .journey-strip {
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+        margin-bottom: 24px;
+      }
+
+      .journey-block,
+      .journey-branch {
+        flex: 1;
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .journey-branch {
+        flex: 1.2;
+      }
+
+      .journey-kicker {
+        display: inline-flex;
+        margin-bottom: 10px;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .journey-block strong,
+      .journey-branch strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #ffffff;
+        font-size: 1rem;
+        line-height: 1.24;
+      }
+
+      .journey-block p,
+      .journey-branch p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.88rem;
+      }
+
+      .journey-block.raw {
+        border-top: 4px solid var(--coral);
+      }
+
+      .journey-block.bronze {
+        border-top: 4px solid #b45309;
+      }
+
+      .journey-block.silver {
+        border-top: 4px solid #cbd5e1;
+      }
+
+      .journey-block.serve {
+        border-top: 4px solid var(--sky);
+      }
+
+      .journey-connector {
+        position: relative;
+        flex: 0 0 34px;
+        min-height: 132px;
+      }
+
+      .journey-connector::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 6px;
+        right: 10px;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .journey-connector::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 6px);
+        right: 3px;
+        width: 12px;
+        height: 12px;
+        border-top: 2px solid rgba(255, 255, 255, 0.66);
+        border-right: 2px solid rgba(255, 255, 255, 0.66);
+        transform: rotate(45deg);
+      }
+
+      .journey-paths {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0;
+      }
+
+      .journey-path {
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .journey-path small {
+        display: block;
+        margin-top: 4px;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+
+      .journey-path.instructor {
+        border-left: 4px solid #f59e0b;
+      }
+
+      .journey-path.diy {
+        border-left: 4px solid #60a5fa;
+      }
+
+      .workflow-board {
+        margin-bottom: 24px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+        color: #0f172a;
+      }
+
+      .workflow-board-head {
+        margin-bottom: 18px;
+      }
+
+      .workflow-board-head h3 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 1.28rem;
+      }
+
+      .workflow-board-head p {
+        margin: 8px 0 0;
+        color: #475569;
+        font-size: 0.94rem;
+      }
+
+      .workflow-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .workflow-header,
+      .lineage-row {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr) 40px minmax(0, 1fr) 40px minmax(0, 1fr);
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .workflow-stage-head {
+        padding: 0 6px;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .lineage-domain {
+        padding: 16px;
+        border: 1px solid #dbe4ec;
+        border-radius: 10px;
+        background: #102321;
+        color: #ffffff;
+      }
+
+      .lineage-domain strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.98rem;
+        line-height: 1.25;
+      }
+
+      .lineage-domain span {
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.85rem;
+      }
+
+      .workflow-card {
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid #dbe4ec;
+        border-radius: 10px;
+        background: #ffffff;
+      }
+
+      .workflow-card.bronze {
+        background: #fffbeb;
+        border-left: 4px solid #b45309;
+      }
+
+      .workflow-card.transform {
+        background: #f8fafc;
+        border-left: 4px solid #64748b;
+      }
+
+      .workflow-card.silver {
+        background: #f5f3ff;
+        border-left: 4px solid #6d28d9;
+      }
+
+      .workflow-card h4 {
+        margin: 0 0 8px;
+        color: #0f172a;
+        font-size: 0.95rem;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+
+      .workflow-card p {
+        margin: 8px 0 0;
+        color: #475569;
+        font-size: 0.85rem;
+        overflow-wrap: anywhere;
+      }
+
+      .workflow-meta {
+        display: inline-flex;
+        margin-bottom: 8px;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .workflow-list {
+        display: grid;
+        gap: 6px;
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .workflow-list li {
+        position: relative;
+        padding-left: 14px;
+        color: #475569;
+        font-size: 0.84rem;
+      }
+
+      .workflow-list li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 7px;
+        height: 7px;
+        border-radius: 2px;
+        background: #94a3b8;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .data-chip,
+      .derive-chip,
+      .measure-chip,
+      .dimension-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        line-height: 1.2;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .data-chip {
+        background: #fff1e7;
+        color: #9a3412;
+      }
+
+      .derive-chip {
+        background: #eef2ff;
+        color: #4338ca;
+      }
+
+      .measure-chip {
+        background: #ecfeff;
+        color: #0f766e;
+      }
+
+      .dimension-chip {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+
+      .workflow-arrow {
+        position: relative;
+        min-height: 100%;
+      }
+
+      .workflow-arrow::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 4px;
+        right: 8px;
+        height: 2px;
+        background: #cbd5e1;
+      }
+
+      .workflow-arrow::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 5px);
+        right: 2px;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #64748b;
+        border-right: 2px solid #64748b;
+        transform: rotate(45deg);
+      }
+
+      .branch-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.05fr 1.05fr;
+        gap: 14px;
+      }
+
+      .shared-foundation {
+        min-width: 0;
+        padding: 18px;
+        border: 1px solid #dbe4ec;
+        border-radius: 12px;
+        background: #f8fafc;
+      }
+
+      .shared-foundation h4 {
+        margin: 0 0 8px;
+        color: #0f172a;
+        font-size: 1.02rem;
+      }
+
+      .shared-stack {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .shared-source {
+        padding: 12px 14px;
+        border: 1px solid #e4e7ec;
+        border-radius: 10px;
+        background: #ffffff;
+      }
+
+      .shared-source strong {
+        display: block;
+        color: #0f172a;
+        font-size: 0.88rem;
+        overflow-wrap: anywhere;
+      }
+
+      .shared-source span {
+        color: #475569;
+        font-size: 0.82rem;
+        overflow-wrap: anywhere;
+      }
+
+      .shared-note {
+        margin: 12px 0 0;
+        color: #475569;
+        font-size: 0.86rem;
+        overflow-wrap: anywhere;
+      }
+
+      .branch-column-card {
+        min-width: 0;
+        padding: 18px;
+        border: 1px solid #dbe4ec;
+        border-radius: 12px;
+        background: #ffffff;
+      }
+
+      .branch-column-card.instructor {
+        background: linear-gradient(180deg, #fffaf3, #ffffff 22%);
+        border-top: 4px solid #f59e0b;
+      }
+
+      .branch-column-card.diy {
+        background: linear-gradient(180deg, #f8fbff, #ffffff 22%);
+        border-top: 4px solid #60a5fa;
+      }
+
+      .branch-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .branch-pill {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .branch-column-card.instructor .branch-pill {
+        background: #fff1e7;
+        color: #9a3412;
+      }
+
+      .branch-column-card.diy .branch-pill {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+
+      .branch-column-card h4 {
+        margin: 8px 0 0;
+        color: #0f172a;
+        font-size: 1.04rem;
+      }
+
+      .branch-outcome {
+        padding: 8px 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-align: right;
+      }
+
+      .branch-stack {
+        display: grid;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .branch-step-card {
+        position: relative;
+        min-width: 0;
+        padding: 14px 14px 14px 52px;
+        border: 1px solid #e4e7ec;
+        border-radius: 10px;
+        background: #ffffff;
+      }
+
+      .branch-step-card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #0f172a;
+        font-size: 0.92rem;
+        overflow-wrap: anywhere;
+      }
+
+      .branch-step-card p {
+        margin: 0;
+        color: #475569;
+        font-size: 0.84rem;
+        overflow-wrap: anywhere;
+      }
+
+      .workflow-card code,
+      .branch-step-card code,
+      .medallion-card code {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .step-chip {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        background: #102321;
+        color: #ffffff;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .fact-callout {
+        display: inline-flex;
+        margin: 4px 0 8px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .branch-column-card.instructor .fact-callout {
+        background: #9a3412;
+      }
+
+      .branch-column-card.diy .fact-callout {
+        background: #1d4ed8;
+      }
+
+      .schema-map {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+
+      .star-layout {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1.18fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 12px;
+        margin-bottom: 14px;
+        padding: 8px 0;
+      }
+
+      .star-layout::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 14%;
+        right: 14%;
+        height: 2px;
+        background: #cbd5e1;
+      }
+
+      .star-layout::after {
+        content: "";
+        position: absolute;
+        top: 14%;
+        bottom: 14%;
+        left: 50%;
+        width: 2px;
+        background: #cbd5e1;
+      }
+
+      .star-box {
+        position: relative;
+        z-index: 1;
+        min-width: 0;
+        padding: 14px;
+        border: 1px solid #dbe4ec;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #0f172a;
+      }
+
+      .star-box strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+      }
+
+      .star-box span {
+        color: #475569;
+        font-size: 0.8rem;
+        overflow-wrap: anywhere;
+      }
+
+      .star-fact {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      .schema-panel.instructor .star-fact {
+        border: 2px solid #f59e0b;
+        background: #fffaf3;
+      }
+
+      .schema-panel.diy .star-fact {
+        border: 2px solid #60a5fa;
+        background: #f8fbff;
+      }
+
+      .star-fact .workflow-meta {
+        margin-bottom: 6px;
+      }
+
+      .fact-grain {
+        display: block;
+        margin-bottom: 8px;
+        color: #475569;
+        font-size: 0.8rem;
+        overflow-wrap: anywhere;
+      }
+
+      .top-left {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .top-right {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .bottom-left {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .bottom-right {
+        grid-column: 3;
+        grid-row: 3;
       }
 
       .legend-row {
@@ -1284,10 +1996,97 @@
         .solution-diagram,
         .solution-support,
         .schema-map,
+        .star-caption-grid,
         .medallion-details,
         .grid-2,
         .checklist {
           grid-template-columns: 1fr;
+        }
+
+        .journey-strip {
+          flex-direction: column;
+        }
+
+        .journey-connector {
+          flex: 0 0 28px;
+          min-height: 28px;
+        }
+
+        .journey-connector::before {
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          right: auto;
+          width: 2px;
+          height: auto;
+        }
+
+        .journey-connector::after {
+          top: auto;
+          right: auto;
+          bottom: 4px;
+          left: calc(50% - 6px);
+          transform: rotate(135deg);
+        }
+
+        .workflow-board {
+          padding: 18px;
+        }
+
+        .workflow-header {
+          display: none;
+        }
+
+        .lineage-row,
+        .branch-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .workflow-arrow {
+          min-height: 28px;
+        }
+
+        .workflow-arrow::before {
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          right: auto;
+          width: 2px;
+          height: auto;
+        }
+
+        .workflow-arrow::after {
+          top: auto;
+          right: auto;
+          bottom: 4px;
+          left: calc(50% - 5px);
+          transform: rotate(135deg);
+        }
+
+        .branch-top {
+          flex-direction: column;
+        }
+
+        .branch-outcome {
+          text-align: left;
+        }
+
+        .star-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .star-layout::before,
+        .star-layout::after {
+          display: none;
+        }
+
+        .top-left,
+        .top-right,
+        .bottom-left,
+        .bottom-right,
+        .star-fact {
+          grid-column: auto;
+          grid-row: auto;
         }
 
         .solution-diagram {
@@ -1349,6 +2148,15 @@
         .oac-head {
           flex-direction: column;
         }
+
+        .star-schema-head {
+          flex-direction: column;
+        }
+
+        .star-schema-note {
+          flex-basis: auto;
+          width: 100%;
+        }
       }
 
       @media (max-width: 620px) {
@@ -1384,6 +2192,14 @@
 
         .button {
           width: 100%;
+        }
+
+        .workflow-board {
+          padding: 16px;
+        }
+
+        .branch-step-card {
+          padding-left: 48px;
         }
 
         .footer-inner {
@@ -2212,273 +3028,384 @@
               layer is set up in AI Lakehouse as a dimensional star schema for OAC dashboards and generative summaries.
             </p>
           </div>
-          <div class="medallion-canvas" aria-label="Detailed medallion flow diagram">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 920" role="img" aria-labelledby="medallion-title medallion-desc">
-              <title id="medallion-title">Public healthcare medallion architecture</title>
-              <desc id="medallion-desc">Raw healthcare data flows into Bronze and Silver layers in AI Data Platform, then into a Gold star schema in AI Lakehouse and OAC business insights.</desc>
-              <defs>
-                <marker id="flowArrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-                  <path d="M0,0 L0,6 L9,3 z" fill="#475569"></path>
-                </marker>
-                <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#64748B" flood-opacity="0.25"></feDropShadow>
-                </filter>
-              </defs>
-              <rect x="0" y="0" width="1560" height="920" fill="#ffffff"></rect>
-              <text x="36" y="42" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#0f172a">Public Healthcare Medallion Flow: Raw → Bronze → Silver → Gold → Insights</text>
-              <text x="36" y="72" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">AIDP owns Bronze and Silver Delta transformations for CSV, JSON, GeoJSON, and document chunks. Autonomous AI Lakehouse owns a Gold star schema for OAC dashboards, spatial insight, and chat.</text>
-              <rect x="30" y="92" width="740" height="770" rx="14" fill="#f8fafc" stroke="#dbe3ec"></rect>
-              <text x="46" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#475569">ORACLE AI DATA PLATFORM</text>
-              <rect x="805" y="92" width="360" height="770" rx="14" fill="#fff7ed" stroke="#fed7aa"></rect>
-              <text x="822" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#9a3412">AUTONOMOUS AI LAKEHOUSE GOLD</text>
-              <rect x="1200" y="92" width="326" height="770" rx="14" fill="#f0f9ff" stroke="#bae6fd"></rect>
-              <text x="1218" y="118" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" fill="#075985">ORACLE ANALYTICS CLOUD</text>
-
-              <text x="56" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#a16207">BRONZE</text>
-              <text x="402" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#64748b">SILVER</text>
-              <text x="833" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#b45309">GOLD</text>
-              <text x="1226" y="158" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#2f6fb2">BUSINESS INSIGHTS</text>
-
-              <path d="M 328 218 C 356 218, 356 218, 390 218" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 328 338 C 356 338, 356 338, 390 338" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 328 458 C 356 458, 356 458, 390 458" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 328 578 C 356 578, 356 578, 390 578" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 328 698 C 356 698, 356 698, 390 698" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 706 218 C 756 218, 756 252, 816 252" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 706 338 C 756 338, 756 252, 816 252" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 706 458 C 756 458, 756 394, 816 394" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 706 578 C 756 578, 756 394, 816 394" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 706 698 C 756 698, 756 675, 816 675" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 1134 252 C 1166 252, 1166 235, 1210 235" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 1134 394 C 1166 394, 1166 376, 1210 376" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 1134 536 C 1166 536, 1166 520, 1210 520" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-              <path d="M 1134 675 C 1166 675, 1166 665, 1210 665" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#flowArrow)"></path>
-
-              <g font-family="Arial, Helvetica, sans-serif">
-                <rect x="56" y="176" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="56" y="176" width="272" height="28" rx="11" fill="#a16207"></rect>
-                <text x="68" y="195" font-size="13" font-weight="700" fill="#ffffff">bronze_facilities</text>
-                <text x="68" y="224" font-size="11" fill="#0f172a">Columns: 10 | New: 0 | As-is: 10</text>
-                <text x="68" y="246" font-size="10" fill="#475569">Facility master, capacity, wait targets, geography</text>
-
-                <rect x="56" y="296" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="56" y="296" width="272" height="28" rx="11" fill="#a16207"></rect>
-                <text x="68" y="315" font-size="13" font-weight="700" fill="#ffffff">bronze_district_health_profile</text>
-                <text x="68" y="344" font-size="11" fill="#0f172a">Columns: 7 | New: 0 | As-is: 7</text>
-                <text x="68" y="366" font-size="10" fill="#475569">District population and need indicators</text>
-
-                <rect x="56" y="416" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="56" y="416" width="272" height="28" rx="11" fill="#a16207"></rect>
-                <text x="68" y="435" font-size="13" font-weight="700" fill="#ffffff">bronze_facility_operations_daily</text>
-                <text x="68" y="464" font-size="11" fill="#0f172a">Columns: 13 | New: 0 | As-is: 13</text>
-                <text x="68" y="486" font-size="10" fill="#475569">Visits, waits, occupancy, staff hours, satisfaction</text>
-
-                <rect x="56" y="536" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="56" y="536" width="272" height="28" rx="11" fill="#a16207"></rect>
-                <text x="68" y="555" font-size="13" font-weight="700" fill="#ffffff">bronze_population_health_weekly</text>
-                <text x="68" y="584" font-size="11" fill="#0f172a">Columns: 8 | New: 0 | As-is: 8</text>
-                <text x="68" y="606" font-size="10" fill="#475569">Campaign appointments, no-shows, walk-ins, doses</text>
-
-                <rect x="56" y="656" width="272" height="92" rx="11" fill="#fef3c7" stroke="#a16207" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="56" y="656" width="272" height="28" rx="11" fill="#a16207"></rect>
-                <text x="68" y="675" font-size="13" font-weight="700" fill="#ffffff">bronze_multiformat_sources</text>
-                <text x="68" y="704" font-size="11" fill="#0f172a">5 CSV + 1 JSONL + 1 GeoJSON + 1 DOCX</text>
-                <text x="68" y="726" font-size="10" fill="#475569">Claims, membership, disbursement, accreditation, spatial, JSON, document</text>
-
-                <rect x="400" y="176" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="400" y="176" width="306" height="28" rx="11" fill="#64748b"></rect>
-                <text x="412" y="195" font-size="13" font-weight="700" fill="#ffffff">silver_dim_facility</text>
-                <text x="412" y="224" font-size="11" fill="#0f172a">Columns: 15 | New/derived: 5 | Updated: 10</text>
-                <text x="412" y="246" font-size="10" fill="#475569">Facility + district reference conformed for reuse</text>
-
-                <rect x="400" y="296" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="400" y="296" width="306" height="28" rx="11" fill="#64748b"></rect>
-                <text x="412" y="315" font-size="13" font-weight="700" fill="#ffffff">silver_facility_day</text>
-                <text x="412" y="344" font-size="11" fill="#0f172a">Columns: 19 | New/derived: 5 | Updated: 14</text>
-                <text x="412" y="366" font-size="10" fill="#475569">Typed operations with wait variance and risk flags</text>
-
-                <rect x="400" y="416" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="400" y="416" width="306" height="28" rx="11" fill="#64748b"></rect>
-                <text x="412" y="435" font-size="13" font-weight="700" fill="#ffffff">silver_immunization_week</text>
-                <text x="412" y="464" font-size="11" fill="#0f172a">Columns: 10 | New/derived: 2 | Updated: 8</text>
-                <text x="412" y="486" font-size="10" fill="#475569">Completion and campaign no-show rates</text>
-
-                <rect x="400" y="536" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="400" y="536" width="306" height="28" rx="11" fill="#64748b"></rect>
-                <text x="412" y="555" font-size="13" font-weight="700" fill="#ffffff">silver_district_health_week</text>
-                <text x="412" y="584" font-size="11" fill="#0f172a">Columns: 15 | New/derived: 4 | Updated: 11</text>
-                <text x="412" y="606" font-size="10" fill="#475569">Joined immunization, surveillance, and community need</text>
-
-                <rect x="400" y="656" width="306" height="92" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="400" y="656" width="306" height="28" rx="11" fill="#64748b"></rect>
-                <text x="412" y="675" font-size="13" font-weight="700" fill="#ffffff">silver_quality_spatial_document</text>
-                <text x="412" y="704" font-size="11" fill="#0f172a">Typed event, spatial, and document context</text>
-                <text x="412" y="726" font-size="10" fill="#475569">Quality events, GeoJSON features, vector chunks</text>
-
-                <rect x="826" y="190" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="826" y="190" width="308" height="30" rx="11" fill="#b45309"></rect>
-                <text x="838" y="210" font-size="13" font-weight="700" fill="#ffffff">dim_date + dim_facility + dim_district</text>
-                <text x="838" y="242" font-size="11" fill="#0f172a">Shared date and location dimensions</text>
-                <text x="838" y="264" font-size="10" fill="#475569">Facility-grain facts carry district_key for direct star joins</text>
-                <text x="838" y="282" font-size="10" fill="#64748b">Autonomous AI Lakehouse Gold dimensions</text>
-
-                <rect x="826" y="332" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="826" y="332" width="308" height="30" rx="11" fill="#b45309"></rect>
-                <text x="838" y="352" font-size="13" font-weight="700" fill="#ffffff">fact_facility_access_daily</text>
-                <text x="838" y="384" font-size="11" fill="#0f172a">Keys: date, facility, pressure band</text>
-                <text x="838" y="406" font-size="10" fill="#475569">Daily waits, occupancy, staffing, satisfaction, risk</text>
-                <text x="838" y="424" font-size="10" fill="#64748b">Facility-day fact table</text>
-
-                <rect x="826" y="474" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="826" y="474" width="308" height="30" rx="11" fill="#b45309"></rect>
-                <text x="838" y="494" font-size="13" font-weight="700" fill="#ffffff">fact_public_health + fact_immunization</text>
-                <text x="838" y="526" font-size="11" fill="#0f172a">Keys: date, district, age group, pressure band</text>
-                <text x="838" y="548" font-size="10" fill="#475569">Pressure, positivity, completion, no-show, doses</text>
-                <text x="838" y="566" font-size="10" fill="#64748b">District-week and equity facts</text>
-
-                <rect x="826" y="616" width="308" height="112" rx="11" fill="#ffedd5" stroke="#b45309" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="826" y="616" width="308" height="30" rx="11" fill="#b45309"></rect>
-                <text x="838" y="636" font-size="13" font-weight="700" fill="#ffffff">quality, spatial, payer, provider, event, doc facts</text>
-                <text x="838" y="668" font-size="11" fill="#0f172a">Keys: shared conformed dimensions</text>
-                <text x="838" y="690" font-size="10" fill="#475569">Claims, disbursement, membership, accreditation, chat context</text>
-                <text x="838" y="708" font-size="10" fill="#64748b">Fact constellation for OAC semantic model</text>
-
-                <rect x="1210" y="194" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="1210" y="194" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
-                <text x="1222" y="213" font-size="13" font-weight="700" fill="#ffffff">Executive Overview</text>
-                <text x="1222" y="244" font-size="11" fill="#0f172a">KPI tiles, district pressure, capacity signals</text>
-                <text x="1222" y="266" font-size="10" fill="#475569">Audience: public-health leadership</text>
-
-                <rect x="1210" y="336" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="1210" y="336" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
-                <text x="1222" y="355" font-size="13" font-weight="700" fill="#ffffff">Access and Capacity</text>
-                <text x="1222" y="386" font-size="11" fill="#0f172a">Wait variance, occupancy, overtime, risk</text>
-                <text x="1222" y="408" font-size="10" fill="#475569">Audience: operations teams</text>
-
-                <rect x="1210" y="478" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="1210" y="478" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
-                <text x="1222" y="497" font-size="13" font-weight="700" fill="#ffffff">Immunization Equity</text>
-                <text x="1222" y="528" font-size="11" fill="#0f172a">Completion, no-show, age-band coverage</text>
-                <text x="1222" y="550" font-size="10" fill="#475569">Audience: campaign and outreach teams</text>
-
-                <rect x="1210" y="620" width="280" height="96" rx="11" fill="#dbeafe" stroke="#2f6fb2" stroke-width="2" filter="url(#cardShadow)"></rect>
-                <rect x="1210" y="620" width="280" height="28" rx="11" fill="#2f6fb2"></rect>
-                <text x="1222" y="639" font-size="13" font-weight="700" fill="#ffffff">Generative Actions</text>
-                <text x="1222" y="670" font-size="11" fill="#0f172a">Summaries for payer, provider, staffing, outreach, quality</text>
-                <text x="1222" y="692" font-size="10" fill="#475569">Audience: incident and planning leads</text>
-              </g>
-
-              <text x="56" y="824" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#475569">Legend:</text>
-              <rect x="112" y="814" width="14" height="14" rx="3" fill="#fef3c7" stroke="#a16207"></rect>
-              <text x="134" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Bronze preserves source values + ingestion metadata</text>
-              <rect x="412" y="814" width="14" height="14" rx="3" fill="#f1f5f9" stroke="#64748b"></rect>
-              <text x="434" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Silver cleans, conforms, validates, and derives reusable measures</text>
-              <rect x="820" y="814" width="14" height="14" rx="3" fill="#ffedd5" stroke="#b45309"></rect>
-              <text x="842" y="826" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#334155">Gold is served from AI Lakehouse as shared dimensions plus business facts</text>
-            </svg>
+          <div class="solution-support" aria-label="Workshop branch overview">
+            <div class="support-item">Shared foundation: all participants land the same raw files in Bronze and derive the same conformed Silver tables first.</div>
+            <div class="support-item">Instructor-led path: the facilitator builds the Claims star schema end to end, then shows how events, maps, and document intelligence enrich the OAC experience.</div>
+            <div class="support-item">DIY path: participants apply the same pattern to the Facility Access Daily star schema using facility operations and population-health pressure context.</div>
           </div>
-          <div class="legend-row" aria-label="Diagram legend">
-            <span class="legend-pill"><span class="legend-dot" style="background:#a16207"></span>Bronze: raw Delta in AIDP</span>
-            <span class="legend-pill"><span class="legend-dot" style="background:#64748b"></span>Silver: conformed Delta in AIDP</span>
-            <span class="legend-pill"><span class="legend-dot" style="background:#b45309"></span>Gold: star schema in AI Lakehouse</span>
-            <span class="legend-pill"><span class="legend-dot" style="background:#2f6fb2"></span>OAC: dashboards and insight actions</span>
-          </div>
-          <div class="schema-map" aria-label="Gold star schema map">
-            <div class="schema-panel">
-              <h3>Shared Dimensions</h3>
-              <ul>
-                <li>dim_date</li>
-                <li>dim_district</li>
-                <li>dim_facility</li>
-                <li>dim_age_group</li>
-                <li>dim_pressure_band</li>
-                <li>dim_document_chunk</li>
-                <li>dim_coverage_program + dim_claim_type</li>
-                <li>dim_member_segment + dim_accreditation_status</li>
-              </ul>
+          <div class="journey-strip" aria-label="End-to-end workshop journey">
+            <div class="journey-block raw">
+              <span class="journey-kicker">Raw landing</span>
+              <strong>8 workshop assets land unchanged</strong>
+              <p>Five CSV files, one JSONL event dataset, one GeoJSON map layer, and one 10-page provider accreditation playbook.</p>
             </div>
-            <div class="schema-panel">
-              <h3>Business Facts</h3>
-              <ul>
-                <li>fact_facility_access_daily + district_key</li>
-                <li>fact_district_public_health_weekly</li>
-                <li>fact_immunization_equity_weekly</li>
-                <li>fact_quality_event_summary + district_key</li>
-                <li>fact_spatial_access_insight</li>
-                <li>fact_capacity_event + fact_stream_wait_time_minute + district_key</li>
-                <li>fact_claims_monthly + fact_disbursement_monthly</li>
-                <li>fact_membership_snapshot + fact_provider_accreditation + district_key</li>
-              </ul>
+            <div class="journey-connector" aria-hidden="true"></div>
+            <div class="journey-block bronze">
+              <span class="journey-kicker">Bronze in AIDP</span>
+              <strong>Source-faithful Delta copies</strong>
+              <p>Bronze preserves file structure, nested payloads, geometry, document metadata, source file, and ingest timestamp for traceability.</p>
             </div>
-            <div class="schema-panel">
-              <h3>OAC Star Views</h3>
-              <ul>
-                <li>mpha_oac_star_access_capacity</li>
-                <li>mpha_oac_star_public_health_pressure</li>
-                <li>mpha_oac_star_immunization_equity</li>
-                <li>mpha_oac_star_spatial_access</li>
-                <li>mpha_oac_star_document_chat_context</li>
-                <li>mpha_oac_star_claims + disbursements</li>
-                <li>mpha_oac_star_membership + provider_accreditation</li>
-              </ul>
+            <div class="journey-connector" aria-hidden="true"></div>
+            <div class="journey-block silver">
+              <span class="journey-kicker">Silver in AIDP</span>
+              <strong>Typed and conformed healthcare data</strong>
+              <p>Silver standardizes dates, amounts, statuses, locations, and operational flags so both Gold models start from the same trusted layer.</p>
+            </div>
+            <div class="journey-connector" aria-hidden="true"></div>
+            <div class="journey-branch">
+              <span class="journey-kicker">Gold in AI Lakehouse</span>
+              <strong>Two teaching paths share one modeling pattern</strong>
+              <div class="journey-paths">
+                <div class="journey-path instructor">
+                  Claims star schema
+                  <small>Instructor-led reference build with event context, district map insight, and document-grounded assistant responses</small>
+                </div>
+                <div class="journey-path diy">
+                  Facility Access Daily star schema
+                  <small>Participant-built challenge using the same dimensional design approach with facility and population-pressure context</small>
+                </div>
+              </div>
+            </div>
+            <div class="journey-connector" aria-hidden="true"></div>
+            <div class="journey-block serve">
+              <span class="journey-kicker">Business insights</span>
+              <strong>Dashboards, maps, and chat with documents</strong>
+              <p>OAC surfaces claims insights, spatial analysis highlights access pressure, and vector search powers document-grounded Q&amp;A.</p>
             </div>
           </div>
+
+          <div class="workflow-board" aria-label="Bronze to Silver lineage">
+            <div class="workflow-board-head">
+              <h3>Step 1 · Bronze to Silver in RDBMS-style lineage</h3>
+              <p>Each row reads left to right: raw Bronze table, the transformation logic applied in AIDP, and the reusable Silver output that later feeds Gold.</p>
+            </div>
+            <div class="workflow-grid">
+              <div class="workflow-header" aria-hidden="true">
+                <div class="workflow-stage-head">Use-case lane</div>
+                <div class="workflow-stage-head">Bronze</div>
+                <div></div>
+                <div class="workflow-stage-head">Transformations and derived columns</div>
+                <div></div>
+                <div class="workflow-stage-head">Silver</div>
+              </div>
+
+              <div class="lineage-row">
+                <div class="lineage-domain">
+                  <strong>Claims intelligence, operations context, and policy grounding</strong>
+                  <span>Core instructor-led lane that becomes the Claims star schema plus OAC map and assistant enrichments.</span>
+                </div>
+                <div class="workflow-card bronze">
+                  <span class="workflow-meta">Bronze assets</span>
+                  <h4>bronze_claims_membership_disbursement + bronze_facility_capacity_events + geojson + accreditation_playbook</h4>
+                  <div class="chip-row">
+                    <span class="data-chip">service_date</span>
+                    <span class="data-chip">district_id</span>
+                    <span class="data-chip">program_code</span>
+                    <span class="data-chip">claim_type</span>
+                    <span class="data-chip">event_timestamp</span>
+                    <span class="data-chip">triage payload</span>
+                    <span class="data-chip">GeoJSON geometry</span>
+                    <span class="data-chip">DOCX sections</span>
+                  </div>
+                  <p>Claims, event, map, and document sources land unchanged so the workshop can show how structured and unstructured context comes together later.</p>
+                </div>
+                <div class="workflow-arrow" aria-hidden="true"></div>
+                <div class="workflow-card transform">
+                  <span class="workflow-meta">AIDP logic</span>
+                  <h4>Standardize claims and prepare contextual enrichments</h4>
+                  <ul class="workflow-list">
+                    <li>Cast claim dates and financial amounts, standardize statuses, and align program codes to reference values.</li>
+                    <li>Explode JSON events and derive reusable operational totals such as surge counts, supply alerts, and triage volume.</li>
+                    <li>Preserve district geometry for map joins and chunk the playbook into vector-ready sections for assistant grounding.</li>
+                  </ul>
+                  <div class="chip-row">
+                    <span class="derive-chip">claim_status_std</span>
+                    <span class="derive-chip">payment_status_std</span>
+                    <span class="derive-chip">service_month_start</span>
+                    <span class="derive-chip">surge_event_count</span>
+                    <span class="derive-chip">supply_alert_count</span>
+                    <span class="derive-chip">chunk_id</span>
+                  </div>
+                </div>
+                <div class="workflow-arrow" aria-hidden="true"></div>
+                <div class="workflow-card silver">
+                  <span class="workflow-meta">Silver tables</span>
+                  <h4>silver_claims_membership_disbursement + silver_facility_capacity_event + silver_spatial_feature + silver_playbook_chunk</h4>
+                  <p>Transaction-grain claims, district-ready event telemetry, spatial features, and vector-ready document chunks line up on common district and time context.</p>
+                </div>
+              </div>
+
+              <div class="lineage-row">
+                <div class="lineage-domain">
+                  <strong>Facility access and population-health pressure</strong>
+                  <span>Operational lane that supports the participant-built Facility Access Daily star schema with demand and pressure context.</span>
+                </div>
+                <div class="workflow-card bronze">
+                  <span class="workflow-meta">Bronze tables</span>
+                  <h4>bronze_facility_operations_daily + bronze_facility_provider_master + bronze_population_health_weekly</h4>
+                  <div class="chip-row">
+                    <span class="data-chip">facility_id</span>
+                    <span class="data-chip">outpatient_visits</span>
+                    <span class="data-chip">avg_ed_wait_minutes</span>
+                    <span class="data-chip">bed_occupancy_rate</span>
+                    <span class="data-chip">provider_target_wait</span>
+                    <span class="data-chip">week_start_date</span>
+                    <span class="data-chip">missed_appointments</span>
+                    <span class="data-chip">doses_administered</span>
+                  </div>
+                  <p>Daily facility operations, provider accreditation context, and weekly population-health signals stay append-friendly in Bronze.</p>
+                </div>
+                <div class="workflow-arrow" aria-hidden="true"></div>
+                <div class="workflow-card transform">
+                  <span class="workflow-meta">AIDP logic</span>
+                  <h4>Blend operational access with district demand pressure</h4>
+                  <ul class="workflow-list">
+                    <li>Join provider targets and accreditation context to facility-day operations.</li>
+                    <li>Derive wait variance, occupancy pressure, and access-risk indicators at facility-day grain.</li>
+                    <li>Roll up population-health records to district-week and derive a pressure index that explains demand-side strain.</li>
+                  </ul>
+                  <div class="chip-row">
+                    <span class="derive-chip">ed_wait_variance_minutes</span>
+                    <span class="derive-chip">outpatient_wait_variance_minutes</span>
+                    <span class="derive-chip">high_occupancy_flag</span>
+                    <span class="derive-chip">access_risk_score</span>
+                    <span class="derive-chip">public_health_pressure_index</span>
+                  </div>
+                </div>
+                <div class="workflow-arrow" aria-hidden="true"></div>
+                <div class="workflow-card silver">
+                  <span class="workflow-meta">Silver tables</span>
+                  <h4>silver_facility_day + silver_facility_provider + silver_population_health_week + silver_district_health_week</h4>
+                  <p>Conformed facility-day operations and district pressure views become the foundation for the Facility Access Daily star schema challenge.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="workflow-board" aria-label="Silver to Gold branch flow">
+            <div class="workflow-board-head">
+              <h3>Step 2 · Silver to Gold in two branches</h3>
+              <p>The workshop branches only after Silver is complete. The instructor demonstrates the Claims star schema first, then participants repeat the same logic for the Facility Access Daily star schema.</p>
+            </div>
+            <div class="branch-grid">
+              <div class="shared-foundation">
+                <span class="workflow-meta">Shared Silver foundation</span>
+                <h4>Every participant starts from the same trusted layer</h4>
+                <div class="shared-stack">
+                  <div class="shared-source">
+                    <strong>silver_claims_membership_disbursement + silver_facility_capacity_event</strong>
+                    <span>Claims, member status, payment context, and district-level event signals such as surge counts and supply alerts.</span>
+                  </div>
+                  <div class="shared-source">
+                    <strong>silver_spatial_feature + silver_playbook_chunk</strong>
+                    <span>District geometry for map visuals and vectorized playbook chunks for assistant grounding.</span>
+                  </div>
+                  <div class="shared-source">
+                    <strong>silver_facility_day + silver_facility_provider + silver_district_health_week</strong>
+                    <span>Facility-day access metrics, provider context, and district demand pressure for the participant challenge.</span>
+                  </div>
+                </div>
+                <p class="shared-note">Quality rules run before Gold so measures, keys, dates, and amounts are presentation-safe for the live workshop.</p>
+              </div>
+
+              <div class="branch-column-card instructor">
+                <div class="branch-top">
+                  <div>
+                    <span class="branch-pill">Instructor-led</span>
+                    <h4>Claims star schema build</h4>
+                  </div>
+                  <div class="branch-outcome">Provided OAC workbook, hotspot map, and assistant</div>
+                </div>
+                <div class="branch-stack">
+                  <div class="branch-step-card">
+                    <span class="step-chip">1</span>
+                    <strong>Build the pure Gold star schema first</strong>
+                    <p>Use <code>silver_claims_membership_disbursement</code> and define one Gold row per service month, district, coverage program, and claim type.</p>
+                  </div>
+                  <div class="branch-step-card">
+                    <span class="step-chip">2</span>
+                    <strong>Derive and aggregate star-schema measures</strong>
+                    <div class="fact-callout">mpha_fact_claims_monthly</div>
+                    <div class="chip-row">
+                      <span class="measure-chip">claims_submitted</span>
+                      <span class="measure-chip">approved_claims</span>
+                      <span class="measure-chip">denied_claims</span>
+                      <span class="measure-chip">pending_claims</span>
+                      <span class="measure-chip">total_submitted_amount</span>
+                      <span class="measure-chip">total_paid_amount</span>
+                      <span class="measure-chip">avg_processing_days</span>
+                      <span class="measure-chip">denial_rate</span>
+                      <span class="derive-chip">mpha_claims_event_context_monthly</span>
+                      <span class="derive-chip">surge_event_count</span>
+                      <span class="derive-chip">supply_alert_count</span>
+                    </div>
+                    <p>OAC charts use the star schema as the core structured model, while a monthly event-context table adds operational signals at a compatible district and month grain.</p>
+                  </div>
+                  <div class="branch-step-card">
+                    <span class="step-chip">3</span>
+                    <strong>Attach dimensions, map context, and document grounding</strong>
+                    <div class="chip-row">
+                      <span class="dimension-chip">mpha_dim_date</span>
+                      <span class="dimension-chip">mpha_dim_district</span>
+                      <span class="dimension-chip">mpha_dim_coverage_program</span>
+                      <span class="dimension-chip">mpha_dim_claim_type</span>
+                      <span class="derive-chip">district_geometry</span>
+                      <span class="derive-chip">playbook_grounding</span>
+                    </div>
+                    <p><code>mpha_dim_district</code> carries the geography needed for OAC maps, while assistant answers stay grounded in <code>silver_playbook_chunk</code> using the current dashboard filter context.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="branch-column-card diy">
+                <div class="branch-top">
+                  <div>
+                    <span class="branch-pill">DIY challenge</span>
+                    <h4>Facility Access Daily star schema</h4>
+                  </div>
+                  <div class="branch-outcome">Participants build the dashboard themselves</div>
+                </div>
+                <div class="branch-stack">
+                  <div class="branch-step-card">
+                    <span class="step-chip">1</span>
+                    <strong>Select the Silver source and Gold grain</strong>
+                    <p>Use <code>silver_facility_day</code> with conformed facility context and district pressure context, and keep one Gold row per facility per day.</p>
+                  </div>
+                  <div class="branch-step-card">
+                    <span class="step-chip">2</span>
+                    <strong>Promote access KPIs into the Gold star schema</strong>
+                    <div class="fact-callout">mpha_fact_facility_access_daily</div>
+                    <div class="chip-row">
+                      <span class="measure-chip">outpatient_visits</span>
+                      <span class="measure-chip">avg_ed_wait_minutes</span>
+                      <span class="measure-chip">ed_wait_variance_minutes</span>
+                      <span class="measure-chip">outpatient_wait_variance_minutes</span>
+                      <span class="measure-chip">high_occupancy_flag</span>
+                      <span class="measure-chip">access_risk_score</span>
+                      <span class="derive-chip">public_health_pressure_index</span>
+                    </div>
+                    <p>This becomes the participant proof-of-understanding exercise, using the same logic style shown in the Claims star schema walkthrough.</p>
+                  </div>
+                  <div class="branch-step-card">
+                    <span class="step-chip">3</span>
+                    <strong>Attach the daily access dimensions</strong>
+                    <div class="chip-row">
+                      <span class="dimension-chip">mpha_dim_date</span>
+                      <span class="dimension-chip">mpha_dim_facility</span>
+                      <span class="dimension-chip">mpha_dim_district</span>
+                      <span class="dimension-chip">mpha_dim_pressure_band</span>
+                    </div>
+                    <p>Participants then design the facility dashboard on their own, using district pressure and access metrics to tell the service-demand story.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="schema-map" aria-label="Gold star schema options">
+            <div class="schema-panel instructor">
+              <h3>Step 3A · Claims star schema in Gold</h3>
+              <div class="star-layout">
+                <div class="star-box top-left">
+                  <strong>mpha_dim_date</strong>
+                  <span>service_month_date_key, month_name, fiscal_qtr</span>
+                </div>
+                <div class="star-box top-right">
+                  <strong>mpha_dim_district</strong>
+                  <span>district_key, district_name, zone_name</span>
+                </div>
+                <div class="star-box star-fact">
+                  <span class="workflow-meta">Fact table</span>
+                  <strong>mpha_fact_claims_monthly</strong>
+                  <span class="fact-grain">Grain: one row per month, district, program, and claim type</span>
+                  <div class="chip-row">
+                    <span class="measure-chip">claims_submitted</span>
+                    <span class="measure-chip">approved_claims</span>
+                    <span class="measure-chip">denied_claims</span>
+                    <span class="measure-chip">total_paid_amount</span>
+                    <span class="measure-chip">avg_processing_days</span>
+                    <span class="measure-chip">denial_rate</span>
+                  </div>
+                </div>
+                <div class="star-box bottom-left">
+                  <strong>mpha_dim_coverage_program</strong>
+                  <span>program_key, program_name, plan_tier</span>
+                </div>
+                <div class="star-box bottom-right">
+                  <strong>mpha_dim_claim_type</strong>
+                  <span>claim_type_key, claim_type_name, clinical_group</span>
+                </div>
+              </div>
+              <ul>
+                <li>Guided build used by the instructor as the reference star schema pattern.</li>
+                <li>Feeds the interactive Claims star schema workbook, while district geometry and monthly event context enrich the OAC experience around it.</li>
+                <li>Document-grounded assistant answers stay outside the fact table and use vectorized playbook chunks as a sidecar insight service.</li>
+              </ul>
+            </div>
+            <div class="schema-panel diy">
+              <h3>Step 3B · Facility Access Daily star schema in Gold</h3>
+              <div class="star-layout">
+                <div class="star-box top-left">
+                  <strong>mpha_dim_date</strong>
+                  <span>date_key, day_name, service_week</span>
+                </div>
+                <div class="star-box top-right">
+                  <strong>mpha_dim_facility</strong>
+                  <span>facility_key, facility_name, facility_type</span>
+                </div>
+                <div class="star-box star-fact">
+                  <span class="workflow-meta">Fact table</span>
+                  <strong>mpha_fact_facility_access_daily</strong>
+                  <span class="fact-grain">Grain: one row per facility per day</span>
+                  <div class="chip-row">
+                    <span class="measure-chip">outpatient_visits</span>
+                    <span class="measure-chip">avg_ed_wait_minutes</span>
+                    <span class="measure-chip">ed_wait_variance_minutes</span>
+                    <span class="measure-chip">high_occupancy_flag</span>
+                    <span class="measure-chip">access_risk_score</span>
+                  </div>
+                </div>
+                <div class="star-box bottom-left">
+                  <strong>mpha_dim_district</strong>
+                  <span>district_key, district_name, population_band</span>
+                </div>
+                <div class="star-box bottom-right">
+                  <strong>mpha_dim_pressure_band</strong>
+                  <span>pressure_band_key, pressure_band_name, threshold_range</span>
+                </div>
+              </div>
+              <ul>
+                <li>Participant-owned challenge that checks whether the Claims star schema modeling pattern was understood.</li>
+                <li>Uses the same star schema principles but leaves the dashboard design and storytelling to the workshop team.</li>
+                <li>Pairs naturally with the spatial insight extension by joining district and facility geography.</li>
+              </ul>
+            </div>
+          </div>
+
           <div class="medallion-details" aria-label="Medallion data and logic">
             <div class="medallion-card">
-              <h3>Bronze data and logic</h3>
-              <p>Created in AIDP from the raw object-storage landing zone.</p>
+              <h3>Why the shared Silver matters</h3>
+              <p>Everyone completes the same Bronze and Silver work before the branch. That makes the instructor-led demo and the DIY challenge feel like one coherent pattern, not two different solutions.</p>
               <ul>
-                <li>Tables: CSV operations, claims, disbursement, membership, provider accreditation, JSON capacity events, GeoJSON spatial features, and playbook chunks.</li>
-                <li>Logic: preserve raw values, nested payloads, geometry, source file, ingest batch, timestamp, and reject only unreadable rows.</li>
+                <li>Bronze preserves source structure, nested payloads, geometry, and document lineage.</li>
+                <li>Silver adds typed columns, conformed statuses, keys, and reusable healthcare measures.</li>
               </ul>
             </div>
             <div class="medallion-card">
-              <h3>Silver data and logic</h3>
-              <p>Created in AIDP as conformed, validated Delta tables.</p>
+              <h3>Claims star schema as the teaching pattern</h3>
+              <p>The Gold claims model is intentionally compact so the room can focus on business logic, star schema thinking, and how those measures surface in OAC.</p>
               <ul>
-                <li>Tables: facility, daily operations, immunization, district health, quality, claims, disbursement, membership, accreditation, capacity event, spatial, and playbook tables.</li>
-                <li>Logic: parse dates and JSON, extract GeoJSON features, validate rates and amounts, join program and member segments, deduplicate keys, and calculate operational flags.</li>
+                <li>Monthly aggregation makes the measures easy to explain and validate live.</li>
+                <li>The provided dashboard shows how a pure star schema can be enriched with map context, event context, and document-grounded assistant answers.</li>
               </ul>
             </div>
             <div class="medallion-card">
-              <h3>Gold data and logic</h3>
-              <p>Created in AI Lakehouse as shared dimensions, fact tables, bridge tables, and OAC-ready star views.</p>
+              <h3>Facility Access Daily star schema as the proof point</h3>
+              <p>The second Gold model lets participants prove they can repeat the pattern on their own while still benefiting from shared spatial, JSON, and document-grounded assets.</p>
               <ul>
-                <li>Tables: shared dimensions, coverage program, claim type, member segment, accreditation status, business facts, and chat bridge tables.</li>
-                <li>Logic: reuse conformed dimensions, publish payer/provider fact tables, expose star views, and preserve flat marts only for quick validation.</li>
+                <li>Spatial joins can reveal high-pressure districts and facility hotspots on a map.</li>
+                <li>Document chunks support an assistant flow for provider accreditation guidance and policy Q&amp;A.</li>
               </ul>
-            </div>
-          </div>
-          <div class="solution-support" aria-label="Architecture support capabilities">
-            <div class="support-item">Data quality checks protect dates, rates, occupancy values, and row-count expectations.</div>
-            <div class="support-item">AIDP owns Bronze and Silver transformation logic; AI Lakehouse owns the Gold star schema and OAC star views.</div>
-            <div class="support-item">Synthetic claim and membership identifiers keep the workshop free of names, addresses, medical-record numbers, and PHI.</div>
-          </div>
-          <div class="architecture">
-            <div class="step">
-              <span class="step-num">1</span>
-              <h3>Raw Landing</h3>
-              <p>Upload five CSV sources, one JSONL source, one GeoJSON source, and one document into the landing area.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">2</span>
-              <h3>Bronze in AIDP</h3>
-              <p>Convert raw files to schema-preserving Delta tables with ingest metadata.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">3</span>
-              <h3>Silver in AIDP</h3>
-              <p>Clean, validate, deduplicate, conform references, and calculate row-level flags.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">4</span>
-              <h3>Gold in AI Lakehouse</h3>
-              <p>Publish shared dimensions, business facts, bridge tables, KPI summaries, and OAC-ready star views.</p>
-            </div>
-            <div class="step">
-              <span class="step-num">5</span>
-              <h3>Business Insights</h3>
-              <p>Use OAC and generative prompts to drive staffing, outreach, and quality actions.</p>
             </div>
           </div>
         </div>
@@ -2488,68 +3415,79 @@
         <div class="wrap">
           <div class="section-head">
             <div class="section-label">Workshop outline</div>
-            <h2>Core labs plus optional real-time analytics extensions.</h2>
+            <h2>Core labs with a guided Claims star schema and a participant-owned Facility Access challenge.</h2>
           </div>
           <div class="labs">
             <article class="lab-card">
               <div class="lab-top">
                 <div class="lab-kicker">Lab 1 · 45 minutes</div>
-                <h3>Create the healthcare lakehouse</h3>
-                <p>Prepare the environment, upload raw MPHA operations and payer/provider datasets, and profile the source files.</p>
+                <h3>Create the public healthcare lakehouse</h3>
+                <p>Prepare the landing zone, upload the compact raw dataset pack, and validate the workshop-ready source inventory.</p>
               </div>
               <ul>
-                <li>Create an object storage folder.</li>
-                <li>Upload five CSV files, one JSONL file, one GeoJSON file, and one DOCX file.</li>
-                <li>Confirm claims, disbursement, membership, and accreditation row counts.</li>
-                <li>Read and validate row counts.</li>
+                <li>Create the object storage and landing folder structure.</li>
+                <li>Upload five CSV files, one JSONL file, one GeoJSON file, and one DOCX playbook.</li>
+                <li>Validate file names, row counts, and source lineage tags.</li>
               </ul>
             </article>
             <article class="lab-card">
               <div class="lab-top">
                 <div class="lab-kicker">Lab 2 · 75 minutes</div>
                 <h3>Build Bronze and Silver in AIDP</h3>
-                <p>Use Spark and Delta Lake to ingest raw data, conform references, validate fields, and derive reusable measures.</p>
+                <p>Use Spark and Delta Lake to ingest raw data, type the records, conform references, and derive shared healthcare measures.</p>
               </div>
               <ul>
-                <li>Create Bronze Delta tables.</li>
-                <li>Create Silver conformed tables.</li>
-                <li>Stage dimensional Gold facts, dimensions, spatial, event, and document-chat outputs.</li>
+                <li>Create Bronze Delta tables for all raw sources.</li>
+                <li>Build Silver conformed tables with derived claims, access, and event metrics.</li>
+                <li>Prepare the shared foundation used by both Gold teaching paths.</li>
               </ul>
             </article>
             <article class="lab-card">
               <div class="lab-top">
                 <div class="lab-kicker">Lab 3 · 60 minutes</div>
-                <h3>Set up dimensional Gold and gather insights</h3>
-                <p>Create the AI Lakehouse star schema, build OAC canvases, and generate leadership narratives.</p>
+                <h3>Instructor-led Claims star schema and OAC workbook</h3>
+                <p>Aggregate the shared Silver claims data into a Gold star schema in AI Lakehouse and build the provided Claims star schema workbook.</p>
               </div>
               <ul>
-                <li>Load Gold dimensions and facts.</li>
-                <li>Create interactive OAC tabs and filters.</li>
-                <li>Summarize actions from metrics and playbook chunks.</li>
+                <li>Create `mpha_fact_claims_monthly` and the four conformed claims dimensions.</li>
+                <li>Publish OAC-ready claims measures, filters, and prompts.</li>
+                <li>Walk through the reference workbook as the pattern participants will reuse later.</li>
               </ul>
             </article>
             <article class="lab-card">
               <div class="lab-top">
-                <div class="lab-kicker">Optional Lab 4 · 45-60 minutes</div>
-                <h3>Real-time analytics with GoldenGate</h3>
-                <p>Capture source operational changes and publish real-time Gold serving objects.</p>
+                <div class="lab-kicker">Lab 4 · 45 minutes</div>
+                <h3>DIY Facility Access Daily star schema challenge</h3>
+                <p>Participants apply the same Gold star schema modeling pattern to Facility Access Daily and design their own dashboard experience.</p>
               </div>
               <ul>
-                <li>Configure source change capture.</li>
-                <li>Deliver CDC to stream, storage, or AI Lakehouse staging.</li>
-                <li>Feed the real-time OAC dashboard tab.</li>
+                <li>Create `mpha_fact_facility_access_daily` from the shared Silver facility tables.</li>
+                <li>Join directly to date, facility, district, and pressure-band dimensions.</li>
+                <li>Build a participant-owned dashboard without a prebuilt OAC page.</li>
               </ul>
             </article>
             <article class="lab-card">
               <div class="lab-top">
                 <div class="lab-kicker">Optional Lab 5 · 45-60 minutes</div>
-                <h3>Stream analytics with Kafka via AIDP</h3>
-                <p>Process wait-time telemetry through a streaming medallion flow.</p>
+                <h3>Claims denial risk scoring</h3>
+                <p>Use curated claims, event context, and provider-accreditation signals to score likely denial hotspots and prioritize manual review.</p>
               </div>
               <ul>
-                <li>Publish Kafka-compatible wait-time events.</li>
-                <li>Create streaming Bronze, Silver, and Gold layers.</li>
-                <li>Monitor live pressure bands in OAC.</li>
+                <li>Derive ML-ready features from claims, event, and accreditation context.</li>
+                <li>Publish `denial_risk_score`, `likely_denial_bucket`, and `review_priority` outputs.</li>
+                <li>Show how scored slices extend the Claims star schema story in OAC.</li>
+              </ul>
+            </article>
+            <article class="lab-card">
+              <div class="lab-top">
+                <div class="lab-kicker">Optional Lab 6 · 45-60 minutes</div>
+                <h3>Claims and Policy Copilot</h3>
+                <p>Build a copilot that combines SQL over the Claims star schema with grounded answers from the vectorized MPHA playbook.</p>
+              </div>
+              <ul>
+                <li>Create a SQL tool over claims, disbursement, membership, and accreditation Gold objects.</li>
+                <li>Create a RAG tool over the document knowledge base for policy grounding.</li>
+                <li>Demonstrate a Claims and Policy Copilot flow for claims leaders and policy teams.</li>
               </ul>
             </article>
           </div>
@@ -2560,10 +3498,11 @@
         <div class="wrap">
           <div class="section-head">
             <div class="section-label">Interactive OAC dashboard wireframe</div>
-            <h2>Gold-layer dashboards shaped like an Oracle Analytics workbook.</h2>
+            <h2>Instructor-led Claims star schema workbook in an Oracle Analytics-style shell.</h2>
             <p class="lead">
-              The OAC experience uses Gold serving objects from AI Lakehouse and provides working filters across
-              executive, operations, immunization, surveillance, payer/provider oversight, spatial, document-chat, and real-time dashboard tabs.
+              This reference workbook is built only for the Claims star schema path, using `mpha_fact_claims_monthly`
+              with directly joined date, district, coverage-program, and claim-type dimensions.
+              The Facility Access Daily dashboard is intentionally left for participants to build on their own after the guided walkthrough.
             </p>
           </div>
           <div class="oac-shell" aria-label="Oracle Analytics dashboard wireframe">
@@ -2571,8 +3510,8 @@
               <div class="oac-nav">
                 <button class="top-icon" type="button" aria-label="Back">&larr;</button>
                 <div class="oac-title-block">
-                  <div class="oac-title">PublicHealthcareAIDPWorkbook</div>
-                  <div class="oac-status" id="oacStatus">Gold star schema | Interactive preview</div>
+                  <div class="oac-title">PublicHealthcareClaimsStarSchema</div>
+                  <div class="oac-status" id="oacStatus">Claims star schema | Instructor-led preview</div>
                 </div>
               </div>
               <div class="oac-toolbar" aria-label="Workbook actions">
@@ -2600,39 +3539,40 @@
                     </select>
                   </div>
                   <div class="filter-box">
-                    <label for="filterFacilityType">Facility Type</label>
-                    <select id="filterFacilityType">
+                    <label for="filterProgram">Program</label>
+                    <select id="filterProgram">
                       <option value="All">All</option>
-                      <option value="Hospital">Hospital</option>
-                      <option value="Urgent Care">Urgent Care</option>
-                      <option value="Community Clinic">Community Clinic</option>
+                      <option value="Universal Care">Universal Care</option>
+                      <option value="Community Health">Community Health</option>
+                      <option value="Senior Support">Senior Support</option>
                     </select>
                   </div>
                   <div class="filter-box">
-                    <label for="filterPressure">Pressure Band</label>
-                    <select id="filterPressure">
+                    <label for="filterClaimType">Claim Type</label>
+                    <select id="filterClaimType">
                       <option value="All">All</option>
-                      <option value="High">High</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Watch">Watch</option>
+                      <option value="Inpatient">Inpatient</option>
+                      <option value="Outpatient">Outpatient</option>
+                      <option value="Pharmacy">Pharmacy</option>
+                      <option value="Diagnostics">Diagnostics</option>
                     </select>
                   </div>
                   <div class="filter-box">
-                    <label for="filterAge">Age Group</label>
-                    <select id="filterAge">
+                    <label for="filterFundingSource">Funding</label>
+                    <select id="filterFundingSource">
                       <option value="All">All</option>
-                      <option value="0-17">0-17</option>
-                      <option value="18-49">18-49</option>
-                      <option value="50-64">50-64</option>
-                      <option value="65+">65+</option>
+                      <option value="Treasury Grant">Treasury Grant</option>
+                      <option value="Regional Subsidy">Regional Subsidy</option>
+                      <option value="Member Co-Funding">Member Co-Funding</option>
                     </select>
                   </div>
                   <div class="filter-box">
-                    <label for="filterPeriod">Reporting Period</label>
+                    <label for="filterPeriod">Period</label>
                     <select id="filterPeriod">
-                      <option value="H1">Jan-Jun 2025</option>
-                      <option value="Jun">June 2025</option>
-                      <option value="Latest">Latest reporting week</option>
+                      <option value="All">Q2 2025</option>
+                      <option value="2025-04">April 2025</option>
+                      <option value="2025-05">May 2025</option>
+                      <option value="2025-06">June 2025</option>
                     </select>
                   </div>
                   <div class="filter-box filter-action-box">
@@ -2641,289 +3581,164 @@
                   </div>
                 </div>
                 <div class="dashboard-tabs" role="tablist" aria-label="Dashboard tabs">
-                  <button class="dashboard-tab active" type="button" data-tab="executive">Executive Overview</button>
-                  <button class="dashboard-tab" type="button" data-tab="access">Access and Capacity</button>
-                  <button class="dashboard-tab" type="button" data-tab="immunization">Immunization Equity</button>
-                  <button class="dashboard-tab" type="button" data-tab="surveillance">Surveillance and Quality</button>
-                  <button class="dashboard-tab" type="button" data-tab="spatial">Spatial Insights</button>
-                  <button class="dashboard-tab" type="button" data-tab="chat">Chat with Data and Documents</button>
-                  <button class="dashboard-tab" type="button" data-tab="realtime">Real-Time Operations</button>
-                  <button class="dashboard-tab" type="button" data-tab="payer">Claims, Disbursement, Membership & Accreditation</button>
+                  <button class="dashboard-tab active" type="button" data-tab="overview">Claims Overview</button>
+                  <button class="dashboard-tab" type="button" data-tab="denial">Denial Analysis</button>
+                  <button class="dashboard-tab" type="button" data-tab="program">Program Performance</button>
+                  <button class="dashboard-tab" type="button" data-tab="mix">Claim Type Mix</button>
                 </div>
                 <div class="oac-head">
                   <div>
-                    <h3 id="dashboardTitle">Executive Overview</h3>
-                    <div class="oac-sub" id="dashboardSubtitle">Gold star schema: facts join directly to conformed dimensions and OAC-ready star views.</div>
+                    <h3 id="dashboardTitle">Claims Overview</h3>
+                    <div class="oac-sub" id="dashboardSubtitle">Instructor-led Claims star schema workbook sourced from a single fact table and four conformed dimensions.</div>
                   </div>
-                  <div class="oac-action" id="filterSummary">All districts | All facility types</div>
+                  <div class="oac-action" id="filterSummary">District: All | Program: All | Claim Type: All</div>
                 </div>
                 <div class="wire-kpis">
                   <div class="wire-card wire-kpi blue">
-                    <div class="label">Outpatient Visits</div>
-                    <div class="value" id="kpiVisits">641K</div>
-                    <div class="delta" id="kpiVisitsDelta">Facility-day fact</div>
+                    <div class="label">Claims Submitted</div>
+                    <div class="value" id="kpiClaims">0</div>
+                    <div class="delta" id="kpiClaimsDelta">Approved and pending in current scope</div>
                   </div>
                   <div class="wire-card wire-kpi red">
-                    <div class="label">Avg ED Wait</div>
-                    <div class="value" id="kpiWait">67 min</div>
-                    <div class="delta">Target variance visible</div>
+                    <div class="label">Denied Claims</div>
+                    <div class="value" id="kpiDenied">0</div>
+                    <div class="delta" id="kpiDeniedDelta">High-denial slices in current scope</div>
                   </div>
                   <div class="wire-card wire-kpi amber">
-                    <div class="label">High Occupancy Days</div>
-                    <div class="value" id="kpiOccupancy">219</div>
-                    <div class="delta">Capacity action queue</div>
+                    <div class="label">Denial Rate</div>
+                    <div class="value" id="kpiDenialRate">0.0%</div>
+                    <div class="delta" id="kpiDenialRateDelta">Worst district signal</div>
                   </div>
                   <div class="wire-card wire-kpi green">
-                    <div class="label">Doses Administered</div>
-                    <div class="value" id="kpiDoses">114K</div>
-                    <div class="delta" id="kpiDosesDelta">Campaign equity mart</div>
+                    <div class="label">Submitted Amount</div>
+                    <div class="value" id="kpiSubmitted">$0</div>
+                    <div class="delta" id="kpiSubmittedDelta">Total billed value in scope</div>
                   </div>
                   <div class="wire-card wire-kpi purple">
-                    <div class="label">Peak Pressure Index</div>
-                    <div class="value" id="kpiPressure">68.5</div>
-                    <div class="delta">District weekly fact</div>
+                    <div class="label">Paid Amount</div>
+                    <div class="value" id="kpiPaid">$0</div>
+                    <div class="delta" id="kpiPaidDelta">Payment yield and funding mix</div>
                   </div>
                   <div class="wire-card wire-kpi teal">
-                    <div class="label">Providers at Risk</div>
-                    <div class="value" id="kpiAccreditation">3</div>
-                    <div class="delta">Accreditation watchlist</div>
+                    <div class="label">Avg Processing Days</div>
+                    <div class="value" id="kpiCycle">0.0</div>
+                    <div class="delta" id="kpiCycleDelta">Slowest claim type in scope</div>
                   </div>
                 </div>
 
-                <section class="dashboard-panel active" data-panel="executive">
+                <section class="dashboard-panel active" data-panel="overview">
                   <div class="wire-grid-3">
                     <div class="wire-card wire-panel">
-                      <h4>Public-Health Pressure by District</h4>
-                      <div class="wire-hint">Fact public health joined to district and pressure band</div>
-                      <div class="bar-chart" id="pressureBars" aria-label="Public health pressure chart"></div>
+                      <h4>Claims submitted by district</h4>
+                      <div class="wire-hint">This tab stays close to the Gold star schema grain: district, month, program, and claim type.</div>
+                      <div class="bar-chart" id="overviewDistrictBars"></div>
                     </div>
                     <div class="wire-card wire-panel">
-                      <h4>Access Risk Mix</h4>
-                      <div class="wire-hint">Facility access fact joined to facility and district dimensions</div>
-                      <div class="donut-chart" aria-hidden="true">
-                        <div class="donut-legend" id="riskLegend"></div>
-                      </div>
+                      <h4>Paid amount by month</h4>
+                      <div class="wire-hint">Use the month dimension to compare cash realization across reporting periods.</div>
+                      <div class="bar-chart" id="overviewMonthBars"></div>
                     </div>
                     <div class="wire-card wire-panel">
-                      <h4>Occupancy and Overtime Trend</h4>
-                      <div class="wire-hint">Daily capacity and staffing view</div>
-                      <div class="line-chart" aria-hidden="true">
-                        <svg viewBox="0 0 360 190" preserveAspectRatio="none">
-                          <path d="M28 150 L332 150" stroke="#e4e7ec" stroke-width="2"></path>
-                          <path d="M28 132 C70 115, 98 126, 130 94 S202 88, 238 62 S292 82, 332 54" fill="none" stroke="#c74634" stroke-width="4"></path>
-                          <path d="M28 142 C74 134, 106 120, 140 112 S204 96, 244 98 S292 86, 332 76" fill="none" stroke="#2f6fb2" stroke-width="4"></path>
-                          <circle cx="238" cy="62" r="5" fill="#c74634"></circle>
-                          <circle cx="332" cy="76" r="5" fill="#2f6fb2"></circle>
-                        </svg>
-                      </div>
+                      <h4>Overview metrics</h4>
+                      <div class="wire-hint">Reference talking points for the instructor-led walkthrough.</div>
+                      <ul class="metric-list" id="overviewMetrics"></ul>
                     </div>
                   </div>
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>Facility Action Queue</h4>
-                      <div class="wire-hint">Capacity, wait-time, quality, and outreach interventions</div>
-                      <div class="wire-table">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>Facility / District</th>
-                              <th>Signal</th>
-                              <th>Fact Measure</th>
-                              <th>Priority</th>
-                              <th>Recommended Action</th>
-                            </tr>
-                          </thead>
-                          <tbody id="actionRows"></tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Generative Insight Draft</h4>
-                      <div class="wire-hint">Narrative generated from dimensional Gold star views</div>
-                      <p class="lead" id="executiveNarrative" style="font-size:0.94rem"></p>
-                      <div class="filter-box"><span>Prompt</span>Summarize top pressure areas and recommended actions.</div>
-                      <div class="filter-box"><span>Source</span>MPHA_OAC_EXECUTIVE_OVERVIEW + MPHA_OAC_SPATIAL_ACCESS</div>
-                    </div>
+                  <div class="wire-card wire-panel wire-table">
+                    <h4>Claims Overview Table</h4>
+                    <table>
+                      <thead>
+                        <tr><th>District</th><th>Claims</th><th>Denied</th><th>Denial Rate</th><th>Paid Amount</th><th>Follow-up</th></tr>
+                      </thead>
+                      <tbody id="overviewRows"></tbody>
+                    </table>
                   </div>
                 </section>
 
-                <section class="dashboard-panel" data-panel="access">
-                  <div class="wire-grid-2">
+                <section class="dashboard-panel" data-panel="denial">
+                  <div class="wire-grid-3">
                     <div class="wire-card wire-panel">
-                      <h4>Access Risk by Facility</h4>
-                      <div class="wire-hint">Filter-aware facility fact and dimensions</div>
-                      <div class="bar-chart" id="facilityRiskBars" aria-label="Access risk by facility"></div>
+                      <h4>Denial rate by district</h4>
+                      <div class="wire-hint">Identify where the fact table in the star schema shows the strongest claim leakage or rule exceptions.</div>
+                      <div class="bar-chart" id="denialDistrictBars"></div>
                     </div>
                     <div class="wire-card wire-panel">
-                      <h4>Capacity Indicators</h4>
-                      <div class="wire-hint">Average values after filters</div>
-                      <ul class="metric-list" id="capacityMetrics"></ul>
+                      <h4>Denial rate by claim type</h4>
+                      <div class="wire-hint">Claim-type dimensions let the semantic model isolate operational denial patterns quickly.</div>
+                      <div class="bar-chart" id="denialTypeBars"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Denial metrics</h4>
+                      <div class="wire-hint">Use these measures to narrate where review teams should focus first.</div>
+                      <ul class="metric-list" id="denialMetrics"></ul>
                     </div>
                   </div>
-                  <div class="wire-card wire-panel">
-                    <h4>Access and Capacity Table</h4>
-                    <div class="wire-table">
-                      <table>
-                        <thead><tr><th>Facility</th><th>District</th><th>Type</th><th>ED wait</th><th>Occupancy</th><th>Risk</th><th>Band</th></tr></thead>
-                        <tbody id="accessRows"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="dashboard-panel" data-panel="immunization">
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>Completion Rate by District</h4>
-                      <div class="wire-hint">Immunization fact joined to age and district dimensions</div>
-                      <div class="bar-chart" id="immunizationBars" aria-label="Immunization completion by district"></div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Equity Notes</h4>
-                      <div class="wire-hint">Age group filter applies to the notes</div>
-                      <ul class="metric-list" id="immunizationNotes"></ul>
-                    </div>
-                  </div>
-                  <div class="wire-card wire-panel">
-                    <h4>Campaign Table</h4>
-                    <div class="wire-table">
-                      <table>
-                        <thead><tr><th>District</th><th>Age group</th><th>Doses</th><th>Completion</th><th>No-show</th><th>Action</th></tr></thead>
-                        <tbody id="immunizationRows"></tbody>
-                      </table>
-                    </div>
+                  <div class="wire-card wire-panel wire-table">
+                    <h4>Denial Analysis Table</h4>
+                    <table>
+                      <thead>
+                        <tr><th>District</th><th>Program</th><th>Claim Type</th><th>Claims</th><th>Denied</th><th>Denial Rate</th><th>Avg Days</th></tr>
+                      </thead>
+                      <tbody id="denialRows"></tbody>
+                    </table>
                   </div>
                 </section>
 
-                <section class="dashboard-panel" data-panel="surveillance">
-                  <div class="wire-grid-2">
+                <section class="dashboard-panel" data-panel="program">
+                  <div class="wire-grid-3">
                     <div class="wire-card wire-panel">
-                      <h4>Respiratory Pressure Trend</h4>
-                      <div class="wire-hint">District weekly fact joined to date, district, and pressure dimensions</div>
-                      <div class="line-chart" aria-hidden="true">
-                        <svg viewBox="0 0 360 190" preserveAspectRatio="none">
-                          <path d="M28 148 L332 148" stroke="#e4e7ec" stroke-width="2"></path>
-                          <path id="surveillanceLineA" d="M28 126 C74 118, 106 92, 140 104 S204 76, 244 80 S292 54, 332 48" fill="none" stroke="#c74634" stroke-width="4"></path>
-                          <path id="surveillanceLineB" d="M28 138 C74 132, 106 124, 140 116 S204 112, 244 98 S292 92, 332 82" fill="none" stroke="#2f6fb2" stroke-width="4"></path>
-                        </svg>
-                      </div>
+                      <h4>Submitted amount by program</h4>
+                      <div class="wire-hint">Coverage-program dimensions keep financial variance analysis in a single star schema view.</div>
+                      <div class="bar-chart" id="programAmountBars"></div>
                     </div>
                     <div class="wire-card wire-panel">
-                      <h4>Quality Closure Summary</h4>
-                      <div class="wire-hint">Quality event fact joined to facility and event dimensions</div>
-                      <ul class="metric-list" id="qualityMetrics"></ul>
+                      <h4>Payment yield by program</h4>
+                      <div class="wire-hint">Compare how billed value converts into paid value across program funding models.</div>
+                      <div class="bar-chart" id="programYieldBars"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Program metrics</h4>
+                      <div class="wire-hint">This is the instructor talking track for submitted-to-paid gaps and pending pressure.</div>
+                      <ul class="metric-list" id="programMetrics"></ul>
                     </div>
                   </div>
-                  <div class="wire-card wire-panel">
-                    <h4>Surveillance and Quality Action Queue</h4>
-                    <div class="wire-table">
-                      <table>
-                        <thead><tr><th>District</th><th>Signal</th><th>Measure</th><th>Priority</th><th>Action</th></tr></thead>
-                        <tbody id="surveillanceRows"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="dashboard-panel" data-panel="spatial">
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>District Spatial Access Map</h4>
-                      <div class="wire-hint">Raw GeoJSON to spatial access fact and district dimension</div>
-                      <div class="map-canvas" id="spatialMap" aria-label="Spatial access map preview"></div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Spatial Business Insight</h4>
-                      <div class="wire-hint">Uses residents per facility plus pressure index</div>
-                      <ul class="metric-list" id="spatialMetrics"></ul>
-                    </div>
-                  </div>
-                  <div class="wire-card wire-panel">
-                    <h4>Mobile Clinic Candidate Table</h4>
-                    <div class="wire-table">
-                      <table>
-                        <thead><tr><th>District</th><th>Residents / facility</th><th>Avg distance</th><th>Pressure</th><th>Recommendation</th></tr></thead>
-                        <tbody id="spatialRows"></tbody>
-                      </table>
-                    </div>
+                  <div class="wire-card wire-panel wire-table">
+                    <h4>Program Performance Table</h4>
+                    <table>
+                      <thead>
+                        <tr><th>Program</th><th>Funding Source</th><th>Claims</th><th>Submitted</th><th>Approved</th><th>Paid</th><th>Pending</th></tr>
+                      </thead>
+                      <tbody id="programRows"></tbody>
+                    </table>
                   </div>
                 </section>
 
-                <section class="dashboard-panel" data-panel="chat">
-                  <div class="wire-grid-2">
+                <section class="dashboard-panel" data-panel="mix">
+                  <div class="wire-grid-3">
                     <div class="wire-card wire-panel">
-                      <h4>Grounded Assistant Answer</h4>
-                      <div class="wire-hint">Prompt entry stays in the right-side assistant rail across all workbook tabs</div>
-                      <div class="answer-box" id="chatAnswer"></div>
+                      <h4>Claim volume by claim type</h4>
+                      <div class="wire-hint">Direct joins to claim type keep utilization, denials, and cycle time in one semantic path.</div>
+                      <div class="bar-chart" id="typeVolumeBars"></div>
                     </div>
                     <div class="wire-card wire-panel">
-                      <h4>Retrieved Context</h4>
-                      <div class="wire-hint">Document and structured Gold context</div>
-                      <ul class="metric-list" id="retrievedContext"></ul>
+                      <h4>Average processing days by claim type</h4>
+                      <div class="wire-hint">Cycle time is kept in the fact and summarized by the claim-type dimension.</div>
+                      <div class="bar-chart" id="typeCycleBars"></div>
+                    </div>
+                    <div class="wire-card wire-panel">
+                      <h4>Claim mix metrics</h4>
+                      <div class="wire-hint">Use these notes to explain which service categories drive work and delay.</div>
+                      <ul class="metric-list" id="mixMetrics"></ul>
                     </div>
                   </div>
-                </section>
-
-                <section class="dashboard-panel" data-panel="realtime">
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>Real-Time Analytics Paths</h4>
-                      <div class="wire-hint">Optional labs for CDC and streaming</div>
-                      <div class="stream-path">
-                        <div class="stream-step"><strong>GoldenGate CDC:</strong> source operational changes to AI Lakehouse staging and OAC real-time objects.</div>
-                        <div class="stream-step"><strong>Kafka via AIDP:</strong> wait-time events to streaming Bronze, Silver, and minute-level Gold aggregates.</div>
-                        <div class="stream-step"><strong>OAC:</strong> Real-Time Operations tab filtered by district and pressure band.</div>
-                      </div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Latest Capacity Events</h4>
-                      <div class="wire-hint">JSON capacity event sample</div>
-                      <ul class="metric-list" id="realtimeMetrics"></ul>
-                    </div>
-                  </div>
-                  <div class="wire-card wire-panel">
-                    <h4>Streaming Event Table</h4>
-                    <div class="wire-table">
-                      <table>
-                        <thead><tr><th>Facility</th><th>District</th><th>Wait</th><th>Occupancy</th><th>Queue</th><th>Band</th></tr></thead>
-                        <tbody id="realtimeRows"></tbody>
-                      </table>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="dashboard-panel" data-panel="payer">
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>Claim Denial Rate by District</h4>
-                      <div class="wire-hint">Claims fact joined to coverage program, claim type, district, and date dimensions</div>
-                      <div class="bar-chart" id="payerClaimsBars" aria-label="Claim denial rate by district"></div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Disbursement and Membership Summary</h4>
-                      <div class="wire-hint">Disbursement and membership facts sharing district and program dimensions</div>
-                      <ul class="metric-list" id="payerMetrics"></ul>
-                    </div>
-                  </div>
-                  <div class="wire-grid-2">
-                    <div class="wire-card wire-panel">
-                      <h4>Claims, Disbursement and Membership Table</h4>
-                      <div class="wire-table">
-                        <table>
-                          <thead><tr><th>District</th><th>Claims</th><th>Denial</th><th>Disbursed</th><th>Renewals Due</th><th>High-Risk Members</th></tr></thead>
-                          <tbody id="payerRows"></tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="wire-card wire-panel">
-                      <h4>Provider Accreditation Watchlist</h4>
-                      <div class="wire-table">
-                        <table>
-                          <thead><tr><th>Provider</th><th>District</th><th>Status</th><th>Score</th><th>Actions</th><th>Expiry</th><th>Risk</th></tr></thead>
-                          <tbody id="providerRows"></tbody>
-                        </table>
-                      </div>
-                    </div>
+                  <div class="wire-card wire-panel wire-table">
+                    <h4>Claim Type Mix Table</h4>
+                    <table>
+                      <thead>
+                        <tr><th>Claim Type</th><th>Service Category</th><th>Diagnosis Group</th><th>Claims</th><th>Denied</th><th>Denial Rate</th><th>Avg Days</th></tr>
+                      </thead>
+                      <tbody id="mixRows"></tbody>
+                    </table>
                   </div>
                 </section>
               </div>
@@ -2943,18 +3758,18 @@
                   <div class="assistant-pattern" aria-hidden="true"></div>
                   <div class="assistant-card">
                     <div class="assistant-label">Grounded assistant</div>
-                    <h4 id="assistantCardTitle">Welcome to the MPHA assistant</h4>
-                    <p id="assistantCardBody">Ask about access, claims, spatial planning, or the operating playbook. Responses stay grounded in Gold metrics and retrieved document chunks.</p>
+                    <h4 id="assistantCardTitle">Welcome to the Claims star schema assistant</h4>
+                    <p id="assistantCardBody">Ask about denial hotspots, program funding gaps, or pending claims. Answers stay grounded in the Claims star schema metrics and the vectorized operating playbook.</p>
                     <ul class="metric-list assistant-metrics" id="assistantContext"></ul>
                   </div>
                 </div>
                 <div class="assistant-suggestions">
-                  <button class="suggestion-button" type="button" data-question="Which districts should receive mobile clinic sessions this week?">Mobile clinics</button>
-                  <button class="suggestion-button" type="button" data-question="What should we do when ED wait variance and occupancy rise together?">Capacity action</button>
-                  <button class="suggestion-button" type="button" data-question="How should respiratory positivity influence outreach?">Respiratory outreach</button>
+                  <button class="suggestion-button" type="button" data-question="Which districts have the highest claims denial rate in June 2025?">Denial hotspot</button>
+                  <button class="suggestion-button" type="button" data-question="Which coverage programs have the biggest submitted-to-paid gap?">Funding gap</button>
+                  <button class="suggestion-button" type="button" data-question="Which claim types are driving pending volume?">Pending volume</button>
                 </div>
                 <div class="assistant-input-row">
-                  <input id="chatQuestion" value="Which districts should receive mobile clinic sessions this week?" placeholder="Ask a question..." />
+                  <input id="chatQuestion" value="Which districts have the highest claims denial rate in June 2025?" placeholder="Ask a question..." />
                   <button id="askButton" type="button">Ask</button>
                 </div>
               </aside>
@@ -2973,69 +3788,83 @@
             <div class="asset">
               <h3>Guide</h3>
               <p>Full hands-on lab narrative, objectives, outcomes, prompts, and downloadable PDF.</p>
-              <a href="workshop_guide.md">Open guide</a>
+              <a href="asset_viewer.html?file=workshop_guide.md&label=Workshop%20guide&kind=markdown">Open guide</a>
             </div>
             <div class="asset">
               <h3>PDF guide</h3>
               <p>Professionally formatted execution-team PDF version of the workshop guide.</p>
-              <a href="workshop_guide.pdf">Download PDF guide</a>
+              <a href="asset_viewer.html?file=workshop_guide.pdf&label=Workshop%20guide%20PDF&kind=pdf">Download PDF guide</a>
             </div>
             <div class="asset">
               <h3>Raw data</h3>
               <p>Five CSV, one JSONL, one GeoJSON, and one DOCX source assets for ingestion.</p>
-              <a href="data/raw/facility_provider_master.csv">Open raw folder sample</a>
+              <a href="asset_viewer.html?file=data/raw/district_health_profile.csv&label=District%20health%20profile&kind=csv">Open district health profile</a>
+              <a href="asset_viewer.html?file=data/raw/facility_provider_master.csv&label=Facility%20provider%20master&kind=csv">Open facility provider master</a>
+              <a href="asset_viewer.html?file=data/raw/facility_operations_daily.csv&label=Facility%20operations%20daily&kind=csv">Open facility operations daily</a>
+              <a href="asset_viewer.html?file=data/raw/population_health_weekly.csv&label=Population%20health%20weekly&kind=csv">Open population health weekly</a>
+              <a href="asset_viewer.html?file=data/raw/claims_membership_disbursement.csv&label=Claims%20membership%20disbursement&kind=csv">Open claims, membership, and disbursement</a>
+              <a href="asset_viewer.html?file=data/raw_json/facility_capacity_events.jsonl&label=Facility%20capacity%20events&kind=code">Open facility capacity events JSONL</a>
+              <a href="asset_viewer.html?file=data/raw_spatial/healthcare_service_areas.geojson&label=Healthcare%20service%20areas&kind=json">Open healthcare service areas GeoJSON</a>
+              <a href="asset_viewer.html?file=documents/MPHA_Winter_Respiratory_Response_Playbook.docx&label=MPHA%20playbook&kind=docx">Open playbook document</a>
             </div>
             <div class="asset">
               <h3>Payer and provider datasets</h3>
               <p>Claims, disbursement, membership, and provider accreditation source files plus Gold summaries.</p>
-              <a href="data/raw/claims_membership_disbursement.csv">Open claims sample</a>
+              <a href="asset_viewer.html?file=data/raw/claims_membership_disbursement.csv&label=Claims%20membership%20disbursement&kind=csv">Open claims sample</a>
             </div>
             <div class="asset">
               <h3>Spatial data</h3>
               <p>GeoJSON facility points, district polygons, and catchments for map insights.</p>
-              <a href="data/raw_spatial/healthcare_service_areas.geojson">Open spatial sample</a>
+              <a href="asset_viewer.html?file=data/raw_spatial/healthcare_service_areas.geojson&label=Healthcare%20service%20areas&kind=json">Open spatial sample</a>
             </div>
             <div class="asset">
               <h3>Playbook document</h3>
               <p>13-page synthetic operating playbook for vector search and grounded chat.</p>
-              <a href="documents/MPHA_Winter_Respiratory_Response_Playbook.docx">Open playbook</a>
+              <a href="asset_viewer.html?file=documents/MPHA_Winter_Respiratory_Response_Playbook.docx&label=MPHA%20playbook&kind=docx">Open playbook</a>
             </div>
             <div class="asset">
               <h3>Document chat context</h3>
               <p>Generated Gold document chunks and embeddings derived from the single playbook document.</p>
-              <a href="data/gold/gold_document_chat_context.csv">Open document context</a>
+              <a href="asset_viewer.html?file=data/gold/gold_document_chat_context.csv&label=Document%20chat%20context&kind=csv">Open document context</a>
             </div>
             <div class="asset">
-              <h3>Gold star data</h3>
-              <p>AI Lakehouse-ready dimensions, fact tables, and bridge tables for OAC, including payer/provider facts.</p>
-              <a href="data/gold_dimensional/fact_claims_monthly.csv">Open claims fact sample</a>
+              <h3>Gold star schema data</h3>
+              <p>AI Lakehouse-ready Claims star schema objects plus the Facility Access Daily challenge star schema for participant build-out.</p>
+              <a href="asset_viewer.html?file=data/gold_dimensional/fact_claims_monthly.csv&label=Claims%20monthly%20fact&kind=csv">Open claims fact sample</a>
             </div>
             <div class="asset">
               <h3>Medallion design</h3>
               <p>Bronze, Silver, and Gold layer data contracts and transformation logic.</p>
-              <a href="medallion_architecture.md">Open medallion design</a>
+              <a href="asset_viewer.html?file=medallion_architecture.md&label=Medallion%20architecture&kind=markdown">Open medallion design</a>
             </div>
             <div class="asset">
               <h3>SQL</h3>
-              <p>AI Lakehouse dimensional Gold setup, load examples, OAC star views, and validation queries.</p>
-              <a href="sql/create_ai_lakehouse_dimensional_gold_schema.sql">Open dimensional setup</a>
+              <p>AI Lakehouse dimensional Gold setup, load examples, OAC star schema views, and validation queries.</p>
+              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_dimensional_gold_schema.sql&label=AI%20Lakehouse%20dimensional%20setup&kind=code">Open dimensional setup</a>
             </div>
             <div class="asset">
               <h3>Notebooks</h3>
-              <p>Split PySpark scripts for Bronze ingestion, Silver refinement, and Gold staging in AI Data Platform.</p>
-              <a href="notebooks/aidp_bronze_pyspark.py">Open Bronze notebook</a>
-              <a href="notebooks/aidp_silver_pyspark.py">Open Silver notebook</a>
-              <a href="notebooks/aidp_gold_pyspark.py">Open Gold notebook</a>
+              <p>Split PySpark scripts for Bronze ingestion, Silver refinement, Gold staging, and optional claims denial-risk scoring in AI Data Platform.</p>
+              <a href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&label=Bronze%20notebook&kind=code">Open Bronze notebook</a>
+              <a href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&label=Silver%20notebook&kind=code">Open Silver notebook</a>
+              <a href="asset_viewer.html?file=notebooks/aidp_gold_pyspark.py&label=Gold%20notebook&kind=code">Open Gold notebook</a>
+              <a href="asset_viewer.html?file=notebooks/aidp_ml_claims_denial_risk_pyspark.py&label=ML%20claims%20denial%20risk%20notebook&kind=code">Open ML notebook</a>
             </div>
             <div class="asset">
               <h3>Dashboard spec</h3>
-              <p>OAC canvas layout, measures, filters, and natural-language prompts.</p>
-              <a href="dashboard_spec.md">Open dashboard spec</a>
+              <p>Instructor-led Claims star schema workbook layout, measures, filters, prompts, and the DIY Facility Access dashboard extension.</p>
+              <a href="asset_viewer.html?file=dashboard_spec.md&label=Dashboard%20spec&kind=markdown">Open dashboard spec</a>
             </div>
             <div class="asset">
-              <h3>Optional labs</h3>
-              <p>GoldenGate real-time analytics and Kafka-compatible streaming via AIDP.</p>
-              <a href="optional_labs/real_time_analytics_golden_gate.md">Open optional lab</a>
+              <h3>Optional AI labs</h3>
+              <p>Machine learning scoring and a Claims and Policy Copilot grounded in the Gold layer and the playbook.</p>
+              <a href="asset_viewer.html?file=optional_labs/claims_denial_risk_scoring.md&label=Claims%20denial%20risk%20scoring&kind=markdown">Open ML lab</a>
+              <a href="asset_viewer.html?file=optional_labs/claims_policy_copilot_agent.md&label=Claims%20and%20Policy%20Copilot&kind=markdown">Open agent lab</a>
+            </div>
+            <div class="asset">
+              <h3>ML score sample</h3>
+              <p>Sample denial-risk output that shows how claims, event, and accreditation context become review priorities.</p>
+              <a href="asset_viewer.html?file=data/gold/gold_claims_denial_risk_scores.csv&label=Claims%20denial%20risk%20scores&kind=csv">Open scoring sample</a>
             </div>
           </div>
         </div>
@@ -3062,8 +3891,8 @@
             <li>Run the Bronze notebook, then the Silver notebook, then the Gold notebook to stage the business-serving layer.</li>
             <li>Stage `data/gold_dimensional` outputs, then run `create_ai_lakehouse_dimensional_gold_schema.sql` in AI Lakehouse.</li>
             <li>Validate Gold, spatial, document-chat, and OAC views with the sample analytics queries.</li>
-            <li>Create OAC canvases from the Gold layer and test the dashboard filters, payer/provider view, spatial view, and grounded chat prompts.</li>
-            <li>Choose whether to rehearse optional GoldenGate or Kafka/AIDP real-time analytics labs.</li>
+            <li>Build and test the instructor-led Claims star schema workbook filters, then reserve Facility Access Daily dashboard design for the participant challenge.</li>
+            <li>Decide whether to rehearse the optional ML scoring lab, the Claims and Policy Copilot lab, or both.</li>
           </ul>
         </div>
       </section>
@@ -3076,425 +3905,542 @@
       </div>
     </footer>
     <script>
-      const districtData = [
-        { district: "North Borough", visits: 116000, edWait: 61, highDays: 32, doses: 21800, pressure: 38.2, completion: 0.43, noShow: 0.079, positivity: 0.081, respiratory: 31, residents: 92000, distance: 1.37, band: "Medium", spatial: "Maintain standard catchment monitoring" },
-        { district: "East River", visits: 149000, edWait: 78, highDays: 61, doses: 24400, pressure: 52.4, completion: 0.39, noShow: 0.097, positivity: 0.121, respiratory: 47, residents: 110750, distance: 1.2, band: "High", spatial: "Prioritize mobile clinic sessions and outreach routing" },
-        { district: "Central City", visits: 184000, edWait: 70, highDays: 58, doses: 32800, pressure: 47.8, completion: 0.41, noShow: 0.088, positivity: 0.103, respiratory: 52, residents: 156400, distance: 0.94, band: "High", spatial: "Prioritize mobile clinic sessions and outreach routing" },
-        { district: "South Lakes", visits: 105000, edWait: 55, highDays: 28, doses: 19900, pressure: 34.3, completion: 0.46, noShow: 0.071, positivity: 0.074, respiratory: 29, residents: 84700, distance: 1.75, band: "Watch", spatial: "Maintain standard catchment monitoring" },
-        { district: "West Hills", visits: 87000, edWait: 49, highDays: 18, doses: 15200, pressure: 31.9, completion: 0.48, noShow: 0.068, positivity: 0.069, respiratory: 22, residents: 71850, distance: 1.64, band: "Watch", spatial: "Maintain standard catchment monitoring" }
+      const monthProfiles = [
+        { key: "2025-04", label: "April 2025", factor: 0.96, cycleAdj: 0.0, denialAdj: 0.0 },
+        { key: "2025-05", label: "May 2025", factor: 1.0, cycleAdj: 0.2, denialAdj: 0.003 },
+        { key: "2025-06", label: "June 2025", factor: 1.05, cycleAdj: 0.5, denialAdj: 0.006 }
       ];
 
-      const facilityData = [
-        { facility: "North Borough General Hospital", district: "North Borough", type: "Hospital", visits: 72000, edWait: 68, occupancy: 0.86, risk: 42, highDays: 25, queue: 34, band: "Medium", action: "Add discharge huddles and monitor ED flex staffing" },
-        { facility: "Northgate Community Clinic", district: "North Borough", type: "Community Clinic", visits: 44000, edWait: 0, occupancy: 0.0, risk: 29, highDays: 0, queue: 0, band: "Watch", action: "Add reminder outreach for missed appointments" },
-        { facility: "East River Medical Center", district: "East River", type: "Hospital", visits: 99000, edWait: 83, occupancy: 0.94, risk: 64, highDays: 51, queue: 58, band: "High", action: "Add flex staffing and redirect non-urgent visits" },
-        { facility: "Riverside Urgent Care", district: "East River", type: "Urgent Care", visits: 50000, edWait: 54, occupancy: 0.62, risk: 38, highDays: 10, queue: 21, band: "Medium", action: "Open same-day urgent clinic slots" },
-        { facility: "Central City Health Campus", district: "Central City", type: "Hospital", visits: 132000, edWait: 77, occupancy: 0.91, risk: 57, highDays: 48, queue: 49, band: "High", action: "Extend respiratory clinic sessions" },
-        { facility: "Downtown Preventive Health Center", district: "Central City", type: "Community Clinic", visits: 52000, edWait: 0, occupancy: 0.0, risk: 35, highDays: 0, queue: 0, band: "Medium", action: "Add older resident outreach and walk-in hours" },
-        { facility: "South Lakes Regional Hospital", district: "South Lakes", type: "Hospital", visits: 76000, edWait: 58, occupancy: 0.82, risk: 37, highDays: 24, queue: 29, band: "Medium", action: "Review discharge coordination backlog" },
-        { facility: "Lakeview Community Clinic", district: "South Lakes", type: "Community Clinic", visits: 29000, edWait: 0, occupancy: 0.0, risk: 22, highDays: 0, queue: 0, band: "Watch", action: "Maintain routine preventive-care schedule" },
-        { facility: "West Hills Hospital", district: "West Hills", type: "Hospital", visits: 58000, edWait: 52, occupancy: 0.74, risk: 31, highDays: 17, queue: 22, band: "Watch", action: "Monitor weekend ED wait variance" },
-        { facility: "Hillcrest Urgent Care", district: "West Hills", type: "Urgent Care", visits: 29000, edWait: 37, occupancy: 0.55, risk: 25, highDays: 1, queue: 14, band: "Watch", action: "Maintain standard urgent-care coverage" }
+      const districtProfiles = [
+        { name: "North Borough", baseVolume: 232, denialBase: 0.068, cycleBase: 14.9 },
+        { name: "East River", baseVolume: 268, denialBase: 0.104, cycleBase: 17.4 },
+        { name: "Central City", baseVolume: 326, denialBase: 0.091, cycleBase: 16.7 },
+        { name: "South Lakes", baseVolume: 214, denialBase: 0.063, cycleBase: 15.1 },
+        { name: "West Hills", baseVolume: 186, denialBase: 0.075, cycleBase: 15.8 }
       ];
 
-      const payerData = [
-        { district: "North Borough", claims: 255, denied: 15, denialRate: 0.059, paymentYield: 0.713, disbursed: 116321.54, pending: 46, failed: 10, avgCycle: 16.1, members: 117, renewals: 30, highRiskMembers: 15, band: "Watch" },
-        { district: "East River", claims: 287, denied: 37, denialRate: 0.129, paymentYield: 0.795, disbursed: 122862.78, pending: 36, failed: 6, avgCycle: 16.8, members: 127, renewals: 27, highRiskMembers: 24, band: "High" },
-        { district: "Central City", claims: 413, denied: 42, denialRate: 0.102, paymentYield: 0.687, disbursed: 174006.60, pending: 59, failed: 16, avgCycle: 17.0, members: 208, renewals: 50, highRiskMembers: 35, band: "High" },
-        { district: "South Lakes", claims: 264, denied: 14, denialRate: 0.053, paymentYield: 0.663, disbursed: 132995.28, pending: 44, failed: 4, avgCycle: 16.7, members: 114, renewals: 29, highRiskMembers: 18, band: "Watch" },
-        { district: "West Hills", claims: 181, denied: 13, denialRate: 0.072, paymentYield: 0.807, disbursed: 107564.41, pending: 33, failed: 8, avgCycle: 16.3, members: 84, renewals: 17, highRiskMembers: 14, band: "Medium" }
+      const programProfiles = [
+        { name: "Universal Care", factor: 1.0, cycleAdj: 0.4, denialAdj: 0.004 },
+        { name: "Community Health", factor: 0.78, cycleAdj: 0.8, denialAdj: 0.008 },
+        { name: "Senior Support", factor: 0.62, cycleAdj: 1.1, denialAdj: 0.006 }
       ];
 
-      const providerData = [
-        { facility: "North Borough General Hospital", district: "North Borough", type: "Hospital", status: "Accredited", score: 93.4, actions: 0, expiry: 221, band: "Medium" },
-        { facility: "Northgate Community Clinic", district: "North Borough", type: "Community Clinic", status: "Accredited", score: 92.6, actions: 0, expiry: 244, band: "Medium" },
-        { facility: "East River Medical Center", district: "East River", type: "Hospital", status: "Corrective Action", score: 75.5, actions: 4, expiry: 87, band: "High" },
-        { facility: "Riverside Urgent Care", district: "East River", type: "Urgent Care", status: "Provisional", score: 83.6, actions: 2, expiry: 200, band: "Medium" },
-        { facility: "Central City Health Campus", district: "Central City", type: "Hospital", status: "Provisional", score: 83.7, actions: 2, expiry: 223, band: "Medium" },
-        { facility: "Downtown Preventive Health Center", district: "Central City", type: "Community Clinic", status: "Provisional", score: 81.4, actions: 2, expiry: 246, band: "High" },
-        { facility: "South Lakes Regional Hospital", district: "South Lakes", type: "Hospital", status: "Accredited", score: 96.5, actions: 0, expiry: 359, band: "Medium" },
-        { facility: "Lakeview Community Clinic", district: "South Lakes", type: "Community Clinic", status: "Accredited", score: 93.2, actions: 0, expiry: 382, band: "Watch" },
-        { facility: "West Hills Hospital", district: "West Hills", type: "Hospital", status: "Accredited", score: 91.9, actions: 1, expiry: 360, band: "Medium" },
-        { facility: "Hillcrest Urgent Care", district: "West Hills", type: "Urgent Care", status: "Accredited", score: 88.2, actions: 1, expiry: 383, band: "Medium" }
+      const claimTypeProfiles = [
+        { name: "Inpatient", factor: 0.28, avgAmount: 5300, serviceCategory: "Hospital", diagnosisGroup: "Respiratory", cycleAdj: 3.4, denialAdj: 0.012, pendingAdj: 0.018 },
+        { name: "Outpatient", factor: 0.42, avgAmount: 1280, serviceCategory: "Ambulatory", diagnosisGroup: "Chronic Care", cycleAdj: 1.7, denialAdj: 0.005, pendingAdj: 0.01 },
+        { name: "Pharmacy", factor: 0.18, avgAmount: 240, serviceCategory: "Pharmacy", diagnosisGroup: "Medication Adherence", cycleAdj: 0.9, denialAdj: -0.004, pendingAdj: 0.006 },
+        { name: "Diagnostics", factor: 0.12, avgAmount: 640, serviceCategory: "Diagnostics", diagnosisGroup: "Preventive Screening", cycleAdj: 2.2, denialAdj: 0.014, pendingAdj: 0.012 }
       ];
 
-      const districtMapShapes = {
-        "North Borough": { points: "74,52 182,40 236,84 214,170 104,160 62,102", label: [150, 102], facilities: [[126, 118], [188, 94]], mobile: [212, 142] },
-        "East River": { points: "244,82 360,66 432,120 410,214 292,206 226,144", label: [330, 134], facilities: [[312, 152], [376, 124]], mobile: [402, 188] },
-        "Central City": { points: "170,182 292,170 372,232 342,338 216,352 144,274", label: [254, 260], facilities: [[232, 244], [292, 278]], mobile: [318, 314] },
-        "South Lakes": { points: "104,360 246,340 296,430 228,526 96,500 70,408", label: [180, 430], facilities: [[156, 446], [226, 404]], mobile: [250, 486] },
-        "West Hills": { points: "308,352 442,332 516,414 488,526 348,526 286,430", label: [404, 430], facilities: [[374, 446], [438, 404]], mobile: [472, 484] }
-      };
+      const fundingSources = ["Treasury Grant", "Regional Subsidy", "Member Co-Funding"];
+      const claimsRows = [];
 
-      const immunizationAge = {
-        "0-17": 0.18,
-        "18-49": 0.34,
-        "50-64": 0.22,
-        "65+": 0.26,
-        All: 1
-      };
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+      districtProfiles.forEach((district, dIndex) => {
+        programProfiles.forEach((program, pIndex) => {
+          claimTypeProfiles.forEach((claimType, tIndex) => {
+            monthProfiles.forEach((month, mIndex) => {
+              const distribution = 1 + (((dIndex + pIndex + tIndex + mIndex) % 3) - 1) * 0.035;
+              const claimsSubmitted = Math.max(18, Math.round(district.baseVolume * program.factor * claimType.factor * month.factor * distribution));
+              const denialRate = clamp(district.denialBase + program.denialAdj + claimType.denialAdj + month.denialAdj, 0.038, 0.17);
+              const pendingRate = clamp(0.072 + claimType.pendingAdj + (program.cycleAdj / 20) + (district.baseVolume > 300 ? 0.01 : 0), 0.08, 0.19);
+              const deniedClaims = Math.max(1, Math.round(claimsSubmitted * denialRate));
+              const pendingClaims = Math.max(1, Math.round(claimsSubmitted * pendingRate));
+              const approvedClaims = Math.max(claimsSubmitted - deniedClaims - pendingClaims, 0);
+              const submittedAmount = claimsSubmitted * claimType.avgAmount;
+              const approvedAmount = submittedAmount * (1 - denialRate * 0.82);
+              const yieldModifier = 0.86 + (pIndex === 0 ? 0.028 : pIndex === 1 ? 0.012 : 0.0) - (dIndex === 1 ? 0.012 : 0) - (tIndex === 0 ? 0.01 : 0) + (mIndex === 2 ? 0.008 : 0);
+              const paymentYield = clamp(yieldModifier, 0.73, 0.93);
+              const paidAmount = approvedAmount * paymentYield;
+
+              claimsRows.push({
+                monthKey: month.key,
+                monthLabel: month.label,
+                district: district.name,
+                program: program.name,
+                claimType: claimType.name,
+                fundingSource: fundingSources[(dIndex + pIndex + tIndex + mIndex) % fundingSources.length],
+                serviceCategory: claimType.serviceCategory,
+                diagnosisGroup: claimType.diagnosisGroup,
+                claimsSubmitted,
+                approvedClaims,
+                deniedClaims,
+                pendingClaims,
+                submittedAmount,
+                approvedAmount,
+                paidAmount,
+                avgProcessingDays: Number((district.cycleBase + program.cycleAdj + claimType.cycleAdj + month.cycleAdj).toFixed(1))
+              });
+            });
+          });
+        });
+      });
 
       const tabMeta = {
-        executive: ["Executive Overview", "Gold star schema: facts join directly to conformed dimensions and OAC-ready star views."],
-        access: ["Access and Capacity", "Facility-day fact joins directly to date, facility, district, and pressure-band dimensions."],
-        immunization: ["Immunization Equity", "Immunization fact joined to date, district, and age-group dimensions."],
-        surveillance: ["Surveillance and Quality", "District health and quality facts joined to conformed dimensions."],
-        spatial: ["Spatial Insights", "Raw GeoJSON becomes a map-based spatial access fact joined to district and pressure dimensions."],
-        chat: ["Chat with Data and Documents", "Chat bridge table links prompts to vectorized playbook chunk dimensions."],
-        realtime: ["Real-Time Operations", "Optional GoldenGate and Kafka/AIDP paths for near-real-time operating signals."],
-        payer: ["Claims, Disbursement, Membership & Accreditation", "Claims, disbursement, membership, and provider accreditation facts reuse shared Gold dimensions."]
+        overview: ["Claims Overview", "Instructor-led Claims star schema workbook sourced from a single fact table and four conformed dimensions."],
+        denial: ["Denial Analysis", "Use the fact table in the star schema to isolate denial concentration by district, coverage program, and claim type."],
+        program: ["Program Performance", "Compare submitted, approved, and paid amounts across coverage programs and funding sources."],
+        mix: ["Claim Type Mix", "Show which claim types, service categories, and diagnosis groups drive volume and cycle time."]
       };
 
-      const chatExamples = [
-        {
-          key: "mobile",
-          answer: "East River and Central City are the strongest mobile-clinic candidates because they combine high pressure with more than 100,000 residents per facility. The playbook's Spatial Response Model recommends mobile outreach when catchment coverage and district pressure are both constrained.",
-          context: ["Page 4 - Immunization Equity Play", "Page 6 - Spatial Response Model", "Gold spatial access insights"]
-        },
-        {
-          key: "occupancy",
-          answer: "When ED wait variance and occupancy rise together, the playbook recommends flex clinical staffing, discharge coordination, diversion monitoring, and same-day clinic capacity for non-urgent demand. East River Medical Center and Central City Health Campus are the current filtered examples.",
-          context: ["Page 3 - Access and Capacity Play", "Page 11 - Thresholds and Escalation", "Gold facility access daily"]
-        },
-        {
-          key: "respiratory",
-          answer: "Rising respiratory positivity should trigger targeted communications and extended respiratory assessment sessions when paired with ED pressure. The dashboard pairs positivity, respiratory ED visits, no-show rate, and district pressure before recommending outreach.",
-          context: ["Page 5 - Respiratory Surveillance Play", "Page 10 - Chat with Data and Documents", "Gold district public health weekly"]
-        }
-      ];
-
       const $ = (id) => document.getElementById(id);
-      const fmtK = (value) => `${Math.round(value / 1000)}K`;
-      const fmtMoneyK = (value) => `$${Math.round(value / 1000)}K`;
-      const avg = (rows, key) => rows.length ? rows.reduce((sum, row) => sum + row[key], 0) / rows.length : 0;
       const sum = (rows, key) => rows.reduce((total, row) => total + row[key], 0);
+      const fmtInteger = (value) => Math.round(value).toLocaleString();
+      const fmtPct = (value) => `${(value * 100).toFixed(1)}%`;
+      const fmtDays = (value) => `${value.toFixed(1)} d`;
+      const fmtMoney = (value) => {
+        if (Math.abs(value) >= 1000000) return `$${(value / 1000000).toFixed(2)}M`;
+        if (Math.abs(value) >= 1000) return `$${(value / 1000).toFixed(0)}K`;
+        return `$${value.toFixed(0)}`;
+      };
+
       let assistantHasPrompt = false;
 
       function activeTabKey() {
-        return document.querySelector(".dashboard-tab.active")?.dataset.tab || "executive";
+        return document.querySelector(".dashboard-tab.active")?.dataset.tab || "overview";
       }
 
       function filters() {
         return {
           district: $("filterDistrict").value,
-          type: $("filterFacilityType").value,
-          pressure: $("filterPressure").value,
-          age: $("filterAge").value,
+          program: $("filterProgram").value,
+          claimType: $("filterClaimType").value,
+          fundingSource: $("filterFundingSource").value,
           period: $("filterPeriod").value
         };
       }
 
-      function filteredDistricts() {
-        const f = filters();
-        return districtData.filter((row) => (f.district === "All" || row.district === f.district) && (f.pressure === "All" || row.band === f.pressure));
+      function selectedText(id) {
+        const select = $(id);
+        return select.options[select.selectedIndex]?.text || select.value;
       }
 
-      function filteredFacilities() {
+      function weightedAvg(rows, valueKey, weightKey) {
+        const totalWeight = sum(rows, weightKey);
+        return totalWeight ? rows.reduce((total, row) => total + row[valueKey] * row[weightKey], 0) / totalWeight : 0;
+      }
+
+      function summarizeRows(rows) {
+        const claimsSubmitted = sum(rows, "claimsSubmitted");
+        const approvedClaims = sum(rows, "approvedClaims");
+        const deniedClaims = sum(rows, "deniedClaims");
+        const pendingClaims = sum(rows, "pendingClaims");
+        const submittedAmount = sum(rows, "submittedAmount");
+        const approvedAmount = sum(rows, "approvedAmount");
+        const paidAmount = sum(rows, "paidAmount");
+        const avgProcessingDays = weightedAvg(rows, "avgProcessingDays", "claimsSubmitted");
+        return {
+          claimsSubmitted,
+          approvedClaims,
+          deniedClaims,
+          pendingClaims,
+          submittedAmount,
+          approvedAmount,
+          paidAmount,
+          avgProcessingDays,
+          denialRate: claimsSubmitted ? deniedClaims / claimsSubmitted : 0,
+          paymentYield: submittedAmount ? paidAmount / submittedAmount : 0,
+          pendingRate: claimsSubmitted ? pendingClaims / claimsSubmitted : 0
+        };
+      }
+
+      function filteredClaimRows() {
         const f = filters();
-        return facilityData.filter((row) =>
+        return claimsRows.filter((row) =>
           (f.district === "All" || row.district === f.district) &&
-          (f.type === "All" || row.type === f.type) &&
-          (f.pressure === "All" || row.band === f.pressure)
+          (f.program === "All" || row.program === f.program) &&
+          (f.claimType === "All" || row.claimType === f.claimType) &&
+          (f.fundingSource === "All" || row.fundingSource === f.fundingSource) &&
+          (f.period === "All" || row.monthKey === f.period)
         );
       }
 
-      function filteredPayerRows() {
-        const f = filters();
-        return payerData.filter((row) =>
-          (f.district === "All" || row.district === f.district) &&
-          (f.pressure === "All" || row.band === f.pressure)
-        );
+      function groupRows(rows, field) {
+        const grouped = new Map();
+        rows.forEach((row) => {
+          const key = row[field];
+          if (!grouped.has(key)) grouped.set(key, []);
+          grouped.get(key).push(row);
+        });
+        return Array.from(grouped, ([label, group]) => ({
+          label,
+          fundingSource: group[0].fundingSource,
+          serviceCategory: group[0].serviceCategory,
+          diagnosisGroup: group[0].diagnosisGroup,
+          ...summarizeRows(group)
+        }));
       }
 
-      function filteredProviders() {
-        const f = filters();
-        return providerData.filter((row) =>
-          (f.district === "All" || row.district === f.district) &&
-          (f.type === "All" || row.type === f.type) &&
-          (f.pressure === "All" || row.band === f.pressure)
-        );
+      function groupRowsByFields(rows, fields) {
+        const grouped = new Map();
+        rows.forEach((row) => {
+          const key = fields.map((field) => row[field]).join("||");
+          if (!grouped.has(key)) grouped.set(key, []);
+          grouped.get(key).push(row);
+        });
+        return Array.from(grouped.values(), (group) => {
+          const result = {};
+          fields.forEach((field) => {
+            result[field] = group[0][field];
+          });
+          return { ...result, ...summarizeRows(group) };
+        });
       }
 
-      function badge(band) {
-        const cls = band === "High" ? "high" : band === "Medium" ? "medium" : "low";
-        return `<span class="badge ${cls}">${band}</span>`;
+      function monthSummary(rows) {
+        return monthProfiles
+          .map((month) => ({
+            key: month.key,
+            label: month.label,
+            ...summarizeRows(rows.filter((row) => row.monthKey === month.key))
+          }))
+          .filter((row) => row.claimsSubmitted > 0);
       }
 
-      function rowsOrFallback(rows, fallback) {
-        return rows.length ? rows : fallback;
-      }
-
-      function bandFill(band) {
-        if (band === "High") return "#de8b80";
-        if (band === "Medium") return "#f4c56f";
-        return "#9ed1b1";
-      }
-
-      function compactBarLabel(label) {
+      function compactLabel(label) {
         return String(label)
           .replace("North Borough", "North")
           .replace("East River", "East")
           .replace("Central City", "Central")
           .replace("South Lakes", "South")
           .replace("West Hills", "West")
-          .replace("Community Clinic", "Clinic")
-          .replace("Urgent Care", "Urgent Care")
-          .replace("Medical Center", "Med Center")
-          .replace("Health Campus", "Health")
-          .replace("General Hospital", "General")
-          .replace("Children's Hospital", "Children's");
+          .replace("Universal Care", "Universal")
+          .replace("Community Health", "Community")
+          .replace("Senior Support", "Senior")
+          .replace("Treasury Grant", "Treasury")
+          .replace("Regional Subsidy", "Regional")
+          .replace("Member Co-Funding", "Member")
+          .replace("Preventive Screening", "Screening")
+          .replace("April 2025", "Apr")
+          .replace("May 2025", "May")
+          .replace("June 2025", "Jun");
       }
 
-      function formatBarMetric(key, value) {
-        if (key === "pressure" || key === "risk") return Number(value).toFixed(1);
-        if (key.endsWith("Pct")) return `${Number(value).toFixed(1)}%`;
-        return Number(value).toLocaleString();
+      function severityLabel(rate) {
+        if (rate >= 0.1) return "High";
+        if (rate >= 0.075) return "Medium";
+        return "Watch";
       }
 
-      function renderBars(id, rows, key, color) {
+      function badge(label) {
+        const cls = label === "High" ? "high" : label === "Medium" ? "medium" : "low";
+        return `<span class="badge ${cls}">${label}</span>`;
+      }
+
+      function followUpForRate(rate) {
+        if (rate >= 0.1) return "Target denial review";
+        if (rate >= 0.075) return "Watch adjudication";
+        return "Routine monitor";
+      }
+
+      function renderMetricBars(id, items, color, formatter) {
         const chart = $(id);
-        const data = rowsOrFallback(rows, districtData);
-        const max = Math.max(...data.map((row) => row[key]), 1);
-        chart.innerHTML = data.map((row) => {
-          const height = Math.max(8, Math.round((row[key] / max) * 92));
-          const label = row.district || row.facility;
+        if (!items.length) {
+          chart.innerHTML = '<div class="wire-hint" style="grid-column:1 / -1;">No claims match the current filter combination.</div>';
+          return;
+        }
+        const max = Math.max(...items.map((item) => item.value), 1);
+        chart.innerHTML = items.map((item) => {
+          const height = Math.max(10, Math.round((item.value / max) * 92));
           return `
-            <div class="chart-bar" title="${label}: ${formatBarMetric(key, row[key])}">
-              <span class="chart-bar-value">${formatBarMetric(key, row[key])}</span>
+            <div class="chart-bar" title="${item.label}: ${formatter(item.value)}">
+              <span class="chart-bar-value">${formatter(item.value)}</span>
               <i class="chart-bar-figure" style="height:${height}%; background:${color}"></i>
-              <span class="chart-bar-label">${compactBarLabel(label)}</span>
+              <span class="chart-bar-label">${compactLabel(item.label)}</span>
             </div>
           `;
         }).join("");
       }
 
+      function renderMetricList(id, items) {
+        $(id).innerHTML = items.map((item) => `<li><span>${item.label}</span><strong>${item.value}</strong></li>`).join("");
+      }
+
+      function renderEmptyTable(id, columns) {
+        $(id).innerHTML = `<tr><td colspan="${columns}" style="color:#667085;">No claims match the current filter combination.</td></tr>`;
+      }
+
       function renderKpis() {
-        const dRows = filteredDistricts();
-        const fRows = filteredFacilities();
-        const pRows = filteredProviders();
-        const ageFactor = immunizationAge[filters().age] || 1;
-        $("kpiVisits").textContent = fmtK(sum(fRows, "visits"));
-        $("kpiWait").textContent = `${Math.round(avg(fRows.filter((row) => row.edWait > 0), "edWait") || 0)} min`;
-        $("kpiOccupancy").textContent = sum(fRows, "highDays");
-        $("kpiDoses").textContent = fmtK(sum(dRows, "doses") * ageFactor);
-        $("kpiPressure").textContent = (Math.max(...rowsOrFallback(dRows, districtData).map((row) => row.pressure))).toFixed(1);
-        $("kpiAccreditation").textContent = rowsOrFallback(pRows, providerData).filter((row) => row.band === "High").length;
-        $("filterSummary").textContent = `District: ${filters().district} | Facility: ${filters().type} | Pressure: ${filters().pressure}`;
-        $("oacStatus").textContent = `Gold star schema | ${dRows.length} districts | ${fRows.length} facilities`;
+        const rows = filteredClaimRows();
+        const summary = summarizeRows(rows);
+        const districtSummary = groupRows(rows, "district").sort((a, b) => b.denialRate - a.denialRate || b.claimsSubmitted - a.claimsSubmitted);
+        const programSummary = groupRows(rows, "program").sort((a, b) => b.paidAmount - a.paidAmount);
+        const typeSummary = groupRows(rows, "claimType").sort((a, b) => b.avgProcessingDays - a.avgProcessingDays);
+        const sliceSummary = groupRowsByFields(rows, ["district", "program", "claimType"]);
+        const topDistrict = districtSummary[0];
+        const topProgram = programSummary[0];
+        const slowestType = typeSummary[0];
+
+        $("kpiClaims").textContent = fmtInteger(summary.claimsSubmitted);
+        $("kpiDenied").textContent = fmtInteger(summary.deniedClaims);
+        $("kpiDenialRate").textContent = fmtPct(summary.denialRate);
+        $("kpiSubmitted").textContent = fmtMoney(summary.submittedAmount);
+        $("kpiPaid").textContent = fmtMoney(summary.paidAmount);
+        $("kpiCycle").textContent = rows.length ? fmtDays(summary.avgProcessingDays) : "0.0 d";
+
+        $("kpiClaimsDelta").textContent = `Approved ${fmtInteger(summary.approvedClaims)} | Pending ${fmtInteger(summary.pendingClaims)}`;
+        $("kpiDeniedDelta").textContent = `${sliceSummary.filter((row) => row.denialRate >= 0.1).length} high-denial slices`;
+        $("kpiDenialRateDelta").textContent = topDistrict ? `Top district: ${compactLabel(topDistrict.label)} ${fmtPct(topDistrict.denialRate)}` : "No claims in scope";
+        $("kpiSubmittedDelta").textContent = topProgram ? `Top program: ${topProgram.label} ${fmtMoney(topProgram.submittedAmount)}` : "No claims in scope";
+        $("kpiPaidDelta").textContent = `Payment yield ${fmtPct(summary.paymentYield)}`;
+        $("kpiCycleDelta").textContent = slowestType ? `Slowest type: ${slowestType.label} ${fmtDays(slowestType.avgProcessingDays)}` : "No claims in scope";
+
+        $("filterSummary").textContent = `District: ${filters().district} | Program: ${filters().program} | Claim Type: ${filters().claimType}`;
+        $("oacStatus").textContent = `Claims star schema | ${selectedText("filterPeriod")} | ${rows.length} fact rows in scope`;
       }
 
-      function renderExecutive() {
-        const dRows = filteredDistricts();
-        const fRows = filteredFacilities();
-        renderBars("pressureBars", dRows, "pressure", "#c74634");
-        const high = fRows.filter((row) => row.band === "High").length;
-        const med = fRows.filter((row) => row.band === "Medium").length;
-        const watch = fRows.filter((row) => row.band === "Watch").length;
-        $("riskLegend").innerHTML = [
-          `<span><i style="background:#c74634"></i>High risk facilities (${high})</span>`,
-          `<span><i style="background:#2f6fb2"></i>Moderate facilities (${med})</span>`,
-          `<span><i style="background:#2b8a3e"></i>Watch list (${watch})</span>`
-        ].join("");
-        $("actionRows").innerHTML = rowsOrFallback(fRows, facilityData).slice(0, 5).map((row) => `
+      function renderOverview() {
+        const rows = filteredClaimRows();
+        const districtSummary = groupRows(rows, "district").sort((a, b) => b.claimsSubmitted - a.claimsSubmitted);
+        const monthTotals = monthSummary(rows);
+        const programSummary = groupRows(rows, "program").sort((a, b) => b.paidAmount - a.paidAmount);
+        const summary = summarizeRows(rows);
+
+        renderMetricBars("overviewDistrictBars", districtSummary.map((row) => ({ label: row.label, value: row.claimsSubmitted })), "#2f6fb2", fmtInteger);
+        renderMetricBars("overviewMonthBars", monthTotals.map((row) => ({ label: row.label, value: row.paidAmount })), "#2b8a3e", fmtMoney);
+        renderMetricList("overviewMetrics", [
+          { label: "Top district by claims", value: districtSummary[0] ? `${districtSummary[0].label} (${fmtInteger(districtSummary[0].claimsSubmitted)})` : "No claims in scope" },
+          { label: "Top program by paid amount", value: programSummary[0] ? `${programSummary[0].label} (${fmtMoney(programSummary[0].paidAmount)})` : "No claims in scope" },
+          { label: "Payment yield", value: fmtPct(summary.paymentYield) },
+          { label: "Pending rate", value: fmtPct(summary.pendingRate) },
+          { label: "Districts represented", value: fmtInteger(districtSummary.length) }
+        ]);
+
+        if (!districtSummary.length) {
+          renderEmptyTable("overviewRows", 6);
+          return;
+        }
+
+        $("overviewRows").innerHTML = districtSummary.map((row) => `
           <tr>
-            <td>${row.facility}<br><span style="color:#667085">${row.district}</span></td>
-            <td>${row.edWait ? "ED wait + occupancy" : "Preventive access"}</td>
-            <td>Access risk ${row.risk}</td>
-            <td>${badge(row.band)}</td>
-            <td>${row.action}</td>
+            <td>${row.label}</td>
+            <td>${fmtInteger(row.claimsSubmitted)}</td>
+            <td>${fmtInteger(row.deniedClaims)}</td>
+            <td>${fmtPct(row.denialRate)}</td>
+            <td>${fmtMoney(row.paidAmount)}</td>
+            <td>${followUpForRate(row.denialRate)}</td>
           </tr>
         `).join("");
-        const lead = rowsOrFallback(dRows, districtData).sort((a, b) => b.pressure - a.pressure)[0];
-        $("executiveNarrative").textContent = `${lead.district} has the strongest current pressure signal in the selected view. Combine staffing actions with ${lead.spatial.toLowerCase()} and use the playbook context for grounded recommendations.`;
       }
 
-      function renderAccess() {
-        const rows = rowsOrFallback(filteredFacilities(), facilityData);
-        renderBars("facilityRiskBars", rows, "risk", "#2f6fb2");
-        $("capacityMetrics").innerHTML = [
-          `<li><span>Average access risk</span><strong>${avg(rows, "risk").toFixed(1)}</strong></li>`,
-          `<li><span>Average occupancy</span><strong>${(avg(rows, "occupancy") * 100).toFixed(1)}%</strong></li>`,
-          `<li><span>High-pressure facilities</span><strong>${rows.filter((row) => row.band === "High").length}</strong></li>`,
-          `<li><span>Total queue depth</span><strong>${sum(rows, "queue")}</strong></li>`
-        ].join("");
-        $("accessRows").innerHTML = rows.map((row) => `
-          <tr><td>${row.facility}</td><td>${row.district}</td><td>${row.type}</td><td>${row.edWait} min</td><td>${(row.occupancy * 100).toFixed(0)}%</td><td>${row.risk}</td><td>${badge(row.band)}</td></tr>
+      function renderDenial() {
+        const rows = filteredClaimRows();
+        const districtSummary = groupRows(rows, "district").sort((a, b) => b.denialRate - a.denialRate || b.deniedClaims - a.deniedClaims);
+        const typeSummary = groupRows(rows, "claimType").sort((a, b) => b.denialRate - a.denialRate || b.deniedClaims - a.deniedClaims);
+        const slices = groupRowsByFields(rows, ["district", "program", "claimType"]).sort((a, b) => b.denialRate - a.denialRate || b.deniedClaims - a.deniedClaims);
+        const summary = summarizeRows(rows);
+
+        renderMetricBars("denialDistrictBars", districtSummary.map((row) => ({ label: row.label, value: row.denialRate })), "#c74634", fmtPct);
+        renderMetricBars("denialTypeBars", typeSummary.map((row) => ({ label: row.label, value: row.denialRate })), "#d97706", fmtPct);
+        renderMetricList("denialMetrics", [
+          { label: "Highest denial district", value: districtSummary[0] ? `${districtSummary[0].label} (${fmtPct(districtSummary[0].denialRate)})` : "No claims in scope" },
+          { label: "Highest denial claim type", value: typeSummary[0] ? `${typeSummary[0].label} (${fmtPct(typeSummary[0].denialRate)})` : "No claims in scope" },
+          { label: "High-denial slices", value: fmtInteger(slices.filter((row) => row.denialRate >= 0.1).length) },
+          { label: "Denied claims", value: fmtInteger(summary.deniedClaims) },
+          { label: "Average processing days", value: rows.length ? fmtDays(summary.avgProcessingDays) : "0.0 d" }
+        ]);
+
+        if (!slices.length) {
+          renderEmptyTable("denialRows", 7);
+          return;
+        }
+
+        $("denialRows").innerHTML = slices.slice(0, 12).map((row) => `
+          <tr>
+            <td>${row.district}</td>
+            <td>${row.program}</td>
+            <td>${row.claimType}</td>
+            <td>${fmtInteger(row.claimsSubmitted)}</td>
+            <td>${fmtInteger(row.deniedClaims)}</td>
+            <td>${fmtPct(row.denialRate)}</td>
+            <td>${fmtDays(row.avgProcessingDays)}</td>
+          </tr>
         `).join("");
       }
 
-      function renderImmunization() {
-        const rows = rowsOrFallback(filteredDistricts(), districtData);
-        const factor = immunizationAge[filters().age] || 1;
-        renderBars("immunizationBars", rows.map((row) => ({ ...row, completionPct: Math.round(row.completion * 100) })), "completionPct", "#2b8a3e");
-        $("immunizationNotes").innerHTML = [
-          `<li><span>Selected age group</span><strong>${filters().age}</strong></li>`,
-          `<li><span>Doses in view</span><strong>${fmtK(sum(rows, "doses") * factor)}</strong></li>`,
-          `<li><span>Average no-show</span><strong>${(avg(rows, "noShow") * 100).toFixed(1)}%</strong></li>`,
-          `<li><span>Outreach priority</span><strong>${rows.some((row) => row.noShow > 0.09) ? "Reminder campaign" : "Routine follow-up"}</strong></li>`
-        ].join("");
-        $("immunizationRows").innerHTML = rows.map((row) => `
-          <tr><td>${row.district}</td><td>${filters().age}</td><td>${fmtK(row.doses * factor)}</td><td>${(row.completion * 100).toFixed(1)}%</td><td>${(row.noShow * 100).toFixed(1)}%</td><td>${row.noShow > 0.09 ? "Target reminders" : "Monitor"}</td></tr>
+      function renderProgram() {
+        const rows = filteredClaimRows();
+        const programSummary = groupRows(rows, "program").sort((a, b) => b.submittedAmount - a.submittedAmount);
+        const fundingRows = groupRowsByFields(rows, ["program", "fundingSource"]).sort((a, b) => b.submittedAmount - a.submittedAmount);
+        const largestGap = programSummary.slice().sort((a, b) => (b.submittedAmount - b.paidAmount) - (a.submittedAmount - a.paidAmount))[0];
+        const bestYield = programSummary.slice().sort((a, b) => b.paymentYield - a.paymentYield)[0];
+        const slowestProgram = programSummary.slice().sort((a, b) => b.avgProcessingDays - a.avgProcessingDays)[0];
+        const summary = summarizeRows(rows);
+
+        renderMetricBars("programAmountBars", programSummary.map((row) => ({ label: row.label, value: row.submittedAmount })), "#2f6fb2", fmtMoney);
+        renderMetricBars("programYieldBars", programSummary.map((row) => ({ label: row.label, value: row.paymentYield })), "#6f42c1", fmtPct);
+        renderMetricList("programMetrics", [
+          { label: "Largest submitted-to-paid gap", value: largestGap ? `${largestGap.label} (${fmtMoney(largestGap.submittedAmount - largestGap.paidAmount)})` : "No claims in scope" },
+          { label: "Best payment yield", value: bestYield ? `${bestYield.label} (${fmtPct(bestYield.paymentYield)})` : "No claims in scope" },
+          { label: "Pending claims", value: fmtInteger(summary.pendingClaims) },
+          { label: "Funding sources in scope", value: fmtInteger(new Set(rows.map((row) => row.fundingSource)).size) },
+          { label: "Slowest program cycle", value: slowestProgram ? `${slowestProgram.label} (${fmtDays(slowestProgram.avgProcessingDays)})` : "No claims in scope" }
+        ]);
+
+        if (!fundingRows.length) {
+          renderEmptyTable("programRows", 7);
+          return;
+        }
+
+        $("programRows").innerHTML = fundingRows.map((row) => `
+          <tr>
+            <td>${row.program}</td>
+            <td>${row.fundingSource}</td>
+            <td>${fmtInteger(row.claimsSubmitted)}</td>
+            <td>${fmtMoney(row.submittedAmount)}</td>
+            <td>${fmtMoney(row.approvedAmount)}</td>
+            <td>${fmtMoney(row.paidAmount)}</td>
+            <td>${fmtInteger(row.pendingClaims)}</td>
+          </tr>
         `).join("");
       }
 
-      function renderSurveillance() {
-        const rows = rowsOrFallback(filteredDistricts(), districtData);
-        $("qualityMetrics").innerHTML = [
-          `<li><span>Average positivity</span><strong>${(avg(rows, "positivity") * 100).toFixed(1)}%</strong></li>`,
-          `<li><span>Respiratory ED visits</span><strong>${sum(rows, "respiratory")}</strong></li>`,
-          `<li><span>Quality SLA focus</span><strong>${rows.some((row) => row.band === "High") ? "Escalate" : "Monitor"}</strong></li>`,
-          `<li><span>Review cadence</span><strong>${rows.some((row) => row.band === "High") ? "Daily" : "Weekly"}</strong></li>`
-        ].join("");
-        $("surveillanceRows").innerHTML = rows.map((row) => `
-          <tr><td>${row.district}</td><td>Respiratory + quality</td><td>${(row.positivity * 100).toFixed(1)}% positivity</td><td>${badge(row.band)}</td><td>${row.band === "High" ? "Extend respiratory sessions" : "Continue surveillance"}</td></tr>
+      function renderMix() {
+        const rows = filteredClaimRows();
+        const typeSummary = groupRows(rows, "claimType").sort((a, b) => b.claimsSubmitted - a.claimsSubmitted);
+        const mixedRows = groupRowsByFields(rows, ["claimType", "serviceCategory", "diagnosisGroup"]).sort((a, b) => b.claimsSubmitted - a.claimsSubmitted);
+        const highestDenialType = typeSummary.slice().sort((a, b) => b.denialRate - a.denialRate)[0];
+        const slowestType = typeSummary.slice().sort((a, b) => b.avgProcessingDays - a.avgProcessingDays)[0];
+        const fastestType = typeSummary.slice().sort((a, b) => a.avgProcessingDays - b.avgProcessingDays)[0];
+
+        renderMetricBars("typeVolumeBars", typeSummary.map((row) => ({ label: row.label, value: row.claimsSubmitted })), "#0f766e", fmtInteger);
+        renderMetricBars("typeCycleBars", typeSummary.map((row) => ({ label: row.label, value: row.avgProcessingDays })), "#c2410c", fmtDays);
+        renderMetricList("mixMetrics", [
+          { label: "Dominant claim type", value: typeSummary[0] ? `${typeSummary[0].label} (${fmtInteger(typeSummary[0].claimsSubmitted)})` : "No claims in scope" },
+          { label: "Highest denial type", value: highestDenialType ? `${highestDenialType.label} (${fmtPct(highestDenialType.denialRate)})` : "No claims in scope" },
+          { label: "Slowest processing type", value: slowestType ? `${slowestType.label} (${fmtDays(slowestType.avgProcessingDays)})` : "No claims in scope" },
+          { label: "Fastest processing type", value: fastestType ? `${fastestType.label} (${fmtDays(fastestType.avgProcessingDays)})` : "No claims in scope" },
+          { label: "Diagnosis watch", value: highestDenialType ? highestDenialType.diagnosisGroup : "No claims in scope" }
+        ]);
+
+        if (!mixedRows.length) {
+          renderEmptyTable("mixRows", 7);
+          return;
+        }
+
+        $("mixRows").innerHTML = mixedRows.map((row) => `
+          <tr>
+            <td>${row.claimType}</td>
+            <td>${row.serviceCategory}</td>
+            <td>${row.diagnosisGroup}</td>
+            <td>${fmtInteger(row.claimsSubmitted)}</td>
+            <td>${fmtInteger(row.deniedClaims)}</td>
+            <td>${fmtPct(row.denialRate)}</td>
+            <td>${fmtDays(row.avgProcessingDays)}</td>
+          </tr>
         `).join("");
       }
 
-      function renderSpatial() {
-        const rows = rowsOrFallback(filteredDistricts(), districtData);
-        const activeDistricts = new Set(rows.map((row) => row.district));
-        $("spatialMap").innerHTML = `
-          <svg class="map-svg" viewBox="0 0 560 560" role="img" aria-label="District access map">
-            ${districtData.map((row) => {
-              const shape = districtMapShapes[row.district];
-              const active = activeDistricts.has(row.district);
-              const opacity = active ? 1 : 0.24;
-              return `
-                <g data-map-district="${row.district}">
-                  <polygon class="district-shape ${active ? "active" : ""}" points="${shape.points}" fill="${bandFill(row.band)}" opacity="${opacity}"></polygon>
-                  <text class="district-label" x="${shape.label[0]}" y="${shape.label[1]}" text-anchor="middle" opacity="${opacity}">${row.district}</text>
-                  <text class="district-sub" x="${shape.label[0]}" y="${shape.label[1] + 16}" text-anchor="middle" opacity="${opacity}">${row.pressure.toFixed(1)} pressure</text>
-                  ${shape.facilities.map(([x, y]) => `<circle class="facility-marker" cx="${x}" cy="${y}" r="6" opacity="${opacity}"></circle>`).join("")}
-                  ${row.spatial.includes("Prioritize") ? `<circle class="mobile-marker" cx="${shape.mobile[0]}" cy="${shape.mobile[1]}" r="10" opacity="${opacity}"></circle>` : ""}
-                </g>
-              `;
-            }).join("")}
-          </svg>
-          <div class="map-legend-row">
-            <span><i class="map-legend-swatch" style="background:#de8b80"></i>High pressure district</span>
-            <span><i class="map-legend-swatch" style="background:#f4c56f"></i>Medium pressure district</span>
-            <span><i class="map-legend-swatch" style="background:#9ed1b1"></i>Watch district</span>
-            <span><i class="map-legend-swatch" style="background:#c74634"></i>Mobile clinic trigger</span>
-          </div>
-        `;
-        document.querySelectorAll("[data-map-district]").forEach((node) => {
-          node.addEventListener("click", () => {
-            const district = node.getAttribute("data-map-district");
-            $("filterDistrict").value = $("filterDistrict").value === district ? "All" : district;
-            renderAll();
-          });
-        });
-        const lead = rows.slice().sort((a, b) => b.residents - a.residents)[0];
-        $("spatialMetrics").innerHTML = [
-          `<li><span>Top access constraint</span><strong>${lead.district}</strong></li>`,
-          `<li><span>Residents per facility</span><strong>${Math.round(lead.residents / 1000)}K</strong></li>`,
-          `<li><span>Distance signal</span><strong>${lead.distance.toFixed(2)} km</strong></li>`,
-          `<li><span>Spatial action</span><strong>${lead.spatial.includes("Prioritize") ? "Mobile clinic" : "Monitor"}</strong></li>`
-        ].join("");
-        $("spatialRows").innerHTML = rows.map((row) => `
-          <tr><td>${row.district}</td><td>${Math.round(row.residents).toLocaleString()}</td><td>${row.distance.toFixed(2)} km</td><td>${row.pressure.toFixed(1)}</td><td>${row.spatial}</td></tr>
-        `).join("");
+      function assistantWelcomeCopy(activeTab) {
+        return {
+          overview: "Use the assistant to explain claim volume, paid amount movement, and denial exposure across the Claims star schema.",
+          denial: "Ask where denials concentrate and which slices should be escalated to adjudication and coding review.",
+          program: "Ask which programs show the largest submitted-to-paid gap and where funding attention should go first.",
+          mix: "Ask which claim types drive pending work and cycle time so the team can prioritize operational fixes."
+        }[activeTab];
       }
 
-      function renderAssistantWelcome(activeTab) {
-        const focus = rowsOrFallback(filteredDistricts(), districtData).slice().sort((a, b) => b.pressure - a.pressure)[0];
-        const welcomeCopy = {
-          executive: "Use the assistant to turn the executive workbook into a short action summary for public-health leadership.",
-          access: "Ask which facilities need intervention first and the assistant will ground the answer in wait, occupancy, and staffing signals.",
-          immunization: "Use the assistant to compare age-group completion gaps and turn them into outreach actions.",
-          surveillance: "Ask for operational impact when respiratory positivity and service-quality signals rise together.",
-          spatial: "Ask which districts should receive mobile clinics and use the map to focus the filter context.",
-          chat: "Ask about the playbook and the assistant will combine retrieved document chunks with Gold metrics.",
-          realtime: "Ask how GoldenGate and Kafka-compatible streaming change the operating picture minute by minute.",
-          payer: "Ask about claims leakage, disbursement exceptions, renewal risk, and provider accreditation exposure."
-        };
+      function renderAssistantWelcome(activeTab, rows) {
+        const districtSummary = groupRows(rows, "district").sort((a, b) => b.claimsSubmitted - a.claimsSubmitted);
+        const programSummary = groupRows(rows, "program").sort((a, b) => b.paidAmount - a.paidAmount);
+        const summary = summarizeRows(rows);
+
         $("assistantCardTitle").textContent = `${tabMeta[activeTab][0]} assistant`;
-        $("assistantCardBody").textContent = welcomeCopy[activeTab];
-        $("assistantContext").innerHTML = [
-          `<li><span>Current district focus</span><strong>${focus.district}</strong></li>`,
-          `<li><span>Pressure in view</span><strong>${focus.pressure.toFixed(1)}</strong></li>`,
-          `<li><span>Star serving model</span><strong>Facts join directly to district and facility dimensions</strong></li>`
-        ].join("");
-        $("chatAnswer").textContent = "Ask a question from the assistant rail on the right. Suggested prompts stay grounded in Gold metrics, the spatial map, and the MPHA playbook.";
-        $("retrievedContext").innerHTML = [
-          `<li><span>Prepared context</span><strong>${focus.district} district Gold metrics</strong></li>`,
-          `<li><span>Prepared context</span><strong>Latest star-schema dashboard filters</strong></li>`,
-          `<li><span>Prepared context</span><strong>Relevant playbook chunks load on demand</strong></li>`
-        ].join("");
+        $("assistantCardBody").textContent = rows.length
+          ? assistantWelcomeCopy(activeTab)
+          : "No claims match the current filter combination. Reset one or more filters to continue the walkthrough.";
+        renderMetricList("assistantContext", [
+          { label: "Claims in scope", value: fmtInteger(summary.claimsSubmitted) },
+          { label: "Lead district", value: districtSummary[0] ? districtSummary[0].label : "None" },
+          { label: "Lead program", value: programSummary[0] ? programSummary[0].label : "None" }
+        ]);
       }
 
-      function renderChat() {
-        const question = $("chatQuestion").value.toLowerCase();
-        let example = chatExamples[0];
-        if (question.includes("occupancy") || question.includes("wait")) example = chatExamples[1];
-        if (question.includes("respiratory") || question.includes("positivity")) example = chatExamples[2];
-        const focus = rowsOrFallback(filteredDistricts(), districtData).sort((a, b) => b.pressure - a.pressure)[0];
-        const leadFacility = rowsOrFallback(filteredFacilities(), facilityData).slice().sort((a, b) => b.risk - a.risk)[0];
-        $("chatAnswer").textContent = `${example.answer} Current filter context: ${focus.district}, pressure ${focus.pressure.toFixed(1)}, lead facility ${leadFacility.facility}, residents per facility ${Math.round(focus.residents).toLocaleString()}, and average distance ${focus.distance.toFixed(2)} km.`;
-        $("retrievedContext").innerHTML = [
-          ...example.context.map((item) => `<li><span>Retrieved</span><strong>${item}</strong></li>`),
-          `<li><span>Structured context</span><strong>${focus.district} Gold metrics</strong></li>`
-        ].join("");
-        $("assistantCardTitle").textContent = `Answer for ${tabMeta[activeTabKey()][0]}`;
-        $("assistantCardBody").textContent = example.answer;
-        $("assistantContext").innerHTML = [
-          `<li><span>Focus district</span><strong>${focus.district}</strong></li>`,
-          `<li><span>Lead facility</span><strong>${leadFacility.facility}</strong></li>`,
-          `<li><span>Grounding</span><strong>${example.context[example.context.length - 1]}</strong></li>`
-        ].join("");
+      function answerAssistantQuestion(question, rows) {
+        if (!rows.length) {
+          return {
+            title: "No claims in scope",
+            body: "The current filter combination returns no Claims star schema rows. Reset one or more filters and ask again.",
+            metrics: [
+              { label: "Current period", value: selectedText("filterPeriod") },
+              { label: "District filter", value: filters().district },
+              { label: "Program filter", value: filters().program }
+            ]
+          };
+        }
+
+        const lower = question.toLowerCase();
+        const districtSummary = groupRows(rows, "district").sort((a, b) => b.denialRate - a.denialRate || b.claimsSubmitted - a.claimsSubmitted);
+        const programSummary = groupRows(rows, "program").sort((a, b) => (b.submittedAmount - b.paidAmount) - (a.submittedAmount - a.paidAmount));
+        const typeSummary = groupRows(rows, "claimType").sort((a, b) => b.pendingClaims - a.pendingClaims || b.avgProcessingDays - a.avgProcessingDays);
+        const sliceSummary = groupRowsByFields(rows, ["district", "program", "claimType"]).sort((a, b) => b.denialRate - a.denialRate || b.deniedClaims - a.deniedClaims);
+
+        if (lower.includes("denial")) {
+          const topDistrict = districtSummary[0];
+          const topSlice = sliceSummary[0];
+          return {
+            title: "Claims denial hotspot",
+            body: `${topDistrict.label} is the highest-denial district in the current scope at ${fmtPct(topDistrict.denialRate)}. The sharpest slice is ${topSlice.program} / ${topSlice.claimType} at ${fmtPct(topSlice.denialRate)}, so the walkthrough should focus on eligibility edits and coding review before the next payment cycle.`,
+            metrics: [
+              { label: "District denial rate", value: fmtPct(topDistrict.denialRate) },
+              { label: "Lead slice", value: `${topSlice.program} / ${topSlice.claimType}` },
+              { label: "Grounding", value: "Claims adjudication playbook" }
+            ]
+          };
+        }
+
+        if (lower.includes("gap") || lower.includes("paid") || lower.includes("funding")) {
+          const topProgram = programSummary[0];
+          const gapValue = topProgram.submittedAmount - topProgram.paidAmount;
+          return {
+            title: "Submitted-to-paid gap",
+            body: `${topProgram.label} has the widest submitted-to-paid gap in the current scope at ${fmtMoney(gapValue)}. In the guided story, that becomes the funding conversation: review approval leakage, pending backlog, and whether the current mix of funding sources is delaying cash realization.`,
+            metrics: [
+              { label: "Program gap", value: fmtMoney(gapValue) },
+              { label: "Payment yield", value: fmtPct(topProgram.paymentYield) },
+              { label: "Grounding", value: "Program funding controls" }
+            ]
+          };
+        }
+
+        if (lower.includes("pending")) {
+          const topType = typeSummary[0];
+          return {
+            title: "Pending claim driver",
+            body: `${topType.label} is driving the most pending volume in the current scope with ${fmtInteger(topType.pendingClaims)} pending claims. That is the best place to show how claim type, processing time, and operational follow-up connect inside the Claims star schema.`,
+            metrics: [
+              { label: "Pending claims", value: fmtInteger(topType.pendingClaims) },
+              { label: "Avg processing days", value: fmtDays(topType.avgProcessingDays) },
+              { label: "Grounding", value: "Claims operations work queue" }
+            ]
+          };
+        }
+
+        const topDistrict = districtSummary[0];
+        const topProgram = programSummary[0];
+        return {
+          title: "Claims star schema summary",
+          body: `${topDistrict.label} currently carries the strongest denial pressure while ${topProgram.label} carries the largest funding gap. That combination gives the instructor a clean story about where district performance and program performance meet inside one star schema.`,
+          metrics: [
+            { label: "Lead district", value: topDistrict.label },
+            { label: "Lead program", value: topProgram.label },
+            { label: "Grounding", value: "Claims star schema workbook filters" }
+          ]
+        };
       }
 
-      function renderRealtime() {
-        const rows = rowsOrFallback(filteredFacilities(), facilityData).sort((a, b) => b.queue - a.queue);
-        $("realtimeMetrics").innerHTML = [
-          `<li><span>High-pressure events</span><strong>${rows.filter((row) => row.band === "High").length}</strong></li>`,
-          `<li><span>Average live wait</span><strong>${Math.round(avg(rows.filter((row) => row.edWait > 0), "edWait") || 0)} min</strong></li>`,
-          `<li><span>Peak queue depth</span><strong>${Math.max(...rows.map((row) => row.queue))}</strong></li>`,
-          `<li><span>Lab assets</span><strong>GoldenGate + Kafka/AIDP</strong></li>`
-        ].join("");
-        $("realtimeRows").innerHTML = rows.slice(0, 7).map((row) => `
-          <tr><td>${row.facility}</td><td>${row.district}</td><td>${row.edWait} min</td><td>${(row.occupancy * 100).toFixed(0)}%</td><td>${row.queue}</td><td>${badge(row.band)}</td></tr>
-        `).join("");
-      }
+      function renderAssistant() {
+        const rows = filteredClaimRows();
+        if (!assistantHasPrompt) {
+          renderAssistantWelcome(activeTabKey(), rows);
+          return;
+        }
 
-      function renderPayer() {
-        const payerRows = rowsOrFallback(filteredPayerRows(), payerData);
-        const providerRows = rowsOrFallback(filteredProviders(), providerData)
-          .slice()
-          .sort((a, b) => (b.band === "High") - (a.band === "High") || b.actions - a.actions || a.expiry - b.expiry);
-        renderBars("payerClaimsBars", payerRows.map((row) => ({ ...row, denialPct: Number((row.denialRate * 100).toFixed(1)) })), "denialPct", "#c74634");
-        const totalClaims = sum(payerRows, "claims");
-        const weightedDenials = totalClaims ? sum(payerRows, "denied") / totalClaims : 0;
-        const totalMembers = sum(payerRows, "members");
-        const renewalRisk = totalMembers ? sum(payerRows, "renewals") / totalMembers : 0;
-        $("payerMetrics").innerHTML = [
-          `<li><span>Claims submitted</span><strong>${totalClaims.toLocaleString()}</strong></li>`,
-          `<li><span>Weighted denial rate</span><strong>${(weightedDenials * 100).toFixed(1)}%</strong></li>`,
-          `<li><span>Total disbursed</span><strong>${fmtMoneyK(sum(payerRows, "disbursed"))}</strong></li>`,
-          `<li><span>Renewal risk</span><strong>${(renewalRisk * 100).toFixed(1)}%</strong></li>`,
-          `<li><span>High accreditation risk</span><strong>${providerRows.filter((row) => row.band === "High").length}</strong></li>`
-        ].join("");
-        $("payerRows").innerHTML = payerRows.map((row) => `
-          <tr>
-            <td>${row.district}</td>
-            <td>${row.claims.toLocaleString()}</td>
-            <td>${(row.denialRate * 100).toFixed(1)}%</td>
-            <td>${fmtMoneyK(row.disbursed)}</td>
-            <td>${row.renewals}</td>
-            <td>${row.highRiskMembers}</td>
-          </tr>
-        `).join("");
-        $("providerRows").innerHTML = providerRows.map((row) => `
-          <tr>
-            <td>${row.facility}</td>
-            <td>${row.district}</td>
-            <td>${row.status}</td>
-            <td>${row.score.toFixed(1)}</td>
-            <td>${row.actions}</td>
-            <td>${row.expiry} days</td>
-            <td>${badge(row.band)}</td>
-          </tr>
-        `).join("");
+        const response = answerAssistantQuestion($("chatQuestion").value.trim(), rows);
+        $("assistantCardTitle").textContent = response.title;
+        $("assistantCardBody").textContent = response.body;
+        renderMetricList("assistantContext", response.metrics);
       }
 
       function renderAll() {
@@ -3502,18 +4448,11 @@
         $("dashboardTitle").textContent = tabMeta[activeTab][0];
         $("dashboardSubtitle").textContent = tabMeta[activeTab][1];
         renderKpis();
-        renderExecutive();
-        renderAccess();
-        renderImmunization();
-        renderSurveillance();
-        renderSpatial();
-        renderRealtime();
-        renderPayer();
-        if (assistantHasPrompt) {
-          renderChat();
-        } else {
-          renderAssistantWelcome(activeTab);
-        }
+        renderOverview();
+        renderDenial();
+        renderProgram();
+        renderMix();
+        renderAssistant();
       }
 
       document.querySelectorAll(".dashboard-tab").forEach((button) => {
@@ -3526,28 +4465,37 @@
         });
       });
 
-      ["filterDistrict", "filterFacilityType", "filterPeriod", "filterPressure", "filterAge"].forEach((id) => {
+      ["filterDistrict", "filterProgram", "filterClaimType", "filterFundingSource", "filterPeriod"].forEach((id) => {
         $(id).addEventListener("change", renderAll);
       });
 
       $("resetFilters").addEventListener("click", () => {
         $("filterDistrict").value = "All";
-        $("filterFacilityType").value = "All";
-        $("filterPeriod").value = "H1";
-        $("filterPressure").value = "All";
-        $("filterAge").value = "All";
+        $("filterProgram").value = "All";
+        $("filterClaimType").value = "All";
+        $("filterFundingSource").value = "All";
+        $("filterPeriod").value = "All";
+        assistantHasPrompt = false;
         renderAll();
       });
 
       $("askButton").addEventListener("click", () => {
         assistantHasPrompt = true;
-        renderChat();
+        renderAssistant();
       });
+
+      $("chatQuestion").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          assistantHasPrompt = true;
+          renderAssistant();
+        }
+      });
+
       document.querySelectorAll(".suggestion-button").forEach((button) => {
         button.addEventListener("click", () => {
           $("chatQuestion").value = button.dataset.question;
           assistantHasPrompt = true;
-          renderChat();
+          renderAssistant();
         });
       });
 
