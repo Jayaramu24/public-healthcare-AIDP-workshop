@@ -100,34 +100,42 @@ Upload these additional source files:
 
 Participants: you can skip this section and join once the facilitator confirms the shared environment is ready.
 
-1. Provision or confirm the Oracle AI Data Platform instance.
+The setup sequence below is intentionally aligned to the six AIDP quick-start sections from Oracle, with healthcare-specific workshop inputs added where needed.
+
+1. Section 1 - AIDP Provisioning
    - Open `Analytics & AI`, then `AI Data Platform`.
    - Click `Create AI Data Platform` if the shared workshop environment does not already exist.
-   - Use workshop-friendly names such as `mpha-aidp` for the instance and `mpha-workshop-ws` for the default workspace.
+   - Enter a workshop-friendly instance name such as `mpha-aidp`.
+   - Enter a default workspace name such as `mpha-workshop-ws`.
    - Choose `Standard` for simpler workshop setup, or `Advanced` if your tenancy requires finer policy control.
-   - Apply the generated policy statements in the correct tenancy or compartment, then complete provisioning.
-2. Assign workshop access using AIDP roles.
+   - Copy the generated IAM policy statements and apply them in the correct tenancy or compartment.
+   - Return to the provisioning page and click `Create`.
+   - Open the newly provisioned AI Data Platform instance after status becomes available.
+2. Section 2 - User Access Management
    - Open `Roles`.
-   - Grant facilitator accounts the admin or workspace-admin role required for setup.
-   - Grant participant accounts builder-level access for notebooks, workspace usage, and catalog access.
+   - Choose the required admin role for facilitators, such as the AI Data Platform admin or workspace-admin role.
+   - Open `Members` and add the facilitator accounts.
+   - Repeat for participant-facing roles that allow notebook use, workspace access, and catalog usage.
    - Validate that a facilitator can see the workspace, catalogs, and compute choices.
-3. Create the shared workshop workspace if you are not using the default one.
-   - Open `Workspaces` and click `Create`.
+3. Section 3 - Workspace and Cluster Setup
+   - Open `Workspaces` and click `Create` if you are not using the default workspace.
    - Use a name such as `mpha-core-workshop`.
    - Set the default catalog to the shared standard catalog that will hold the healthcare landing volumes.
-4. Create the shared Spark compute cluster.
    - Open `Compute` and click `Create`.
-   - Use a name such as `mpha-spark-cluster`.
+   - Use a cluster name such as `mpha-spark-cluster`.
    - Select the `Spark` runtime.
    - If available, start with `Quickstart`.
    - Size the driver and workers for workshop execution rather than production-scale tuning.
    - Enable autoscaling if your team prefers elastic usage.
-5. Create the standard catalog and landing schema for Object Storage-backed data.
-   - Open `Master Catalog`.
-   - Create a standard catalog such as `MPHA_WORKSHOP_CAT`.
-   - Create a schema such as `mpha_landing`.
-6. Create the external volumes used by the workshop.
-   - In the `mpha_landing` schema, create external volumes for:
+4. Section 4 - Catalog Setup with OCI Object Storage
+   - Open the OCI Console navigation menu and go to `Storage -> Buckets`.
+   - Select the compartment where the workshop bucket should live.
+   - Click `Create Bucket`.
+   - Enter a bucket name such as `mpha-workshop-bucket`.
+   - Keep the default storage tier unless your tenancy requires a different choice.
+   - Click `Create`.
+   - Open the new bucket.
+   - Create the workshop folder structure so each AIDP volume can point to a clean path:
      - `mpha/raw/`
      - `mpha/raw_json/`
      - `mpha/raw_spatial/`
@@ -135,21 +143,40 @@ Participants: you can skip this section and join once the facilitator confirms t
      - `mpha/bronze/`
      - `mpha/silver/`
      - `mpha/gold_stage/`
+     - `mpha/gold_dimensional/`
      - `mpha/vector/`
-   - For each one, open the schema `Volume` tab, click `Create Volume`, choose `External`, and point it to the correct compartment, bucket, and folder.
-7. Create the external Autonomous AI Lakehouse catalog for Gold publishing and validation.
+   - If your Object Storage view does not show a dedicated folder-create action, upload a small placeholder file into each prefix or use the `Create folder` action if available in your tenancy UI.
+   - Confirm that the bucket and prefixes are visible before you move into catalog and volume creation.
+   - Open `Master Catalog`.
+   - Create a standard catalog such as `MPHA_WORKSHOP_CAT`.
+   - Create a schema such as `mpha_landing`.
+   - In the `mpha_landing` schema, open the `Volume` tab and create external volumes for:
+     - `mpha/raw/`
+     - `mpha/raw_json/`
+     - `mpha/raw_spatial/`
+     - `mpha/documents/`
+     - `mpha/bronze/`
+     - `mpha/silver/`
+     - `mpha/gold_stage/`
+     - `mpha/gold_dimensional/`
+     - `mpha/vector/`
+   - For each volume, choose `External` and point it to the correct compartment, bucket, and folder.
+5. Section 5 - Catalog Setup with Oracle Autonomous AI Lakehouse
    - In `Master Catalog`, click `Create Catalog`.
    - Set `Catalog Type` to `External`.
    - Choose the connection type for Autonomous AI Lakehouse.
    - Use either wallet-based access or direct instance-based connectivity, depending on your environment.
    - Test and save the catalog with a name such as `MPHA_AILH_CAT`.
-8. Set up the shared notebook structure in AIDP.
+   - Open the matching Gold-serving schema in the external catalog and confirm the star schema tables will be visible there once loaded.
+6. Section 6 - Notebook Management
+   - Open the shared workspace folder structure.
    - Create folders such as `01_bronze`, `02_silver`, `03_gold`, `04_ml`, `05_agent`, and `shared_assets`.
    - Upload or create the starter notebooks:
      - `aidp_bronze_pyspark.py`
      - `aidp_silver_pyspark.py`
      - `aidp_gold_pyspark.py`
      - `aidp_claims_star_ai_lakehouse_pyspark.py`
+   - Open a notebook and attach the shared Spark cluster so the execution environment is ready for participants.
 
 ### Participant Steps
 
