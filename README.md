@@ -16,7 +16,7 @@ The business story blends four recognizable healthcare administration domains:
 - Membership
 - Healthcare Provider Accreditation
 
-The end-to-end flow moves from raw operational data into a medallion architecture, then into a Gold dimensional model for Oracle Analytics Cloud and AI-assisted insights.
+The end-to-end flow moves from raw operational data into a medallion architecture, then branches into two Gold teaching outcomes: an instructor-led Claims star schema with a provided OAC workbook, and a DIY Facility Access Daily star schema that participants model and visualize on their own.
 
 ## Quick Start
 
@@ -27,8 +27,25 @@ The end-to-end flow moves from raw operational data into a medallion architectur
    - [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)
    - [notebooks/aidp_silver_pyspark.py](notebooks/aidp_silver_pyspark.py)
    - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
+   - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
 5. Use the Gold schema SQL in AI Lakehouse:
    - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
+
+## AIDP Setup Order
+
+The workshop now follows Oracle's AIDP quick-start flow, contextualized for the MPHA healthcare use case:
+
+1. Provision or reuse the AIDP instance
+2. Assign user access with AIDP roles
+3. Create the workshop workspace
+4. Create a Spark cluster and attach it to notebooks
+5. Create the standard Object Storage-backed catalog and schema
+6. Create external volumes for `raw`, `raw_json`, `raw_spatial`, `documents`, `bronze`, `silver`, and `gold_stage`
+7. Create the external Autonomous AI Lakehouse catalog
+8. Organize notebook folders for Bronze, Silver, Gold, ML, and agent work
+9. Run the medallion notebooks in order
+
+See [workshop_guide.md](workshop_guide.md) for the full step-by-step walkthrough and workshop-specific naming guidance.
 
 If you want to preview the HTML locally in a browser:
 
@@ -45,9 +62,10 @@ Then open `http://127.0.0.1:8765/`.
 - A professionally formatted PDF guide for offline delivery
 - A compact raw source set with healthcare-relevant business flavor
 - Separate Bronze, Silver, and Gold Spark notebooks for AIDP
-- A Gold star schema designed for AI Lakehouse and OAC
+- Two Gold star paths designed for AI Lakehouse and OAC
+- An instructor-led Claims star schema workbook plus a participant-owned Facility Access dashboard challenge
 - Interactive dashboard mockups, spatial insight examples, and vector-chat patterns
-- Optional extension labs for GoldenGate and Kafka-compatible streaming
+- Optional extension labs for machine learning and a Claims and Policy Copilot
 
 ## Raw Source Datasets
 
@@ -83,25 +101,16 @@ The workshop uses a classic medallion progression with Oracle AI Data Platform d
 
 ### Gold
 
-- Publish a dimensional model in Autonomous AI Lakehouse
-- Use shared dimensions and facts for OAC and AI workloads
-- Support executive, operational, spatial, and document-assisted analytics
+- Publish dimensional stars in Autonomous AI Lakehouse
+- Reuse the same Silver foundation for two different Gold teaching paths
+- Support instructor-led claims analytics first, then participant-led facility-access modeling
 
-The recommended Gold layer is a dimensional star schema with shared conformed dimensions and business-serving views:
+The recommended Gold layer now branches into:
 
-- `dim_date`
-- `dim_district`
-- `dim_facility`
-- `dim_provider`
-- `dim_program`
-- `dim_service_line`
-- `fact_claims`
-- `fact_membership`
-- `fact_disbursement`
-- `fact_operations`
-- `fact_population_health`
+- `mpha_fact_claims_monthly` plus `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type`
+- `mpha_fact_facility_access_daily` plus `mpha_dim_date`, `mpha_dim_facility`, `mpha_dim_district`, and `mpha_dim_pressure_band`
 
-Facility-grain facts also carry `district_key`, so OAC joins directly from facts to both `dim_facility` and `dim_district` without dimension-to-dimension dependencies.
+The Claims star schema is the provided OAC reference workbook. The Facility Access Daily star schema is intentionally left as the participant challenge so the same design pattern has to be applied independently.
 
 Reference material:
 
@@ -111,14 +120,13 @@ Reference material:
 
 ## Dashboard And Insight Coverage
 
-The OAC wireframes and workshop narrative cover:
+The OAC wireframes and workshop narrative now focus on:
 
-- Executive care access and operational resilience
-- Claims and disbursement monitoring
-- Membership growth, lapse, and eligibility risk
-- Provider accreditation readiness and expiry tracking
-- Spatial access analysis using district and facility catchments
-- Chat with structured data and vectorized healthcare operating documents
+- The instructor-led Claims star schema workbook
+- Claims, disbursement, and program funding monitoring
+- Interactive filters, metrics, and grounded assistant prompts for the claims story
+- Spatial and document-chat assets as adjacent workshop capabilities
+- A participant extension path for Facility Access Daily dashboard creation
 
 Useful references:
 
@@ -138,7 +146,11 @@ Use the Spark assets as separate notebooks in Oracle AI Data Platform:
   Cleanses, joins, and refines Bronze data into conformed Silver tables.
 
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)  
+- [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)  
   Produces Gold-ready dimensional outputs and business-serving views.
+
+- [notebooks/aidp_ml_claims_denial_risk_pyspark.py](notebooks/aidp_ml_claims_denial_risk_pyspark.py)  
+  Optional ML notebook that trains and publishes claims denial risk scores from curated Gold inputs.
 
 - [notebooks/aidp_refinement_pyspark.py](notebooks/aidp_refinement_pyspark.py)  
   Retained as a single-script reference version of the medallion flow.
@@ -150,18 +162,18 @@ Use the Spark assets as separate notebooks in Oracle AI Data Platform:
 - [workshop_guide.pdf](workshop_guide.pdf) - downloadable formatted guide
 - [data_dictionary.md](data_dictionary.md) - business definitions and column details
 - [manifest.json](manifest.json) - generated artifact manifest
-- [optional_labs/](optional_labs/) - real-time and streaming extension labs
+- [optional_labs/](optional_labs/) - machine learning and agent extension labs
 - [github_migration.md](github_migration.md) - repository handoff instructions
 
 ## Optional Labs
 
-- [optional_labs/real_time_analytics_golden_gate.md](optional_labs/real_time_analytics_golden_gate.md)
-- [optional_labs/stream_analytics_kafka_aidp.md](optional_labs/stream_analytics_kafka_aidp.md)
+- [optional_labs/claims_denial_risk_scoring.md](optional_labs/claims_denial_risk_scoring.md)
+- [optional_labs/claims_policy_copilot_agent.md](optional_labs/claims_policy_copilot_agent.md)
 
 These labs extend the core workshop into:
 
-- Real-time analytics using OCI GoldenGate
-- Stream analytics using Kafka-compatible streaming through AIDP
+- Claims denial risk scoring using curated claims, event, and accreditation context
+- A Claims and Policy Copilot using SQL over the Gold layer plus RAG over the policy playbook
 
 ## Data Privacy
 

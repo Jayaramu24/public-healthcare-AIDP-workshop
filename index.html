@@ -3990,7 +3990,7 @@
             </div>
             <div class="asset">
               <h3>Notebooks</h3>
-              <p>Split PySpark scripts for Bronze ingestion, Silver refinement, Gold staging, and optional claims denial-risk scoring in AI Data Platform.</p>
+              <p>Split PySpark scripts for Bronze ingestion, Silver refinement, direct Claims star schema publishing to AI Lakehouse, Gold staging, and optional claims denial-risk scoring in AI Data Platform.</p>
               <div class="asset-actions">
                 <a class="asset-download" href="notebooks/aidp_bronze_pyspark.py" download>Download Bronze notebook starter</a>
                 <div class="asset-groups">
@@ -3999,6 +3999,7 @@
                     <div class="asset-links">
                       <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&label=Bronze%20notebook&kind=code">Bronze</a>
                       <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&label=Silver%20notebook&kind=code">Silver</a>
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_claims_star_ai_lakehouse_pyspark.py&label=Claims%20star%20schema%20to%20AI%20Lakehouse&kind=code">Claims star to AI Lakehouse</a>
                       <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_gold_pyspark.py&label=Gold%20notebook&kind=code">Gold</a>
                     </div>
                   </div>
@@ -4067,8 +4068,8 @@
             <li>Confirm target OCI tenancy has Object Storage, AI Data Platform, Autonomous AI Lakehouse, and OAC access.</li>
             <li>Upload `data/raw`, `data/raw_json`, `data/raw_spatial`, and `documents` files to the landing zone and update the AIDP notebook paths.</li>
             <li>Verify the five CSV files, one JSONL file, one GeoJSON file, and one DOCX file are present before running AIDP refinement.</li>
-            <li>Run the Bronze notebook, then the Silver notebook, then the Gold notebook to stage the business-serving layer.</li>
-            <li>Stage `data/gold_dimensional` outputs, then run `create_ai_lakehouse_dimensional_gold_schema.sql` in AI Lakehouse.</li>
+            <li>Run the Bronze notebook, then the Silver notebook, then run the Claims star schema notebook to write the instructor-led Claims model directly to the connected AI Lakehouse catalog.</li>
+            <li>Use the Gold notebook plus `create_ai_lakehouse_dimensional_gold_schema.sql` only when you want the alternative staged-file loading path.</li>
             <li>Validate Gold, spatial, document-chat, and OAC views with the sample analytics queries.</li>
             <li>Build and test the instructor-led Claims star schema workbook filters, then reserve Facility Access Daily dashboard design for the participant challenge.</li>
             <li>Decide whether to rehearse the optional ML scoring lab, the Claims and Policy Copilot lab, or both.</li>

@@ -149,6 +149,7 @@ Participants: you can skip this section and join once the facilitator confirms t
      - `aidp_bronze_pyspark.py`
      - `aidp_silver_pyspark.py`
      - `aidp_gold_pyspark.py`
+     - `aidp_claims_star_ai_lakehouse_pyspark.py`
 
 ### Participant Steps
 
@@ -198,6 +199,8 @@ Participants: you can ignore this unless the facilitator asks you to use the leg
 
 1. Run `notebooks/aidp_bronze_pyspark.py` to write raw-preserving Bronze Delta tables.
 2. Run `notebooks/aidp_silver_pyspark.py` to type, validate, and conform the healthcare data into Silver Delta tables.
+3. For the instructor-led Claims path, run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to build the Claims star schema dimensions and fact directly in the connected Autonomous AI Lakehouse external catalog.
+4. Use `notebooks/aidp_gold_pyspark.py` only when the facilitator wants the broader flat Gold-serving compatibility outputs staged to object storage.
 
 ### Bronze Layer in AIDP
 
@@ -418,12 +421,18 @@ Participants: you can skip this section and join once the facilitator confirms t
 ### Participant Steps
 
 1. Sign in to Database Actions with the assigned workshop user and run `select user from dual;` in `SQL` to confirm that you land in the expected schema.
-2. Run `notebooks/aidp_gold_pyspark.py` after the Silver notebook completes.
-3. Set the `silver_base` and `gold_stage_base` paths to your object storage locations.
-4. Stage Gold-serving outputs for claims, facility access, and the supporting dimensions used by both stars.
-5. Load the dimensional Gold schema with `sql/create_ai_lakehouse_dimensional_gold_schema.sql`.
-   - Run the DDL and load statements in `Database Actions -> SQL`.
-   - Use the schema assigned for the Gold-serving exercise, such as `MPHA_GOLD_OWNER` for the instructor-led path or a team schema if you want each table of participants to load independently.
+2. Run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` after the Silver notebook completes.
+3. Set the notebook variables for:
+   - `silver_base`
+   - `target_catalog`
+   - `target_schema`
+4. Use the connected external Autonomous AI Lakehouse catalog, such as `MPHA_AILH_CAT`, and the assigned Gold-serving schema, such as `MPHA_GOLD_OWNER`.
+5. Confirm that the notebook writes these instructor-led Claims star schema tables:
+   - `mpha_dim_date`
+   - `mpha_dim_district`
+   - `mpha_dim_coverage_program`
+   - `mpha_dim_claim_type`
+   - `mpha_fact_claims_monthly`
 6. Open the shared claims dataset and create the workbook.
 7. Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
 8. Create calculations in `My Calculations` only if the dataset does not already expose:
@@ -451,6 +460,10 @@ Participants: you can skip this section and join once the facilitator confirms t
    - `Claim Type Mix`
 13. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
 14. Reopen the workbook and use `Assistant` for claims-dataset questions only.
+
+Alternative loading path:
+
+- If the facilitator prefers a SQL-driven load instead of the direct AIDP catalog write, use `notebooks/aidp_gold_pyspark.py` to stage outputs and then run `sql/create_ai_lakehouse_dimensional_gold_schema.sql` in Database Actions.
 
 Recommended workshop pattern:
 
