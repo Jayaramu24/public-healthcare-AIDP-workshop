@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Workshop Asset Viewer</title>
+    <style>
+      :root {
+        --ink: #182321;
+        --muted: #5e6d68;
+        --line: #d7e2dd;
+        --soft: #f5f8f7;
+        --surface: #ffffff;
+        --deep: #143735;
+        --coral: #e15f3f;
+        --accent: #2f6fb2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--soft);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .shell {
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 24px;
+        background: var(--deep);
+        color: #ffffff;
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .topbar p {
+        margin: 4px 0 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.9rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        font-size: 0.92rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button.light {
+        border-color: var(--line);
+        background: #ffffff;
+        color: var(--ink);
+      }
+
+      .wrap {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 32px;
+      }
+
+      .meta {
+        margin-bottom: 16px;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .meta-item strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+
+      .meta-item span {
+        font-size: 0.96rem;
+        word-break: break-word;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+        overflow: hidden;
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfcfb;
+      }
+
+      .panel-head strong {
+        font-size: 0.95rem;
+      }
+
+      .status {
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .viewer-frame {
+        width: 100%;
+        min-height: calc(100svh - 250px);
+        border: 0;
+        background: #ffffff;
+      }
+
+      .viewer-pre {
+        margin: 0;
+        padding: 18px;
+        min-height: calc(100svh - 250px);
+        overflow: auto;
+        background: #fcfdfc;
+        color: #1a2a27;
+        font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .viewer-markdown {
+        min-height: calc(100svh - 250px);
+        padding: 28px;
+        color: #20312d;
+      }
+
+      .viewer-markdown > :first-child {
+        margin-top: 0;
+      }
+
+      .viewer-markdown h1,
+      .viewer-markdown h2,
+      .viewer-markdown h3,
+      .viewer-markdown h4 {
+        margin: 1.5em 0 0.5em;
+        line-height: 1.2;
+      }
+
+      .viewer-markdown h1 {
+        font-size: 2rem;
+      }
+
+      .viewer-markdown h2 {
+        font-size: 1.45rem;
+      }
+
+      .viewer-markdown h3 {
+        font-size: 1.15rem;
+      }
+
+      .viewer-markdown p,
+      .viewer-markdown li {
+        color: #334440;
+        line-height: 1.7;
+      }
+
+      .viewer-markdown p {
+        margin: 0 0 1em;
+      }
+
+      .viewer-markdown ul,
+      .viewer-markdown ol {
+        margin: 0 0 1em 1.25em;
+        padding: 0;
+      }
+
+      .viewer-markdown li + li {
+        margin-top: 0.35em;
+      }
+
+      .viewer-markdown a {
+        color: var(--accent);
+      }
+
+      .viewer-markdown code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef4f2;
+        font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .viewer-markdown pre {
+        margin: 0 0 1em;
+        padding: 16px;
+        overflow: auto;
+        border-radius: 8px;
+        background: #f8fbfa;
+        border: 1px solid #e3ece8;
+        color: #1c2e29;
+        font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .viewer-markdown pre code {
+        padding: 0;
+        background: transparent;
+      }
+
+      .viewer-markdown table {
+        width: 100%;
+        margin: 0 0 1.25em;
+        border-collapse: collapse;
+        border: 1px solid #dce7e2;
+      }
+
+      .viewer-markdown th,
+      .viewer-markdown td {
+        padding: 10px 12px;
+        border: 1px solid #dce7e2;
+        vertical-align: top;
+        text-align: left;
+      }
+
+      .viewer-markdown th {
+        background: #f4f8f6;
+      }
+
+      .viewer-markdown figure {
+        margin: 18px 0 22px;
+      }
+
+      .viewer-markdown img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #d7e2dd;
+        border-radius: 8px;
+        box-shadow: 0 12px 28px rgba(17, 31, 28, 0.1);
+      }
+
+      .viewer-markdown figcaption {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .docx-card,
+      .download-card,
+      .error-card {
+        padding: 28px;
+      }
+
+      .download-card h2,
+      .docx-card h2,
+      .error-card h2 {
+        margin: 0 0 10px;
+        font-size: 1.25rem;
+      }
+
+      .download-card p,
+      .docx-card p,
+      .error-card p {
+        margin: 0 0 14px;
+        color: var(--muted);
+        max-width: 760px;
+      }
+
+      .docx-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .docx-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: #ffffff;
+        color: var(--ink);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      @media (max-width: 860px) {
+        .topbar,
+        .panel-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .meta-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <h1 id="assetTitle">Workshop asset</h1>
+          <p id="assetSubtitle">Previewing a workshop file inside the browser.</p>
+        </div>
+        <div class="actions">
+          <a class="button" href="index.html#assets">Back to assets</a>
+          <a class="button light" id="openOriginal" href="#">Open original file</a>
+        </div>
+      </header>
+
+      <main class="wrap">
+        <section class="meta">
+          <div class="meta-grid">
+            <div class="meta-item">
+              <strong>Label</strong>
+              <span id="metaLabel">-</span>
+            </div>
+            <div class="meta-item">
+              <strong>Type</strong>
+              <span id="metaType">-</span>
+            </div>
+            <div class="meta-item">
+              <strong>Path</strong>
+              <span id="metaPath">-</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <strong id="panelTitle">Preview</strong>
+            <span class="status" id="panelStatus">Loading asset...</span>
+          </div>
+          <div id="viewerHost"></div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const file = params.get("file") || "";
+      const label = params.get("label") || "Workshop asset";
+      const kind = (params.get("kind") || "").toLowerCase();
+      const ext = (file.split(".").pop() || "").toLowerCase();
+
+      const assetTitle = document.getElementById("assetTitle");
+      const assetSubtitle = document.getElementById("assetSubtitle");
+      const metaLabel = document.getElementById("metaLabel");
+      const metaType = document.getElementById("metaType");
+      const metaPath = document.getElementById("metaPath");
+      const panelTitle = document.getElementById("panelTitle");
+      const panelStatus = document.getElementById("panelStatus");
+      const viewerHost = document.getElementById("viewerHost");
+      const openOriginal = document.getElementById("openOriginal");
+
+      function setMeta(typeLabel) {
+        document.title = `${label} | Workshop Asset Viewer`;
+        assetTitle.textContent = label;
+        assetSubtitle.textContent = `Path: ${file}`;
+        metaLabel.textContent = label;
+        metaType.textContent = typeLabel;
+        metaPath.textContent = file;
+        panelTitle.textContent = label;
+        openOriginal.href = file;
+      }
+
+      function showError(message) {
+        panelStatus.textContent = "Preview unavailable";
+        viewerHost.innerHTML = `
+          <div class="error-card">
+            <h2>Asset preview unavailable</h2>
+            <p>${message}</p>
+          </div>
+        `;
+      }
+
+      function showPre(text) {
+        const pre = document.createElement("pre");
+        pre.className = "viewer-pre";
+        pre.textContent = text;
+        viewerHost.replaceChildren(pre);
+        panelStatus.textContent = "Preview loaded";
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function renderInline(text) {
+        let html = escapeHtml(text);
+        html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+        html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+        html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+        return html;
+      }
+
+      function parseTableRow(line) {
+        return line
+          .trim()
+          .replace(/^\|/, "")
+          .replace(/\|$/, "")
+          .split("|")
+          .map((cell) => cell.trim());
+      }
+
+      function renderMarkdown(text) {
+        const lines = text.replace(/\r\n/g, "\n").split("\n");
+        const blocks = [];
+        let i = 0;
+
+        const isTableDivider = (line) => /^\s*\|?(?:\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?\s*$/.test(line);
+
+        while (i < lines.length) {
+          const line = lines[i];
+          const trimmed = line.trim();
+
+          if (!trimmed) {
+            i += 1;
+            continue;
+          }
+
+          if (/^```/.test(trimmed)) {
+            const buffer = [];
+            i += 1;
+            while (i < lines.length && !/^```/.test(lines[i].trim())) {
+              buffer.push(lines[i]);
+              i += 1;
+            }
+            if (i < lines.length) {
+              i += 1;
+            }
+            blocks.push(`<pre><code>${escapeHtml(buffer.join("\n"))}</code></pre>`);
+            continue;
+          }
+
+          const imageMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+          if (imageMatch) {
+            blocks.push(
+              `<figure><img src="${imageMatch[2]}" alt="${escapeHtml(imageMatch[1])}" loading="lazy" /><figcaption>${escapeHtml(imageMatch[1] || "Reference image")}</figcaption></figure>`
+            );
+            i += 1;
+            continue;
+          }
+
+          const headingMatch = trimmed.match(/^(#{1,4})\s+(.*)$/);
+          if (headingMatch) {
+            const level = headingMatch[1].length;
+            blocks.push(`<h${level}>${renderInline(headingMatch[2])}</h${level}>`);
+            i += 1;
+            continue;
+          }
+
+          if (trimmed.includes("|") && i + 1 < lines.length && isTableDivider(lines[i + 1])) {
+            const headerCells = parseTableRow(lines[i]);
+            const bodyRows = [];
+            i += 2;
+            while (i < lines.length && lines[i].trim().includes("|")) {
+              bodyRows.push(parseTableRow(lines[i]));
+              i += 1;
+            }
+            const thead = `<thead><tr>${headerCells.map((cell) => `<th>${renderInline(cell)}</th>`).join("")}</tr></thead>`;
+            const tbody = `<tbody>${bodyRows.map((row) => `<tr>${row.map((cell) => `<td>${renderInline(cell)}</td>`).join("")}</tr>`).join("")}</tbody>`;
+            blocks.push(`<table>${thead}${tbody}</table>`);
+            continue;
+          }
+
+          if (/^[-*]\s+/.test(trimmed)) {
+            const items = [];
+            while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
+              items.push(lines[i].trim().replace(/^[-*]\s+/, ""));
+              i += 1;
+            }
+            blocks.push(`<ul>${items.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ul>`);
+            continue;
+          }
+
+          if (/^\d+\.\s+/.test(trimmed)) {
+            const items = [];
+            while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
+              items.push(lines[i].trim().replace(/^\d+\.\s+/, ""));
+              i += 1;
+            }
+            blocks.push(`<ol>${items.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ol>`);
+            continue;
+          }
+
+          const para = [];
+          while (
+            i < lines.length &&
+            lines[i].trim() &&
+            !/^```/.test(lines[i].trim()) &&
+            !/^(#{1,4})\s+/.test(lines[i].trim()) &&
+            !/^!\[([^\]]*)\]\(([^)]+)\)$/.test(lines[i].trim()) &&
+            !/^[-*]\s+/.test(lines[i].trim()) &&
+            !/^\d+\.\s+/.test(lines[i].trim()) &&
+            !(lines[i].trim().includes("|") && i + 1 < lines.length && isTableDivider(lines[i + 1]))
+          ) {
+            para.push(lines[i].trim());
+            i += 1;
+          }
+          blocks.push(`<p>${renderInline(para.join(" "))}</p>`);
+        }
+
+        return blocks.join("\n");
+      }
+
+      function showMarkdown(text) {
+        const article = document.createElement("article");
+        article.className = "viewer-markdown";
+        article.innerHTML = renderMarkdown(text);
+        viewerHost.replaceChildren(article);
+        panelStatus.textContent = "Rendered markdown preview loaded";
+      }
+
+      function showIframe(url) {
+        const frame = document.createElement("iframe");
+        frame.className = "viewer-frame";
+        frame.src = url;
+        frame.title = label;
+        viewerHost.replaceChildren(frame);
+        panelStatus.textContent = "Embedded preview loaded";
+      }
+
+      function showDocxCard() {
+        viewerHost.innerHTML = `
+          <div class="docx-card">
+            <h2>DOCX source file</h2>
+            <p>This asset is a Word document source used by the workshop for vectorization and policy grounding. Browser preview for DOCX is inconsistent, so this page provides a direct open link plus the derived document-chat context used in the workshop.</p>
+            <div class="docx-links">
+              <a href="${file}">Open original DOCX</a>
+              <a href="asset_viewer.html?file=data/gold/gold_document_chat_context.csv&label=Document%20chat%20context&kind=csv">Open derived document context</a>
+            </div>
+          </div>
+        `;
+        panelStatus.textContent = "DOCX helper view loaded";
+      }
+
+      function showDownloadCard() {
+        const filename = file.split("/").pop() || "workshop asset";
+        viewerHost.innerHTML = `
+          <div class="download-card">
+            <h2>Download-ready asset</h2>
+            <p>This file is packaged as a downloadable workshop bundle. Some browsers handle archive downloads more reliably from this helper page than from a direct local-file link.</p>
+            <div class="docx-links">
+              <a href="${file}" download="${filename}">Download bundle ZIP</a>
+              <a href="${file}">Open original file</a>
+            </div>
+          </div>
+        `;
+        panelStatus.textContent = "Download helper view loaded";
+      }
+
+      async function loadTextAsset(renderMode = "plain") {
+        try {
+          const response = await fetch(file, { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const text = await response.text();
+          if (renderMode === "markdown") {
+            showMarkdown(text);
+          } else {
+            showPre(text);
+          }
+        } catch (error) {
+          showError(`The file exists in the workshop package, but the browser could not render it directly here. Use "Open original file" to access the raw asset. (${error.message})`);
+        }
+      }
+
+      if (!file) {
+        showError("No asset path was provided.");
+      } else if (kind === "pdf" || ext === "pdf") {
+        setMeta("PDF document");
+        showIframe(file);
+      } else if (kind === "download" || ext === "zip") {
+        setMeta("Download bundle");
+        showDownloadCard();
+      } else if (kind === "docx" || ext === "docx") {
+        setMeta("Word document");
+        showDocxCard();
+      } else if (["md", "csv", "sql", "py", "json", "jsonl", "geojson", "txt"].includes(ext) || ["markdown", "text", "code", "csv", "json"].includes(kind)) {
+        const typeLabel =
+          kind === "markdown" ? "Markdown" :
+          kind === "csv" ? "CSV dataset" :
+          kind === "code" ? "Code or SQL asset" :
+          kind === "json" ? "JSON asset" :
+          ext.toUpperCase();
+        setMeta(typeLabel);
+        loadTextAsset(kind === "markdown" || ext === "md" ? "markdown" : "plain");
+      } else {
+        setMeta(ext ? `${ext.toUpperCase()} file` : "Workshop file");
+        showError("This asset type does not have an inline preview yet. Use \"Open original file\" to access the source asset.");
+      }
+    </script>
+  </body>
+</html>
