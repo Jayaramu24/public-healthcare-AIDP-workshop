@@ -467,6 +467,14 @@ Participants: you can skip this section and join once the facilitator confirms t
 15. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
 16. Reopen the workbook and use `Assistant` for claims-dataset questions only.
 
+Quick validation pack:
+
+- Run `sql/claims_star_validation.sql` in Database Actions after the notebook completes.
+- Expected outcomes:
+  - all five Claims star schema tables return non-zero row counts
+  - orphan-row check returns `0`
+  - joined preview returns readable business rows with populated claims measures
+
 Alternative loading path:
 
 - If the facilitator prefers a SQL-driven load instead of the direct AIDP catalog write, use `notebooks/aidp_gold_pyspark.py` to stage outputs and then run `sql/create_ai_lakehouse_dimensional_gold_schema.sql` in Database Actions.
