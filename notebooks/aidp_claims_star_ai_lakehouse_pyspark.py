@@ -14,7 +14,8 @@
 #    - mpha_dim_coverage_program
 #    - mpha_dim_claim_type
 #    - mpha_fact_claims_monthly
-# 3. Run `aidp_silver_pyspark.py` first so the Silver Delta tables exist.
+# 3. The target user/schema has sufficient quota on tablespace DATA for inserts.
+# 4. Run `aidp_silver_pyspark.py` first so the Silver Delta tables exist.
 
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
@@ -24,7 +25,7 @@ silver_base = "oci://<bucket>@<namespace>/mpha/silver"
 target_catalog = "MPHA_AILH_CAT"
 target_schema = "MPHA_GOLD_OWNER"
 table_prefix = "mpha"
-write_mode = "overwrite"
+write_mode = "append"
 
 
 def read_delta(name):
@@ -35,14 +36,50 @@ def target_table(name):
     return f"{target_catalog}.{target_schema}.{table_prefix}_{name}"
 
 
+def validate_target_namespace():
+    schema_rows = spark.sql(f"SHOW SCHEMAS IN {target_catalog} LIKE '{target_schema}'").collect()
+    if not schema_rows:
+        raise ValueError(
+            f"Target schema {target_catalog}.{target_schema} was not found. "
+            "Update `target_catalog` / `target_schema` to an existing external AI Lakehouse catalog schema, "
+            "or create the schema and base tables first."
+        )
+
+
+def validate_target_tables(required_tables):
+    available = {
+        row.tableName
+        for row in spark.sql(f"SHOW TABLES IN {target_catalog}.{target_schema}").collect()
+    }
+    missing = [table for table in required_tables if f"{table_prefix}_{table}" not in available]
+    if missing:
+        raise ValueError(
+            "The target schema exists, but these required star-schema tables are missing: "
+            + ", ".join(f"{table_prefix}_{name}" for name in missing)
+            + ". Create them first in Autonomous AI Lakehouse before running this notebook."
+        )
+
+
 def write_catalog_table(frame, name, columns):
     ordered = frame.select(*columns)
-    ordered.write.mode(write_mode).saveAsTable(target_table(name))
+    ordered.write.mode(write_mode).insertInto(target_table(name))
     print(f"Wrote {target_table(name)}")
 
 
 silver_district = read_delta("silver_district")
 silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
+
+
+validate_target_namespace()
+validate_target_tables(
+    [
+        "dim_date",
+        "dim_district",
+        "dim_coverage_program",
+        "dim_claim_type",
+        "fact_claims_monthly",
+    ]
+)
 
 
 claims_with_service_month = silver_claims_membership_disbursement.withColumn(

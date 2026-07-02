@@ -24,10 +24,10 @@ The end-to-end flow moves from raw operational data into a medallion architectur
 2. Use the formatted workshop guide for delivery: [workshop_guide.pdf](workshop_guide.pdf)
 3. Review the detailed hands-on instructions: [workshop_guide.md](workshop_guide.md)
 4. Run the notebooks in this order:
-   - [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)
-   - [notebooks/aidp_silver_pyspark.py](notebooks/aidp_silver_pyspark.py)
-   - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
-   - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
+- [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)
+- [notebooks/aidp_silver_pyspark.py](notebooks/aidp_silver_pyspark.py)
+- [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
+- [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
 5. Use the Gold schema SQL in AI Lakehouse:
    - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
 
@@ -147,6 +147,13 @@ Use the Spark assets as separate notebooks in Oracle AI Data Platform:
 
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)  
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)  
+
+Recommended notebook path for the instructor-led Claims workshop:
+
+- Run `notebooks/aidp_bronze_pyspark.py`
+- Run `notebooks/aidp_silver_pyspark.py`
+- Run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to write directly into the connected Autonomous AI Lakehouse catalog
+- Use `notebooks/aidp_gold_pyspark.py` only as the optional staged-file path
   Produces Gold-ready dimensional outputs and business-serving views.
 
 - [notebooks/aidp_ml_claims_denial_risk_pyspark.py](notebooks/aidp_ml_claims_denial_risk_pyspark.py)  

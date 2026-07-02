@@ -401,6 +401,7 @@ Participants: you can skip this section and join once the facilitator confirms t
      - facilitator or shared schema quota: `2G` to `5G`
    - Open the `Granted Roles` tab and grant `DWROLE`, plus `CONNECT` if your tenancy standard still expects it.
    - Confirm the users are `REST Enabled`.
+   - Set quota on tablespace `DATA` high enough for workshop loading. For the direct AIDP Claims star schema notebook path, `1G` is a practical minimum; use `2G` to `5G` for facilitator or shared schemas when you want more headroom.
    - Copy the Database Actions URL from the user card and share it with the participant together with the username and temporary password.
 3. Create the shared OAC connection if one does not already exist.
    - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
@@ -427,39 +428,44 @@ Participants: you can skip this section and join once the facilitator confirms t
    - `target_catalog`
    - `target_schema`
 4. Use the connected external Autonomous AI Lakehouse catalog, such as `MPHA_AILH_CAT`, and the assigned Gold-serving schema, such as `MPHA_GOLD_OWNER`.
-5. Confirm that the notebook writes these instructor-led Claims star schema tables:
+5. Confirm these prerequisites before running the write step:
+   - the target schema exists in the external catalog
+   - the target tables already exist in Autonomous AI Lakehouse
+   - the target user has quota on tablespace `DATA`
+6. The notebook writes with `insertInto()` into existing AI Lakehouse tables, so treat it as the direct-load path for an already prepared Claims star schema.
+7. Confirm that the notebook writes these instructor-led Claims star schema tables:
    - `mpha_dim_date`
    - `mpha_dim_district`
    - `mpha_dim_coverage_program`
    - `mpha_dim_claim_type`
    - `mpha_fact_claims_monthly`
-6. Open the shared claims dataset and create the workbook.
-7. Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
-8. Create calculations in `My Calculations` only if the dataset does not already expose:
+8. Open the shared claims dataset and create the workbook.
+9. Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
+10. Create calculations in `My Calculations` only if the dataset does not already expose:
    - Claim Denial Rate
    - Payment Yield
    - Approval Rate
    - Pending Rate
-9. Build the KPI band with native OAC tiles.
+11. Build the KPI band with native OAC tiles.
    - Drag `claims_submitted` to the canvas to create the first tile.
    - Drag up to four more measures onto the same tile.
    - Create a second tile for a sixth KPI such as `avg_processing_days`.
-10. Add a `Dashboard Filter` control with:
+12. Add a `Dashboard Filter` control with:
    - Reporting Period
    - District
    - Coverage Program
    - Claim Type
    - Funding Source
-11. Add the core visuals:
+13. Add the core visuals:
    - district claims chart
    - monthly paid-amount trend
    - district summary table
-12. Create the additional canvases in `Freeform` layout:
+14. Create the additional canvases in `Freeform` layout:
    - `Denial Analysis`
    - `Program Performance`
    - `Claim Type Mix`
-13. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
-14. Reopen the workbook and use `Assistant` for claims-dataset questions only.
+15. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
+16. Reopen the workbook and use `Assistant` for claims-dataset questions only.
 
 Alternative loading path:
 
