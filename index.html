@@ -1930,6 +1930,65 @@
         font-weight: 780;
       }
 
+      .asset-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .asset-download {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--deep);
+        color: #ffffff !important;
+        font-size: 0.9rem;
+        font-weight: 780;
+      }
+
+      .asset-groups {
+        display: grid;
+        gap: 10px;
+      }
+
+      .asset-group {
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+
+      .asset-group strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .asset-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .asset-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--soft);
+        color: var(--green) !important;
+        font-size: 0.84rem;
+        font-weight: 760;
+      }
+
       .checklist {
         display: grid;
         grid-template-columns: 0.9fr 1.1fr;
@@ -3798,39 +3857,107 @@
             <div class="asset">
               <h3>Raw data</h3>
               <p>Five CSV, one JSONL, one GeoJSON, and one DOCX source assets for ingestion.</p>
-              <a href="asset_viewer.html?file=data/raw/district_health_profile.csv&label=District%20health%20profile&kind=csv">Open district health profile</a>
-              <a href="asset_viewer.html?file=data/raw/facility_provider_master.csv&label=Facility%20provider%20master&kind=csv">Open facility provider master</a>
-              <a href="asset_viewer.html?file=data/raw/facility_operations_daily.csv&label=Facility%20operations%20daily&kind=csv">Open facility operations daily</a>
-              <a href="asset_viewer.html?file=data/raw/population_health_weekly.csv&label=Population%20health%20weekly&kind=csv">Open population health weekly</a>
-              <a href="asset_viewer.html?file=data/raw/claims_membership_disbursement.csv&label=Claims%20membership%20disbursement&kind=csv">Open claims, membership, and disbursement</a>
-              <a href="asset_viewer.html?file=data/raw_json/facility_capacity_events.jsonl&label=Facility%20capacity%20events&kind=code">Open facility capacity events JSONL</a>
-              <a href="asset_viewer.html?file=data/raw_spatial/healthcare_service_areas.geojson&label=Healthcare%20service%20areas&kind=json">Open healthcare service areas GeoJSON</a>
-              <a href="asset_viewer.html?file=documents/MPHA_Winter_Respiratory_Response_Playbook.docx&label=MPHA%20playbook&kind=docx">Open playbook document</a>
+              <div class="asset-actions">
+                <a class="asset-download" href="downloads/public_healthcare_raw_data_bundle.zip" download>Download full raw data bundle</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>CSV sources</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="data/raw/district_health_profile.csv" download>District health profile</a>
+                      <a class="asset-link" href="data/raw/facility_provider_master.csv" download>Facility provider master</a>
+                      <a class="asset-link" href="data/raw/facility_operations_daily.csv" download>Facility operations daily</a>
+                      <a class="asset-link" href="data/raw/population_health_weekly.csv" download>Population health weekly</a>
+                      <a class="asset-link" href="data/raw/claims_membership_disbursement.csv" download>Claims, membership, and disbursement</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>JSONL and spatial</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="data/raw_json/facility_capacity_events.jsonl" download>Facility capacity events JSONL</a>
+                      <a class="asset-link" href="data/raw_spatial/healthcare_service_areas.geojson" download>Healthcare service areas GeoJSON</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>Document</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="documents/MPHA_Winter_Respiratory_Response_Playbook.docx" download>MPHA playbook DOCX</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
-              <h3>Payer and provider datasets</h3>
-              <p>Claims, disbursement, membership, and provider accreditation source files plus Gold summaries.</p>
-              <a href="asset_viewer.html?file=data/raw/claims_membership_disbursement.csv&label=Claims%20membership%20disbursement&kind=csv">Open claims sample</a>
+              <h3>Claims and provider Gold outputs</h3>
+              <p>Curated Gold summaries for claims, disbursement, membership, and provider accreditation analysis.</p>
+              <div class="asset-actions">
+                <a class="asset-download" href="data/gold/gold_claims_summary.csv" download>Download claims Gold summary</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Gold summaries</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_claims_summary.csv&label=Claims%20summary&kind=csv">Claims summary</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_disbursement_summary.csv&label=Disbursement%20summary&kind=csv">Disbursement summary</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_membership_summary.csv&label=Membership%20summary&kind=csv">Membership summary</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_provider_accreditation_summary.csv&label=Provider%20accreditation%20summary&kind=csv">Provider accreditation summary</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
-              <h3>Spatial data</h3>
-              <p>GeoJSON facility points, district polygons, and catchments for map insights.</p>
-              <a href="asset_viewer.html?file=data/raw_spatial/healthcare_service_areas.geojson&label=Healthcare%20service%20areas&kind=json">Open spatial sample</a>
+              <h3>Spatial insight outputs</h3>
+              <p>Derived spatial business insight outputs used for map-based access, catchment, and pressure analysis.</p>
+              <div class="asset-actions">
+                <a class="asset-download" href="data/gold/gold_spatial_access_insights.csv" download>Download spatial insight output</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Derived output</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_spatial_access_insights.csv&label=Spatial%20access%20insights&kind=csv">Spatial access insights</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
-              <h3>Playbook document</h3>
-              <p>13-page synthetic operating playbook for vector search and grounded chat.</p>
-              <a href="asset_viewer.html?file=documents/MPHA_Winter_Respiratory_Response_Playbook.docx&label=MPHA%20playbook&kind=docx">Open playbook</a>
-            </div>
-            <div class="asset">
-              <h3>Document chat context</h3>
-              <p>Generated Gold document chunks and embeddings derived from the single playbook document.</p>
-              <a href="asset_viewer.html?file=data/gold/gold_document_chat_context.csv&label=Document%20chat%20context&kind=csv">Open document context</a>
+              <h3>Document and copilot outputs</h3>
+              <p>Derived document chunks, grounded chat context, and the guided agent lab assets used for the copilot use case.</p>
+              <div class="asset-actions">
+                <a class="asset-download" href="data/gold/gold_document_chat_context.csv" download>Download document chat context</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Derived output</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_document_chat_context.csv&label=Document%20chat%20context&kind=csv">Document chat context</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>Copilot lab</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=optional_labs/claims_policy_copilot_agent.md&label=Claims%20and%20Policy%20Copilot&kind=markdown">Claims and Policy Copilot lab</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
               <h3>Gold star schema data</h3>
               <p>AI Lakehouse-ready Claims star schema objects plus the Facility Access Daily challenge star schema for participant build-out.</p>
-              <a href="asset_viewer.html?file=data/gold_dimensional/fact_claims_monthly.csv&label=Claims%20monthly%20fact&kind=csv">Open claims fact sample</a>
+              <div class="asset-actions">
+                <a class="asset-download" href="data/gold_dimensional/fact_claims_monthly.csv" download>Download claims fact sample</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Fact and dimensions</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold_dimensional/fact_claims_monthly.csv&label=Claims%20monthly%20fact&kind=csv">Claims fact</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold_dimensional/dim_date.csv&label=Date%20dimension&kind=csv">Date dimension</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold_dimensional/dim_district.csv&label=District%20dimension&kind=csv">District dimension</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold_dimensional/dim_coverage_program.csv&label=Coverage%20program%20dimension&kind=csv">Coverage program dimension</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold_dimensional/dim_claim_type.csv&label=Claim%20type%20dimension&kind=csv">Claim type dimension</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
               <h3>Medallion design</h3>
@@ -3840,15 +3967,50 @@
             <div class="asset">
               <h3>SQL</h3>
               <p>AI Lakehouse dimensional Gold setup, load examples, OAC star schema views, and validation queries.</p>
-              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_dimensional_gold_schema.sql&label=AI%20Lakehouse%20dimensional%20setup&kind=code">Open dimensional setup</a>
+              <div class="asset-actions">
+                <a class="asset-download" href="sql/create_ai_lakehouse_dimensional_gold_schema.sql" download>Download primary Gold schema SQL</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Core setup</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=sql/create_ai_lakehouse_dimensional_gold_schema.sql&label=AI%20Lakehouse%20dimensional%20setup&kind=code">Dimensional setup</a>
+                      <a class="asset-link" href="asset_viewer.html?file=sql/create_ai_lakehouse_gold_layer.sql&label=Flat%20Gold%20layer%20setup&kind=code">Flat Gold setup</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>Validation and extensions</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=sql/analytics_queries.sql&label=Analytics%20queries&kind=code">Analytics queries</a>
+                      <a class="asset-link" href="asset_viewer.html?file=sql/spatial_insights.sql&label=Spatial%20insights%20SQL&kind=code">Spatial SQL</a>
+                      <a class="asset-link" href="asset_viewer.html?file=sql/vector_chat_usecase.sql&label=Vector%20chat%20use%20case%20SQL&kind=code">Vector chat SQL</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
               <h3>Notebooks</h3>
               <p>Split PySpark scripts for Bronze ingestion, Silver refinement, Gold staging, and optional claims denial-risk scoring in AI Data Platform.</p>
-              <a href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&label=Bronze%20notebook&kind=code">Open Bronze notebook</a>
-              <a href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&label=Silver%20notebook&kind=code">Open Silver notebook</a>
-              <a href="asset_viewer.html?file=notebooks/aidp_gold_pyspark.py&label=Gold%20notebook&kind=code">Open Gold notebook</a>
-              <a href="asset_viewer.html?file=notebooks/aidp_ml_claims_denial_risk_pyspark.py&label=ML%20claims%20denial%20risk%20notebook&kind=code">Open ML notebook</a>
+              <div class="asset-actions">
+                <a class="asset-download" href="notebooks/aidp_bronze_pyspark.py" download>Download Bronze notebook starter</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Core notebooks</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&label=Bronze%20notebook&kind=code">Bronze</a>
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&label=Silver%20notebook&kind=code">Silver</a>
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_gold_pyspark.py&label=Gold%20notebook&kind=code">Gold</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>Optional notebooks</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_ml_claims_denial_risk_pyspark.py&label=ML%20claims%20denial%20risk%20notebook&kind=code">ML scoring</a>
+                      <a class="asset-link" href="asset_viewer.html?file=notebooks/aidp_refinement_pyspark.py&label=Legacy%20refinement%20notebook&kind=code">Legacy refinement</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
               <h3>Dashboard spec</h3>
@@ -3857,9 +4019,26 @@
             </div>
             <div class="asset">
               <h3>Optional AI labs</h3>
-              <p>Machine learning scoring and a Claims and Policy Copilot grounded in the Gold layer and the playbook.</p>
-              <a href="asset_viewer.html?file=optional_labs/claims_denial_risk_scoring.md&label=Claims%20denial%20risk%20scoring&kind=markdown">Open ML lab</a>
-              <a href="asset_viewer.html?file=optional_labs/claims_policy_copilot_agent.md&label=Claims%20and%20Policy%20Copilot&kind=markdown">Open agent lab</a>
+              <p>Machine learning scoring and agent experience assets built from the Gold layer outputs.</p>
+              <div class="asset-actions">
+                <a class="asset-download" href="optional_labs/claims_denial_risk_scoring.md" download>Download ML lab markdown</a>
+                <div class="asset-groups">
+                  <div class="asset-group">
+                    <strong>Lab guides</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=optional_labs/claims_denial_risk_scoring.md&label=Claims%20denial%20risk%20scoring&kind=markdown">ML lab</a>
+                      <a class="asset-link" href="asset_viewer.html?file=optional_labs/claims_policy_copilot_agent.md&label=Claims%20and%20Policy%20Copilot&kind=markdown">Agent lab</a>
+                    </div>
+                  </div>
+                  <div class="asset-group">
+                    <strong>Related assets</strong>
+                    <div class="asset-links">
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_claims_denial_risk_scores.csv&label=Claims%20denial%20risk%20scores&kind=csv">ML score sample</a>
+                      <a class="asset-link" href="asset_viewer.html?file=data/gold/gold_document_chat_context.csv&label=Document%20chat%20context&kind=csv">Document context sample</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="asset">
               <h3>ML score sample</h3>
