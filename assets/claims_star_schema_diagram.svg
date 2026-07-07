@@ -1,29 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
   <title id="title">MPHA Claims star schema diagram</title>
-  <desc id="desc">A star schema with mpha_fact_claims_monthly in the center connected to date, district, coverage program, and claim type dimensions.</desc>
+  <desc id="desc">A neat Claims star schema with a centered monthly claims fact table connected to date, district, coverage program, and claim type dimensions.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#143735" flood-opacity="0.16"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#143735" flood-opacity="0.14"/>
     </filter>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7a76"/>
-    </marker>
     <style>
       .bg { fill: #f5f8f7; }
+      .accent { fill: #c74634; }
       .title { font: 700 32px Arial, Helvetica, sans-serif; fill: #20312d; }
       .subtitle { font: 18px Arial, Helvetica, sans-serif; fill: #5e6d68; }
-      .box { fill: #ffffff; stroke: #d7e2dd; stroke-width: 2; rx: 18; filter: url(#shadow); }
-      .fact { fill: #143735; stroke: #143735; stroke-width: 2; rx: 22; filter: url(#shadow); }
-      .dim-title { font: 700 20px Arial, Helvetica, sans-serif; fill: #20312d; }
-      .dim-sub { font: 15px Arial, Helvetica, sans-serif; fill: #5e6d68; }
-      .fact-title { font: 700 23px Arial, Helvetica, sans-serif; fill: #ffffff; }
-      .fact-sub { font: 15px Arial, Helvetica, sans-serif; fill: #dce7e2; }
-      .small { font: 14px Arial, Helvetica, sans-serif; fill: #455550; }
-      .small-light { font: 14px Arial, Helvetica, sans-serif; fill: #f3f8f6; }
-      .chip { fill: #eef4f2; stroke: #d7e2dd; stroke-width: 1; rx: 11; }
-      .fact-chip { fill: #254946; stroke: #45645f; stroke-width: 1; rx: 11; }
-      .line { stroke: #6b7a76; stroke-width: 3; fill: none; marker-end: url(#arrow); }
-      .accent { fill: #c74634; }
+      .card { fill: #ffffff; stroke: #d7e2dd; stroke-width: 2; rx: 18; filter: url(#shadow); }
+      .fact-card { fill: #143735; stroke: #143735; stroke-width: 2; rx: 22; filter: url(#shadow); }
+      .card-title { font: 700 18px Arial, Helvetica, sans-serif; fill: #20312d; text-anchor: middle; }
+      .card-sub { font: 14px Arial, Helvetica, sans-serif; fill: #5e6d68; text-anchor: middle; }
+      .fact-title { font: 700 22px Arial, Helvetica, sans-serif; fill: #ffffff; text-anchor: middle; }
+      .fact-sub { font: 14px Arial, Helvetica, sans-serif; fill: #dce7e2; text-anchor: middle; }
+      .pill { fill: #eef4f2; stroke: #d7e2dd; stroke-width: 1; rx: 11; }
+      .fact-pill { fill: #254946; stroke: #45645f; stroke-width: 1; rx: 11; }
+      .pill-text { font: 13px Arial, Helvetica, sans-serif; fill: #455550; text-anchor: middle; dominant-baseline: middle; }
+      .pill-text-light { font: 13px Arial, Helvetica, sans-serif; fill: #f3f8f6; text-anchor: middle; dominant-baseline: middle; }
+      .connector { stroke: #71807c; stroke-width: 3; fill: none; stroke-linecap: round; }
+      .connector-dot { fill: #71807c; }
+      .caption { font: 17px Arial, Helvetica, sans-serif; fill: #5e6d68; text-anchor: middle; }
     </style>
   </defs>
 
@@ -32,70 +31,66 @@
   <text class="title" x="70" y="116">Claims Star Schema in Autonomous AI Lakehouse</text>
   <text class="subtitle" x="70" y="148">One monthly claims fact table connects directly to conformed dimensions used by OAC dashboards and AI Assistant questions.</text>
 
-  <path class="line" d="M 405 244 C 460 270, 500 298, 534 334"/>
-  <path class="line" d="M 795 244 C 740 270, 700 298, 666 334"/>
-  <path class="line" d="M 405 528 C 460 500, 500 468, 534 426"/>
-  <path class="line" d="M 795 528 C 740 500, 700 468, 666 426"/>
+  <path class="connector" d="M 402 296 C 456 318, 500 342, 535 366"/>
+  <path class="connector" d="M 798 296 C 744 318, 700 342, 665 366"/>
+  <path class="connector" d="M 402 578 C 456 548, 500 515, 535 474"/>
+  <path class="connector" d="M 798 578 C 744 548, 700 515, 665 474"/>
+  <circle class="connector-dot" cx="535" cy="366" r="5"/>
+  <circle class="connector-dot" cx="665" cy="366" r="5"/>
+  <circle class="connector-dot" cx="535" cy="474" r="5"/>
+  <circle class="connector-dot" cx="665" cy="474" r="5"/>
 
-  <rect class="box" x="80" y="205" width="325" height="172"/>
-  <text class="dim-title" x="110" y="245">mpha_dim_date</text>
-  <text class="dim-sub" x="110" y="272">Calendar and month grain</text>
-  <rect class="chip" x="110" y="297" width="160" height="30"/>
-  <text class="small" x="124" y="317">date_key</text>
-  <rect class="chip" x="110" y="334" width="170" height="30"/>
-  <text class="small" x="124" y="354">full_date</text>
-  <rect class="chip" x="287" y="297" width="84" height="30"/>
-  <text class="small" x="301" y="317">month</text>
-  <rect class="chip" x="287" y="334" width="84" height="30"/>
-  <text class="small" x="301" y="354">year</text>
+  <g transform="translate(80 205)">
+    <rect class="card" x="0" y="0" width="322" height="170"/>
+    <text class="card-title" x="161" y="40">mpha_dim_date</text>
+    <text class="card-sub" x="161" y="66">Calendar and month grain</text>
+    <rect class="pill" x="46" y="88" width="230" height="30"/>
+    <text class="pill-text" x="161" y="103">date_key</text>
+    <rect class="pill" x="46" y="124" width="230" height="30"/>
+    <text class="pill-text" x="161" y="139">full_date | month | year</text>
+  </g>
 
-  <rect class="box" x="795" y="205" width="325" height="172"/>
-  <text class="dim-title" x="825" y="245">mpha_dim_district</text>
-  <text class="dim-sub" x="825" y="272">District and population context</text>
-  <rect class="chip" x="825" y="297" width="160" height="30"/>
-  <text class="small" x="839" y="317">district_key</text>
-  <rect class="chip" x="825" y="334" width="170" height="30"/>
-  <text class="small" x="839" y="354">district_name</text>
-  <rect class="chip" x="1002" y="297" width="84" height="30"/>
-  <text class="small" x="1016" y="317">region</text>
-  <rect class="chip" x="1002" y="334" width="84" height="30"/>
-  <text class="small" x="1016" y="354">risk</text>
+  <g transform="translate(798 205)">
+    <rect class="card" x="0" y="0" width="322" height="170"/>
+    <text class="card-title" x="161" y="40">mpha_dim_district</text>
+    <text class="card-sub" x="161" y="66">District and population context</text>
+    <rect class="pill" x="46" y="88" width="230" height="30"/>
+    <text class="pill-text" x="161" y="103">district_key</text>
+    <rect class="pill" x="46" y="124" width="230" height="30"/>
+    <text class="pill-text" x="161" y="139">district_name | region | risk</text>
+  </g>
 
-  <rect class="fact" x="440" y="300" width="320" height="206"/>
-  <text class="fact-title" x="486" y="344">mpha_fact_claims_monthly</text>
-  <text class="fact-sub" x="495" y="371">Monthly claims performance grain</text>
-  <rect class="fact-chip" x="472" y="397" width="256" height="30"/>
-  <text class="small-light" x="486" y="417">service_month_date_key</text>
-  <rect class="fact-chip" x="472" y="434" width="118" height="30"/>
-  <text class="small-light" x="486" y="454">district_key</text>
-  <rect class="fact-chip" x="602" y="434" width="126" height="30"/>
-  <text class="small-light" x="616" y="454">program_key</text>
-  <rect class="fact-chip" x="472" y="471" width="256" height="30"/>
-  <text class="small-light" x="486" y="491">claims, amounts, denial rate, days</text>
+  <g transform="translate(420 300)">
+    <rect class="fact-card" x="0" y="0" width="360" height="220"/>
+    <text class="fact-title" x="180" y="46">mpha_fact_claims_monthly</text>
+    <text class="fact-sub" x="180" y="74">Monthly claims performance grain</text>
+    <rect class="fact-pill" x="35" y="98" width="290" height="30"/>
+    <text class="pill-text-light" x="180" y="113">service_month_date_key</text>
+    <rect class="fact-pill" x="35" y="134" width="290" height="30"/>
+    <text class="pill-text-light" x="180" y="149">district_key | program_key | claim_type_key</text>
+    <rect class="fact-pill" x="35" y="170" width="290" height="30"/>
+    <text class="pill-text-light" x="180" y="185">claims | amounts | denial rate | days</text>
+  </g>
 
-  <rect class="box" x="80" y="520" width="325" height="172"/>
-  <text class="dim-title" x="110" y="560">mpha_dim_coverage_program</text>
-  <text class="dim-sub" x="110" y="587">Coverage and public program lens</text>
-  <rect class="chip" x="110" y="612" width="160" height="30"/>
-  <text class="small" x="124" y="632">program_key</text>
-  <rect class="chip" x="110" y="649" width="170" height="30"/>
-  <text class="small" x="124" y="669">coverage_program</text>
-  <rect class="chip" x="287" y="612" width="84" height="30"/>
-  <text class="small" x="301" y="632">payer</text>
-  <rect class="chip" x="287" y="649" width="84" height="30"/>
-  <text class="small" x="301" y="669">funding</text>
+  <g transform="translate(80 520)">
+    <rect class="card" x="0" y="0" width="322" height="170"/>
+    <text class="card-title" x="161" y="40">mpha_dim_coverage_program</text>
+    <text class="card-sub" x="161" y="66">Coverage and public program lens</text>
+    <rect class="pill" x="46" y="88" width="230" height="30"/>
+    <text class="pill-text" x="161" y="103">program_key</text>
+    <rect class="pill" x="46" y="124" width="230" height="30"/>
+    <text class="pill-text" x="161" y="139">coverage_program | funding</text>
+  </g>
 
-  <rect class="box" x="795" y="520" width="325" height="172"/>
-  <text class="dim-title" x="825" y="560">mpha_dim_claim_type</text>
-  <text class="dim-sub" x="825" y="587">Service and adjudication category</text>
-  <rect class="chip" x="825" y="612" width="160" height="30"/>
-  <text class="small" x="839" y="632">claim_type_key</text>
-  <rect class="chip" x="825" y="649" width="170" height="30"/>
-  <text class="small" x="839" y="669">claim_type</text>
-  <rect class="chip" x="1002" y="612" width="84" height="30"/>
-  <text class="small" x="1016" y="632">service</text>
-  <rect class="chip" x="1002" y="649" width="84" height="30"/>
-  <text class="small" x="1016" y="669">priority</text>
+  <g transform="translate(798 520)">
+    <rect class="card" x="0" y="0" width="322" height="170"/>
+    <text class="card-title" x="161" y="40">mpha_dim_claim_type</text>
+    <text class="card-sub" x="161" y="66">Service and adjudication category</text>
+    <rect class="pill" x="46" y="88" width="230" height="30"/>
+    <text class="pill-text" x="161" y="103">claim_type_key</text>
+    <rect class="pill" x="46" y="124" width="230" height="30"/>
+    <text class="pill-text" x="161" y="139">claim_type | service | priority</text>
+  </g>
 
-  <text class="subtitle" x="70" y="724">OAC joins the fact to each dimension directly, keeping the guided dashboard simple, explainable, and reusable.</text>
+  <text class="caption" x="600" y="724">OAC joins the central fact to each dimension directly, keeping the guided dashboard simple, explainable, and reusable.</text>
 </svg>
