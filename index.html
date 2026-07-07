@@ -525,23 +525,23 @@
           <figcaption>Apply the standard AIDP policies before expecting notebooks, catalogs, volumes, and Object Storage access to work correctly.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/home_hires.png" alt="AIDP Workbench home page" />
+          <img src="live_aidp_screens_lab4_style/home_lab4style.png" alt="AIDP Workbench home page" />
           <figcaption>Open AIDP Workbench and confirm the instance is available for workshop execution.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/master_catalog_hires.png" alt="AIDP Master Catalog page" />
+          <img src="live_aidp_screens_lab4_style/master_catalog_lab4style.png" alt="AIDP Master Catalog page" />
           <figcaption>Open Master Catalog to verify the standard catalog and AI Lakehouse external catalog setup.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/standard_catalog_hires.png" alt="AIDP standard catalog for workshop landing zone" />
+          <img src="live_aidp_screens_lab4_style/standard_catalog_lab4style.png" alt="AIDP standard catalog for workshop landing zone" />
           <figcaption>Confirm the standard catalog that backs the workshop landing area and external volume.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/external_catalog_hires.png" alt="AIDP external AI Lakehouse catalog" />
+          <img src="live_aidp_screens_lab4_style/external_catalog_lab4style.png" alt="AIDP external AI Lakehouse catalog" />
           <figcaption>Confirm the external Autonomous AI Lakehouse catalog that exposes the Gold-serving schema used by the Claims star schema load.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/volumes_hires.png" alt="AIDP volume list for workshop schema" />
+          <img src="live_aidp_screens_lab4_style/volumes_lab4style.png" alt="AIDP volume list for workshop schema" />
           <figcaption>Open the schema volume list and confirm the external volume mapped to the Object Storage bucket is available.</figcaption>
         </figure>
         <h3>Admin-to-participant handoff</h3>
@@ -558,11 +558,11 @@
           </tbody>
         </table>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/workspace_root_hires.png" alt="AIDP workspace root with workshop folders" />
+          <img src="live_aidp_screens_lab4_style/workspace_root_lab4style.png" alt="AIDP workspace root with workshop folders" />
           <figcaption>Participant starting point after admin setup: the AIDP workspace contains folders for Bronze, Silver, Gold, and Claims star schema loading.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/volume_contents_hires.png" alt="AIDP volume with workshop medallion folders" />
+          <img src="live_aidp_screens_lab4_style/volume_contents_lab4style.png" alt="AIDP volume with workshop medallion folders" />
           <figcaption>The shared volume exposes the persistent storage folders used by the notebook sequence.</figcaption>
         </figure>
         <div class="handoff">
@@ -603,11 +603,11 @@
           </tbody>
         </table>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/bronze_notebook_hires.png" alt="Bronze notebook opened in AIDP" />
+          <img src="live_aidp_screens_lab4_style/bronze_notebook_lab4style.png" alt="Bronze notebook opened in AIDP" />
           <figcaption>Bronze notebook checkpoint: confirm paths, attach compute, and run all cells.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/silver_notebook_hires.png" alt="Silver notebook opened in AIDP" />
+          <img src="live_aidp_screens_lab4_style/silver_notebook_lab4style.png" alt="Silver notebook opened in AIDP" />
           <figcaption>Silver notebook checkpoint: transformations complete and conformed Silver data is written back to the shared volume.</figcaption>
         </figure>
         <div class="callout expected">
@@ -616,7 +616,7 @@
         </div>
         <h3>Instructor checkpoint - create the AIDP Workflow for incremental medallion runs</h3>
         <p>
-          After participants understand the notebook sequence, the instructor shows the validated AIDP Workflow version of the same flow. This is not a conceptual sketch: the workflow was built and repaired live with timeout values, task dependencies, and a rerunnable AI Lakehouse load pattern.
+          After participants understand the notebook sequence, the instructor shows the validated AIDP Workflow version of the same flow. This is the operational view of the workshop pipeline: every task has a file, compute target, timeout, dependency, and a successful run trail.
         </p>
         <div class="workflow-steps" id="lab2-workflow-steps">
           <div class="workflow-step-detail">
@@ -624,12 +624,12 @@
             <h4>Open Workflow and create the job</h4>
             <p>In AIDP Workbench, open the shared workshop workspace, click <strong>Workflow</strong>, and create a workflow named <code>MPHA_INCREMENTAL_MEDALLION_FLOW</code>.</p>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/01_workflow_jobs_empty.png" alt="AIDP Workflow page before creating the workflow" />
-              <figcaption>Start from the Workflow page in the workshop workspace.</figcaption>
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/01_workflow_jobs_list_fresh_wide_clean.png" alt="AIDP Workflow page showing the MPHA incremental medallion workflow job" />
+              <figcaption>Start from the Workflow page in the workshop workspace. The instructor can create the job or reopen the existing validated workflow.</figcaption>
             </figure>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/03_create_job_filled.png" alt="Create workflow job dialog filled for MPHA incremental medallion flow" />
-              <figcaption>Create the workflow job using the workshop name so participants can recognize it later in Activity.</figcaption>
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/00_workflow_create_job_dialog_fresh.png" alt="Create workflow job dialog filled for MPHA incremental medallion flow" />
+              <figcaption>Create the workflow job using the workshop name so participants can recognize it later in Activity and Runs.</figcaption>
             </figure>
           </div>
 
@@ -640,32 +640,20 @@
             <ul>
               <li>Select the Bronze file from the <code>O1_Bronze</code> folder.</li>
               <li>Select compute <code>E2EAIDPIndustrydemos</code>.</li>
-              <li>Set timeout to <code>60</code> minutes before adding the next task.</li>
+              <li>Set an execution timeout before adding the next task. The validated workflow uses <code>30</code> minutes.</li>
             </ul>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/10_bronze_task_python_type.png" alt="Bronze workflow task configured as Python task" />
-              <figcaption>The task type must match the uploaded file type. Use Notebook task if participants upload the notebook wrapper instead.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/16_bronze_task_file_selected_and_cluster.png" alt="Bronze task with file and compute selected" />
-              <figcaption>The Bronze task is ready after the file, compute, and timeout are set.</figcaption>
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/02_workflow_tasks_bronze_config_fresh_wide.png" alt="Bronze task configured with file location, compute, and timeout" />
+              <figcaption>The Bronze task is ready after the file, compute, and timeout are set. The graph view also shows the downstream task chain.</figcaption>
             </figure>
           </div>
 
           <div class="workflow-step-detail">
             <span class="step-label">Workflow step 3</span>
-            <h4>Add Silver after the timeout is set</h4>
-            <p>Add <code>silverrefine</code> only after the Bronze task has a timeout value. Set the dependency to <code>bronzeingest</code>, choose the Silver notebook, select the same compute, and set timeout to <code>60</code> minutes.</p>
+            <h4>Add Silver after Bronze</h4>
+            <p>Add <code>silverrefine</code> after the Bronze task has a timeout value. Set the dependency to <code>bronzeingest</code>, choose the Silver notebook or Python file, select the same compute, and set a timeout.</p>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/19_after_timeout_fix_second_task_created.png" alt="Second workflow task created after timeout was added" />
-              <figcaption>Validated behavior: the downstream task was added after the timeout issue was corrected.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/20_silver_name_timeout_entered.png" alt="Silver task name and timeout entered" />
-              <figcaption>AIDP displays a 60-minute timeout as <code>1 hour</code>.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/23_silver_task_configured.png" alt="Silver workflow task configured" />
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/03_workflow_tasks_silver_config_fresh.png" alt="Silver workflow task configured with dependency and compute" />
               <figcaption>Silver is chained after Bronze and uses the shared workshop compute.</figcaption>
             </figure>
           </div>
@@ -673,13 +661,13 @@
           <div class="workflow-step-detail">
             <span class="step-label">Workflow step 4</span>
             <h4>Add Gold staging and AI Lakehouse load tasks</h4>
-            <p>Add <code>goldstage</code> after <code>silverrefine</code>. Then add <code>lakehouseload</code> after <code>goldstage</code>. For both tasks, select Notebook task, choose the file from the correct workspace folder, select compute, and set timeout to <code>60</code> minutes.</p>
+            <p>Add <code>goldstage</code> after <code>silverrefine</code>. Then add <code>lakehouseload</code> after <code>goldstage</code>. For both tasks, choose the file from the correct workspace folder, select compute, and set a timeout.</p>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/25_gold_task_configured.png" alt="Gold workflow task configured" />
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/04_workflow_tasks_gold_config_fresh.png" alt="Gold staging workflow task configured" />
               <figcaption>The Gold task stages broader Gold outputs from the Silver layer.</figcaption>
             </figure>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/27_lakehouse_load_task_configured.png" alt="AI Lakehouse load workflow task configured" />
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/05_workflow_tasks_lakehouse_load_config_fresh.png" alt="AI Lakehouse load workflow task configured" />
               <figcaption>The AI Lakehouse load task writes the Claims star schema into the connected external catalog.</figcaption>
             </figure>
           </div>
@@ -689,16 +677,8 @@
             <h4>Review and run the workflow</h4>
             <p>Before running, confirm the chain is <code>bronzeingest</code> to <code>silverrefine</code> to <code>goldstage</code> to <code>lakehouseload</code>. Run the workflow and watch the graph view.</p>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/28_configured_workflow_chain_before_run.png" alt="Configured AIDP workflow chain before run" />
-              <figcaption>Full task graph before execution.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/29_run_created_success_toast.png" alt="Workflow run created successfully toast" />
-              <figcaption>The run opens from the success message after submission.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/32_compute_starting_for_workflow_run.png" alt="Workflow waiting for compute to start" />
-              <figcaption>If compute is starting, wait. The task moves from pending to running when compute is active.</figcaption>
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/06_workflow_runs_success_list_fresh.png" alt="Workflow runs tab showing a successful manual run" />
+              <figcaption>The Runs tab confirms the manual workflow execution and shows the final success state.</figcaption>
             </figure>
           </div>
 
@@ -707,30 +687,12 @@
             <h4>Confirm task progress and final success</h4>
             <p>Open task details as the workflow runs. The Bronze output proves the raw files were written to the shared volume. The final <code>lakehouseload</code> task confirms the Claims star schema load.</p>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/33_bronze_task_running_with_output.png" alt="Bronze workflow task running with output" />
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/07_workflow_run_detail_success_graph_fresh.png" alt="Workflow run graph with Bronze task output visible" />
               <figcaption>Bronze output shows raw datasets being written into the Bronze layer.</figcaption>
             </figure>
             <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/34_bronze_task_success.png" alt="Bronze workflow task completed successfully" />
-              <figcaption>Each upstream task should turn green before the dependent task starts.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/63_lakehouse_repair3_success_selected.png" alt="AI Lakehouse load task successful after repair" />
-              <figcaption>Validated final state: <code>lakehouseload</code> succeeded and the notebook skipped rows already present in AI Lakehouse.</figcaption>
-            </figure>
-          </div>
-
-          <div class="workflow-step-detail">
-            <span class="step-label">Workflow troubleshooting</span>
-            <h4>Use Repair run for a failed downstream task</h4>
-            <p>If Bronze, Silver, and Gold already succeeded, do not rerun the full chain. Fix the notebook issue, click <strong>Repair run</strong>, select only <code>lakehouseload</code>, and run the repair.</p>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/44_repair_run_dialog.png" alt="AIDP repair run dialog" />
-              <figcaption>The repair dialog lets the instructor choose which task to rerun.</figcaption>
-            </figure>
-            <figure class="shot">
-              <img src="assets/aidp_workflow_lab/screenshots/60_repair3_lakehouse_selected.png" alt="Only lakehouseload selected for repair" />
-              <figcaption>Select only the failed downstream task after correcting the notebook.</figcaption>
+              <img src="assets/aidp_workflow_lab/screenshots_fresh/08_workflow_run_detail_lakehouse_success_fresh.png" alt="Lakehouse load task selected with successful output visible" />
+              <figcaption>Validated final state: <code>lakehouseload</code> succeeded and the notebook verified the connected AI Lakehouse schema.</figcaption>
             </figure>
           </div>
         </div>
@@ -742,23 +704,23 @@
           <div class="flow-step"><strong>validation</strong><span>Run Claims star schema SQL checks before OAC, ML, or agents consume Gold.</span></div>
         </div>
         <figure class="shot">
-          <img src="assets/aidp_workflow_lab/screenshots/28_configured_workflow_chain_before_run.png" alt="Configured AIDP workflow task chain" />
-          <figcaption>Validated workflow chain: Bronze, Silver, Gold staging, and AI Lakehouse load. Each task is configured with a 60-minute timeout.</figcaption>
+          <img src="assets/aidp_workflow_lab/screenshots_fresh/02_workflow_tasks_bronze_config_fresh_wide.png" alt="Configured AIDP workflow task chain" />
+          <figcaption>Validated workflow chain: Bronze, Silver, Gold staging, and AI Lakehouse load. Each task is configured with a timeout and shared compute.</figcaption>
         </figure>
         <table>
           <thead>
             <tr><th>Validated point</th><th>What the instructor should say</th><th>Workshop asset</th></tr>
           </thead>
           <tbody>
-            <tr><td>Timeout</td><td>Set timeout on every task before adding the next task. Use <code>60</code> minutes; AIDP displays this as <code>1 hour</code>.</td><td>See the workflow screenshot pack.</td></tr>
+            <tr><td>Timeout</td><td>Set a timeout on every task before adding the next dependent task. The validated screenshots use <code>30</code> minutes; increase it if your compute startup is slower.</td><td>See the workflow screenshot pack.</td></tr>
             <tr><td>Task type</td><td>Match the task type to the uploaded asset. The validated Bronze task used a Python file; the other tasks used notebooks.</td><td>Bronze, Silver, Gold, and AI Lakehouse load assets.</td></tr>
             <tr><td>Incremental load</td><td>The AI Lakehouse connector does not support destructive reset operations from the notebook, so the load notebook reads existing target keys and inserts only new rows.</td><td><a href="asset_viewer.html?file=notebooks/04_Claims_Star_AI_Lakehouse_Load.ipynb&amp;label=Claims%20star%20schema%20AI%20Lakehouse%20load&amp;kind=code">AI Lakehouse load notebook</a>.</td></tr>
             <tr><td>Repair run</td><td>If only the downstream AI Lakehouse task fails, use <strong>Repair run</strong> and select only <code>lakehouseload</code> after fixing the notebook.</td><td><a href="asset_viewer.html?file=workflows/aidp_incremental_medallion_workflow.md&amp;label=AIDP%20Incremental%20Medallion%20Workflow&amp;kind=markdown">AIDP incremental medallion workflow runbook</a>.</td></tr>
           </tbody>
         </table>
         <figure class="shot">
-          <img src="assets/aidp_workflow_lab/screenshots/63_lakehouse_repair3_success_selected.png" alt="Successful repaired AI Lakehouse load task" />
-          <figcaption>Validated result: the repaired <code>lakehouseload</code> task completed successfully and skipped rows that were already loaded.</figcaption>
+          <img src="assets/aidp_workflow_lab/screenshots_fresh/08_workflow_run_detail_lakehouse_success_fresh.png" alt="Successful AI Lakehouse load task" />
+          <figcaption>Validated result: the <code>lakehouseload</code> task completed successfully and the target AI Lakehouse schema was visible to the notebook.</figcaption>
         </figure>
         <div class="callout warning">
           <strong>Instructor note</strong>
@@ -797,11 +759,11 @@
           </div>
         </div>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/ailh_load_notebook_hires.png" alt="Claims star schema load notebook in AIDP" />
+          <img src="live_aidp_screens_lab4_style/ailh_load_notebook_lab4style.png" alt="Claims star schema load notebook in AIDP" />
           <figcaption>The Claims star schema load notebook writes directly to the AI Lakehouse external catalog.</figcaption>
         </figure>
         <figure class="shot">
-          <img src="live_aidp_screens_hires/external_schema_tables_hires.png" alt="Claims fact and dimension tables visible in the AI Lakehouse external catalog" />
+          <img src="live_aidp_screens_lab4_style/external_schema_tables_lab4style.png" alt="Claims fact and dimension tables visible in the AI Lakehouse external catalog" />
           <figcaption>Validation checkpoint: the target schema contains the Claims fact and dimension tables required by OAC.</figcaption>
         </figure>
       </section>

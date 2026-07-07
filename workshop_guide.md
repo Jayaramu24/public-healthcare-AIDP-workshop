@@ -251,7 +251,7 @@ Validated workflow settings:
 | --- | --- |
 | Workspace | `E2EAIDPIndustryDemos` |
 | Compute | `E2EAIDPIndustrydemos` |
-| Timeout per task | `60` minutes, displayed by AIDP as `1 hour` |
+| Timeout per task | `30` minutes in the validated run; increase if your compute startup is slower |
 | Bronze task | Python task in the validated run |
 | Silver, Gold, AI Lakehouse tasks | Notebook tasks |
 
