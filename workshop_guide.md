@@ -592,7 +592,7 @@ After the Claims star schema validation succeeds, move to the OAC lab.
 Use these assets as the guided OAC reference build:
 
 - `dashboard_spec.md`
-- `lab4_oac_executive_overview_build_guide.html`
+- `assets/oac_dashboard_lab/screenshots/`
 - `assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png`
 
 Important boundary:
@@ -616,7 +616,7 @@ Participants: you can skip this section if the facilitator has already prepared 
 1. Create the shared OAC connection if one does not already exist.
    - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
    - Use `TLS` for wallet-free connectivity or `Mutual TLS` if your environment requires a wallet upload.
-   - Screenshot reference in the Lab 4 build guide: OAC home, Create menu, connection type, and AI Lakehouse connection form.
+   - Screenshot reference in the Lab 4 section of the main workshop page: OAC home, Create menu, connection type, and AI Lakehouse connection form.
 2. Create the guided Claims star schema dataset.
    - In OAC, go to `Create -> Dataset`.
    - Select the Autonomous AI Lakehouse connection.
@@ -626,7 +626,7 @@ Participants: you can skip this section if the facilitator has already prepared 
    - Right-click the fact table and select `Preserve Grain`.
    - Use the data profiling panel to confirm value distributions, nulls, and sample rows.
    - Save the dataset as `MPHAClaimAnalysis`.
-   - Screenshot reference in the Lab 4 build guide: dataset connection selection, expanded Claims schema checkpoint, MPHA self-service Join Diagram, data profiling view, and workbook data panel verification.
+   - Screenshot reference in the Lab 4 section of the main workshop page: dataset connection selection, expanded Claims schema checkpoint, MPHA self-service Join Diagram, data profiling view, and workbook data panel verification.
 3. Enable OAC Assistant at the dataset level if it is not already enabled.
    - Open the dataset in a workbook.
    - Right-click the dataset name in the data panel.
@@ -634,11 +634,11 @@ Participants: you can skip this section if the facilitator has already prepared 
    - Set `Index Dataset For` to `Assistants and Homepage Search`.
    - Review the indexed field scope.
    - Click `Save` if changes were made, then `Run Now`.
-   - Screenshot reference in the Lab 4 build guide: dataset context menu, Search settings, Search scope, and Assistant panel.
+   - Screenshot reference in the Lab 4 section of the main workshop page: dataset context menu, Search settings, Search scope, and Assistant panel.
 
 ### Participant Steps
 
-Use `lab4_oac_executive_overview_build_guide.html` as the screenshot-led participant guide. It follows the live OAC flow from Lakehouse connection through dataset modeling, data profiling, Assistant indexing, and the final Executive Overview dashboard canvas.
+Use the Lab 4 section of the main workshop page as the screenshot-led participant guide. It follows the live OAC flow from Lakehouse connection through dataset modeling, data profiling, Assistant indexing, and the final Executive Overview dashboard canvas.
 
 1. Open the provided `MPHAClaimAnalysis` dataset and create a workbook.
 2. Rename the first canvas to `Executive Overview`.
@@ -680,7 +680,6 @@ Use `lab4_oac_executive_overview_build_guide.html` as the screenshot-led partici
 
 Reference build:
 
-- `lab4_oac_executive_overview_build_guide.html`
 - `dashboard_spec.md`
 - `assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png`
 

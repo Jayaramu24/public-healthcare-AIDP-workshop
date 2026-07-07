@@ -1,6 +1,6 @@
 # Medallion Architecture Design
 
-This workshop uses a public-health medallion architecture:
+This workshop uses a public-health medallion architecture with a shared Bronze/Silver foundation and two Gold teaching paths:
 
 `Raw files -> Bronze in AIDP -> Silver in AIDP -> Gold in Autonomous AI Lakehouse -> OAC and generative insights`
 
@@ -55,13 +55,109 @@ Silver is cleaned, typed, validated, and conformed. It is still detailed enough 
 
 Recommended storage: Delta tables in AIDP under `mpha/silver/`.
 
+## AIDP Workflow for Incremental Medallion Operation
+
+The workshop teaches the medallion notebooks manually first, then introduces an AIDP Workflow to show how the same work becomes operational.
+
+Recommended workflow asset:
+
+- `workflows/aidp_incremental_medallion_workflow.md`
+- `workflows/aidp_incremental_medallion_workflow.json`
+
+Recommended workflow name:
+
+`MPHA_INCREMENTAL_MEDALLION_FLOW`
+
+Task graph:
+
+1. `01_bronze_ingest`
+   - Notebook: `01_Bronze_Public_Healthcare.ipynb`
+   - Purpose: preserve raw CSV, JSONL, and GeoJSON sources with ingestion metadata.
+2. `02_silver_conform`
+   - Notebook: `02_Silver_Public_Healthcare.ipynb`
+   - Purpose: type, validate, enrich, and conform healthcare detail.
+3. `03_claims_star_schema_load`
+   - Notebook: `04_Claims_Star_AI_Lakehouse_Load.ipynb`
+   - Purpose: publish the guided Claims star schema into Autonomous AI Lakehouse.
+4. `04_claims_star_validation`
+   - Asset: `sql/claims_star_validation.sql`
+   - Purpose: gate OAC, ML, and agent usage until table counts, joins, and orphan checks pass.
+5. Optional branches:
+   - `05_flat_gold_stage_optional` for broader flat Gold compatibility outputs.
+   - `06_ml_scoring_optional` for Claims denial risk scoring after Gold validation.
+
+Incremental run parameters:
+
+| Parameter | Purpose |
+| --- | --- |
+| `run_mode` | Distinguishes `FULL_REFRESH` classroom execution from `INCREMENTAL` operational reruns. |
+| `batch_id` | Labels the source batch and supports audit and replay. |
+| `watermark_start` | Lower bound for new or changed records. |
+| `watermark_end` | Upper bound for new or changed records. |
+| `target_catalog` | External AI Lakehouse catalog used by the direct Gold load. |
+| `target_schema` | Participant or team schema that receives the Gold star schema. |
+
+Production incrementality:
+
+- Bronze should append or deduplicate incoming raw records by source file, source key, and batch id.
+- Silver should recompute only impacted records or partitions.
+- Gold should upsert dimensions and refresh the affected monthly Claims fact grain.
+- Validation should block downstream OAC, ML, and agent consumption when checks fail.
+
 ## Gold Layer in Autonomous AI Lakehouse
 
 Gold is the business-serving layer. The recommended design is a dimensional star schema created in Autonomous AI Lakehouse using `sql/create_ai_lakehouse_dimensional_gold_schema.sql` after AIDP stages Gold outputs to Object Storage.
 
 The package keeps the original flat Gold marts in `data/gold/` for quick validation, but the OAC semantic model should use the dimensional star outputs in `data/gold_dimensional/`.
 
+### Workshop teaching paths
+
+The workshop branches after Silver:
+
+1. **Guided Claims star schema**
+   - Silver source: `silver_claims_membership_disbursement`
+   - Gold fact: `mpha_fact_claims_monthly`
+   - Gold dimensions:
+     - `mpha_dim_date`
+     - `mpha_dim_district`
+     - `mpha_dim_coverage_program`
+     - `mpha_dim_claim_type`
+   - Derived Gold outputs:
+     - monthly aggregation by district, coverage program, and claim type
+     - `claims_submitted`
+     - `approved_claims`
+     - `denied_claims`
+     - `pending_claims`
+     - `total_submitted_amount`
+     - `total_approved_amount`
+     - `total_paid_amount`
+     - `avg_processing_days`
+     - `denial_rate`
+   - OAC outcome: the provided guided workbook is built only for this star schema.
+
+2. **DIY Facility Access Daily star schema**
+   - Silver sources: `silver_facility_day`, `silver_facility_provider`
+   - Gold fact: `mpha_fact_facility_access_daily`
+   - Gold dimensions:
+     - `mpha_dim_date`
+     - `mpha_dim_facility`
+     - `mpha_dim_district`
+     - `mpha_dim_pressure_band`
+   - Derived Gold outputs:
+     - `ed_wait_variance_minutes`
+     - `outpatient_wait_variance_minutes`
+     - `high_occupancy_flag`
+     - `access_risk_score`
+     - direct `district_key` retention in the fact for simple OAC joins
+   - OAC outcome: participants create their own Facility Access Daily dashboard as the understanding check.
+
 ### Dimensional Gold Model
+
+### Claims Star Schema Visual
+
+![Claims star schema with central fact table connected to date, district, coverage program, and claim type dimensions](assets/claims_star_schema_diagram.svg)
+
+The guided dashboard uses the Claims star schema above. `mpha_fact_claims_monthly` stays at monthly claims grain and carries direct foreign keys to `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type`. This keeps the OAC self-service model intuitive: one fact in the center, four conformed dimensions around it, and business measures such as submitted claims, denied claims, paid amount, denial rate, and average processing days in the fact.
 
 Shared dimensions:
 
@@ -85,7 +181,6 @@ Facts and bridge tables:
 - `mpha_fact_quality_event_summary`
 - `mpha_fact_spatial_access_insight`
 - `mpha_fact_capacity_event`
-- `mpha_fact_stream_wait_time_minute`
 - `mpha_bridge_chat_topic_chunk`
 - `mpha_fact_claims_monthly`
 - `mpha_fact_disbursement_monthly`
@@ -112,24 +207,17 @@ District-grain facts join directly to `mpha_dim_district`; all dated facts reuse
 | `mpha_gold_spatial_access_insights` | `silver_spatial_feature`, `mpha_gold_district_public_health_weekly` | Publish residents-per-facility, pressure, catchment planning, and mobile-clinic action signals. |
 | `mpha_gold_capacity_event_latest` | `silver_facility_capacity_event`, `silver_facility_provider` | Publish JSON capacity-event signals for real-time operations views. |
 | `mpha_gold_document_chat_context` | `silver_playbook_chunk` | Publish document chunks and embedding metadata for chat with data and documents. |
+| `mpha_gold_claims_denial_risk_scores` | `mpha_gold_claims_summary`, `mpha_gold_capacity_event_latest`, `mpha_gold_provider_accreditation_summary` | Publish optional denial-risk scoring outputs for claims review prioritization. |
 | `mpha_gold_claims_summary` | `silver_claims_membership_disbursement` | Publish monthly claims submitted, approved, denied, pending, paid, and processing metrics by program and claim type. |
 | `mpha_gold_disbursement_summary` | `silver_claims_membership_disbursement` | Publish monthly disbursement amount, payment status, funding source, payee type, and cycle-time metrics. |
 | `mpha_gold_membership_summary` | `silver_claims_membership_disbursement` | Publish membership, eligibility, renewal, risk-segment, and chronic-condition metrics by program and district. |
 | `mpha_gold_provider_accreditation_summary` | `silver_provider_accreditation` | Publish accreditation score, corrective actions, days to expiry, and accreditation risk band. |
 
-Recommended serving objects:
+Recommended serving objects still available in the package:
 
-- `mpha_oac_star_access_capacity`
-- `mpha_oac_star_public_health_pressure`
-- `mpha_oac_star_immunization_equity`
-- `mpha_oac_star_quality_events`
-- `mpha_oac_star_spatial_access`
-- `mpha_oac_star_realtime_operations`
-- `mpha_oac_star_document_chat_context`
 - `mpha_oac_star_claims`
-- `mpha_oac_star_disbursements`
-- `mpha_oac_star_membership`
-- `mpha_oac_star_provider_accreditation`
+- `mpha_oac_star_access_capacity`
+- other `mpha_oac_star_*` views for extension, rehearsal, or follow-on demos
 
 ## Data Quality Rules
 
@@ -151,15 +239,8 @@ Recommended serving objects:
 
 The Gold layer is designed to answer:
 
-- Which facilities need capacity relief?
-- Which districts have the highest public-health pressure?
-- Where are immunization completion or no-show rates signaling equity gaps?
-- How is respiratory positivity affecting emergency demand?
-- Which quality-event categories are breaching closure expectations?
-- Which districts have spatial access constraints that justify mobile clinics?
-- Which playbook sections support the recommended action when leaders chat with data and documents?
 - Which programs or claim types have the highest denial rate or slowest adjudication cycle?
-- Where are public-program disbursements pending or failing by funding source?
-- Which districts have the most renewal-due or high-risk members?
-- Which providers need accreditation corrective-action follow-up or expiry review?
-- Facility-grain facts such as access, quality, capacity-event, streaming, and provider-accreditation facts carry `district_key` directly so OAC joins straight from facts to conformed dimensions.
+- Which districts show the largest gaps between submitted and paid claim amounts?
+- Which claim types are driving pending volume or long processing cycles?
+- How should participants apply the same star-pattern to the Facility Access Daily fact?
+- Facility-grain facts such as access, quality, capacity-event, and provider-accreditation facts carry `district_key` directly so OAC joins straight from facts to conformed dimensions.
