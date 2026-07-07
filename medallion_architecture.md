@@ -155,7 +155,7 @@ The workshop branches after Silver:
 
 ### Claims Star Schema Visual
 
-![Claims star schema with central fact table connected to date, district, coverage program, and claim type dimensions](assets/claims_star_schema_diagram.svg)
+![Claims star schema with central fact table connected to date, district, coverage program, and claim type dimensions](assets/claims_star_schema_diagram.svg?v=20260708-align)
 
 The guided dashboard uses the Claims star schema above. `mpha_fact_claims_monthly` stays at monthly claims grain and carries direct foreign keys to `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type`. This keeps the OAC self-service model intuitive: one fact in the center, four conformed dimensions around it, and business measures such as submitted claims, denied claims, paid amount, denial rate, and average processing days in the fact.
 
