@@ -344,6 +344,7 @@
       <option value="lab2">Lab 2 - Bronze and Silver</option>
       <option value="lab3">Lab 3 - Claims star schema</option>
       <option value="lab4">Lab 4 - OAC dashboard</option>
+      <option value="lab4b">Lab 4B - Context enrichment</option>
       <option value="challenge">DIY facility challenge</option>
       <option value="lab5">Lab 5 - ML risk scoring</option>
       <option value="lab6-rag-kb">Lab 6A - RAG knowledge base</option>
@@ -362,6 +363,7 @@
       <a class="section-link" href="#lab2">Lab 2 - Bronze and Silver</a>
       <a class="section-link" href="#lab3">Lab 3 - Claims star schema</a>
       <a class="section-link" href="#lab4">Lab 4 - OAC dashboard</a>
+      <a class="section-link" href="#lab4b">Lab 4B - Context enrichment</a>
       <a class="section-link" href="#challenge">DIY facility challenge</a>
       <a class="section-link" href="#lab5">Lab 5 - ML risk scoring</a>
       <a class="section-link" href="#lab6-rag-kb">Lab 6A - RAG knowledge base</a>
@@ -403,6 +405,7 @@
             <ul>
               <li>OAC Claims Executive Overview with KPIs, trends, hotspots, maps, and Assistant responses.</li>
               <li>Claims star schema in Autonomous AI Lakehouse as the trusted Gold serving layer.</li>
+              <li>Round 2 JSON and spatial context extension for richer district-level Claims insights.</li>
               <li>Denial risk scoring to prioritize claims that need review or intervention.</li>
               <li>Claims and Policy Copilot that combines SQL analytics with RAG over the MPHA playbook.</li>
             </ul>
@@ -419,7 +422,7 @@
           <div class="flow-step"><strong>2. Medallion</strong><span>Upload notebooks and process raw data through Bronze and Silver.</span></div>
           <div class="flow-step"><strong>3. Serve</strong><span>Load Claims dimensions and fact into AI Lakehouse.</span></div>
           <div class="flow-step"><strong>4. Analyze</strong><span>Build the MPHA Claims Executive Overview in OAC.</span></div>
-          <div class="flow-step"><strong>5. Extend</strong><span>Facility dashboard challenge, ML scoring, and policy copilot.</span></div>
+          <div class="flow-step"><strong>5. Extend</strong><span>Add JSON and spatial context, then continue with facility, ML, and agent extensions.</span></div>
         </div>
         <div class="callout warning">
           <strong>Teaching pattern</strong>
@@ -861,6 +864,135 @@
             <tr><td>Which claim types need denial review?</td><td>Highlights Outpatient and Emergency as high-priority review areas when they combine denial volume with processing pressure.</td></tr>
           </tbody>
         </table>
+      </section>
+
+      <section class="lab" id="lab4b">
+        <div class="lab-head">
+          <div>
+            <p class="eyebrow">Lab 4B</p>
+            <h2>Extend Claims analytics with JSON and spatial context</h2>
+          </div>
+          <div class="duration">Instructor-led extension · 25 minutes</div>
+        </div>
+        <span class="role">Instructor-led extension</span>
+        <p>
+          Round 1 answered the original Claims visibility requirement. In Round 2, MPHA leadership asks whether Claims denial hotspots are connected to facility capacity pressure and spatial access gaps. The extension pattern keeps the original Claims star schema stable, adds new JSON and spatial enrichments through AIDP, and publishes district-level context beside the existing Gold model in AI Lakehouse.
+        </p>
+        <div class="callout expected">
+          <strong>Progressive enhancement pattern</strong>
+          Do not rebuild the Claims dashboard or Claims star schema. Add new raw formats, produce new Silver and Gold context outputs, publish one AI Lakehouse context table/view, and extend OAC with additional district-level insights.
+        </div>
+        <div class="flow-strip" aria-label="Round 2 context extension flow">
+          <div class="flow-step"><strong>Round 1</strong><span>Claims CSV to Claims star schema and OAC dashboard.</span></div>
+          <div class="flow-step"><strong>New ask</strong><span>Explain Claims pressure with operations and access context.</span></div>
+          <div class="flow-step"><strong>Bronze to Silver</strong><span>Combine JSON capacity events and GeoJSON service areas.</span></div>
+          <div class="flow-step"><strong>Silver to Gold</strong><span>Aggregate district-month Claims context.</span></div>
+          <div class="flow-step"><strong>Extend</strong><span>Load context to AI Lakehouse and add OAC insights.</span></div>
+        </div>
+        <h3>Task 1 - Upload the Round 2 Silver extension notebook</h3>
+        <ol>
+          <li>Download <code>02B_Silver_Claims_Context_Extension.ipynb</code> from the workshop assets.</li>
+          <li>Open the existing AIDP workspace and go to the <code>O2_Silver</code> folder.</li>
+          <li>Upload the notebook. This is an add-on notebook; it does not replace <code>02_silver.ipynb</code>.</li>
+          <li>Attach the same Spark compute used in Lab 2 and run all cells.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/01_existing_workspace_for_round2_extension.png" alt="Existing AIDP workspace before adding Round 2 extension notebooks" />
+          <figcaption>Round 2 starts in the same AIDP workspace. The existing Bronze, Silver, Gold, AI Lakehouse load, ML, and Agent folders remain untouched.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/02_upload_silver_context_extension_to_o2_silver.png" alt="AIDP O2 Silver folder where the Round 2 Silver context extension notebook is uploaded" />
+          <figcaption>Upload checkpoint: place <code>02B_Silver_Claims_Context_Extension.ipynb</code> in <code>O2_Silver</code> as a new add-on notebook.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/04_silver_extension_notebook_attached.png" alt="AIDP Silver extension notebook attached to the active Spark cluster" />
+          <figcaption>Run checkpoint: open <code>02B_Silver_Claims_Context_Extension.ipynb</code>, attach the active Spark cluster, and keep the original <code>02_silver.ipynb</code> untouched.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/05_silver_extension_success.png" alt="AIDP Silver extension notebook showing successful output for silver_operations_access_context" />
+          <figcaption>Success checkpoint: the notebook writes <code>silver_operations_access_context</code> and prints district-level capacity and spatial access bands.</figcaption>
+        </figure>
+        <table>
+          <thead>
+            <tr><th>Bronze input</th><th>Silver enrichment</th><th>Business meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>bronze_facility_capacity_events</code></td><td>Parse JSON timestamps, flatten triage counts, derive supply/diversion flags, and classify <code>capacity_pressure_band</code>.</td><td>Turns operational JSON events into comparable district/facility pressure signals.</td></tr>
+            <tr><td><code>bronze_healthcare_service_areas_geojson</code></td><td>Explode GeoJSON features, classify boundaries, facility points, and catchments, then derive access coverage signals.</td><td>Turns spatial service-area data into district access context.</td></tr>
+            <tr><td>Facility and district reference data</td><td>Join JSON and spatial signals to facility and district master data.</td><td>Creates one conformed table: <code>silver_operations_access_context</code>.</td></tr>
+          </tbody>
+        </table>
+        <h3>Task 2 - Create the AI Lakehouse extension table</h3>
+        <ol>
+          <li>Open Autonomous AI Lakehouse Database Actions or the approved SQL execution surface.</li>
+          <li>Run <code>sql/create_ai_lakehouse_claims_context_extension.sql</code>.</li>
+          <li>Confirm <code>mpha_fact_district_claims_context</code> and <code>mpha_claims_district_context_v</code> are created in the same schema as the Claims star schema.</li>
+        </ol>
+        <div class="callout warning">
+          <strong>Admin or instructor step</strong>
+          This SQL adds only the extension table and view. It does not change <code>mpha_fact_claims_monthly</code> or any Claims dimension.
+        </div>
+        <div class="callout">
+          <strong>Validated run note</strong>
+          In the instructor validation run, the fact table was created from AIDP against the connected <code>goldailh.e2eaidpuser</code> external catalog, then the Gold notebook inserted 5 district-month context rows. Database Actions remains the recommended delivery path for the SQL script.
+        </div>
+        <h3>Task 3 - Upload and run the Gold plus AI Lakehouse extension notebook</h3>
+        <ol>
+          <li>Download <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> from the workshop assets.</li>
+          <li>Open the existing <code>03a_GoldAILHLoad</code> folder in AIDP.</li>
+          <li>Upload the notebook. Confirm <code>target_catalog</code>, <code>target_schema</code>, and <code>table_prefix</code>.</li>
+          <li>Run all cells. The notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>mpha_fact_district_claims_context</code>.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/03_upload_gold_context_extension_to_lakehouse_folder.png" alt="AIDP AI Lakehouse load folder where the Round 2 Gold context extension notebook is uploaded" />
+          <figcaption>Gold load checkpoint: upload the extension notebook beside the existing AI Lakehouse load notebook so the Round 2 context remains separate from the original Claims publish path.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/06_gold_extension_notebook_attached.png" alt="AIDP Gold extension notebook attached to the active Spark cluster" />
+          <figcaption>Run checkpoint: attach <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> to the same active Spark cluster before execution.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/07_gold_extension_success.png" alt="AIDP Gold extension notebook showing successful write to AI Lakehouse" />
+          <figcaption>Success checkpoint: the Gold notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>goldailh.e2eaidpuser.mpha_fact_district_claims_context</code>.</figcaption>
+        </figure>
+        <table>
+          <thead>
+            <tr><th>Gold output</th><th>Grain</th><th>Key measures</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>gold_district_claims_context</code></td><td>District-month</td><td>Claims submitted, denied claims, denial rate, processing days, occupancy, wait pressure, diversion count, supply alerts, residents per facility, access gap score, and priority score.</td></tr>
+            <tr><td><code>mpha_fact_district_claims_context</code></td><td>District-month in AI Lakehouse</td><td>Same context metrics keyed to <code>mpha_dim_date</code> and <code>mpha_dim_district</code>.</td></tr>
+            <tr><td><code>mpha_claims_district_context_v</code></td><td>OAC-ready view</td><td>District-level context for adding extension visuals to the existing Claims dashboard.</td></tr>
+          </tbody>
+        </table>
+        <h3>Task 4 - Validate and extend OAC</h3>
+        <ol>
+          <li>Run <code>sql/claims_context_extension_validation.sql</code>.</li>
+          <li>In OAC, add <code>mpha_claims_district_context_v</code> as an additional dataset or supporting table.</li>
+          <li>Add a small <strong>Context Enrichment</strong> canvas or dashboard section without changing the original Executive Overview visuals.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/08_gold_extension_validation.png" alt="AIDP validation query showing five AI Lakehouse context fact rows" />
+          <figcaption>Validation checkpoint: a Spark query against <code>mpha_fact_district_claims_context</code> returns 5 AI Lakehouse context rows and top priority scores.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/aidp_context_extension_lab/screenshots/09_context_view_validation.png" alt="AIDP validation query showing the OAC-ready context view and five rows" />
+          <figcaption>OAC readiness checkpoint: <code>mpha_claims_district_context_v</code> exists in the external catalog and returns 5 rows for dashboard extension.</figcaption>
+        </figure>
+        <div class="task-grid">
+          <div class="task">
+            <strong>Question 1</strong>
+            <p>Which denial hotspots also have high capacity pressure?</p>
+          </div>
+          <div class="task">
+            <strong>Question 2</strong>
+            <p>Which districts combine high denial rate and poor spatial access?</p>
+          </div>
+          <div class="task">
+            <strong>Question 3</strong>
+            <p>Where should MPHA prioritize claims review, provider outreach, and mobile clinic intervention together?</p>
+          </div>
+        </div>
       </section>
 
       <section class="lab" id="challenge">
@@ -1441,11 +1573,13 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           </div>
           <div class="task">
             <strong>Notebook assets</strong>
-            <p>Separate notebooks for Bronze, Silver, Gold staging, direct Claims star schema publishing, ML scoring, and workflow execution.</p>
+            <p>Separate notebooks for Bronze, Silver, Gold staging, direct Claims star schema publishing, Round 2 context enrichment, ML scoring, and workflow execution.</p>
             <p>
               <a href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&amp;label=Bronze%20notebook&amp;kind=code">Bronze</a><br />
               <a href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&amp;label=Silver%20notebook&amp;kind=code">Silver</a><br />
               <a href="asset_viewer.html?file=notebooks/aidp_claims_star_ai_lakehouse_pyspark.py&amp;label=Claims%20star%20schema%20to%20AI%20Lakehouse&amp;kind=code">Claims direct load</a><br />
+              <a href="asset_viewer.html?file=notebooks/02B_Silver_Claims_Context_Extension.ipynb&amp;label=Round%202%20Silver%20context%20extension&amp;kind=code">Round 2 Silver context notebook</a><br />
+              <a href="asset_viewer.html?file=notebooks/03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb&amp;label=Round%202%20Gold%20context%20AI%20Lakehouse%20extension&amp;kind=code">Round 2 Gold context notebook</a><br />
               <a href="asset_viewer.html?file=notebooks/aidp_ml_claims_denial_risk_pyspark.py&amp;label=Claims%20ML%20notebook&amp;kind=code">ML scoring</a><br />
               <a href="asset_viewer.html?file=workflows/aidp_incremental_medallion_workflow.md&amp;label=AIDP%20Incremental%20Medallion%20Workflow&amp;kind=markdown">Incremental workflow runbook</a>
             </p>
@@ -1455,8 +1589,10 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
             <p>Separated SQL for Claims star schema, Facility Access structures, and focused validation checks.</p>
             <p>
               <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_star_schema.sql&amp;label=Claims%20star%20schema%20SQL&amp;kind=code">Claims star schema SQL</a><br />
+              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_context_extension.sql&amp;label=Claims%20context%20extension%20SQL&amp;kind=code">Claims context extension SQL</a><br />
               <a href="asset_viewer.html?file=sql/create_ai_lakehouse_facilities_star_schema.sql&amp;label=Facilities%20star%20schema%20SQL&amp;kind=code">Facilities star schema SQL</a><br />
-              <a href="asset_viewer.html?file=sql/claims_star_validation.sql&amp;label=Claims%20star%20validation%20SQL&amp;kind=code">Validation SQL pack</a>
+              <a href="asset_viewer.html?file=sql/claims_star_validation.sql&amp;label=Claims%20star%20validation%20SQL&amp;kind=code">Claims validation SQL pack</a><br />
+              <a href="asset_viewer.html?file=sql/claims_context_extension_validation.sql&amp;label=Claims%20context%20extension%20validation%20SQL&amp;kind=code">Context extension validation SQL pack</a>
             </p>
           </div>
           <div class="task">

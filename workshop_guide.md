@@ -37,6 +37,12 @@ MPHA leadership wants a daily and weekly decision-support view that answers:
 
 **Dataset type:** Five synthetic CSV datasets, one JSONL event dataset, one GeoJSON spatial dataset, and one synthetic operating playbook document
 
+## Recommended Execution Flow
+
+Use `workshop_single_flow.html` as the main facilitator and participant runbook. It combines environment setup, AIDP medallion processing, Claims star schema publishing, OAC dashboarding, the Facility Access Daily challenge, and optional ML and agent extensions into one end-to-end path.
+
+Use the detailed lab pages and this guide as drill-down references when a participant needs screenshots, SQL details, validation checks, or troubleshooting notes.
+
 ## Architecture
 
 1. Raw CSV, JSONL, GeoJSON, and document files are uploaded to object storage as the immutable landing zone.
@@ -229,6 +235,57 @@ Participants: you can ignore this unless the facilitator asks you to use the leg
 3. For the instructor-led Claims path, run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to build the Claims star schema dimensions and fact directly in the connected Autonomous AI Lakehouse external catalog.
 4. Use `notebooks/aidp_gold_pyspark.py` only when the facilitator wants the broader flat Gold-serving compatibility outputs staged to object storage.
 
+### AIDP Workflow Pattern for Incremental Medallion Runs
+
+After participants run the notebooks manually, the facilitator should create or review the validated AIDP Workflow version of the same sequence. This keeps the hands-on path simple while introducing how data-engineering notebooks become an operational pipeline.
+
+Use `workflows/aidp_incremental_medallion_workflow.md` as the workflow runbook.
+
+Recommended workflow name:
+
+`MPHA_INCREMENTAL_MEDALLION_FLOW`
+
+Validated workflow settings:
+
+| Setting | Validated value |
+| --- | --- |
+| Workspace | `E2EAIDPIndustryDemos` |
+| Compute | `E2EAIDPIndustrydemos` |
+| Timeout per task | `60` minutes, displayed by AIDP as `1 hour` |
+| Bronze task | Python task in the validated run |
+| Silver, Gold, AI Lakehouse tasks | Notebook tasks |
+
+Important: set a timeout value on each task before adding the next downstream task.
+
+Workflow parameters to explain:
+
+| Parameter | Purpose |
+| --- | --- |
+| `run_mode` | `FULL_REFRESH` for the first classroom run, `INCREMENTAL` for the operational rerun discussion. |
+| `batch_id` | Labels the raw-data load and supports replay and audit. |
+| `watermark_start` | Lower bound for the incremental source window. |
+| `watermark_end` | Upper bound for the incremental source window. |
+| `target_catalog` | AIDP external AI Lakehouse catalog, such as `goldailh`. |
+| `target_schema` | Participant Gold schema, such as `e2eaidpuser`. |
+
+Workflow task sequence:
+
+| Task | Validated asset | Dependency | Incremental concept |
+| --- | --- | --- | --- |
+| `bronzeingest` | `/Workspace/O1_Bronze/aidp_bronze_pyspark.py` | None | Append or deduplicate new raw records by batch id and source file. |
+| `silverrefine` | `/Workspace/O2_Silver/02_silver.ipynb` | `bronzeingest` | Recompute impacted Silver records or partitions. |
+| `goldstage` | `/Workspace/03_Gold/03_Gold.ipynb` | `silverrefine` | Stage broader Gold compatibility outputs when needed. |
+| `lakehouseload` | `/Workspace/03a_GoldAILHLoad/03a_GoldAILHLoad.ipynb` | `goldstage` | Insert only new Claims star schema dimension and fact rows into AI Lakehouse. |
+| Claims validation | `sql/claims_star_validation.sql` | `lakehouseload` | Block OAC, ML, and agent use until validation passes. |
+
+Instructor talk track:
+
+1. The first run is a clear full-refresh workshop execution.
+2. The second run is the incremental story: new batch id, new watermark window, impacted Bronze/Silver/Gold processing, and validation gates.
+3. The AI Lakehouse connector did not support destructive table reset operations from Spark during validation, so the load notebook now reads existing target keys and inserts only new rows.
+4. If a downstream task fails, use **Repair run** and select only the failed task after correcting the notebook.
+5. In production, extend the same idea into parameter cells, Delta append or merge logic, partition-aware Silver processing, AI Lakehouse dimension upserts, and fact-grain refresh logic.
+
 ### Bronze Layer in AIDP
 
 Bronze is the repeatable raw-data layer. It preserves the workshop source data and adds only technical ingestion metadata.
@@ -403,14 +460,14 @@ This is a star schema because the fact tables carry the foreign keys needed for 
 
 You have Bronze and Silver Delta layers in AI Data Platform and a dimensional Gold serving layer in Autonomous AI Lakehouse, including spatial planning, real-time event, and document-chat serving objects.
 
-## Lab 3 - Instructor-Led Claims star schema and OAC Workbook
+## Lab 3 - Publish Claims star schema to Autonomous AI Lakehouse
 
 ### Objectives
 
-- Connect OAC to Autonomous AI Lakehouse.
-- Build a Claims star schema dataset in OAC using the dimensional Gold tables or the curated OAC claims view.
-- Create a native multi-canvas OAC workbook using freeform layout and dashboard filter controls.
-- Enable OAC Assistant correctly at the dataset level and use it only for claims-dataset questions.
+- Confirm the Autonomous AI Lakehouse target schema and workshop users.
+- Load the instructor-led Claims star schema from AIDP into the connected AI Lakehouse external catalog.
+- Validate the Claims star schema tables before opening OAC.
+- Prepare a clean handoff into the OAC Executive Overview lab.
 
 ### Admin Steps
 
@@ -437,21 +494,17 @@ Participants: you can skip this section and join once the facilitator confirms t
    - Confirm the users are `REST Enabled`.
    - Set quota on tablespace `DATA` high enough for workshop loading. For the direct AIDP Claims star schema notebook path, `1G` is a practical minimum; use `2G` to `5G` for facilitator or shared schemas when you want more headroom.
    - Copy the Database Actions URL from the user card and share it with the participant together with the username and temporary password.
-3. Create the shared OAC connection if one does not already exist.
-   - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
-   - Use `TLS` for wallet-free connectivity or `Mutual TLS` if your environment requires a wallet upload.
-4. Create the shared instructor-led claims dataset.
-   - Create a dataset from the Lakehouse connection.
-   - Drag `mpha_fact_claims_monthly` to the Join Diagram first.
-   - Drag `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type` next.
-   - Right-click the fact table and select `Preserve Grain`.
-   - Save the dataset with a clear name such as `MPHA_Claims_Star_DS`.
-   - Fast-track alternative: use `MPHA_OAC_STAR_CLAIMS` if the team prefers a one-table dataset.
-5. Enable OAC Assistant at the dataset level if it is not already enabled.
-   - Return to the dataset home card.
-   - Open `Actions -> Inspect -> Search`.
-   - Set `Index Dataset For` to `Assistant and Homepage`.
-   - Click `Save`, then `Run Now`.
+3. Create the Claims star schema target tables in the Gold-serving schema.
+   - Use `sql/create_ai_lakehouse_claims_star_schema.sql` for the instructor-led Claims path.
+   - Use a schema such as `MPHA_GOLD_OWNER` or the assigned participant/team schema.
+   - Confirm these tables exist before participants run the direct-load notebook:
+     - `mpha_dim_date`
+     - `mpha_dim_district`
+     - `mpha_dim_coverage_program`
+     - `mpha_dim_claim_type`
+     - `mpha_fact_claims_monthly`
+4. Confirm the AIDP external catalog can see the target AI Lakehouse schema.
+5. Share the target catalog and schema names with participants before the notebook execution step.
 
 ### Participant Steps
 
@@ -473,33 +526,11 @@ Participants: you can skip this section and join once the facilitator confirms t
    - `mpha_dim_coverage_program`
    - `mpha_dim_claim_type`
    - `mpha_fact_claims_monthly`
-8. Open the shared claims dataset and create the workbook.
-9. Change the first canvas layout from `Auto Fit` to `Freeform` and rename `Canvas 1` to `Claims Overview`.
-10. Create calculations in `My Calculations` only if the dataset does not already expose:
-   - Claim Denial Rate
-   - Payment Yield
-   - Approval Rate
-   - Pending Rate
-11. Build the KPI band with native OAC tiles.
-   - Drag `claims_submitted` to the canvas to create the first tile.
-   - Drag up to four more measures onto the same tile.
-   - Create a second tile for a sixth KPI such as `avg_processing_days`.
-12. Add a `Dashboard Filter` control with:
-   - Reporting Period
-   - District
-   - Coverage Program
-   - Claim Type
-   - Funding Source
-13. Add the core visuals:
-   - district claims chart
-   - monthly paid-amount trend
-   - district summary table
-14. Create the additional canvases in `Freeform` layout:
-   - `Denial Analysis`
-   - `Program Performance`
-   - `Claim Type Mix`
-15. Use a native `Map` visualization for the spatial business insight by plotting district with denial rate or paid amount when district geography is available.
-16. Reopen the workbook and use `Assistant` for claims-dataset questions only.
+8. Run the validation SQL pack in Database Actions.
+9. Confirm all five Claims star schema tables return non-zero row counts.
+10. Confirm the orphan-row check returns `0`.
+11. Confirm the joined preview query returns readable district, program, claim type, and claims measures.
+12. Continue to Lab 4 after the Claims star schema is validated.
 
 Quick validation pack:
 
@@ -552,60 +583,246 @@ Recommended joins:
 - `mpha_fact_claims_monthly.program_key -> mpha_dim_coverage_program.program_key`
 - `mpha_fact_claims_monthly.claim_type_key -> mpha_dim_claim_type.claim_type_key`
 
-The role-tagged Lab 3 exercise steps above are the execution sequence to follow for the native OAC workbook build.
+The role-tagged Lab 3 exercise steps above are the execution sequence to follow for the Claims star schema publish and validation flow.
 
-### Recommended OAC canvases for the instructor-led workbook
+### Lab 4 handoff
 
-1. **Claims Overview**
-   - KPI tiles for claims submitted, denied claims, denial rate, submitted amount, paid amount, and average processing days
-   - monthly paid-amount trend
-   - district summary table
+After the Claims star schema validation succeeds, move to the OAC lab.
 
-2. **Denial Analysis**
-   - denial rate by district
-   - denial rate by coverage program
-   - denial rate by claim type
-   - district map for denial exposure
+Use these assets as the instructor-led OAC reference build:
 
-3. **Program Performance**
-   - submitted amount versus paid amount by coverage program
-   - approval and pending counts
-   - funding-source mix by coverage program
-   - claim volume trend by service month
-
-4. **Claim Type Mix**
-   - claim type volume
-   - service category mix
-   - diagnosis-group concentration
-   - high-denial claim types
-
-Use `dashboard_spec.md` and the HTML wireframe as the instructor-led reference build.
-
-The screenshot-backed step-by-step OAC build notes are in `dashboard_spec.md`, including the Lakehouse connection flow, multi-table dataset setup, freeform workbook canvases, dashboard filter control, map visual, and dataset-level OAC Assistant setup.
+- `dashboard_spec.md`
+- `lab4_oac_executive_overview_build_guide.html`
+- `assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png`
 
 Important boundary:
 
 - OAC Assistant answers questions about the indexed claims dataset.
 - Questions that depend on the playbook document belong in the separate `Claims and Policy Copilot` optional lab.
 
-## Lab 4 - DIY Facility Access Daily star schema and Participant Dashboard Challenge
+## Lab 4 - Analyze Claims star schema in Oracle Analytics Cloud
 
 ### Objectives
 
-- Apply the same dimensional pattern used in the Claims star schema.
-- Build the Facility Access Daily star schema without step-by-step dashboard instructions.
-- Create a participant-owned OAC dashboard from the facility access fact and its dimensions.
+- Connect OAC to the validated Claims star schema in Autonomous AI Lakehouse.
+- Build the MPHA Claims Executive Overview canvas in OAC.
+- Use KPI tiles with sparklines, business-question titles, and compact command-center spacing.
+- Test OAC Assistant with claims-dataset questions only.
 
-### Admin Notes
+### Admin Preparation
 
-Participants: the facilitator only needs to step in here if the shared Facility Access Daily dataset or connection has already been prepared for you.
+Participants: you can skip this section if the facilitator has already prepared the OAC connection and dataset.
+
+1. Create the shared OAC connection if one does not already exist.
+   - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
+   - Use `TLS` for wallet-free connectivity or `Mutual TLS` if your environment requires a wallet upload.
+   - Screenshot reference in the Lab 4 build guide: OAC home, Create menu, connection type, and AI Lakehouse connection form.
+2. Create the instructor-led Claims star schema dataset.
+   - In OAC, go to `Create -> Dataset`.
+   - Select the Autonomous AI Lakehouse connection.
+   - Expand the connected schema and select `mpha_fact_claims_monthly`, `mpha_dim_date`, `mpha_dim_district`, `mpha_dim_coverage_program`, and `mpha_dim_claim_type`.
+   - Drag or double-click the five tables into the Join Diagram canvas.
+   - Prepare the self-service data model by confirming that `mpha_fact_claims_monthly` is centered and connected to the four dimensions.
+   - Right-click the fact table and select `Preserve Grain`.
+   - Use the data profiling panel to confirm value distributions, nulls, and sample rows.
+   - Save the dataset as `MPHAClaimAnalysis`.
+   - Screenshot reference in the Lab 4 build guide: dataset connection selection, expanded Claims schema checkpoint, MPHA self-service Join Diagram, data profiling view, and workbook data panel verification.
+3. Enable OAC Assistant at the dataset level if it is not already enabled.
+   - Open the dataset in a workbook.
+   - Right-click the dataset name in the data panel.
+   - Open `Inspect -> Search`.
+   - Set `Index Dataset For` to `Assistants and Homepage Search`.
+   - Review the indexed field scope.
+   - Click `Save` if changes were made, then `Run Now`.
+   - Screenshot reference in the Lab 4 build guide: dataset context menu, Search settings, Search scope, and Assistant panel.
 
 ### Participant Steps
 
-1. Build the Facility Access Daily star schema using the same dimensional pattern used in the guided claims flow.
-2. Use the prepared fact and dimension targets below as your design objective.
-3. Create your own participant-owned OAC dashboard using the facility access fact and its dimensions.
-4. Decide which filters, KPIs, and visual interactions best support an operator workflow.
+Use `lab4_oac_executive_overview_build_guide.html` as the screenshot-led participant guide. It follows the live OAC flow from Lakehouse connection through dataset modeling, data profiling, Assistant indexing, and the final Executive Overview dashboard canvas.
+
+1. Open the provided `MPHAClaimAnalysis` dataset and create a workbook.
+2. Rename the first canvas to `Executive Overview`.
+3. Set the canvas layout to `Freeform`.
+4. Add a title text box: `MPHA Claims Processing Command Center`.
+5. Add dashboard filters for:
+   - `DISTRICT_NAME`
+   - `CLAIM_TYPE`
+6. Create six KPI tile visuals with monthly sparklines:
+   - `Claims submitted`
+   - `Claims denied`
+   - `Denial rate`
+   - `Submitted amount`
+   - `Paid amount`
+   - `Processing days`
+7. Add the denial hotspot heatmap:
+   - title: `Where are denial-rate hotspots by program and claim type?`
+   - rows: coverage program
+   - columns: claim type
+   - color: denial rate
+8. Add the denied-claims district donut:
+   - title: `Which districts contribute the most denied claims?`
+   - value: denied claims
+   - category: district name
+9. Add the claim-type review table:
+   - title: `Which claim types need denial review?`
+   - columns: claim type, denied claims, denial rate
+10. Add the bubble analysis:
+   - title: `Do high-volume claim types also take longer or get denied more?`
+   - group: claim type
+   - x axis: claims submitted
+   - y axis: average processing days
+11. Add the denial-rate trend:
+   - title: `How is the denial rate trending month over month?`
+   - category: service month
+   - measure: denial rate
+12. Use round borders, light center shadows, equal spacing, and business-question titles across the canvas.
+13. Save the workbook as `MPHA Claims Command Center`.
+
+Reference build:
+
+- `lab4_oac_executive_overview_build_guide.html`
+- `dashboard_spec.md`
+- `assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png`
+
+### OAC Assistant Prompts
+
+Use prompts like these after dataset indexing completes:
+
+- "Which districts contribute the most denied claims, and what should the claims operations team prioritize?"
+- "Which claim types need denial review?"
+- "Compare denied claims and processing days by claim type."
+- "How is denial rate trending by month?"
+
+For the first Assistant prompt, expand `Additional Insights` before capturing the workshop checkpoint screenshot.
+
+## Lab 4B - Extend Claims Analytics with JSON and Spatial Context
+
+### Business Trigger
+
+Round 1 answers the original Claims visibility requirement. After seeing the Claims dashboard, MPHA leadership asks whether denial hotspots are connected to facility capacity pressure and spatial access gaps.
+
+The extension pattern is intentional: do not rebuild the Claims star schema. Add new raw formats, process them through AIDP, publish a district-level context table in AI Lakehouse, and extend OAC with additional insights.
+
+### Inputs
+
+- JSON raw data: `data/raw_json/facility_capacity_events.jsonl`
+- Spatial raw data: `data/raw_spatial/healthcare_service_areas.geojson`
+- Existing Bronze outputs from Lab 2
+- Existing Claims star schema from Lab 3
+
+### Bronze-to-Silver Extension
+
+Run `notebooks/02B_Silver_Claims_Context_Extension.ipynb`.
+
+Validated AIDP execution:
+
+1. Create or upload `02B_Silver_Claims_Context_Extension.ipynb` in the `O2_Silver` folder.
+2. Attach the active Spark cluster `E2EAIDPIndustrydemos`.
+3. Run the notebook cell.
+4. Confirm the output includes:
+   - `Round 2 Silver context complete.`
+   - `Wrote silver_operations_access_context to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver/silver_operations_access_context`
+
+Screenshots captured:
+
+- `assets/aidp_context_extension_lab/screenshots/04_silver_extension_notebook_attached.png`
+- `assets/aidp_context_extension_lab/screenshots/05_silver_extension_success.png`
+
+This notebook combines:
+
+- `bronze_facility_capacity_events`
+- `bronze_healthcare_service_areas_geojson`
+- facility/provider reference data
+- district reference data
+
+It creates:
+
+- `silver_operations_access_context`
+
+Key enhancements:
+
+- parse JSON event timestamp, hour, and day of week
+- flatten triage category counts
+- derive `triage_total`, `triage_acuity_score`, `supply_alert_count`, `diversion_event_flag`, and `capacity_pressure_band`
+- explode GeoJSON features
+- classify district boundary, facility point, and facility catchment features
+- derive `facility_count`, `catchment_count`, `residents_per_facility`, `spatial_access_band`, and `access_gap_score`
+- create a combined `operations_access_risk_score`
+
+### Silver-to-Gold and AI Lakehouse Extension
+
+Run `sql/create_ai_lakehouse_claims_context_extension.sql` first to create:
+
+- `mpha_fact_district_claims_context`
+- `mpha_claims_district_context_v`
+
+Then run `notebooks/03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb`.
+
+Validated AIDP execution:
+
+1. Create or upload `03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb` in the `03a_GoldAILHLoad` folder.
+2. Attach the active Spark cluster `E2EAIDPIndustrydemos`.
+3. Confirm the AI Lakehouse extension table exists before the insert.
+4. Run the notebook cell.
+5. Confirm the output includes:
+   - `Wrote Gold context Delta output to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage/gold_district_claims_context`
+   - `Wrote 5 new rows to goldailh.e2eaidpuser.mpha_fact_district_claims_context`
+   - `Round 2 Gold context complete.`
+
+Screenshots captured:
+
+- `assets/aidp_context_extension_lab/screenshots/06_gold_extension_notebook_attached.png`
+- `assets/aidp_context_extension_lab/screenshots/07_gold_extension_success.png`
+
+It creates:
+
+- `gold_district_claims_context`
+- AI Lakehouse rows in `mpha_fact_district_claims_context`
+
+The grain is district-month, aligned to the existing Claims star schema dimensions.
+
+Key enhancements:
+
+- aggregate capacity pressure by district-month
+- aggregate Claims denial and processing metrics by district-month
+- calculate `claims_context_priority_score`
+- recommend district action such as claims review, provider outreach, or mobile clinic scheduling
+
+### Validation
+
+Run `sql/claims_context_extension_validation.sql`.
+
+Expected checks:
+
+- context rows are loaded
+- district and month counts are non-zero
+- priority districts show combined Claims, capacity, and spatial access signals
+
+Validated output:
+
+- `mpha_fact_district_claims_context` returned 5 AI Lakehouse rows.
+- `mpha_claims_district_context_v` returned 5 OAC-ready rows.
+
+Screenshots captured:
+
+- `assets/aidp_context_extension_lab/screenshots/08_gold_extension_validation.png`
+- `assets/aidp_context_extension_lab/screenshots/09_context_view_validation.png`
+
+### OAC Extension
+
+Add `mpha_claims_district_context_v` to the existing Claims analytics workbook as a supporting dataset or a new context canvas.
+
+Use business-question visuals such as:
+
+- "Which denial hotspots also have high capacity pressure?"
+- "Which districts combine high denial rate and poor spatial access?"
+- "Where should MPHA prioritize claims review, provider outreach, and mobile clinic intervention together?"
+
+The original Executive Overview canvas remains unchanged. The Round 2 context is added as an extension.
+
+### DIY Facility Access Daily Dashboard Challenge
+
+After the guided OAC walkthrough, participants create their own dashboard for Facility Access Daily. The facilitator should not provide the complete dashboard build because this is the participant understanding check.
 
 ### DIY Build Target
 
@@ -623,9 +840,9 @@ Participants: the facilitator only needs to step in here if the shared Facility 
 - Decide which filters are needed for a useful operator workflow.
 - Explain why the fact keeps `district_key` directly in the fact row.
 
-### Generative Analytics Prompts
+### Discussion Prompts
 
-Use prompts like these in OAC narrative or assistant features:
+Use prompts like these during the participant challenge discussion. Claims-only questions can be asked in OAC Assistant after dataset indexing; document or playbook-dependent questions should be saved for the Claims and Policy Copilot lab.
 
 - "Summarize the top three districts with the highest public-health pressure this month."
 - "Explain which facilities are most likely to need staffing support based on occupancy and overtime."
@@ -656,11 +873,11 @@ Use `optional_labs/claims_denial_risk_scoring.md` and `data/gold/gold_claims_den
 Participants: you can skip this section if the facilitator has already prepared the ML folder, cluster, and source objects.
 
 1. Confirm that the claims-serving Gold outputs, spatial insight outputs, and provider-accreditation outputs are available.
-2. Confirm that the shared Spark cluster and the `04_ml` folder are ready for participant use.
+2. Confirm that the shared Spark cluster and the `04_ML` folder are ready for participant use.
 
 ### Participant Steps
 
-1. Create a Spark notebook in the `04_ml` folder and attach the workshop Spark cluster.
+1. Create or upload a Spark notebook in the `04_ML` folder and attach the workshop Spark cluster.
 2. Use `notebooks/aidp_ml_claims_denial_risk_pyspark.py` as the starter ML notebook.
 3. Load `gold_claims_summary`, `gold_capacity_event_latest`, `gold_provider_accreditation_summary`, and `gold_spatial_access_insights`.
 4. Build the training frame at Claims star schema grain:
@@ -676,56 +893,85 @@ Participants: you can skip this section if the facilitator has already prepared 
    - `likely_denial_bucket`
    - `review_priority`
 9. Publish the result as `gold_claims_denial_risk_scores.csv` or an equivalent serving table.
-10. Blend the output back into the instructor-led Claims star schema story in OAC.
+10. Register the selected run as `claim_denial_risk` in AIDP Models, version `v1`.
+11. Blend the output back into the instructor-led Claims star schema story in OAC.
 
 ### Expected Outcome
 
 You can explain how AI Data Platform notebooks can score denial risk from the curated Gold layer and show how review teams can prioritize follow-up using `denial_risk_score`, `likely_denial_bucket`, and `review_priority`.
 
-## Optional Lab 6 - Claims and Policy Copilot
+## Optional Lab 6A - Prepare the Claims Policy RAG Knowledge Base
 
 Use `optional_labs/claims_policy_copilot_agent.md`, `documents/MPHA_Winter_Respiratory_Response_Playbook.docx`, and the Claims star schema Gold objects.
+
+### Objectives
+
+- Prepare an AIDP knowledge base from the MPHA playbook document.
+- Expose the playbook document from Object Storage through the AIDP external volume.
+- Chunk and ingest the document into a searchable knowledge base for RAG grounding.
+
+### Admin Preparation
+
+Participants: you can skip this section if the facilitator has already prepared the Object Storage/external-volume source and the knowledge base.
+
+1. Confirm the playbook document is available in Object Storage and exposed through the AIDP external volume.
+2. Confirm `e2eindustrydemos.default.mphapolicy` exists or can be created in the AIDP standard catalog schema.
+
+### Participant Steps
+
+1. Open AIDP Workbench, go to **Master catalog**, and open `e2eindustrydemos.default`.
+2. Open **Volumes**, then `e2eindustrydemovol`, and confirm `RawData` contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
+3. Return to `e2eindustrydemos.default`, choose **Add to schema > Knowledge base**, and create `mphapolicy`.
+4. In `mphapolicy`, add the `RawData` folder as a data source.
+5. Keep the supported document filters enabled, including `DOCX`, and start ingestion.
+6. Confirm the latest ingestion job run shows `Succeeded`.
+7. Record the knowledge base path: `e2eindustrydemos.default.mphapolicy`.
+
+### Expected Outcome
+
+The MPHA playbook is available as a searchable AIDP knowledge base and can be selected by the RAG tool in Optional Lab 6B.
+
+## Optional Lab 6B - Claims and Policy Copilot
+
+Use `optional_labs/claims_policy_copilot_agent.md`, the Claims star schema Gold objects, and the knowledge base from Optional Lab 6A.
 
 ### Objectives
 
 - Build a copilot that can answer claims, policy, and operational follow-up questions in natural language.
 - Query curated Claims star schema data with a SQL tool.
 - Ground policy and operating answers with the vectorized playbook through a RAG tool.
+- Validate SQL-only, RAG-only, and combined supervisor-agent questions.
 
 ### Admin Preparation
 
-Participants: you can skip this section if the facilitator has already prepared the claims-serving scope, the policy document location, and the Generative AI Agents compartment access.
+Participants: you can skip this section if the facilitator has already prepared the claims-serving scope, the knowledge base, and the agent AI compute.
 
 1. Confirm the claims-serving Gold objects are queryable in Autonomous AI Lakehouse.
-2. Confirm the playbook document is available in Object Storage.
-3. Confirm the facilitator can access OCI Generative AI Agents in the correct compartment.
+2. Confirm `e2eindustrydemos.default.mphapolicy` exists from Optional Lab 6A.
+3. Confirm the facilitator can access AIDP Agent flows and the AI compute used for testing.
 
 ### Participant Steps
 
-1. Place the MPHA playbook in Object Storage and, if needed, prepare a PDF or text copy for ingestion.
-2. Create a knowledge base in OCI Generative AI Agents using the playbook source.
-3. Create the `MPHA_Claims_Policy_Copilot` agent shell.
-4. Add a SQL tool that is limited to the approved claims, disbursement, membership, accreditation, and optional scoring tables.
-5. Add a RAG tool connected to the playbook knowledge base.
-6. Create an endpoint for interactive testing.
-7. Test three question types:
-   - SQL-only
-   - policy-only
-   - combined claims-and-policy
-8. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
+1. Create or open the `MPHA_Claims_Policy_Copilot` agent shell.
+2. Add a SQL tool that is limited to the approved Claims star schema tables.
+3. Add a RAG tool connected to `e2eindustrydemos.default.mphapolicy`.
+4. Add a supervisor agent, a SQL executor, and a RAG executor.
+5. Deploy the agent flow to active AI compute.
+6. Test three question types: SQL-only, policy-only, and combined claims-and-policy.
+7. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
 
 ### Expected Outcome
 
-You can explain a practical agent pattern for this workshop: AI Data Platform prepares the Gold layer, OCI Generative AI Agents provides the executable SQL-plus-RAG copilot today, and the experience stays grounded in the curated claims data and the MPHA playbook.
+You can explain a practical agent pattern for this workshop: AI Data Platform prepares the Gold layer, stores playbook chunks in an AIDP knowledge base, and runs an executable SQL-plus-RAG copilot grounded in the curated Claims star schema and the MPHA playbook.
 
-## Optional Lab 7 - Governance and Operationalization
+## Facilitator Extension - Governance and Operationalization
 
 ### Admin Steps
 
 Participants: this is primarily a facilitator or platform-owner extension lab.
 
 1. Add data quality checks for missing dates, invalid rates, and impossible occupancy values.
-2. Schedule the Bronze, Silver, and Gold Spark jobs.
+2. Schedule the Bronze, Silver, and Gold Spark jobs through the AIDP workflow described in `workflows/aidp_incremental_medallion_workflow.md`.
 3. Create OAC alerts for high occupancy or high pressure index.
 4. Document the synthetic-data privacy boundary for demo and training usage.
 
