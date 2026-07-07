@@ -345,10 +345,10 @@
       <option value="lab3">Lab 3 - Claims star schema</option>
       <option value="lab4">Lab 4 - OAC dashboard</option>
       <option value="lab4b">Lab 4B - Context enrichment</option>
+      <option value="lab5">Optional Lab 5 - ML risk scoring</option>
+      <option value="lab6-rag-kb">Optional Lab 6A - RAG knowledge base</option>
+      <option value="lab6-agent">Optional Lab 6B - Claims policy copilot</option>
       <option value="challenge">DIY facility challenge</option>
-      <option value="lab5">Lab 5 - ML risk scoring</option>
-      <option value="lab6-rag-kb">Lab 6A - RAG knowledge base</option>
-      <option value="lab6-agent">Lab 6B - Claims policy copilot</option>
       <option value="assets">Workshop assets</option>
       <option value="closeout">Closeout</option>
     </select>
@@ -364,10 +364,10 @@
       <a class="section-link" href="#lab3">Lab 3 - Claims star schema</a>
       <a class="section-link" href="#lab4">Lab 4 - OAC dashboard</a>
       <a class="section-link" href="#lab4b">Lab 4B - Context enrichment</a>
+      <a class="section-link" href="#lab5">Optional Lab 5 - ML risk scoring</a>
+      <a class="section-link" href="#lab6-rag-kb">Optional Lab 6A - RAG knowledge base</a>
+      <a class="section-link" href="#lab6-agent">Optional Lab 6B - Claims policy copilot</a>
       <a class="section-link" href="#challenge">DIY facility challenge</a>
-      <a class="section-link" href="#lab5">Lab 5 - ML risk scoring</a>
-      <a class="section-link" href="#lab6-rag-kb">Lab 6A - RAG knowledge base</a>
-      <a class="section-link" href="#lab6-agent">Lab 6B - Claims policy copilot</a>
       <a class="section-link" href="#assets">Workshop assets</a>
       <a class="section-link" href="#closeout">Closeout</a>
     </aside>
@@ -599,7 +599,7 @@
           <tbody>
             <tr><td><code>01_Bronze_Public_Healthcare.ipynb</code></td><td><code>O1_Bronze</code></td><td>Loads CSV, JSON, spatial, and document inputs into Bronze Delta tables.</td></tr>
             <tr><td><code>02_Silver_Public_Healthcare.ipynb</code></td><td><code>O2_Silver</code></td><td>Cleanses, standardizes, derives, and conforms payer, provider, claims, events, spatial, and document context.</td></tr>
-            <tr><td><code>03_Gold_Public_Healthcare.ipynb</code></td><td><code>03_Gold</code></td><td>Reviews broader Gold business outputs; the direct Claims star schema load is the instructor-led serving path.</td></tr>
+            <tr><td><code>03_Gold_Public_Healthcare.ipynb</code></td><td><code>03_Gold</code></td><td>Reviews broader Gold business outputs; the direct Claims star schema load is the guided serving path.</td></tr>
           </tbody>
         </table>
         <figure class="shot">
@@ -614,9 +614,9 @@
           <strong>Lab 2 handoff</strong>
           Bronze and Silver are complete when the Silver notebook finishes without errors and the Claims-serving inputs are ready for the direct AI Lakehouse load notebook.
         </div>
-        <h3>Instructor checkpoint - create the AIDP Workflow for incremental medallion runs</h3>
+        <h3>Operational checkpoint - create the AIDP Workflow for incremental medallion runs</h3>
         <p>
-          After participants understand the notebook sequence, the instructor shows the validated AIDP Workflow version of the same flow. This is the operational view of the workshop pipeline: every task has a file, compute target, timeout, dependency, and a successful run trail.
+          After the notebook sequence is clear, review the validated AIDP Workflow version of the same flow. This is the operational view of the workshop pipeline: every task has a file, compute target, timeout, dependency, and a successful run trail.
         </p>
         <div class="workflow-steps" id="lab2-workflow-steps">
           <div class="workflow-step-detail">
@@ -625,7 +625,7 @@
             <p>In AIDP Workbench, open the shared workshop workspace, click <strong>Workflow</strong>, and create a workflow named <code>MPHA_INCREMENTAL_MEDALLION_FLOW</code>.</p>
             <figure class="shot">
               <img src="assets/aidp_workflow_lab/screenshots_fresh/01_workflow_jobs_list_fresh_wide_clean.png" alt="AIDP Workflow page showing the MPHA incremental medallion workflow job" />
-              <figcaption>Start from the Workflow page in the workshop workspace. The instructor can create the job or reopen the existing validated workflow.</figcaption>
+              <figcaption>Start from the Workflow page in the workshop workspace. Create the job or reopen the existing validated workflow.</figcaption>
             </figure>
             <figure class="shot">
               <img src="assets/aidp_workflow_lab/screenshots_fresh/00_workflow_create_job_dialog_fresh.png" alt="Create workflow job dialog filled for MPHA incremental medallion flow" />
@@ -709,7 +709,7 @@
         </figure>
         <table>
           <thead>
-            <tr><th>Validated point</th><th>What the instructor should say</th><th>Workshop asset</th></tr>
+            <tr><th>Validated point</th><th>Discussion point</th><th>Workshop asset</th></tr>
           </thead>
           <tbody>
             <tr><td>Timeout</td><td>Set a timeout on every task before adding the next dependent task. The validated screenshots use <code>30</code> minutes; increase it if your compute startup is slower.</td><td>See the workflow screenshot pack.</td></tr>
@@ -723,7 +723,7 @@
           <figcaption>Validated result: the <code>lakehouseload</code> task completed successfully and the target AI Lakehouse schema was visible to the notebook.</figcaption>
         </figure>
         <div class="callout warning">
-          <strong>Instructor note</strong>
+          <strong>Learning note</strong>
           The workflow lab should be shown only after participants run the notebooks manually. This keeps the learning curve gentle, then introduces operational concepts such as dependency control, timeouts, repair runs, idempotent loading, and validation gates.
         </div>
       </section>
@@ -834,9 +834,9 @@
             <p class="eyebrow">Lab 4B</p>
             <h2>Extend Claims analytics with JSON and spatial context</h2>
           </div>
-          <div class="duration">Instructor-led extension · 25 minutes</div>
+          <div class="duration">Guided extension · 25 minutes</div>
         </div>
-        <span class="role">Instructor-led extension</span>
+        <span class="role">Guided extension</span>
         <p>
           Round 1 answered the original Claims visibility requirement. In Round 2, MPHA leadership asks whether Claims denial hotspots are connected to facility capacity pressure and spatial access gaps. The extension pattern keeps the original Claims star schema stable, adds new JSON and spatial enrichments through AIDP, and publishes district-level context beside the existing Gold model in AI Lakehouse.
         </p>
@@ -849,7 +849,7 @@
           <div class="flow-step"><strong>New ask</strong><span>Explain Claims pressure with operations and access context.</span></div>
           <div class="flow-step"><strong>Bronze to Silver</strong><span>Combine JSON capacity events and GeoJSON service areas.</span></div>
           <div class="flow-step"><strong>Silver to Gold</strong><span>Aggregate district-month Claims context.</span></div>
-          <div class="flow-step"><strong>Extend</strong><span>Load context to AI Lakehouse and add OAC insights.</span></div>
+          <div class="flow-step"><strong>Extend</strong><span>Load context to AI Lakehouse, add it to the workbook, and index it for Assistant.</span></div>
         </div>
         <h3>Task 1 - Upload the Round 2 Silver extension notebook</h3>
         <ol>
@@ -891,12 +891,12 @@
           <li>Confirm <code>mpha_fact_district_claims_context</code> and <code>mpha_claims_district_context_v</code> are created in the same schema as the Claims star schema.</li>
         </ol>
         <div class="callout warning">
-          <strong>Admin or instructor step</strong>
+          <strong>Admin step</strong>
           This SQL adds only the extension table and view. It does not change <code>mpha_fact_claims_monthly</code> or any Claims dimension.
         </div>
         <div class="callout">
           <strong>Validated run note</strong>
-          In the instructor validation run, the fact table was created from AIDP against the connected <code>goldailh.e2eaidpuser</code> external catalog, then the Gold notebook inserted 5 district-month context rows. Database Actions remains the recommended delivery path for the SQL script.
+          In the validation run, the fact table was created from AIDP against the connected <code>goldailh.e2eaidpuser</code> external catalog, then the Gold notebook inserted 5 district-month context rows. Database Actions remains the recommended delivery path for the SQL script.
         </div>
         <h3>Task 3 - Upload and run the Gold plus AI Lakehouse extension notebook</h3>
         <ol>
@@ -930,8 +930,10 @@
         <h3>Task 4 - Validate and extend OAC</h3>
         <ol>
           <li>Run <code>sql/claims_context_extension_validation.sql</code>.</li>
-          <li>In OAC, add <code>mpha_claims_district_context_v</code> as an additional dataset or supporting table.</li>
-          <li>Add a small <strong>Context Enrichment</strong> canvas or dashboard section without changing the original Executive Overview visuals.</li>
+          <li>In OAC, open the existing MPHA Claims workbook and add <code>mpha_claims_district_context_v</code> to the workbook data model or as an additional dataset.</li>
+          <li>Join the context view at district and month grain where the workbook model allows it, or keep it as a separate dataset for Assistant questions.</li>
+          <li>Inspect the added context fields and enable indexing so OAC Assistant can use the new JSON capacity and spatial access signals.</li>
+          <li>Do not create a new canvas for this workshop step. The objective is to demonstrate that the existing workbook can be extended with new Lakehouse data and tested through natural-language questions.</li>
         </ol>
         <figure class="shot">
           <img src="assets/aidp_context_extension_lab/screenshots/08_gold_extension_validation.png" alt="AIDP validation query showing five AI Lakehouse context fact rows" />
@@ -952,40 +954,16 @@
           </div>
           <div class="task">
             <strong>Question 3</strong>
+            <p>Which districts have supply alerts or diversion events that may explain claims processing pressure?</p>
+          </div>
+          <div class="task">
+            <strong>Question 4</strong>
+            <p>Where are residents per facility highest, and how does that compare with denial rate?</p>
+          </div>
+          <div class="task">
+            <strong>Question 5</strong>
             <p>Where should MPHA prioritize claims review, provider outreach, and mobile clinic intervention together?</p>
           </div>
-        </div>
-      </section>
-
-      <section class="lab" id="challenge">
-        <div class="lab-head">
-          <div>
-            <p class="eyebrow">Participant Challenge</p>
-            <h2>Build the Facility Access Daily dashboard independently</h2>
-          </div>
-          <div class="duration">DIY extension · 30-45 minutes</div>
-        </div>
-        <span class="role">Participant challenge</span>
-        <p>
-          After the instructor-led Claims dashboard, participants apply the same pattern to the Facility Access Daily star schema. The facilitator should not provide the complete dashboard build.
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Design element</th>
-              <th>Participant expectation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Star schema</td><td>Use one fact table with conformed date, facility, district, and pressure-band dimensions.</td></tr>
-            <tr><td>KPIs</td><td>Use access, wait time, occupancy, staffing, and pressure metrics.</td></tr>
-            <tr><td>Diagnostic visuals</td><td>Use business-question titles and avoid raw column-name chart titles.</td></tr>
-            <tr><td>Presentation quality</td><td>Use equal spacing, round borders, light shadows, and a compact command-center layout.</td></tr>
-          </tbody>
-        </table>
-        <div class="callout expected">
-          <strong>Challenge outcome</strong>
-          Participants demonstrate that they can translate the Claims star schema dashboard pattern into a new public-healthcare operations use case.
         </div>
       </section>
 
@@ -993,18 +971,18 @@
       <section class="lab" id="lab5">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 5</p>
+            <p class="eyebrow">Optional Lab 5</p>
             <h2>Track, train, register, and score a Claims denial risk model</h2>
           </div>
-          <div class="duration">Optional instructor-led extension · 60 minutes</div>
+          <div class="duration">Optional extension · 60 minutes</div>
         </div>
         <span class="role optional">Optional extension</span>
         <p>
-          This lab turns the Claims star schema into a predictive review-prioritization use case. Participants upload and run an AIDP ML notebook, review the tracked run in AIDP Experiments, register the selected model in the catalog, and publish batch scores that can be reused by OAC and the Claims and Policy Copilot.
+          This optional lab turns the Claims star schema into a predictive review-prioritization use case. Participants upload and run an AIDP ML notebook, review the tracked run in AIDP Experiments, register the selected model in the catalog, and publish batch scores that can be added to AI Lakehouse or OAC as a follow-on analytics extension.
         </p>
         <div class="callout warning">
           <strong>Preview feature note</strong>
-          AIDP Experiments and Models are preview capabilities in the July 2026 Oracle documentation. Use this lab as an instructor-led extension and confirm compute compatibility before delivery. The flow below was validated in the workshop AIDP instance on July 7, 2026.
+          AIDP Experiments and Models are preview capabilities in the July 2026 Oracle documentation. Use this lab as an optional extension and confirm compute compatibility before delivery. The flow below was validated in the workshop AIDP instance on July 7, 2026.
         </div>
         <h3>Business use case</h3>
         <p>
@@ -1019,7 +997,7 @@
             <tr><td>Track training</td><td>Experiments with MLflow</td><td>Create <code>MPHA Claims Denial Risk Prediction</code> and log model parameters and metrics.</td></tr>
             <tr><td>Compare runs</td><td>Experiment run list and compare view</td><td>Compare AUC, high-risk count, average score, and feature set notes.</td></tr>
             <tr><td>Govern model</td><td>Models registry</td><td>Register the selected run as <code>claim_denial_risk</code>.</td></tr>
-            <tr><td>Operationalize</td><td>Batch scoring notebook or workflow</td><td>Score the latest month and publish <code>gold_claims_denial_risk_scores</code>.</td></tr>
+            <tr><td>Operationalize</td><td>Batch scoring notebook or workflow</td><td>Score the latest month and publish <code>gold_claims_denial_risk_scores</code> to Gold-stage storage; optionally load or add it to AI Lakehouse/OAC for consumption.</td></tr>
           </tbody>
         </table>
         <h3>Official AIDP references used</h3>
@@ -1051,7 +1029,7 @@
         </figure>
         <h3>Task 2 - Create or confirm the AIDP Experiment</h3>
         <ol>
-          <li><strong>Admin or instructor step: create the experiment if it does not already exist.</strong> Open <strong>Experiments</strong> from AIDP Workbench and click <strong>Create</strong>.</li>
+          <li><strong>Admin step: create the experiment if it does not already exist.</strong> Open <strong>Experiments</strong> from AIDP Workbench and click <strong>Create</strong>.</li>
           <li>Name the experiment <code>MPHA Claims Denial Risk Prediction</code>.</li>
           <li>Add the description <code>Tracks MPHA claims denial risk model training, validation metrics, and candidate model registration for the workshop ML lab.</code></li>
           <li>Optionally add tags such as <code>domain=public_healthcare</code>, <code>model_type=classification</code>, and <code>grain=district_program_claim_type_month</code>.</li>
@@ -1090,7 +1068,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <li><strong>Participant step: open the latest finished run.</strong> Click the newest <code>claims_denial_risk_v1_baseline</code> run.</li>
           <li>Confirm the run information shows status <code>FINISHED</code>, start time, end time, and duration.</li>
           <li>In the <strong>Models</strong> section, confirm the logged model artifact is <code>claims_denial_risk_pipeline</code>.</li>
-          <li>If the model has already been registered by the instructor, confirm the <strong>Registered models</strong> section shows <code>e2eindustrydemos.default.claim_denial_risk</code> with version <code>v1</code>.</li>
+          <li>If the model has already been registered in the shared environment, confirm the <strong>Registered models</strong> section shows <code>e2eindustrydemos.default.claim_denial_risk</code> with version <code>v1</code>.</li>
           <li>If this is a participant-run environment, continue to Task 5 to register the model.</li>
         </ol>
         <figure class="shot">
@@ -1110,7 +1088,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         </table>
         <h3>Task 5 - Register the selected model</h3>
         <ol>
-          <li><strong>Instructor-led step:</strong> From the run details page, click <strong>Register</strong>.</li>
+          <li><strong>Guided step:</strong> From the run details page, click <strong>Register</strong>.</li>
           <li>Enter or select the model name <code>claim_denial_risk</code>.</li>
           <li>Choose the model location <code>Master catalog - e2eindustrydemos - default</code>.</li>
           <li>Use the logged model artifact <code>claims_denial_risk_pipeline</code>.</li>
@@ -1145,10 +1123,10 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         <h3>Task 7 - Batch score and publish the risk output</h3>
         <ol>
           <li><strong>Participant step: run the scoring cells.</strong> The notebook scores the latest service month after training is complete.</li>
-          <li>Publish <code>gold_claims_denial_risk_scores</code> for downstream analytics.</li>
-          <li>Publish <code>gold_claims_denial_model_run_summary</code> so facilitators can show which model run produced the output.</li>
+          <li>Publish <code>gold_claims_denial_risk_scores</code> to Gold-stage storage for downstream analytics.</li>
+          <li>Publish <code>gold_claims_denial_model_run_summary</code> so users can trace which model run produced the output.</li>
           <li>Confirm each scored row keeps the Claims star schema grain: service month, district, coverage program, and claim type.</li>
-          <li>Use the scored output in OAC or the Claims and Policy Copilot as an optional extension.</li>
+          <li>Optional consumption path: load the scored output into AI Lakehouse or add it to the OAC workbook as an additional dataset, then index it for Assistant questions about denial risk.</li>
         </ol>
         <table>
           <thead>
@@ -1175,7 +1153,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         </table>
         <div class="callout expected">
           <strong>Lab 5 handoff</strong>
-          The lab is complete when an experiment run is visible, the selected model is registered or ready to register, and the scored Gold output is available for OAC and the copilot story.
+          The lab is complete when an experiment run is visible, the selected model is registered or ready to register, and the scored Gold-stage output is ready to be added to AI Lakehouse, OAC, or the copilot story.
         </div>
       </section>
 
@@ -1184,10 +1162,10 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
       <section class="lab" id="lab6-rag-kb">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 6A</p>
+            <p class="eyebrow">Optional Lab 6A</p>
             <h2>Prepare the MPHA RAG knowledge base in AIDP</h2>
           </div>
-          <div class="duration">Optional instructor-led extension · 35-45 minutes</div>
+          <div class="duration">Optional extension · 35-45 minutes</div>
         </div>
         <span class="role optional">Optional extension</span>
         <p>
@@ -1314,10 +1292,10 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
       <section class="lab" id="lab6-agent">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 6B</p>
+            <p class="eyebrow">Optional Lab 6B</p>
             <h2>Build the Claims and Policy Copilot agent flow in AIDP</h2>
           </div>
-          <div class="duration">Optional instructor-led extension · 60-75 minutes</div>
+          <div class="duration">Optional extension · 60-75 minutes</div>
         </div>
         <span class="role optional">Optional extension</span>
         <p>
@@ -1325,7 +1303,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         </p>
         <div class="callout warning">
           <strong>Admin and participant split</strong>
-          Admins prepare the AI compute, the AI Lakehouse external catalog, and the required access policies. Participants or the instructor use the <code>mphapolicy</code> knowledge base from Lab 6A and then build and test the agent flow.
+          Admins prepare the AI compute, the AI Lakehouse external catalog, and the required access policies. Participants use the <code>mphapolicy</code> knowledge base from Lab 6A and then build and test the agent flow.
         </div>
         <h3>Business scenario</h3>
         <p>
@@ -1508,6 +1486,38 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
         </div>
       </section>
 
+      <section class="lab" id="challenge">
+        <div class="lab-head">
+          <div>
+            <p class="eyebrow">Participant Challenge</p>
+            <h2>Build the Facility Access Daily dashboard independently</h2>
+          </div>
+          <div class="duration">DIY extension · 30-45 minutes</div>
+        </div>
+        <span class="role">Participant challenge</span>
+        <p>
+          After the guided Claims dashboard and optional extension labs, participants apply the same pattern to the Facility Access Daily star schema. This challenge checks whether participants can translate the Claims dashboard approach into a new public-healthcare operations use case.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Design element</th>
+              <th>Participant expectation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Star schema</td><td>Use one fact table with conformed date, facility, district, and pressure-band dimensions.</td></tr>
+            <tr><td>KPIs</td><td>Use access, wait time, occupancy, staffing, and pressure metrics.</td></tr>
+            <tr><td>Diagnostic visuals</td><td>Use business-question titles and avoid raw column-name chart titles.</td></tr>
+            <tr><td>Presentation quality</td><td>Use equal spacing, round borders, light shadows, and a compact command-center layout.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout expected">
+          <strong>Challenge outcome</strong>
+          Participants demonstrate that they can translate the Claims star schema dashboard pattern into a new public-healthcare operations dashboard.
+        </div>
+      </section>
+
       <section class="lab" id="assets">
         <div class="lab-head">
           <div>
@@ -1522,7 +1532,7 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
         <div class="task-grid">
           <div class="task">
             <strong>Core guides</strong>
-            <p>Markdown and PDF execution guides for instructors and participants.</p>
+            <p>Markdown and PDF execution guides for facilitators and participants.</p>
             <p>
               <a href="asset_viewer.html?file=workshop_guide.md&amp;label=Workshop%20guide&amp;kind=markdown">Open guide</a><br />
               <a href="asset_viewer.html?file=workshop_guide.pdf&amp;label=Workshop%20guide%20PDF&amp;kind=pdf">Open PDF guide</a>
@@ -1566,11 +1576,6 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
               <a href="lab4_oac_executive_overview_build_guide.html">Open Lab 4 OAC build guide</a>
             </p>
           </div>
-          <div class="task">
-            <strong>Future-domain template</strong>
-            <p>Reusable instructions for generating similar workshops for banking, finance, manufacturing, and other verticals.</p>
-            <p><a href="asset_viewer.html?file=codex_workshop_instruction_template.md&amp;label=Codex%20workshop%20instruction%20template&amp;kind=markdown">Open template</a></p>
-          </div>
         </div>
       </section>
 
@@ -1590,10 +1595,24 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <li>How the same pattern can extend to facility operations, ML scoring, and policy copilot use cases.</li>
         </ul>
         <div class="handoff">
-          <h3>Supporting assets</h3>
-          <p>
-            Use <a href="workshop_guide.pdf">workshop_guide.pdf</a>, <a href="lab2_medallion_mockup.html">lab2_medallion_mockup.html</a>, <a href="lab4_oac_executive_overview_build_guide.html">lab4_oac_executive_overview_build_guide.html</a>, and <a href="asset_viewer.html?file=optional_labs/claims_policy_copilot_agent.md&amp;label=Claims%20and%20Policy%20Copilot&amp;kind=markdown">claims_policy_copilot_agent.md</a> for the deeper step-by-step drill-downs behind this single flow.
-          </p>
+          <h3>Official References</h3>
+          <p>The workshop content was prepared using these Oracle product references and tutorials.</p>
+          <ul>
+            <li><a href="https://blogs.oracle.com/ai-data-platform/continuing-your-oracle-ai-data-platform-journey-quick-start-guide">Oracle AI Data Platform quick-start journey blog</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/experiments.html">Oracle AI Data Platform Experiments</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/models.html">Oracle AI Data Platform Models</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/knowledge-bases.html">Oracle AI Data Platform Knowledge Bases</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/customer-managed-mlflow-servers.html">Oracle AI Data Platform customer-managed MLflow servers</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-create-connection-to-oawd/index.html">Oracle Analytics tutorial: create a connection to Autonomous Data Warehouse / AI Lakehouse-style data</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-mutli-table-data-set/index.html">Oracle Analytics tutorial: create a multi-table dataset</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-create-canvases-vizs/index.html">Oracle Analytics tutorial: create canvases and visualizations</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-oa-assistant/index.html">Oracle Analytics tutorial: use Oracle Analytics Assistant</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-tile-spark-chart/">Oracle Analytics tutorial: KPI tile with spark chart</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/autonomous-provision.html">Autonomous Database documentation: provision Autonomous Database / AI Lakehouse foundation</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/connect-database-actions.html">Autonomous Database documentation: connect to Database Actions</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-create.html">Autonomous Database documentation: create users</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/adbsb/manage-users-privileges.html">Autonomous Database documentation: manage user privileges</a></li>
+          </ul>
         </div>
       </section>
     </main>
