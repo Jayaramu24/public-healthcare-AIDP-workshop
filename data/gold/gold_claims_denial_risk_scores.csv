@@ -1,0 +1,13 @@
+service_month,district_id,district_name,program_code,coverage_program,claim_type,claims_submitted,denied_claims,denial_rate,avg_processing_days,supply_alert_count,triage_total,public_health_pressure_index,accreditation_risk_band,denial_risk_score,likely_denial_bucket,review_priority,model_version,score_run_date
+2025-04-01,D02,East River,ECP,Essential Care Plan,Outpatient,74,10,0.1351,17.9,2,19,47.8,Medium,0.78,High,1,claims_denial_risk_v1,2025-07-01
+2025-04-01,D03,Central City,CCS,Chronic Care Support,Emergency,68,8,0.1176,18.6,1,22,45.9,Medium,0.72,High,1,claims_denial_risk_v1,2025-07-01
+2025-04-01,D04,South Lakes,MCH,Maternal and Child Health,Inpatient,39,7,0.1795,20.8,1,14,38.4,High,0.83,High,1,claims_denial_risk_v1,2025-07-01
+2025-04-01,D05,West Hills,SAP,Senior Access Plan,Emergency,28,4,0.1429,16.1,2,11,41.2,Medium,0.69,High,2,claims_denial_risk_v1,2025-07-01
+2025-05-01,D02,East River,MCH,Maternal and Child Health,Pharmacy,51,6,0.1176,19.4,3,18,49.6,High,0.81,High,1,claims_denial_risk_v1,2025-07-01
+2025-05-01,D03,Central City,ECP,Essential Care Plan,Emergency,83,9,0.1084,18.9,2,25,46.7,Medium,0.74,High,1,claims_denial_risk_v1,2025-07-01
+2025-05-01,D01,North Borough,WFP,Worker Family Plan,Pharmacy,44,5,0.1136,15.8,1,9,33.7,Low,0.58,Medium,2,claims_denial_risk_v1,2025-07-01
+2025-05-01,D04,South Lakes,SAP,Senior Access Plan,Diagnostic,33,4,0.1212,17.1,1,12,37.6,Medium,0.63,Medium,2,claims_denial_risk_v1,2025-07-01
+2025-06-01,D02,East River,ECP,Essential Care Plan,Emergency,79,11,0.1392,19.8,3,24,52.3,High,0.87,High,1,claims_denial_risk_v1,2025-07-01
+2025-06-01,D03,Central City,MCH,Maternal and Child Health,Preventive,57,7,0.1228,18.1,2,21,48.1,Medium,0.71,High,1,claims_denial_risk_v1,2025-07-01
+2025-06-01,D04,South Lakes,CCS,Chronic Care Support,Emergency,41,5,0.1220,17.6,2,16,40.5,High,0.76,High,1,claims_denial_risk_v1,2025-07-01
+2025-06-01,D05,West Hills,WFP,Worker Family Plan,Outpatient,36,4,0.1111,16.4,1,10,39.2,Medium,0.61,Medium,2,claims_denial_risk_v1,2025-07-01
