@@ -75,18 +75,18 @@ To keep execution responsibilities clear during the workshop:
 - build workbook content and complete guided or DIY exercises
 - test optional ML and agent labs when included
 
-## Lab 1 - Create a Healthcare Lakehouse with AI Data Platform
+## Lab 0 - Admin Setup Across the Workshop
 
 ### Objectives
 
-- Provision or identify the Oracle AI Data Platform environment for the workshop.
-- Create the workspace, Spark cluster, and catalogs needed for the healthcare flow.
-- Create or identify an object storage bucket for workshop data.
-- Upload the raw MPHA CSV files.
-- Create a Spark notebook in AI Data Platform.
-- Read and profile the raw files.
+- Provision or identify the OCI compartment, Object Storage bucket, AIDP instance, AI Lakehouse schema, Agent AI compute, and OAC instance.
+- Create the AIDP workspace, Spark cluster, standard catalog, external volume, and AI Lakehouse external catalog.
+- Upload the raw MPHA CSV, JSONL, GeoJSON, and playbook document assets.
+- Confirm the participant workspace folders, medallion storage folders, Claims star schema targets, and Agent AI compute are ready.
 
-### Files to upload
+Participants can skip Lab 0 and join after the facilitator confirms the shared environment is ready.
+
+### Files To Upload During Admin Setup
 
 Upload these five CSV files from `data/raw/`:
 
@@ -104,114 +104,164 @@ Upload these additional source files:
 
 ### Admin Steps
 
-Participants: you can skip this section and join once the facilitator confirms the shared environment is ready.
+Each admin step below is immediately followed by its checkpoint screenshot so the instruction and visual proof stay together.
 
-The setup sequence below is intentionally aligned to the six AIDP quick-start sections from Oracle, with healthcare-specific workshop inputs added where needed.
+1. Create or select the OCI compartment.
+   - Open `Identity & Security -> Compartments`.
+   - Create or select a compartment such as `MPHA_AIDP_WORKSHOP`.
+   - Use the same compartment for Object Storage, AIDP, Autonomous AI Lakehouse, OAC, Generative AI Agents, and policies.
 
-1. Section 1 - AIDP Provisioning
-   - Open `Analytics & AI`, then `AI Data Platform`.
-   - Click `Create AI Data Platform` if the shared workshop environment does not already exist.
-   - Enter a workshop-friendly instance name such as `mpha-aidp`.
-   - Enter a default workspace name such as `mpha-workshop-ws`.
-   - Choose `Standard` for simpler workshop setup, or `Advanced` if your tenancy requires finer policy control.
-   - Copy the generated IAM policy statements and apply them in the correct tenancy or compartment.
-   - Return to the provisioning page and click `Create`.
-   - Open the newly provisioned AI Data Platform instance after status becomes available.
-2. Section 2 - User Access Management
-   - Open `Roles`.
-   - Choose the required admin role for facilitators, such as the AI Data Platform admin or workspace-admin role.
-   - Open `Members` and add the facilitator accounts.
-   - Repeat for participant-facing roles that allow notebook use, workspace access, and catalog usage.
-   - Validate that a facilitator can see the workspace, catalogs, and compute choices.
-3. Section 3 - Workspace and Cluster Setup
-   - Open `Workspaces` and click `Create` if you are not using the default workspace.
-   - Use a name such as `mpha-core-workshop`.
-   - Set the default catalog to the shared standard catalog that will hold the healthcare landing volumes.
-   - Open `Compute` and click `Create`.
-   - Use a cluster name such as `mpha-spark-cluster`.
-   - Select the `Spark` runtime.
-   - If available, start with `Quickstart`.
-   - Size the driver and workers for workshop execution rather than production-scale tuning.
-   - Enable autoscaling if your team prefers elastic usage.
-4. Section 4 - Catalog Setup with OCI Object Storage
-   - Open the OCI Console navigation menu and go to `Storage -> Buckets`.
-   - Select the compartment where the workshop bucket should live.
-   - Click `Create Bucket`.
-   - Enter a bucket name such as `mpha-workshop-bucket`.
-   - Keep the default storage tier unless your tenancy requires a different choice.
-   - Click `Create`.
-   - Open the new bucket.
-   - Create the workshop folder structure so each AIDP volume can point to a clean path:
-     - `mpha/raw/`
-     - `mpha/raw_json/`
-     - `mpha/raw_spatial/`
-     - `mpha/documents/`
-     - `mpha/bronze/`
-     - `mpha/silver/`
-     - `mpha/gold_stage/`
-     - `mpha/gold_dimensional/`
-     - `mpha/vector/`
-   - If your Object Storage view does not show a dedicated folder-create action, upload a small placeholder file into each prefix or use the `Create folder` action if available in your tenancy UI.
-   - Confirm that the bucket and prefixes are visible before you move into catalog and volume creation.
+![OCI Compartments landing page](assets/livelabs_source_setup/comp-1.png)
+
+On the Create Compartment form, enter the workshop compartment name and create it before using any other service.
+
+![OCI create compartment form](assets/livelabs_source_setup/comp-3.png)
+
+2. Create or confirm the AIDP instance and standard policies.
+   - Open `Analytics & AI -> AI Data Platform`.
+   - Create or reuse the workshop AIDP instance.
+   - Apply the generated standard policies before testing notebooks, catalogs, volumes, and Object Storage access.
+
+![OCI AI Data Platform service page](assets/livelabs_source_setup/create-aidp.png)
+
+On the Create AI Data Platform form, provide the instance details in the workshop compartment.
+
+![OCI create AI Data Platform instance form](assets/livelabs_source_setup/create-aidp-2.png)
+
+After the AIDP instance exists, open the standard policies step and apply the generated policy statements.
+
+![AIDP standard policies screen](assets/livelabs_source_setup/aidp-standard-policies-1.png)
+
+3. Create the Object Storage bucket, folders, and raw landing area.
+   - Open `Storage -> Buckets`.
+   - Create a bucket such as `mpha-workshop-bucket`.
+   - Create the folder prefixes below.
+   - Upload the five CSV files under `mpha/raw/`, the JSONL file under `mpha/raw_json/`, the GeoJSON file under `mpha/raw_spatial/`, and the MPHA playbook document under `mpha/documents/`.
+
+![OCI Object Storage Buckets page](assets/livelabs_source_setup/os-buckets-1.png)
+
+On the bucket creation form, create the shared Object Storage bucket for the workshop.
+
+![OCI create bucket form](assets/livelabs_source_setup/os-buckets-3.png)
+
+Inside the bucket, create the folder prefixes required by the raw, medallion, document, and vector flows.
+
+![OCI create object storage folder path](assets/livelabs_source_setup/os-buckets-5.png)
+
+Return to the bucket object list and confirm the new folder prefixes are visible.
+
+![OCI Object Storage folder confirmation](assets/livelabs_source_setup/os-buckets-6.png)
+
+Folder contract:
+
+| Folder prefix | Used for |
+| --- | --- |
+| `mpha/raw/` | Five CSV source files |
+| `mpha/raw_json/` | Facility capacity event JSONL |
+| `mpha/raw_spatial/` | Healthcare service area GeoJSON |
+| `mpha/documents/` | MPHA playbook document |
+| `mpha/bronze/` | Bronze Delta outputs |
+| `mpha/silver/` | Silver conformed outputs |
+| `mpha/gold_stage/` | Intermediate Gold-stage files |
+| `mpha/gold_dimensional/` | Dimensional outputs and validation extracts |
+| `mpha/vector/` | Document chunk and embedding-ready outputs |
+
+4. Open AIDP Workbench and confirm the workspace.
+   - Open the AIDP Workbench after the instance becomes available.
+   - Create or confirm a workspace such as `mpha-core-workshop`.
+   - Create or confirm a Spark cluster such as `mpha-spark-cluster`.
+   - Verify participants can attach the cluster to notebooks.
+
+![AIDP Workbench home page](live_aidp_screens_lab4_style/home_lab4style.png)
+
+Open the shared AIDP workspace and confirm the participant notebook folders are present.
+
+![AIDP workspace root with workshop folders](live_aidp_screens_lab4_style/workspace_root_lab4style.png)
+
+5. Create the standard catalog, schema, and external volume.
    - Open `Master Catalog`.
-   - Create a standard catalog such as `MPHA_WORKSHOP_CAT`.
-   - Create a schema such as `mpha_landing`.
-   - In the `mpha_landing` schema, open the `Volume` tab and create external volumes for:
-     - `mpha/raw/`
-     - `mpha/raw_json/`
-     - `mpha/raw_spatial/`
-     - `mpha/documents/`
-     - `mpha/bronze/`
-     - `mpha/silver/`
-     - `mpha/gold_stage/`
-     - `mpha/gold_dimensional/`
-     - `mpha/vector/`
-   - For each volume, choose `External` and point it to the correct compartment, bucket, and folder.
-5. Section 5 - Catalog Setup with Oracle Autonomous AI Lakehouse
-   - In `Master Catalog`, click `Create Catalog`.
-   - Set `Catalog Type` to `External`.
-   - Choose the connection type for Autonomous AI Lakehouse.
-   - Use either wallet-based access or direct instance-based connectivity, depending on your environment.
-   - Test and save the catalog with a name such as `MPHA_AILH_CAT`.
-   - Open the matching Gold-serving schema in the external catalog and confirm the star schema tables will be visible there once loaded.
-6. Section 6 - Notebook Management
-   - Open the shared workspace folder structure.
-   - Create folders such as `01_bronze`, `02_silver`, `03_gold`, `04_ml`, `05_agent`, and `shared_assets`.
-   - Upload or create the starter notebooks:
-     - `aidp_bronze_pyspark.py`
-     - `aidp_silver_pyspark.py`
-     - `aidp_gold_pyspark.py`
-     - `aidp_claims_star_ai_lakehouse_pyspark.py`
-   - Open a notebook and attach the shared Spark cluster so the execution environment is ready for participants.
+   - Create or confirm the standard catalog and schema used for the workshop landing area.
+   - Create external volumes that point to the Object Storage bucket and folder prefixes.
 
-### Participant Steps
+![AIDP Master Catalog page](live_aidp_screens_lab4_style/master_catalog_lab4style.png)
 
-1. Sign in to the workshop workspace and confirm that you can see the shared folders, catalogs, and Spark cluster.
-2. Upload the raw datasets if the facilitator has not preloaded them.
-   - Create or verify the object storage folders:
-     - `mpha/raw/`
-     - `mpha/raw_json/`
-     - `mpha/raw_spatial/`
-     - `mpha/documents/`
-   - Upload the five CSV files, one JSONL file, one GeoJSON file, and one DOCX file.
-3. Open the Bronze notebook in the `01_bronze` folder and attach the shared Spark cluster.
-4. Use `notebooks/aidp_bronze_pyspark.py` as the starter notebook and set:
-   - `raw_base`
-   - `raw_json_base`
-   - `raw_spatial_base`
-   - `document_base`
-   - `bronze_base`
-5. Read each raw source and confirm the row counts match `manifest.json`.
+Open the standard catalog that backs the Object Storage landing zone.
+
+![AIDP standard catalog for workshop landing zone](live_aidp_screens_lab4_style/standard_catalog_lab4style.png)
+
+Open the schema Volumes view and confirm the external volume is available.
+
+![AIDP volume list for workshop schema](live_aidp_screens_lab4_style/volumes_lab4style.png)
+
+Open the external volume and confirm the workshop folder structure is visible through AIDP.
+
+![AIDP volume with workshop medallion folders](live_aidp_screens_lab4_style/volume_contents_lab4style.png)
+
+6. Create the AI Lakehouse catalog, user, and Claims target schema.
+   - Create the AIDP external catalog connection to Autonomous AI Lakehouse.
+   - Test connectivity and confirm the participant schema is visible.
+   - In Autonomous AI Lakehouse Database Actions, create the workshop user or schema, set quota, REST-enable the user if needed, and run the Claims star schema table creation SQL.
+
+![AIDP external AI Lakehouse catalog](live_aidp_screens_lab4_style/external_catalog_lab4style.png)
+
+Open the AI Lakehouse external schema and confirm the Claims star schema tables are listed.
+
+![Claims star schema tables visible in AI Lakehouse external catalog](live_aidp_screens_lab4_style/external_schema_tables_lab4style.png)
+
+7. Create the workspace notebook folders.
+   - In AIDP, create folders such as `O1_Bronze`, `O2_Silver`, `03_Gold`, `03a_GoldAILHLoad`, `04_ML`, `05_Agent`, and `Shared`.
+   - Participants upload the downloaded notebooks into these folders during the labs.
+
+![AIDP workspace root with workshop folders](live_aidp_screens_lab4_style/workspace_root_lab4style.png)
+
+8. Create the blank copilot shell and prepare AI compute.
+   - Open `Agent flows` in AIDP Workbench.
+   - Click `Create` and create a visual-builder shell named `MPHA_Claims_Policy_Copilot`.
+   - Leave AI Compute unselected in the shell creation dialog unless the compute already exists.
+   - After the blank shell opens, click `Compute` on the agent flow page.
+   - Select `Create a new AI Compute`.
+   - Provide a clearly named compute such as `AIComputeForAgents`.
+   - The validated configuration uses `1` OCPU and `16` GB memory.
+   - In the real admin setup, click `Create` and wait until the compute is active before Optional Lab 6B.
+   - This AI compute is separate from the Spark cluster used by the data engineering and ML notebooks.
+
+![AIDP create agent flow dialog filled for a blank Lab 0 copilot shell with no AI compute selected](assets/aidp_agent_lab/screenshots/10b_blank_agent_flow_shell_filled_no_compute.png)
+
+After creating the shell, confirm it opens empty with AI Compute set to None.
+
+![Blank AIDP copilot shell created with AI Compute set to None](assets/aidp_agent_lab/screenshots/10c_blank_agent_flow_shell_created_no_compute.png)
+
+Open the Compute menu from the blank shell so the facilitator can create or attach AI compute.
+
+![Blank AIDP agent shell Compute menu showing Attach to AI Compute and Create a new AI Compute](assets/aidp_agent_lab/screenshots/10d_blank_shell_compute_menu_create_attach.png)
+
+Review the AI compute values before clicking Create in the live admin setup.
+
+![Create AI compute dialog filled with AIComputeForAgents, one OCPU, and sixteen GB memory](assets/aidp_agent_lab/screenshots/10f_create_ai_compute_dialog_filled_not_submitted.png)
+
+9. Create or confirm Oracle Analytics Cloud.
+   - Provision Oracle Analytics Cloud or confirm the shared OAC instance is ready.
+   - Do not build the OAC dataset until after the Claims star schema has been loaded and validated in Lab 2.
+
+![Oracle Analytics Cloud home page](assets/oac_dashboard_lab/screenshots/01_oac_home.png)
+
+### Lab 0 Readiness Gate
+
+- AIDP instance, workspace, Spark compute, catalogs, and volume are available.
+- Raw data bundle has been uploaded or made available to participants.
+- AI Lakehouse target user and Claims star schema tables are created.
+- Blank copilot shell exists and `AIComputeForAgents` is active or being started before Optional Lab 6B.
+- OAC instance is available, while the dashboard dataset is created after the Claims load.
 
 ### Expected Outcome
 
-You have an AIDP environment that is ready for the workshop: workspace, cluster, catalogs, volumes, uploaded healthcare sources, and a connected Bronze notebook.
+The workshop environment is ready: shared OCI resources, AIDP workspace, Spark cluster, Agent AI compute, catalogs, volumes, uploaded healthcare sources, AI Lakehouse Claims target schema, and OAC access are available for participant labs.
 
-Reference blog for the Lab 1 setup pattern:
+Reference blog for the Lab 0 setup pattern:
 
 - [Continuing Your Oracle AI Data Platform Journey: Quick Start Guide](https://blogs.oracle.com/ai-data-platform/continuing-your-oracle-ai-data-platform-journey-quick-start-guide)
 
-## Lab 2 - Build Bronze and Silver Layers with AI Data Platform
+## Lab 1 - Build Bronze and Silver Layers with AI Data Platform
 
 ### Objectives
 
@@ -232,8 +282,9 @@ Participants: you can ignore this unless the facilitator asks you to use the leg
 
 1. Run `notebooks/aidp_bronze_pyspark.py` to write raw-preserving Bronze Delta tables.
 2. Run `notebooks/aidp_silver_pyspark.py` to type, validate, and conform the healthcare data into Silver Delta tables.
-3. For the guided Claims path, run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to build the Claims star schema dimensions and fact directly in the connected Autonomous AI Lakehouse external catalog.
-4. Use `notebooks/aidp_gold_pyspark.py` only when the facilitator wants the broader flat Gold-serving compatibility outputs staged to object storage.
+3. Confirm the Silver outputs are ready for the Claims star schema load.
+4. Continue to Lab 2 for the direct Claims star schema load into Autonomous AI Lakehouse.
+5. Use `notebooks/aidp_gold_pyspark.py` only when the facilitator wants the broader flat Gold-serving compatibility outputs staged to object storage.
 
 ### AIDP Workflow Pattern for Incremental Medallion Runs
 
@@ -347,9 +398,9 @@ Use the Bronze-to-Silver flow as the common modeling foundation before the works
 - `MPHA_Winter_Respiratory_Response_Playbook.docx -> silver_playbook_chunk`
   - Derive `document_id`, `chunk_id`, `page_number`, `section_title`, `embedding_model`, and `embedding_json`
 
-### Gold Layer in Autonomous AI Lakehouse
+### Gold Preview For The Next Lab
 
-Gold is the business serving layer. The recommended model is a dimensional star in Autonomous AI Lakehouse so OAC connects to shared, reusable dimensions and facts rather than notebook outputs or isolated flat files.
+Gold is the business serving layer that participants publish in Lab 2. The recommended model is a dimensional star in Autonomous AI Lakehouse so OAC connects to shared, reusable dimensions and facts rather than notebook outputs or isolated flat files.
 
 The package also includes flat Gold mart samples in `data/gold/` for quick validation, but the workshop execution path should use `data/gold_dimensional/` together with the split AI Lakehouse SQL scripts:
 
@@ -458,9 +509,9 @@ This is a star schema because the fact tables carry the foreign keys needed for 
 
 ### Expected Outcome
 
-You have Bronze and Silver Delta layers in AI Data Platform and a dimensional Gold serving layer in Autonomous AI Lakehouse, including spatial planning, real-time event, and document-chat serving objects.
+You have Bronze and Silver Delta layers in AI Data Platform. Participants are ready to publish the guided Claims star schema into Autonomous AI Lakehouse in Lab 2.
 
-## Lab 3 - Publish Claims star schema to Autonomous AI Lakehouse
+## Lab 2 - Publish Claims star schema to Autonomous AI Lakehouse
 
 ### Objectives
 
@@ -530,7 +581,7 @@ Participants: you can skip this section and join once the facilitator confirms t
 9. Confirm all five Claims star schema tables return non-zero row counts.
 10. Confirm the orphan-row check returns `0`.
 11. Confirm the joined preview query returns readable district, program, claim type, and claims measures.
-12. Continue to Lab 4 after the Claims star schema is validated.
+12. Continue to Lab 3 after the Claims star schema is validated.
 
 Quick validation pack:
 
@@ -583,9 +634,9 @@ Recommended joins:
 - `mpha_fact_claims_monthly.program_key -> mpha_dim_coverage_program.program_key`
 - `mpha_fact_claims_monthly.claim_type_key -> mpha_dim_claim_type.claim_type_key`
 
-The role-tagged Lab 3 exercise steps above are the execution sequence to follow for the Claims star schema publish and validation flow.
+The role-tagged Lab 2 exercise steps above are the execution sequence to follow for the Claims star schema publish and validation flow.
 
-### Lab 4 handoff
+### Lab 3 handoff
 
 After the Claims star schema validation succeeds, move to the OAC lab.
 
@@ -600,7 +651,7 @@ Important boundary:
 - OAC Assistant answers questions about the indexed claims dataset.
 - Questions that depend on the playbook document belong in the separate `Claims and Policy Copilot` optional lab.
 
-## Lab 4 - Analyze Claims star schema in Oracle Analytics Cloud
+## Lab 3 - Analyze Claims star schema in Oracle Analytics Cloud
 
 ### Objectives
 
@@ -616,7 +667,7 @@ Participants: you can skip this section if the facilitator has already prepared 
 1. Create the shared OAC connection if one does not already exist.
    - In OAC, go to `Create -> Connection -> Oracle Autonomous AI Lakehouse`.
    - Use `TLS` for wallet-free connectivity or `Mutual TLS` if your environment requires a wallet upload.
-   - Screenshot reference in the Lab 4 section of the main workshop page: OAC home, Create menu, connection type, and AI Lakehouse connection form.
+   - Screenshot reference in the Lab 3 section of the main workshop page: OAC home, Create menu, connection type, and AI Lakehouse connection form.
 2. Create the guided Claims star schema dataset.
    - In OAC, go to `Create -> Dataset`.
    - Select the Autonomous AI Lakehouse connection.
@@ -626,7 +677,7 @@ Participants: you can skip this section if the facilitator has already prepared 
    - Right-click the fact table and select `Preserve Grain`.
    - Use the data profiling panel to confirm value distributions, nulls, and sample rows.
    - Save the dataset as `MPHAClaimAnalysis`.
-   - Screenshot reference in the Lab 4 section of the main workshop page: dataset connection selection, expanded Claims schema checkpoint, MPHA self-service Join Diagram, data profiling view, and workbook data panel verification.
+   - Screenshot reference in the Lab 3 section of the main workshop page: dataset connection selection, expanded Claims schema checkpoint, MPHA self-service Join Diagram, data profiling view, and workbook data panel verification.
 3. Enable OAC Assistant at the dataset level if it is not already enabled.
    - Open the dataset in a workbook.
    - Right-click the dataset name in the data panel.
@@ -634,11 +685,11 @@ Participants: you can skip this section if the facilitator has already prepared 
    - Set `Index Dataset For` to `Assistants and Homepage Search`.
    - Review the indexed field scope.
    - Click `Save` if changes were made, then `Run Now`.
-   - Screenshot reference in the Lab 4 section of the main workshop page: dataset context menu, Search settings, Search scope, and Assistant panel.
+   - Screenshot reference in the Lab 3 section of the main workshop page: dataset context menu, Search settings, Search scope, and Assistant panel.
 
 ### Participant Steps
 
-Use the Lab 4 section of the main workshop page as the screenshot-led participant guide. It follows the live OAC flow from Lakehouse connection through dataset modeling, data profiling, Assistant indexing, and the final Executive Overview dashboard canvas.
+Use the Lab 3 section of the main workshop page as the screenshot-led participant guide. It follows the live OAC flow from Lakehouse connection through dataset modeling, data profiling, Assistant indexing, and the final Executive Overview dashboard canvas.
 
 1. Open the provided `MPHAClaimAnalysis` dataset and create a workbook.
 2. Rename the first canvas to `Executive Overview`.
@@ -694,7 +745,7 @@ Use prompts like these after dataset indexing completes:
 
 For the first Assistant prompt, expand `Additional Insights` before capturing the workshop checkpoint screenshot.
 
-## Lab 4B - Extend Claims Analytics with JSON and Spatial Context
+## Lab 4 - Extend Claims Analytics with JSON and Spatial Context
 
 ### Business Trigger
 
@@ -706,8 +757,8 @@ The extension pattern is intentional: do not rebuild the Claims star schema. Add
 
 - JSON raw data: `data/raw_json/facility_capacity_events.jsonl`
 - Spatial raw data: `data/raw_spatial/healthcare_service_areas.geojson`
-- Existing Bronze outputs from Lab 2
-- Existing Claims star schema from Lab 3
+- Existing Bronze outputs from Lab 1
+- Existing Claims star schema from Lab 2
 
 ### Bronze-to-Silver Extension
 
@@ -915,17 +966,19 @@ Participants: you can skip this section if the facilitator has already prepared 
 
 1. Confirm the claims-serving Gold objects are queryable in Autonomous AI Lakehouse.
 2. Confirm `e2eindustrydemos.default.mphapolicy` exists from Optional Lab 6A.
-3. Confirm the facilitator can access AIDP Agent flows and the AI compute used for testing.
+3. Confirm the blank `MPHA_Claims_Policy_Copilot` shell exists from Lab 0.
+4. Confirm `AIComputeForAgents` is active or attachable from the shell `Compute` menu before tool testing or Playground.
 
 ### Participant Steps
 
-1. Create or open the `MPHA_Claims_Policy_Copilot` agent shell.
+1. Open the prepared blank `MPHA_Claims_Policy_Copilot` agent shell.
 2. Add a SQL tool that is limited to the approved Claims star schema tables.
 3. Add a RAG tool connected to `e2eindustrydemos.default.mphapolicy`.
 4. Add a supervisor agent, a SQL executor, and a RAG executor.
-5. Deploy the agent flow to active AI compute.
-6. Test three question types: SQL-only, policy-only, and combined claims-and-policy.
-7. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
+5. Attach the Lab 0 AI compute from the agent flow `Compute` menu if it is not already attached.
+6. Deploy the agent flow to active AI compute.
+7. Test three question types: SQL-only, policy-only, and combined claims-and-policy.
+8. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
 
 ### Expected Outcome
 
@@ -1000,6 +1053,7 @@ These Oracle resources were used while preparing the workshop flow, lab sequence
 - Oracle AI Data Platform Experiments: https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/experiments.html
 - Oracle AI Data Platform Models: https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/models.html
 - Oracle AI Data Platform Knowledge Bases: https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/knowledge-bases.html
+- Oracle AI Data Platform AI Agents and Agent Flows: https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/ai-agent-flows.html
 - Oracle AI Data Platform customer-managed MLflow servers: https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/customer-managed-mlflow-servers.html
 - Oracle Analytics tutorial - connect to Oracle Autonomous Data Warehouse: https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-create-connection-to-oawd/index.html
 - Oracle Analytics tutorial - create a dataset from multiple tables: https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-mutli-table-data-set/index.html

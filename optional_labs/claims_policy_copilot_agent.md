@@ -1,231 +1,336 @@
-# Optional Lab 6 - Claims and Policy Copilot
+# Lab 6 - Claims and Policy Copilot in AIDP
 
 ## Goal
 
-Build a copilot that can answer claims, payment, membership, provider-accreditation, and policy questions by combining SQL over the Gold layer with grounded retrieval over the MPHA playbook.
+Build an Oracle AI Data Platform agent flow that can answer MPHA claims analytics and policy questions by combining:
 
-## Implementation note
+- SQL over the Claims star schema in Autonomous AI Lakehouse
+- RAG over the MPHA Winter Respiratory Response Playbook
+- Supervisor-agent routing that decides whether to call SQL, RAG, or both
 
-Oracle's March 31, 2026 AI Data Platform Workbench blog presents AI Agent Flow as planned for a future GA release. For a runnable workshop pattern today, use AI Data Platform to prepare the data and OCI Generative AI Agents to expose the executable SQL-plus-RAG copilot.
+## Business scenario
 
-The screenshots below use a blend of official Oracle references and workshop visuals:
+MPHA claims leaders want to ask:
 
-- Oracle AI Data Platform Workbench blog visuals for the AIDP preparation and orchestration flow
-- Oracle Cloud Infrastructure documentation pages as the reference visuals for the Generative AI Agents console steps
-- Representative OCI Generative AI playground-style visuals for the testing and exposed-chat experience in Steps 8 and 9
+- Which districts have the highest denial exposure?
+- Which coverage programs or claim types are driving the submitted-to-paid gap?
+- What does the MPHA playbook recommend when respiratory emergency visits and facility occupancy rise?
+- How should operations respond when high-denial districts also face facility pressure?
 
-## Business Scenario
+## Admin prerequisites
 
-MPHA wants claims leaders and policy teams to ask questions such as:
+Before participants build or test the agent, the facilitator confirms:
 
-- Which districts have the highest denial exposure this month?
-- Which programs have the biggest submitted-to-paid gap?
-- Which claim types are taking the longest to adjudicate?
-- What does the playbook recommend when denial rate and processing days rise together?
-- Which provider-accreditation risks should policy teams review first?
+1. The Claims star schema is loaded and validated in AI Lakehouse:
+   - `mpha_fact_claims_monthly`
+   - `mpha_dim_date`
+   - `mpha_dim_district`
+   - `mpha_dim_coverage_program`
+   - `mpha_dim_claim_type`
+2. AIDP can read the AI Lakehouse external catalog, for example `goldailh.e2eaidpuser`.
+3. The MPHA playbook is indexed in the AIDP knowledge base prepared in Part A, for example `e2eindustrydemos.default.mphapolicy`.
+4. The facilitator created a blank `MPHA_Claims_Policy_Copilot` shell in Lab 0.
+5. The Lab 0 AI compute `AIComputeForAgents` is active or available to attach from the shell **Compute** menu.
+6. The user has access to the AIDP workspace `E2EAIDPIndustryDemos`.
 
-## Required workshop assets
+## Part A - Prepare the MPHA playbook knowledge base
 
-- Claims star schema Gold objects in AI Lakehouse
-- `data/gold/gold_claims_denial_risk_scores.csv` or its equivalent table
-- `documents/MPHA_Winter_Respiratory_Response_Playbook.docx`
-- Optional text or PDF exports of the same policy content for easier knowledge-base ingestion
+Use this part when the facilitator has not already prepared the `mphapolicy` knowledge base.
 
-## Prerequisites
+### Step A1 - Open the standard catalog schema
 
-Before starting the copilot build, confirm:
+In AIDP Workbench, click **Master catalog**, open the standard catalog `e2eindustrydemos`, and open schema `default`.
 
-- the Claims star schema objects are already queryable in Autonomous AI Lakehouse
-- the playbook document is available in Object Storage
-- the facilitator can access OCI Generative AI Agents in the correct compartment
-- the SQL-serving scope for the workshop has already been agreed
-- the optional ML output is available if you want the copilot to answer risk-prioritization questions
+Confirm the schema includes **Volumes**, **Knowledge Bases**, and **Models**.
 
-## Step-by-step build process
+![AIDP schema types with Knowledge Bases](assets/aidp_rag_knowledge_lab/screenshots/03_schema_types_knowledge_bases_visible.png)
 
-### Step 1 - Prepare the SQL-serving layer
+Expected result: participants know where the knowledge base will be created.
 
-Create or validate a compact claims-serving set in AI Lakehouse:
+### Step A2 - Confirm the external volume and playbook file
 
-- `MPHA_FACT_CLAIMS_MONTHLY`
-- `MPHA_FACT_DISBURSEMENT_MONTHLY`
-- `MPHA_FACT_MEMBERSHIP_SNAPSHOT`
-- `MPHA_FACT_PROVIDER_ACCREDITATION`
-- `MPHA_GOLD_CLAIMS_DENIAL_RISK_SCORES`
+Open **Volumes** and confirm `e2eindustrydemovol` is listed as an **External** volume.
 
-Keep the SQL scope tight. This agent should answer payer and policy questions, not every possible healthcare question in the lakehouse.
+![External volume for MPHA document source](assets/aidp_rag_knowledge_lab/screenshots/04_external_volume_for_playbook_source.png)
 
-![AIDP catalogs reference](assets/oci_agent_lab/aidp_catalogs.png)
+Open `e2eindustrydemovol`, then open `RawData`. Confirm the folder contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
 
-Source: [Oracle AI Data Platform Workbench blog - AI Data Platform Workbench Catalogs](https://blogs.oracle.com/ai-data-platform/oracle-ai-data-platform-workbench-drive-ai-powered-workflows-and-insights-across-enterprise-and-oracle-fusion-cloud-erp-data)
+![MPHA playbook file in RawData](assets/aidp_rag_knowledge_lab/screenshots/06_rawdata_playbook_docx_visible.png)
 
-Execution checklist:
+Expected result: the playbook document is available through `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`.
 
-1. Validate that the claims, disbursement, membership, accreditation, and optional scoring tables are populated.
-2. Confirm the table and column names that the SQL tool will expose.
-3. Keep the SQL scope limited to the workshop-serving layer rather than exposing unrelated schemas.
+### Step A3 - Create the knowledge base shell
 
-### Step 2 - Prepare the knowledge source
+Return to `e2eindustrydemos.default`, click **Add to schema**, and choose **Knowledge base**.
 
-Stage the MPHA playbook in Object Storage for retrieval:
+![Add Knowledge base from schema](assets/aidp_rag_knowledge_lab/screenshots/12_add_to_schema_knowledge_base_menu.png)
 
-- keep the document in a dedicated bucket or prefix
-- use the single playbook as the authoritative policy source for the workshop
-- confirm that section titles and page references are preserved
+Create the knowledge base with these values:
 
-![AIDP notebooks folder reference](assets/oci_agent_lab/aidp_notebooks_folder.png)
+- Name: `mphapolicy`
+- Description: `MPHA playbook knowledge base for claims policy copilot`
+- Workspace for compute: `E2EAIDPIndustryDemos`
+- Cluster used for ingestion: the active workshop Spark cluster
+- Embedding model: use the model enabled for the workshop environment
+- Chunk size: default unless the facilitator specifies a different value
+- Chunk overlap: default unless the facilitator specifies a different value
 
-Source: [Oracle AI Data Platform Workbench blog - AI Data Platform Workbench Notebooks](https://blogs.oracle.com/ai-data-platform/oracle-ai-data-platform-workbench-drive-ai-powered-workflows-and-insights-across-enterprise-and-oracle-fusion-cloud-erp-data)
+![Create Knowledge Base dialog](assets/aidp_rag_knowledge_lab/screenshots/13_create_knowledge_base_dialog_advanced_settings.png)
 
-Execution checklist:
+Expected result: `e2eindustrydemos.default.mphapolicy` exists as a knowledge base.
 
-1. Place the playbook in a dedicated bucket or prefix.
-2. If needed, also create a PDF or text copy for easier ingestion.
-3. Confirm the document title, section names, and page structure are preserved so citations remain meaningful.
+### Step A4 - Add RawData as the data source
 
-### Step 3 - Create the knowledge base
+Open `mphapolicy`, go to the **Data Source** tab, and click **Add data source to knowledge base**.
 
-In OCI Generative AI Agents:
+In the tree selector, choose the RawData folder from the external volume:
 
-1. Create a knowledge base.
-2. Choose Object Storage as the data-store type.
-3. Select the bucket or prefix that contains the policy document.
-4. Start the ingestion job so the knowledge base becomes queryable.
+`/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`
 
-![Create knowledge base reference](assets/oci_agent_lab/oci_create_knowledge_base_reference.png)
+Keep **DOCX** selected. It is acceptable to keep PDF and TEXT selected if the folder may later include those supported file types. Keep **Start ingestion job on add** selected for the workshop.
 
-Source: [OCI Generative AI Agents documentation - Creating a Knowledge Base](https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/create-knowledge-base.htm)
+![Add data source dialog](assets/aidp_rag_knowledge_lab/screenshots/14_add_data_source_dialog_file_filters_ingestion.png)
 
-Execution checklist:
+Expected result: the `RawData` folder appears as a volume data source for `mphapolicy`.
 
-1. Name the knowledge base clearly, such as `MPHA_Playbook_KB`.
-2. Select the Object Storage location that contains the policy source.
-3. Start ingestion and wait for the job to complete before testing the agent.
-4. Validate that the knowledge base is queryable and ready to attach to a tool.
+### Step A5 - Validate parameters and run ingestion
 
-### Step 4 - Create the agent shell
+Open the `RawData` data source from the knowledge base.
 
-Create an agent with:
+Confirm:
 
-- a clear name such as `MPHA_Claims_Policy_Copilot`
-- a welcome message that sets the scope
-- routing instructions such as: `Use the SQL tool first for metrics. Use the RAG tool for policy guidance. Use both when the user asks what happened and what action is recommended.`
+- Path: `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`
+- File pattern includes `docx`
+- Workspace and cluster keys are populated
 
-![Create agent reference](assets/oci_agent_lab/oci_create_agent_reference.png)
+If ingestion did not start automatically, click **Ingest now**.
 
-Source: [OCI Generative AI Agents documentation - Creating an Agent](https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/create-agent.htm)
+![Knowledge base data source row](assets/aidp_rag_knowledge_lab/screenshots/08_mphapolicy_data_source_rawdata_volume.png)
 
-Execution checklist:
+Open the data source parameters panel and verify the ingestion controls before continuing.
 
-1. Create the agent shell first before adding tools.
-2. Set a short description that explains the copilot's scope to workshop participants.
-3. Add instructions that tell the agent when to prefer SQL, when to prefer RAG, and when to combine both.
+![Knowledge base data source parameters](assets/aidp_rag_knowledge_lab/screenshots/09_kb_data_source_parameters_ingest_now.png)
 
-### Step 5 - Add the SQL tool
+Expected result: the playbook source is ready to be chunked and embedded.
 
-Configure a SQL tool for the claims-serving layer:
+### Step A6 - Verify ingestion succeeded
 
-1. Import the schema inline or from Object Storage with table, column, and relationship definitions.
-2. Select `Oracle SQL` as the dialect.
-3. Add in-context examples for claims, payment, and denial questions.
-4. Attach a database connection if you want live execution.
-5. Enable SQL execution.
-6. Enable SQL self-correction if you want the agent to repair failed queries.
+Open the **Job runs** tab for the `RawData` source and confirm the latest run shows **Succeeded**.
 
-Suggested examples:
+![Knowledge base ingestion succeeded](assets/aidp_rag_knowledge_lab/screenshots/10_kb_ingestion_job_runs_succeeded.png)
 
-- Question: Which districts have the highest denial rate in June 2025?
-- Question: Which coverage programs have the largest submitted-to-paid gap?
-- Question: Which claim types are driving the highest pending volume?
+Open the knowledge-base **Details** tab if you need to confirm the workspace and cluster keys.
 
-![Create SQL tool reference](assets/oci_agent_lab/oci_create_sql_tool_reference.png)
+![Knowledge base details](assets/aidp_rag_knowledge_lab/screenshots/11_mphapolicy_knowledge_base_details.png)
 
-Source: [OCI Generative AI Agents documentation - Creating a SQL Tool](https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/sqltool-add.htm)
+Expected result: `e2eindustrydemos.default.mphapolicy` is ready for the RAG tool in Part B.
 
-Execution checklist:
+## Part B - Build and test the copilot agent
 
-1. Load the schema metadata for the approved claims-serving tables.
-2. Add two or three good in-context examples before enabling execution.
-3. Test a simple aggregation question first.
-4. Test a more complex question that compares multiple programs or districts.
+### Step 1 - Open Agent flows
 
-### Step 6 - Add the RAG tool
+In AIDP Workbench, open the shared workspace and click **Agent flows**.
 
-Create a RAG tool and attach the MPHA playbook knowledge base:
+![AIDP Agent flows landing page](assets/aidp_agent_lab/screenshots/00_agent_flows_landing_page.png)
 
-- set custom instructions to answer with concise policy guidance
-- ask the tool to cite the relevant section or page when possible
-- keep the tone operational rather than clinical
+Expected result: the participant can see the existing or newly created `MPHA_Claims_Policy_Copilot` flow.
 
-![Create RAG tool reference](assets/oci_agent_lab/oci_create_rag_tool_reference.png)
+### Step 2 - Open the prepared copilot shell
 
-Source: [OCI Generative AI Agents documentation - Creating a RAG Tool](https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/RAG-tool-create.htm)
+Open the prepared blank visual flow from Lab 0. If the facilitator did not run Lab 0, create a new visual flow with the same name.
 
-Execution checklist:
+Use:
 
-1. Attach the knowledge base created in Step 3.
-2. Add guidance telling the tool to cite the relevant section or page.
-3. Test a policy-only question before combining it with SQL-backed questions.
+- Flow name: `MPHA_Claims_Policy_Copilot`
+- Authoring mode: Visual
+- Starting pattern: empty shell with no supervisor, executor agents, SQL tool, or RAG tool
 
-### Step 7 - Create the endpoint
+![Blank AIDP Claims Policy Copilot shell](assets/aidp_agent_lab/screenshots/10c_blank_agent_flow_shell_created_no_compute.png)
 
-Create an endpoint for the agent so the team can test it interactively:
+Expected result: participants start from the blank shell and build the copilot logic themselves.
 
-- enable human in the loop if the workshop team wants a review step
-- keep moderation settings aligned with the demo environment
+### Step 3 - Configure the supervisor agent
 
-![Create endpoint reference](assets/oci_agent_lab/oci_create_endpoint_reference.png)
+Name the supervisor:
 
-Source: [OCI Generative AI Agents documentation - Creating an Endpoint](https://docs.oracle.com/en-us/iaas/Content/generative-ai-agents/create-endpoint.htm)
+`SUPERVISOR_AGENT_1`
 
-Execution checklist:
+Use this routing pattern:
 
-1. Create the endpoint only after the SQL and RAG tools are attached.
-2. Confirm the endpoint is reachable from the intended demo environment.
-3. Keep security and moderation settings aligned with the workshop setup.
+```text
+Available executor agents:
+- AGENT_1: structured MPHA claims analytics from the AI Lakehouse Claims star schema.
+- AGENT_2: document-grounded MPHA policy, playbook, accreditation, prior authorization, denial remediation, disbursement, membership, and facility-pressure guidance.
+- For structured claims questions, call AGENT_1.
+- For document or policy questions, call AGENT_2.
+- For combined data-plus-policy questions, call AGENT_1 first, then AGENT_2, then synthesize both results.
+- Do not call SQL_1 or RAG_1 directly from the supervisor.
+```
 
-### Step 8 - Test with combined questions
+![Supervisor agent instructions](assets/aidp_agent_lab/screenshots/02_supervisor_agent_instructions.png)
 
-Use prompts that require both data and policy grounding:
+Expected result: the supervisor routes claims metrics to the SQL executor, policy questions to the RAG executor, and combined questions to both.
 
-- `Which districts have the highest denial exposure in June 2025 and what action does the playbook recommend?`
-- `Which coverage programs have the biggest submitted-to-paid gap and what operating follow-up should claims leaders run?`
-- `Which provider-accreditation risks line up with high denial pressure?`
+### Step 4 - Configure the Claims SQL executor
 
-![Generative AI playground combined-question reference](assets/oci_agent_lab/oci_genai_playground_test_reference.png)
+Name the executor:
 
-Reference visual: workshop-created OCI Generative AI playground-style view aligned to the combined-question testing experience.
+`AGENT_1`
 
-Execution checklist:
+Purpose:
 
-1. Test one SQL-only question.
-2. Test one RAG-only policy question.
-3. Test one combined question that needs both claims metrics and playbook guidance.
-4. Verify that the answer uses the right tool path and stays within the workshop scope.
+`Claims SQL executor for denial-rate, payment, district, program, claim type and processing-day metrics.`
 
-### Step 9 - Expose the experience
+Mandatory behavior:
 
-Use the endpoint in a lightweight chat experience or as a sidecar assistant pattern during the workshop. Position it as a copilot for claims and policy teams, not a replacement for governed dashboards.
+```text
+- Always call SQL_1 before answering any structured claims analytics question.
+- Use SQL_1 for questions about claims submitted, denied claims, denial rate, submitted amount, paid amount, processing days, district hotspots, coverage program performance, claim type patterns, or monthly trends.
+- Use only rows returned by SQL_1.
+- If SQL_1 fails or returns no rows, say the SQL tool failed or returned no rows.
+```
 
-![Generative AI playground exposed experience reference](assets/oci_agent_lab/oci_genai_playground_experience_reference.png)
+![SQL executor instructions](assets/aidp_agent_lab/screenshots/03_sql_agent_instructions.png)
 
-Reference visual: workshop-created OCI Generative AI playground-style view aligned to the exposed copilot chat experience.
+Expected result: `AGENT_1` is connected only to `SQL_1`.
 
-## Facilitator run sequence
+### Step 5 - Configure the Claims star schema SQL tool
 
-Use this exact order during the workshop:
+Name the SQL tool:
 
-1. Show the claims-serving tables that power the SQL tool.
-2. Show the playbook document that powers the knowledge base.
-3. Show the knowledge base creation result.
-4. Show the agent shell and tool attachments.
-5. Run one SQL-backed question.
-6. Run one playbook-backed policy question.
-7. Run one combined claims-and-policy question.
-8. Close by explaining how this differs from OAC Assistant:
-   - OAC Assistant works on the indexed analytics dataset
-   - the copilot combines governed SQL plus playbook retrieval for broader operational guidance
+`SQL_1`
 
-## Expected outcome
+Purpose:
 
-You can show a practical agent pattern for this workshop: AI Data Platform creates the trusted Gold layer, OCI Generative AI Agents supplies the executable copilot today, and the answer path stays grounded in both curated claims data and the MPHA playbook.
+Retrieve MPHA claims denial hotspots from the AI Lakehouse Claims star schema.
+
+Use this query shape:
+
+```sql
+SELECT
+  d.full_date AS service_month,
+  di.district_name,
+  p.coverage_program,
+  c.claim_type,
+  SUM(f.claims_submitted) AS claims_submitted,
+  SUM(f.denied_claims) AS denied_claims,
+  ROUND((SUM(f.denied_claims) * 100.0) /
+        CASE WHEN SUM(f.claims_submitted) = 0 THEN NULL ELSE SUM(f.claims_submitted) END, 2) AS denial_rate_pct,
+  ROUND(SUM(f.total_submitted_amount), 2) AS total_submitted_amount,
+  ROUND(SUM(f.total_paid_amount), 2) AS total_paid_amount,
+  ROUND(AVG(f.avg_processing_days), 1) AS avg_processing_days
+FROM mpha_fact_claims_monthly f
+JOIN mpha_dim_date d ON f.service_month_date_key = d.date_key
+JOIN mpha_dim_district di ON f.district_key = di.district_key
+JOIN mpha_dim_coverage_program p ON f.program_key = p.program_key
+JOIN mpha_dim_claim_type c ON f.claim_type_key = c.claim_type_key
+GROUP BY d.full_date, di.district_name, p.coverage_program, c.claim_type
+ORDER BY denial_rate_pct DESC, denied_claims DESC
+FETCH FIRST :TOP_N ROWS ONLY
+```
+
+![Claims star schema SQL tool](assets/aidp_agent_lab/screenshots/04_sql_tool_claims_star_query.png)
+
+Expected result: the tool returns service month, district, coverage program, claim type, denied claims, denial rate, submitted amount, paid amount, and average processing days.
+
+### Step 6 - Configure the Policy RAG executor
+
+Name the executor:
+
+`AGENT_2`
+
+Purpose:
+
+Answer MPHA policy, playbook, accreditation, prior authorization, denial remediation, disbursement, membership, and facility-pressure questions.
+
+Mandatory behavior:
+
+```text
+- Always call RAG_1 before answering.
+- Use only evidence returned by RAG_1.
+- If RAG_1 returns no relevant evidence, say the policy source does not contain enough evidence to answer this.
+- Include source references when available.
+```
+
+![RAG executor instructions](assets/aidp_agent_lab/screenshots/05_rag_agent_instructions.png)
+
+Expected result: `AGENT_2` is connected only to `RAG_1`.
+
+### Step 7 - Configure the MPHA playbook RAG tool
+
+Name the RAG tool:
+
+`RAG_1`
+
+Knowledge base:
+
+`e2eindustrydemos.default.mphapolicy`
+
+Purpose:
+
+Retrieve MPHA playbook chunks for operational guidance, escalation thresholds, denial remediation, accreditation, membership operations, disbursement controls, and facility pressure.
+
+![MPHA playbook RAG tool](assets/aidp_agent_lab/screenshots/06_rag_tool_playbook_knowledge_base.png)
+
+Expected result: the tool returns ranked chunks with source paths and chunk references.
+
+### Step 8 - Deploy the flow
+
+1. Confirm the canvas wiring is complete.
+2. On the agent flow page, click **Compute** and attach the Lab 0 compute `AIComputeForAgents` if it is not already attached.
+3. Wait until the active AI compute badge appears. Playground and tool tests depend on this attached compute.
+4. Click **Deploy**.
+5. In the deployment dialog, select the AI compute that will host the deployed endpoint.
+6. Deploy the flow and wait until the action button changes to **Undeploy**.
+
+![Agent flow Compute menu](assets/aidp_agent_lab/screenshots/10_agent_compute_menu_create_attach.png)
+
+Expected result: the Compute menu lets participants attach the compute prepared in Lab 0. Creating compute here is a fallback only if the facilitator skipped that admin step.
+
+![Deployed AI compute state](assets/aidp_agent_lab/screenshots/07_deployed_ai_compute_active.png)
+
+Expected result: the page shows `AIComputeForAgents (ACTIVE)` and the action button changes to `Undeploy`.
+
+### Step 9 - Open Playground
+
+1. Switch from **Development** to **Playground**.
+2. Select `SUPERVISOR_AGENT_1`.
+3. Create a clean test session.
+4. Run the tests through the supervisor, not directly through the executor agents.
+
+![Supervisor playground entry](assets/aidp_agent_lab/screenshots/08_supervisor_playground_entry.png)
+
+Expected result: participants can test SQL-only, RAG-only, and combined prompts.
+
+### Step 10 - Run the validation prompts
+
+Run these three prompts in order.
+
+| Test | Prompt | Expected path |
+| --- | --- | --- |
+| SQL-only | Identify the top 5 MPHA claims denial hotspots with district, coverage program, claim type, denied claims, denial rate, submitted amount, paid amount, and average processing days. | `SUPERVISOR_AGENT_1 -> AGENT_1 -> SQL_1` |
+| RAG-only | What does the MPHA playbook recommend for rising respiratory emergency visits and high facility occupancy pressure? | `SUPERVISOR_AGENT_1 -> AGENT_2 -> RAG_1` |
+| Combined | Use both agents. First identify the top 3 MPHA claims denial hotspots. Then retrieve general MPHA playbook actions for rising respiratory emergency visits and high facility occupancy pressure. Synthesize how operations should prioritize those high-denial districts if the same pressure conditions occur. | SQL first, RAG second, then supervisor synthesis |
+
+![Combined supervisor response](assets/aidp_agent_lab/screenshots/09_supervisor_combined_test_response.png)
+
+## Expected combined result
+
+The validated workshop run returned:
+
+| Evidence | Example result |
+| --- | --- |
+| Claims hotspot 1 | East River, Maternal and Child Health, Pharmacy: 3 denied claims, 100% denial rate, $368.62 submitted, $0 paid, 21.7 average processing days. |
+| Claims hotspot 2 | East River, Chronic Care Support, Emergency: 2 denied claims, 100% denial rate, $2,044.29 submitted, $0 paid, 15.5 average processing days. |
+| Claims hotspot 3 | Central City, Chronic Care Support, Diagnostic: 2 denied claims, 100% denial rate, $868.39 submitted, $0 paid, 22.5 average processing days. |
+| Playbook evidence | Discharge acceleration, transfer review, flex clinical staffing, routing non-urgent demand to same-day clinics, mobile sessions, extended respiratory assessment hours, and weekly executive review. |
+| Recommendation | Prioritize East River and Central City during respiratory surge or high occupancy pressure because they combine claims denial exposure with operational access risk. |
+
+## Completion criteria
+
+The lab is complete when:
+
+1. SQL-only questions return claims hotspot data.
+2. RAG-only questions return MPHA playbook evidence with sources.
+3. Combined questions call both executor agents and return a synthesized action plan.
+4. The supervisor does not bypass `AGENT_1` or `AGENT_2`.

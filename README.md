@@ -21,14 +21,15 @@ The end-to-end flow moves from raw operational data into a medallion architectur
 ## Quick Start
 
 1. Open the shareable workshop landing page: [index.html](index.html)
-2. Use the formatted workshop guide for delivery: [workshop_guide.pdf](workshop_guide.pdf)
-3. Review the detailed hands-on instructions: [workshop_guide.md](workshop_guide.md)
-4. Run the notebooks in this order:
+2. Use the single end-to-end runbook for facilitation: [workshop_single_flow.html](workshop_single_flow.html)
+3. Use the formatted workshop guide for delivery: [workshop_guide.pdf](workshop_guide.pdf)
+4. Review the detailed hands-on instructions: [workshop_guide.md](workshop_guide.md)
+5. Run the notebooks in this order:
 - [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)
 - [notebooks/aidp_silver_pyspark.py](notebooks/aidp_silver_pyspark.py)
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
-5. Use the Gold schema SQL in AI Lakehouse:
+6. Use the Gold schema SQL in AI Lakehouse:
    - [sql/create_ai_lakehouse_claims_star_schema.sql](sql/create_ai_lakehouse_claims_star_schema.sql)
    - [sql/create_ai_lakehouse_facilities_star_schema.sql](sql/create_ai_lakehouse_facilities_star_schema.sql)
    - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
@@ -135,6 +136,8 @@ The OAC wireframes and workshop narrative now focus on:
 Useful references:
 
 - [dashboard_spec.md](dashboard_spec.md)
+- [OAC Executive Overview build guide](lab4_oac_executive_overview_build_guide.html)
+- [assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png](assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png)
 - [sql/analytics_queries.sql](sql/analytics_queries.sql)
 - [sql/spatial_insights.sql](sql/spatial_insights.sql)
 - [sql/vector_chat_usecase.sql](sql/vector_chat_usecase.sql)
@@ -150,7 +153,10 @@ Use the Spark assets as separate notebooks in Oracle AI Data Platform:
   Cleanses, joins, and refines Bronze data into conformed Silver tables.
 
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)  
+  Produces optional broader Gold-stage compatibility outputs and business-serving views.
+
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)  
+  Loads the instructor-led Claims star schema directly into the connected Autonomous AI Lakehouse catalog.
 
 Recommended notebook path for the instructor-led Claims workshop:
 
@@ -158,7 +164,8 @@ Recommended notebook path for the instructor-led Claims workshop:
 - Run `notebooks/aidp_silver_pyspark.py`
 - Run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to write directly into the connected Autonomous AI Lakehouse catalog
 - Use `notebooks/aidp_gold_pyspark.py` only as the optional staged-file path
-  Produces Gold-ready dimensional outputs and business-serving views.
+
+Use [workflows/aidp_incremental_medallion_workflow.md](workflows/aidp_incremental_medallion_workflow.md) to create the validated AIDP Workflow that orchestrates Bronze, Silver, Gold staging, and AI Lakehouse load tasks. Set a 60-minute timeout on each task. The AI Lakehouse load notebook uses a key-based left-anti join so repeated workflow runs insert only new Claims star schema rows.
 
 - [notebooks/aidp_ml_claims_denial_risk_pyspark.py](notebooks/aidp_ml_claims_denial_risk_pyspark.py)  
   Optional ML notebook that trains and publishes claims denial risk scores from curated Gold inputs.
@@ -169,10 +176,12 @@ Recommended notebook path for the instructor-led Claims workshop:
 ## Repository Map
 
 - [index.html](index.html) - shareable workshop landing page
+- [workshop_single_flow.html](workshop_single_flow.html) - combined end-to-end lab flow for facilitation
 - [workshop_guide.md](workshop_guide.md) - detailed facilitator guide
 - [workshop_guide.pdf](workshop_guide.pdf) - downloadable formatted guide
 - [data_dictionary.md](data_dictionary.md) - business definitions and column details
 - [manifest.json](manifest.json) - generated artifact manifest
+- [workflows/](workflows/) - AIDP workflow runbook and reference task graph
 - [optional_labs/](optional_labs/) - machine learning and agent extension labs
 - [github_migration.md](github_migration.md) - repository handoff instructions
 

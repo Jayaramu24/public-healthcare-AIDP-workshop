@@ -60,10 +60,17 @@ def validate_target_tables(required_tables):
         )
 
 
-def write_catalog_table(frame, name, columns):
+def write_catalog_table(frame, name, columns, key_columns):
+    table_name = target_table(name)
     ordered = frame.select(*columns)
-    ordered.write.mode(write_mode).insertInto(target_table(name))
-    print(f"Wrote {target_table(name)}")
+    existing_keys = spark.table(table_name).select(*key_columns).dropDuplicates()
+    new_rows = ordered.join(existing_keys, key_columns, "left_anti")
+    new_row_count = new_rows.count()
+    if new_row_count == 0:
+        print(f"No new rows to write for {table_name}")
+        return
+    new_rows.write.mode(write_mode).insertInto(table_name)
+    print(f"Wrote {new_row_count} new rows to {table_name}")
 
 
 silver_district = read_delta("silver_district")
@@ -80,7 +87,6 @@ validate_target_tables(
         "fact_claims_monthly",
     ]
 )
-
 
 claims_with_service_month = silver_claims_membership_disbursement.withColumn(
     "service_month",
@@ -269,6 +275,7 @@ write_catalog_table(
         "day_of_week",
         "is_week_start",
     ],
+    ["date_key"],
 )
 
 write_catalog_table(
@@ -284,6 +291,7 @@ write_catalog_table(
         "chronic_condition_pct",
         "median_income_usd",
     ],
+    ["district_key"],
 )
 
 write_catalog_table(
@@ -296,6 +304,7 @@ write_catalog_table(
         "program_type",
         "funding_source",
     ],
+    ["program_key"],
 )
 
 write_catalog_table(
@@ -307,6 +316,7 @@ write_catalog_table(
         "service_category",
         "diagnosis_group",
     ],
+    ["claim_type_key"],
 )
 
 write_catalog_table(
@@ -327,6 +337,7 @@ write_catalog_table(
         "avg_processing_days",
         "denial_rate",
     ],
+    ["service_month_date_key", "district_key", "program_key", "claim_type_key"],
 )
 
 

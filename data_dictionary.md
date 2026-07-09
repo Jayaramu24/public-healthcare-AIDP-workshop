@@ -202,7 +202,6 @@ The recommended workshop serving model is the dimensional Gold schema in `data/g
 | `data/gold_dimensional/fact_quality_event_summary.csv` | Facility-quality event | `facility_key`, `district_key`, `quality_event_key` |
 | `data/gold_dimensional/fact_spatial_access_insight.csv` | District | `district_key`, `pressure_band_key` |
 | `data/gold_dimensional/fact_capacity_event.csv` | Facility-event | `event_date_key`, `facility_key`, `district_key`, `pressure_band_key` |
-| `data/gold_dimensional/fact_stream_wait_time_minute.csv` | Facility-minute | `event_date_key`, `facility_key`, `district_key`, `pressure_band_key` |
 | `data/gold_dimensional/bridge_chat_topic_chunk.csv` | Chat question to document chunk | `document_chunk_key` |
 | `data/gold_dimensional/fact_claims_monthly.csv` | District-month-program-claim type | `service_month_date_key`, `district_key`, `program_key`, `claim_type_key` |
 | `data/gold_dimensional/fact_disbursement_monthly.csv` | District-month-program-payee type | `disbursement_month_date_key`, `district_key`, `program_key` |
@@ -320,21 +319,27 @@ Key columns:
 - `embedding_model`
 - `embedding_json`
 
-### `data/gold/gold_stream_wait_time_minute.csv`
+### `data/gold/gold_claims_denial_risk_scores.csv`
 
-Grain: one row per stream event minute sample.
+Grain: one row per service month, district, coverage program, and claim type score slice.
 
-Business purpose: optional Kafka/AIDP streaming lab validation and OAC Real-Time Operations preview.
+Business purpose: optional machine learning scoring output that prioritizes likely denial hotspots for claims review teams.
 
 Key columns:
 
-- `event_minute`
-- `facility_id`, `district_id`
-- `avg_wait_minutes`, `max_wait_minutes`
-- `avg_occupancy_rate`
-- `max_queue_depth`
-- `event_count`
-- `pressure_band`
+- `service_month`
+- `district_id`, `district_name`
+- `program_code`, `coverage_program`
+- `claim_type`
+- `claims_submitted`, `denied_claims`, `denial_rate`
+- `avg_processing_days`
+- `supply_alert_count`, `triage_total`
+- `public_health_pressure_index`
+- `accreditation_risk_band`
+- `denial_risk_score`
+- `likely_denial_bucket`
+- `review_priority`
+- `model_version`, `score_run_date`
 
 ### `data/gold/gold_claims_summary.csv`
 
@@ -360,16 +365,6 @@ Grain: one row per facility/provider accreditation snapshot.
 
 Business purpose: accreditation status, level, score, corrective actions, days to expiry, and accreditation risk band.
 
-## Streaming Sample Files
+## Optional AI extension note
 
-### `data/streaming/wait_time_events.jsonl`
-
-Grain: one Kafka-compatible wait-time snapshot event.
-
-Business purpose: optional stream analytics lab using AIDP Structured Streaming.
-
-Key fields:
-
-- `event_id`, `event_time`, `kafka_key`, `topic`
-- `facility_id`, `district_id`
-- `wait_minutes`, `occupancy_rate`, `queue_depth`, `event_type`
+The current workshop version uses optional ML scoring and agent labs as the extension path. Earlier real-time and streaming artifacts are not used in the execution flow for this version.

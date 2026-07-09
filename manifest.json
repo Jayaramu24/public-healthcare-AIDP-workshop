@@ -10,8 +10,48 @@
   "files": [
     {
       "path": "workshop_guide.pdf",
-      "rows": 12,
+      "rows": 24,
       "grain": "PDF page"
+    },
+    {
+      "path": "workshop_single_flow.html",
+      "rows": 8,
+      "grain": "combined end-to-end lab flow"
+    },
+    {
+      "path": "workflows/aidp_incremental_medallion_workflow.md",
+      "rows": 6,
+      "grain": "AIDP workflow runbook"
+    },
+    {
+      "path": "workflows/aidp_incremental_medallion_workflow.json",
+      "rows": 6,
+      "grain": "AIDP workflow reference task graph"
+    },
+    {
+      "path": "assets/aidp_workflow_lab/screenshots",
+      "rows": 63,
+      "grain": "AIDP Workflow Lab screenshot sequence"
+    },
+    {
+      "path": "assets/aidp_rag_knowledge_lab/screenshots",
+      "rows": 14,
+      "grain": "AIDP RAG knowledge-base screenshot sequence"
+    },
+    {
+      "path": "lab4_oac_executive_overview_build_guide.html",
+      "rows": 6,
+      "grain": "OAC lab task"
+    },
+    {
+      "path": "assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png",
+      "rows": 1,
+      "grain": "OAC Executive Overview with Assistant responses screenshot"
+    },
+    {
+      "path": "assets/oac_dashboard_lab/screenshots",
+      "rows": 40,
+      "grain": "OAC Lab 3 screenshot sequence"
     },
     {
       "path": "data/raw/district_health_profile.csv",
@@ -114,9 +154,9 @@
       "grain": "document chunk serving context"
     },
     {
-      "path": "data/gold/gold_stream_wait_time_minute.csv",
-      "rows": 120,
-      "grain": "streaming wait-time minute"
+      "path": "data/gold/gold_claims_denial_risk_scores.csv",
+      "rows": 12,
+      "grain": "district-month-program-claim type denial risk score"
     },
     {
       "path": "data/gold/gold_claims_summary.csv",
@@ -224,11 +264,6 @@
       "grain": "capacity event fact"
     },
     {
-      "path": "data/gold_dimensional/fact_stream_wait_time_minute.csv",
-      "rows": 120,
-      "grain": "streaming wait-time fact"
-    },
-    {
       "path": "data/gold_dimensional/bridge_chat_topic_chunk.csv",
       "rows": 6,
       "grain": "chat topic to document chunk bridge"
@@ -252,11 +287,6 @@
       "path": "data/gold_dimensional/fact_provider_accreditation.csv",
       "rows": 10,
       "grain": "provider accreditation fact"
-    },
-    {
-      "path": "data/streaming/wait_time_events.jsonl",
-      "rows": 120,
-      "grain": "streaming wait-time event"
     }
   ]
 }

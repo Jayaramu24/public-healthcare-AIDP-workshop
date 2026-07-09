@@ -55,6 +55,15 @@
     .topbar strong { font-size: 17px; }
     .topbar span { display: block; color: #d5d7da; font-size: 13px; }
     .topbar a { color: #fff; font-size: 14px; }
+    .topbar .brand {
+      color: #fff;
+      text-decoration: none;
+    }
+    .topbar .brand:hover strong,
+    .topbar .brand:focus strong {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .topbar-links { display: flex; align-items: center; gap: 12px; }
     .topbar-links a {
       padding: 6px 10px;
@@ -137,6 +146,12 @@
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 13px;
+    }
+    .shot-lead {
+      margin: 14px 0 8px;
+      color: #364152;
+      font-size: 14px;
+      font-weight: 700;
     }
     .context-pair {
       display: grid;
@@ -235,6 +250,36 @@
     .task strong { display: block; margin-bottom: 6px; color: #1f2937; }
     .task p { color: var(--muted); font-size: 14px; }
 
+    .admin-step-block,
+    .lab-step-block {
+      margin: 24px 0 34px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--oracle);
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(16, 24, 40, 0.05);
+    }
+    .admin-step-block h3,
+    .lab-step-block h3 {
+      margin-bottom: 10px;
+      font-size: 21px;
+    }
+    .admin-step-block .role,
+    .lab-step-block .role {
+      margin-bottom: 12px;
+    }
+    .admin-step-block ul,
+    .admin-step-block ol,
+    .lab-step-block ul,
+    .lab-step-block ol {
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+    .admin-step-block .shot,
+    .lab-step-block .shot {
+      margin: 16px 0 18px;
+    }
+
     .callout {
       margin: 18px 0;
       padding: 15px 17px;
@@ -257,11 +302,14 @@
 
     .workflow-steps {
       margin: 24px 0 30px;
-      border-top: 1px solid var(--line);
     }
     .workflow-step-detail {
-      padding: 24px 0 8px;
-      border-bottom: 1px solid var(--line);
+      margin: 20px 0 28px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(16, 24, 40, 0.05);
     }
     .workflow-step-detail h4 {
       margin: 0 0 8px;
@@ -326,12 +374,11 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
   <header class="topbar">
-    <div><strong>Public Healthcare AIDP Workshop</strong><span>Single screenshot-based execution flow</span></div>
+    <a class="brand" href="#top" aria-label="Return to the top of the workshop flow"><strong>Public Healthcare AIDP Workshop</strong><span>Single screenshot-based execution flow</span></a>
     <div class="topbar-links" aria-label="Workshop resources">
       <a href="#assets">Assets</a>
-      <a href="workshop_guide.md">Guide</a>
       <a href="workshop_guide.pdf">PDF</a>
     </div>
   </header>
@@ -340,11 +387,11 @@
     <select onchange="if(this.value) location.hash=this.value" aria-label="Jump to a lab">
       <option value="">Jump to a lab</option>
       <option value="orientation">Orientation</option>
-      <option value="lab1">Lab 1 - Environment setup</option>
-      <option value="lab2">Lab 2 - Bronze and Silver</option>
-      <option value="lab3">Lab 3 - Claims star schema</option>
-      <option value="lab4">Lab 4 - OAC dashboard</option>
-      <option value="lab4b">Lab 4B - Context enrichment</option>
+      <option value="lab0">Lab 0 - Admin setup</option>
+      <option value="lab1">Lab 1 - Bronze and Silver</option>
+      <option value="lab2">Lab 2 - Claims star schema</option>
+      <option value="lab3">Lab 3 - OAC dashboard</option>
+      <option value="lab4">Lab 4 - Context enrichment</option>
       <option value="lab5">Optional Lab 5 - ML risk scoring</option>
       <option value="lab6-rag-kb">Optional Lab 6A - RAG knowledge base</option>
       <option value="lab6-agent">Optional Lab 6B - Claims policy copilot</option>
@@ -359,11 +406,11 @@
       <h2>Workshop Flow</h2>
       <p>Use this single page to run the complete workshop flow from setup through analytics, ML, and agents.</p>
       <a class="section-link" href="#orientation">Orientation</a>
-      <a class="section-link" href="#lab1">Lab 1 - Environment setup</a>
-      <a class="section-link" href="#lab2">Lab 2 - Bronze and Silver</a>
-      <a class="section-link" href="#lab3">Lab 3 - Claims star schema</a>
-      <a class="section-link" href="#lab4">Lab 4 - OAC dashboard</a>
-      <a class="section-link" href="#lab4b">Lab 4B - Context enrichment</a>
+      <a class="section-link" href="#lab0">Lab 0 - Admin setup</a>
+      <a class="section-link" href="#lab1">Lab 1 - Bronze and Silver</a>
+      <a class="section-link" href="#lab2">Lab 2 - Claims star schema</a>
+      <a class="section-link" href="#lab3">Lab 3 - OAC dashboard</a>
+      <a class="section-link" href="#lab4">Lab 4 - Context enrichment</a>
       <a class="section-link" href="#lab5">Optional Lab 5 - ML risk scoring</a>
       <a class="section-link" href="#lab6-rag-kb">Optional Lab 6A - RAG knowledge base</a>
       <a class="section-link" href="#lab6-agent">Optional Lab 6B - Claims policy copilot</a>
@@ -418,7 +465,7 @@
         </div>
         <h2 class="flow-heading">Workshop build path</h2>
         <div class="flow-strip" aria-label="Workshop flow summary">
-          <div class="flow-step"><strong>1. Set up</strong><span>OCI, Object Storage, AIDP, AI Lakehouse, catalogs, OAC.</span></div>
+          <div class="flow-step"><strong>1. Set up</strong><span>OCI, Object Storage, AIDP, AI Lakehouse, AI compute, catalogs, OAC.</span></div>
           <div class="flow-step"><strong>2. Medallion</strong><span>Upload notebooks and process raw data through Bronze and Silver.</span></div>
           <div class="flow-step"><strong>3. Serve</strong><span>Load Claims dimensions and fact into AI Lakehouse.</span></div>
           <div class="flow-step"><strong>4. Analyze</strong><span>Build the MPHA Claims Executive Overview in OAC.</span></div>
@@ -426,124 +473,240 @@
         </div>
         <div class="callout warning">
           <strong>Teaching pattern</strong>
-          Lab 1 is completed once by the facilitator. Participants begin active hands-on work after the Lab 1 readiness gate.
+          Lab 0 is completed once by the facilitator. Participants begin active hands-on work after the Lab 0 readiness gate.
         </div>
       </section>
 
-      <section class="lab" id="lab1">
+      <section class="lab" id="lab0">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 1</p>
+            <p class="eyebrow">Lab 0</p>
             <h2>Set up the shared OCI, AIDP, AI Lakehouse, and OAC environment</h2>
           </div>
           <div class="duration">Admin-led · 45-60 minutes</div>
         </div>
         <span class="role admin">Admin step</span>
         <p>
-          The facilitator prepares the environment once so first-time participants are not distracted by tenancy, policy, user, bucket, catalog, and service provisioning details. Do not move to Lab 2 until these setup steps are complete and visible to the participants.
+          The facilitator prepares the environment once so first-time participants are not distracted by tenancy, policy, user, bucket, catalog, and service provisioning details. Do not move to Lab 1 until these setup steps are complete and visible to the participants.
         </p>
         <div class="callout warning">
           <strong>Admin ownership</strong>
-          Compartment, Object Storage, AIDP, AI Lakehouse, OAC, catalog, volume, and policy setup are admin tasks. Participants should receive a ready workspace and start active work from notebook upload and execution.
+          Compartment, Object Storage, AIDP, AI Lakehouse, OAC, catalog, volume, Spark compute, Agent AI compute, and policy setup are admin tasks. Participants should receive a ready workspace and start active work from notebook upload and execution.
         </div>
-        <h3>Admin setup sequence</h3>
-        <ol>
-          <li><strong>Create or select the OCI compartment.</strong> In the OCI Console, open <code>Identity &amp; Security - Compartments</code>. Create a compartment such as <code>MPHA_AIDP_WORKSHOP</code> or select the compartment assigned by the tenancy admin. Use this same compartment for Object Storage, AIDP, Autonomous AI Lakehouse, OAC, Generative AI Agents, and policies.</li>
-          <li><strong>Add the required standard policies.</strong> Apply the AIDP standard policies generated during AIDP setup. Confirm the facilitator group can manage AIDP workspaces, clusters, catalogs, volumes, Object Storage buckets, AI Lakehouse resources, OAC connections, and Generative AI Agent resources where optional labs are included.</li>
-          <li><strong>Create the Object Storage bucket.</strong> Open <code>Storage - Buckets</code>, select the workshop compartment, and create a bucket such as <code>mpha-workshop-bucket</code>. Keep the default storage tier unless your tenancy standard says otherwise.</li>
-          <li><strong>Create the Object Storage folder structure.</strong> Open the bucket and create the prefixes listed in the folder contract below. If the console does not show a create-folder action, upload a small placeholder file into each prefix.</li>
-          <li><strong>Upload the raw workshop assets.</strong> Upload the five CSV files under <code>mpha/raw/</code>, the JSONL file under <code>mpha/raw_json/</code>, the GeoJSON file under <code>mpha/raw_spatial/</code>, and the MPHA playbook document under <code>mpha/documents/</code>.</li>
-          <li><strong>Create or confirm the AIDP instance.</strong> Open <code>Analytics &amp; AI - AI Data Platform</code>, create or reuse the workshop AIDP instance, and confirm the standard policies are applied successfully.</li>
-          <li><strong>Create the AIDP workspace and Spark cluster.</strong> Create a workspace such as <code>mpha-core-workshop</code>, create a Spark cluster such as <code>mpha-spark-cluster</code>, and confirm participants can attach that cluster to notebooks.</li>
-          <li><strong>Create the standard catalog, schema, and external volume.</strong> In AIDP <code>Master Catalog</code>, create or confirm the standard catalog and schema used for the workshop landing area. Create external volumes that point to the Object Storage bucket and folder prefixes.</li>
-          <li><strong>Create the external AI Lakehouse catalog.</strong> Create the AIDP external catalog connection to Autonomous AI Lakehouse, test connectivity, and confirm the participant schema is visible.</li>
-          <li><strong>Create the AI Lakehouse target schema and user.</strong> In Autonomous AI Lakehouse Database Actions, create the workshop user or schema, set quota high enough for loading, REST-enable the user if needed, and run the Claims star schema table creation SQL.</li>
-          <li><strong>Create the workspace notebook folders.</strong> In AIDP, create folders such as <code>O1_Bronze</code>, <code>O2_Silver</code>, <code>03_Gold</code>, <code>03a_GoldAILHLoad</code>, <code>04_ML</code>, <code>05_Agent</code>, and <code>Shared</code>. Participants will upload the downloaded notebooks into these folders during the labs.</li>
-          <li><strong>Create or confirm OAC.</strong> Provision Oracle Analytics Cloud or confirm the shared OAC instance is ready. Do not build the OAC dataset until after the Claims star schema has been loaded and validated in Lab 3.</li>
-        </ol>
-        <h3>Compartment creation screenshots</h3>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/comp-1.png" alt="OCI Compartments landing page" />
-          <figcaption>Open the OCI Console and navigate to the Compartments page before creating the workshop resource boundary.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/comp-3.png" alt="OCI create compartment form" />
-          <figcaption>Create one clearly named compartment, such as MPHA_AIDP_WORKSHOP, and use it consistently for AIDP, AI Lakehouse, Object Storage, OAC, and optional agent resources.</figcaption>
-        </figure>
-        <h3>Object Storage bucket screenshots</h3>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/os-buckets-1.png" alt="OCI Object Storage Buckets page" />
-          <figcaption>Navigate to Object Storage Buckets in the same compartment that will host the workshop resources.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/os-buckets-3.png" alt="OCI create bucket form" />
-          <figcaption>Create the shared workshop bucket, for example mpha-workshop-bucket, before creating AIDP external volumes.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/os-buckets-5.png" alt="OCI create object storage folder path" />
-          <figcaption>Create the folder prefixes used by the workshop medallion flow, including raw, raw_json, raw_spatial, documents, bronze, silver, gold_stage, gold_dimensional, and vector.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/os-buckets-6.png" alt="OCI Object Storage folder confirmation" />
-          <figcaption>Confirm the bucket folders are visible before mapping them to AIDP volumes or uploading the workshop data bundle.</figcaption>
-        </figure>
-        <h3>Object Storage folder contract</h3>
+        <h3>Lab 0 admin setup sequence</h3>
+        <p>
+          Complete these steps in order. Each step includes the checkpoint screenshot that confirms the expected screen or result before moving forward.
+        </p>
+
+        <div class="admin-step-block" id="lab0-step-compartment">
+          <h3>Step 1: Create or select the OCI compartment</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            In the OCI Console, open <code>Identity &amp; Security - Compartments</code>. Create a compartment such as <code>MPHA_AIDP_WORKSHOP</code> or select the compartment assigned by the tenancy admin. Use this same compartment for Object Storage, AIDP, Autonomous AI Lakehouse, OAC, Generative AI Agents, and policies.
+          </p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/comp-1.png" alt="OCI Compartments landing page" />
+            <figcaption>Checkpoint: open the Compartments page before creating or selecting the workshop resource boundary.</figcaption>
+          </figure>
+          <p class="shot-lead">On the compartment create form, enter the workshop compartment name and confirm it will be reused for every OCI service.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/comp-3.png" alt="OCI create compartment form" />
+            <figcaption>Checkpoint: create one clearly named compartment, such as <code>MPHA_AIDP_WORKSHOP</code>, and reuse it for all workshop services.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-aidp">
+          <h3>Step 2: Create or confirm the AIDP instance and standard policies</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            Open <code>Analytics &amp; AI - AI Data Platform</code>, create or reuse the workshop AIDP instance, and apply the generated standard policies. Confirm the facilitator group can manage AIDP workspaces, clusters, catalogs, volumes, Object Storage buckets, AI Lakehouse resources, OAC connections, and Generative AI Agent resources where optional labs are included.
+          </p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/create-aidp.png" alt="OCI AI Data Platform service page" />
+            <figcaption>Checkpoint: open AI Data Platform from the OCI Console and start the instance setup in the workshop compartment.</figcaption>
+          </figure>
+          <p class="shot-lead">On the Create AI Data Platform form, select the workshop compartment and provide the AIDP instance details.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/create-aidp-2.png" alt="OCI create AI Data Platform instance form" />
+            <figcaption>Checkpoint: create the AIDP instance that will host workspaces, notebooks, compute, catalogs, and volume access.</figcaption>
+          </figure>
+          <p class="shot-lead">After the AIDP instance is created, open the standard policies page and apply the generated policy statements.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/aidp-standard-policies-1.png" alt="AIDP standard policies screen" />
+            <figcaption>Checkpoint: apply the standard AIDP policies before testing notebooks, catalogs, volumes, and Object Storage access.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-object-storage">
+          <h3>Step 3: Create the Object Storage bucket, folders, and raw landing area</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            Open <code>Storage - Buckets</code>, select the workshop compartment, and create a bucket such as <code>mpha-workshop-bucket</code>. Then create the prefixes listed in the folder contract below. Upload the five CSV files under <code>mpha/raw/</code>, the JSONL file under <code>mpha/raw_json/</code>, the GeoJSON file under <code>mpha/raw_spatial/</code>, and the MPHA playbook document under <code>mpha/documents/</code>.
+          </p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/os-buckets-1.png" alt="OCI Object Storage Buckets page" />
+            <figcaption>Checkpoint: navigate to Object Storage Buckets in the same compartment that hosts the workshop resources.</figcaption>
+          </figure>
+          <p class="shot-lead">On the bucket creation form, create the shared Object Storage bucket for the workshop data and medallion folders.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/os-buckets-3.png" alt="OCI create bucket form" />
+            <figcaption>Checkpoint: create the shared workshop bucket before creating AIDP external volumes.</figcaption>
+          </figure>
+          <p class="shot-lead">Inside the bucket, create the required folder prefixes for raw, bronze, silver, gold, document, and vector content.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/os-buckets-5.png" alt="OCI create object storage folder path" />
+            <figcaption>Checkpoint: create the folder prefixes used by the workshop medallion flow.</figcaption>
+          </figure>
+          <p class="shot-lead">After creating the prefixes, return to the bucket view and confirm the folders are visible before moving to AIDP volumes.</p>
+          <figure class="shot">
+            <img src="assets/livelabs_source_setup/os-buckets-6.png" alt="OCI Object Storage folder confirmation" />
+            <figcaption>Checkpoint: confirm the bucket folders are visible before mapping them to AIDP volumes or uploading the workshop data bundle.</figcaption>
+          </figure>
+
+          <h3>Object Storage folder contract</h3>
         <table>
           <thead>
             <tr><th>Folder prefix</th><th>Used for</th><th>Lab dependency</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>mpha/raw/</code></td><td>Five CSV files for claims, membership, disbursement, provider, facility, district, and population-health context.</td><td>Lab 2 Bronze</td></tr>
-            <tr><td><code>mpha/raw_json/</code></td><td>Facility capacity event JSONL input.</td><td>Lab 2 Bronze</td></tr>
-            <tr><td><code>mpha/raw_spatial/</code></td><td>Healthcare service area GeoJSON input.</td><td>Lab 2 Bronze and spatial insight</td></tr>
-            <tr><td><code>mpha/documents/</code></td><td>MPHA playbook document for document chunking and Claims Policy Copilot grounding.</td><td>Lab 2 and Optional Lab 6A</td></tr>
-            <tr><td><code>mpha/bronze/</code></td><td>Bronze Delta outputs preserving raw structure plus ingestion metadata.</td><td>Lab 2 Bronze</td></tr>
-            <tr><td><code>mpha/silver/</code></td><td>Conformed and typed Silver outputs used by Gold and ML flows.</td><td>Lab 2 Silver</td></tr>
-            <tr><td><code>mpha/gold_stage/</code></td><td>Intermediate Gold-stage files and optional staged-file path.</td><td>Lab 3 and Optional Lab 5</td></tr>
-            <tr><td><code>mpha/gold_dimensional/</code></td><td>Dimensional outputs and validation extracts when the team wants file-based inspection.</td><td>Lab 3 validation</td></tr>
+            <tr><td><code>mpha/raw/</code></td><td>Five CSV files for claims, membership, disbursement, provider, facility, district, and population-health context.</td><td>Lab 1 Bronze</td></tr>
+            <tr><td><code>mpha/raw_json/</code></td><td>Facility capacity event JSONL input.</td><td>Lab 1 Bronze</td></tr>
+            <tr><td><code>mpha/raw_spatial/</code></td><td>Healthcare service area GeoJSON input.</td><td>Lab 1 Bronze and spatial insight</td></tr>
+            <tr><td><code>mpha/documents/</code></td><td>MPHA playbook document for document chunking and Claims Policy Copilot grounding.</td><td>Lab 1 and Optional Lab 6A</td></tr>
+            <tr><td><code>mpha/bronze/</code></td><td>Bronze Delta outputs preserving raw structure plus ingestion metadata.</td><td>Lab 1 Bronze</td></tr>
+            <tr><td><code>mpha/silver/</code></td><td>Conformed and typed Silver outputs used by Gold and ML flows.</td><td>Lab 1 Silver</td></tr>
+            <tr><td><code>mpha/gold_stage/</code></td><td>Intermediate Gold-stage files and optional staged-file path.</td><td>Lab 2 and Optional Lab 5</td></tr>
+            <tr><td><code>mpha/gold_dimensional/</code></td><td>Dimensional outputs and validation extracts when the team wants file-based inspection.</td><td>Lab 2 validation</td></tr>
             <tr><td><code>mpha/vector/</code></td><td>Document chunk and embedding-ready outputs for policy retrieval patterns.</td><td>Optional Lab 6A</td></tr>
           </tbody>
         </table>
-        <h3>AIDP setup screenshots</h3>
-        <ol>
-          <li><strong>Open AI Data Platform.</strong> In the OCI Console, go to <code>Analytics &amp; AI - AI Data Platform</code> and start the instance creation flow in the workshop compartment.</li>
-          <li><strong>Create the AIDP instance.</strong> Use a name such as <code>mpha-aidp</code>, select the approved network and capacity options, and create the default workspace if the console asks for one.</li>
-          <li><strong>Add standard policies.</strong> Use the AIDP-generated standard policies so the service can access the required Object Storage, catalog, workspace, and compute resources.</li>
-          <li><strong>Open AIDP Workbench.</strong> After the instance becomes available, open the workbench and verify the shared workspace, Spark compute, catalogs, external catalog, schema, and volume.</li>
-          <li><strong>Confirm the participant starting point.</strong> Participants should see the notebook folders and the medallion volume before Lab 2 begins.</li>
-        </ol>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/create-aidp.png" alt="OCI AI Data Platform service page" />
-          <figcaption>Open AI Data Platform from the OCI Console and create or select the instance used for the workshop.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/create-aidp-2.png" alt="OCI create AI Data Platform instance form" />
-          <figcaption>Create the AIDP instance in the workshop compartment. This platform hosts the workspace, notebooks, compute, catalogs, and volume access used by the labs.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/livelabs_source_setup/aidp-standard-policies-1.png" alt="AIDP standard policies screen" />
-          <figcaption>Apply the standard AIDP policies before expecting notebooks, catalogs, volumes, and Object Storage access to work correctly.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/home_lab4style.png" alt="AIDP Workbench home page" />
-          <figcaption>Open AIDP Workbench and confirm the instance is available for workshop execution.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/master_catalog_lab4style.png" alt="AIDP Master Catalog page" />
-          <figcaption>Open Master Catalog to verify the standard catalog and AI Lakehouse external catalog setup.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/standard_catalog_lab4style.png" alt="AIDP standard catalog for workshop landing zone" />
-          <figcaption>Confirm the standard catalog that backs the workshop landing area and external volume.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/external_catalog_lab4style.png" alt="AIDP external AI Lakehouse catalog" />
-          <figcaption>Confirm the external Autonomous AI Lakehouse catalog that exposes the Gold-serving schema used by the Claims star schema load.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/volumes_lab4style.png" alt="AIDP volume list for workshop schema" />
-          <figcaption>Open the schema volume list and confirm the external volume mapped to the Object Storage bucket is available.</figcaption>
-        </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-workbench">
+          <h3>Step 4: Open AIDP Workbench and confirm the workspace</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            After the AIDP instance becomes available, open AIDP Workbench. Create or confirm the workspace such as <code>mpha-core-workshop</code>, create or confirm a Spark cluster such as <code>mpha-spark-cluster</code>, and verify participants can attach that cluster to notebooks.
+          </p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/home_lab4style.png" alt="AIDP Workbench home page" />
+            <figcaption>Checkpoint: AIDP Workbench opens successfully and the workshop environment is available.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the participant workspace and confirm the shared folder structure that participants will use for notebook uploads.</p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/workspace_root_lab4style.png" alt="AIDP workspace root with workshop folders" />
+            <figcaption>Checkpoint: the shared workspace is visible and will become the participant starting point after Lab 0.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-catalog-volume">
+          <h3>Step 5: Create the standard catalog, schema, and external volume</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            In AIDP <code>Master Catalog</code>, create or confirm the standard catalog and schema used for the workshop landing area. Create external volumes that point to the Object Storage bucket and folder prefixes.
+          </p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/master_catalog_lab4style.png" alt="AIDP Master Catalog page" />
+            <figcaption>Checkpoint: Master Catalog is open and ready for standard and external catalog validation.</figcaption>
+          </figure>
+          <p class="shot-lead">In Master Catalog, open the standard catalog created for the workshop landing zone.</p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/standard_catalog_lab4style.png" alt="AIDP standard catalog for workshop landing zone" />
+            <figcaption>Checkpoint: the standard catalog that backs the workshop landing area is available.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the schema Volumes tab and confirm the external volume is mapped to the Object Storage bucket.</p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/volumes_lab4style.png" alt="AIDP volume list for workshop schema" />
+            <figcaption>Checkpoint: the schema volume list shows the external volume mapped to Object Storage.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the external volume and verify the medallion folder structure is available from AIDP.</p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/volume_contents_lab4style.png" alt="AIDP volume with workshop medallion folders" />
+            <figcaption>Checkpoint: the shared volume exposes the persistent storage folders used by the notebook sequence.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-ailh">
+          <h3>Step 6: Create the AI Lakehouse catalog, user, and Claims target schema</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            Create the AIDP external catalog connection to Autonomous AI Lakehouse, test connectivity, and confirm the participant schema is visible. In Autonomous AI Lakehouse Database Actions, create the workshop user or schema, set quota high enough for loading, REST-enable the user if needed, and run the Claims star schema table creation SQL.
+          </p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/external_catalog_lab4style.png" alt="AIDP external AI Lakehouse catalog" />
+            <figcaption>Checkpoint: the external Autonomous AI Lakehouse catalog is visible from AIDP.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the AI Lakehouse external catalog schema and confirm the Claims fact and dimension tables are visible.</p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/external_schema_tables_lab4style.png" alt="Claims star schema tables visible in AI Lakehouse external catalog" />
+            <figcaption>Checkpoint: the Gold-serving schema exposes the Claims fact and dimension tables that Lab 2 will load.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-notebook-folders">
+          <h3>Step 7: Create the workspace notebook folders</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            In AIDP, create folders such as <code>O1_Bronze</code>, <code>O2_Silver</code>, <code>03_Gold</code>, <code>03a_GoldAILHLoad</code>, <code>04_ML</code>, <code>05_Agent</code>, and <code>Shared</code>. Participants will upload the downloaded notebooks into these folders during the labs.
+          </p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/workspace_root_lab4style.png" alt="AIDP workspace root with workshop folders" />
+            <figcaption>Checkpoint: the AIDP workspace contains folders for Bronze, Silver, Gold, AI Lakehouse loading, ML, and Agent labs.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-agent-ai-compute">
+          <h3>Step 8: Create the blank copilot shell and prepare AI compute</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            Create only an empty agent flow shell in Lab 0 so the facilitator can start the AI compute ahead of the optional copilot lab. Do not add the supervisor, SQL executor, RAG executor, or tools in Lab 0. Participants build that logic later in Optional Lab 6B.
+          </p>
+          <ol>
+            <li>Open <strong>Agent flows</strong> in the AIDP workspace.</li>
+            <li>Click <strong>Create</strong> and create a visual-builder shell named <code>MPHA_Claims_Policy_Copilot</code>.</li>
+            <li>Leave <strong>AI Compute</strong> unselected in the shell creation dialog unless the compute already exists.</li>
+            <li>After the blank shell opens, click <strong>Compute</strong> on the agent flow page.</li>
+            <li>Select <strong>Create a new AI Compute</strong>, provide the compute details, and click <strong>Create</strong> in the real admin setup.</li>
+            <li>Use a clearly named compute such as <code>AIComputeForAgents</code>. The validated configuration uses <code>1</code> OCPU and <code>16</code> GB memory.</li>
+            <li>Wait until the AI compute status is active before participants start Optional Lab 6B.</li>
+          </ol>
+          <div class="callout expected">
+            <strong>Why this belongs in Lab 0</strong>
+            AI compute can take time to start. Creating a blank shell lets the facilitator prepare compute early without building the agent logic for participants.
+          </div>
+          <figure class="shot">
+            <img src="assets/aidp_agent_lab/screenshots/10b_blank_agent_flow_shell_filled_no_compute.png" alt="AIDP create agent flow dialog filled for a blank Lab 0 copilot shell with no AI compute selected" />
+            <figcaption>Shell checkpoint: create a visual-builder shell. In a fresh workshop use <code>MPHA_Claims_Policy_Copilot</code>; the captured validation environment uses a Lab 0 shell suffix because the finished copilot already existed.</figcaption>
+          </figure>
+          <p class="shot-lead">After submitting the blank shell form, verify the shell opens with no compute or agent nodes attached.</p>
+          <figure class="shot">
+            <img src="assets/aidp_agent_lab/screenshots/10c_blank_agent_flow_shell_created_no_compute.png" alt="Blank AIDP copilot shell created with AI Compute set to None" />
+            <figcaption>Blank-shell checkpoint: the shell opens with <code>AI Compute: None</code> and no supervisor, agent, SQL, or RAG nodes configured yet.</figcaption>
+          </figure>
+          <p class="shot-lead">Use the blank shell Compute menu to choose whether to attach existing compute or create the workshop AI compute.</p>
+          <figure class="shot">
+            <img src="assets/aidp_agent_lab/screenshots/10d_blank_shell_compute_menu_create_attach.png" alt="Blank AIDP agent shell Compute menu showing Attach to AI Compute and Create a new AI Compute" />
+            <figcaption>Compute-menu checkpoint: use the blank shell page <strong>Compute</strong> menu to create or attach AI compute before the participant copilot lab.</figcaption>
+          </figure>
+          <p class="shot-lead">In the Create AI compute dialog, enter the facilitator-provided compute name, OCPU, and memory values before creating it.</p>
+          <figure class="shot">
+            <img src="assets/aidp_agent_lab/screenshots/10f_create_ai_compute_dialog_filled_not_submitted.png" alt="Create AI compute dialog filled with AIComputeForAgents, one OCPU, and sixteen GB memory" />
+            <figcaption>Compute setup checkpoint: review the compute name, OCPU count, and memory value, then click <strong>Create</strong> in the live admin setup and wait for the compute to become active.</figcaption>
+          </figure>
+        </div>
+
+        <div class="admin-step-block" id="lab0-step-oac">
+          <h3>Step 9: Create or confirm Oracle Analytics Cloud</h3>
+          <span class="role admin">Admin step</span>
+          <p>
+            Provision Oracle Analytics Cloud or confirm the shared OAC instance is ready. Do not build the OAC dataset until after the Claims star schema has been loaded and validated in Lab 2.
+          </p>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/01_oac_home.png" alt="Oracle Analytics Cloud home page" />
+            <figcaption>Checkpoint: OAC is available and ready for the participant dashboard lab after the Claims star schema is loaded.</figcaption>
+          </figure>
+        </div>
+
         <h3>Admin-to-participant handoff</h3>
         <table>
           <thead>
@@ -554,32 +717,26 @@
             <tr><td>Object Storage bucket and prefixes exist.</td><td>Raw files and medallion folders are visible through the AIDP volume.</td></tr>
             <tr><td>AIDP workspace, Spark cluster, catalogs, and volumes are ready.</td><td>Participants can upload notebooks and attach the shared compute.</td></tr>
             <tr><td>AI Lakehouse schema and Claims star schema tables exist.</td><td>The direct-load notebook can insert into <code>mpha_dim_*</code> and <code>mpha_fact_claims_monthly</code>.</td></tr>
-            <tr><td>OAC instance is provisioned.</td><td>OAC connection and dataset creation can begin after Lab 3 validation.</td></tr>
+            <tr><td>Blank Claims Policy Copilot shell and Agent AI compute are prepared.</td><td>Optional Lab 6B starts from the empty shell; participants build the supervisor, SQL, and RAG logic after compute is already available.</td></tr>
+            <tr><td>OAC instance is provisioned.</td><td>OAC connection and dataset creation can begin after Lab 2 validation.</td></tr>
           </tbody>
         </table>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/workspace_root_lab4style.png" alt="AIDP workspace root with workshop folders" />
-          <figcaption>Participant starting point after admin setup: the AIDP workspace contains folders for Bronze, Silver, Gold, and Claims star schema loading.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/volume_contents_lab4style.png" alt="AIDP volume with workshop medallion folders" />
-          <figcaption>The shared volume exposes the persistent storage folders used by the notebook sequence.</figcaption>
-        </figure>
         <div class="handoff">
-          <h3>Lab 1 readiness gate</h3>
+          <h3>Lab 0 readiness gate</h3>
           <ul>
-            <li>AIDP instance, workspace, compute, catalogs, and volume are available.</li>
+            <li>AIDP instance, workspace, Spark compute, catalogs, and volume are available.</li>
             <li>Raw data bundle has been uploaded or made available to participants.</li>
             <li>AI Lakehouse target user and Claims star schema tables are created.</li>
+            <li>Blank copilot shell exists and <code>AIComputeForAgents</code> is active or being started before Optional Lab 6B.</li>
             <li>OAC instance is available but the dashboard dataset is created after the Claims load.</li>
           </ul>
         </div>
       </section>
 
-      <section class="lab" id="lab2">
+      <section class="lab" id="lab1">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 2</p>
+            <p class="eyebrow">Lab 1</p>
             <h2>Build Bronze and Silver layers in AIDP</h2>
           </div>
           <div class="duration">Participant hands-on · 45-60 minutes</div>
@@ -588,37 +745,70 @@
         <p>
           Participants download the workshop notebooks, upload them into the matching AIDP workspace folders, attach compute, and run the notebooks in sequence.
         </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Notebook</th>
-              <th>Folder</th>
-              <th>Outcome</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><code>01_Bronze_Public_Healthcare.ipynb</code></td><td><code>O1_Bronze</code></td><td>Loads CSV, JSON, spatial, and document inputs into Bronze Delta tables.</td></tr>
-            <tr><td><code>02_Silver_Public_Healthcare.ipynb</code></td><td><code>O2_Silver</code></td><td>Cleanses, standardizes, derives, and conforms payer, provider, claims, events, spatial, and document context.</td></tr>
-            <tr><td><code>03_Gold_Public_Healthcare.ipynb</code></td><td><code>03_Gold</code></td><td>Reviews broader Gold business outputs; the direct Claims star schema load is the guided serving path.</td></tr>
-          </tbody>
-        </table>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/bronze_notebook_lab4style.png" alt="Bronze notebook opened in AIDP" />
-          <figcaption>Bronze notebook checkpoint: confirm paths, attach compute, and run all cells.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/silver_notebook_lab4style.png" alt="Silver notebook opened in AIDP" />
-          <figcaption>Silver notebook checkpoint: transformations complete and conformed Silver data is written back to the shared volume.</figcaption>
-        </figure>
+        <div class="lab-step-block" id="lab1-step-upload-notebooks">
+          <h3>Step 1: Download and upload the Bronze and Silver notebooks</h3>
+          <span class="role">Participant step</span>
+          <p>
+            Download the notebook assets from the Workshop Assets section and upload them into the matching AIDP workspace folders. Use the existing workspace folders prepared in Lab 0.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Notebook</th>
+                <th>Folder</th>
+                <th>Outcome</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>01_Bronze_Public_Healthcare.ipynb</code></td><td><code>O1_Bronze</code></td><td>Loads CSV, JSON, spatial, and document inputs into Bronze Delta tables.</td></tr>
+              <tr><td><code>02_Silver_Public_Healthcare.ipynb</code></td><td><code>O2_Silver</code></td><td>Cleanses, standardizes, derives, and conforms payer, provider, claims, events, spatial, and document context.</td></tr>
+              <tr><td><code>03_Gold_Public_Healthcare.ipynb</code></td><td><code>03_Gold</code></td><td>Reviews broader Gold business outputs; the direct Claims star schema load is the guided serving path.</td></tr>
+            </tbody>
+          </table>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/workspace_root_lab4style.png" alt="AIDP workspace root with notebook folders" />
+            <figcaption>Upload checkpoint: the workspace contains the prepared folders where participants upload the Bronze and Silver notebooks.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab1-step-bronze">
+          <h3>Step 2: Run the Bronze notebook</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Open the Bronze notebook from <code>O1_Bronze</code>.</li>
+            <li>Attach the shared Spark compute.</li>
+            <li>Confirm the raw CSV, JSONL, GeoJSON, and document paths.</li>
+            <li>Run all cells and confirm Bronze outputs are written to the shared volume.</li>
+          </ol>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/bronze_notebook_lab4style.png" alt="Bronze notebook opened in AIDP" />
+            <figcaption>Bronze notebook checkpoint: confirm paths, attach compute, and run all cells.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab1-step-silver">
+          <h3>Step 3: Run the Silver notebook</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Open the Silver notebook from <code>O2_Silver</code>.</li>
+            <li>Attach the same Spark compute used for Bronze.</li>
+            <li>Run all cells to standardize, type, derive, and conform the healthcare data.</li>
+            <li>Confirm Silver outputs are written and ready for the Claims star schema load in Lab 2.</li>
+          </ol>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/silver_notebook_lab4style.png" alt="Silver notebook opened in AIDP" />
+            <figcaption>Silver notebook checkpoint: transformations complete and conformed Silver data is written back to the shared volume.</figcaption>
+          </figure>
+        </div>
         <div class="callout expected">
-          <strong>Lab 2 handoff</strong>
+          <strong>Lab 1 handoff</strong>
           Bronze and Silver are complete when the Silver notebook finishes without errors and the Claims-serving inputs are ready for the direct AI Lakehouse load notebook.
         </div>
         <h3>Operational checkpoint - create the AIDP Workflow for incremental medallion runs</h3>
         <p>
           After the notebook sequence is clear, review the validated AIDP Workflow version of the same flow. This is the operational view of the workshop pipeline: every task has a file, compute target, timeout, dependency, and a successful run trail.
         </p>
-        <div class="workflow-steps" id="lab2-workflow-steps">
+        <div class="workflow-steps" id="lab1-workflow-steps">
           <div class="workflow-step-detail">
             <span class="step-label">Workflow step 1</span>
             <h4>Open Workflow and create the job</h4>
@@ -627,6 +817,7 @@
               <img src="assets/aidp_workflow_lab/screenshots_fresh/01_workflow_jobs_list_fresh_wide_clean.png" alt="AIDP Workflow page showing the MPHA incremental medallion workflow job" />
               <figcaption>Start from the Workflow page in the workshop workspace. Create the job or reopen the existing validated workflow.</figcaption>
             </figure>
+            <p class="shot-lead">Create the workflow job shell and give it the workshop workflow name before adding notebook tasks.</p>
             <figure class="shot">
               <img src="assets/aidp_workflow_lab/screenshots_fresh/00_workflow_create_job_dialog_fresh.png" alt="Create workflow job dialog filled for MPHA incremental medallion flow" />
               <figcaption>Create the workflow job using the workshop name so participants can recognize it later in Activity and Runs.</figcaption>
@@ -666,6 +857,7 @@
               <img src="assets/aidp_workflow_lab/screenshots_fresh/04_workflow_tasks_gold_config_fresh.png" alt="Gold staging workflow task configured" />
               <figcaption>The Gold task stages broader Gold outputs from the Silver layer.</figcaption>
             </figure>
+            <p class="shot-lead">Open the Lakehouse load task configuration and confirm it points to the Claims star schema load notebook.</p>
             <figure class="shot">
               <img src="assets/aidp_workflow_lab/screenshots_fresh/05_workflow_tasks_lakehouse_load_config_fresh.png" alt="AI Lakehouse load workflow task configured" />
               <figcaption>The AI Lakehouse load task writes the Claims star schema into the connected external catalog.</figcaption>
@@ -690,6 +882,7 @@
               <img src="assets/aidp_workflow_lab/screenshots_fresh/07_workflow_run_detail_success_graph_fresh.png" alt="Workflow run graph with Bronze task output visible" />
               <figcaption>Bronze output shows raw datasets being written into the Bronze layer.</figcaption>
             </figure>
+            <p class="shot-lead">After running the workflow, open the final task details and confirm the Lakehouse load completed successfully.</p>
             <figure class="shot">
               <img src="assets/aidp_workflow_lab/screenshots_fresh/08_workflow_run_detail_lakehouse_success_fresh.png" alt="Lakehouse load task selected with successful output visible" />
               <figcaption>Validated final state: <code>lakehouseload</code> succeeded and the notebook verified the connected AI Lakehouse schema.</figcaption>
@@ -728,10 +921,10 @@
         </div>
       </section>
 
-      <section class="lab" id="lab3">
+      <section class="lab" id="lab2">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 3</p>
+            <p class="eyebrow">Lab 2</p>
             <h2>Publish the Claims star schema into Autonomous AI Lakehouse</h2>
           </div>
           <div class="duration">Participant hands-on · 30 minutes</div>
@@ -740,38 +933,65 @@
         <p>
           The guided dashboard uses a Claims star schema, not a flat Gold export. Participants run the direct-load notebook to write dimensions and the monthly claims fact into the connected AI Lakehouse external catalog.
         </p>
-        <div class="task-grid">
-          <div class="task">
-            <strong>Confirm target schema</strong>
-            <p>Admin creates the Claims target tables in AI Lakehouse. Participants confirm they can read the target schema through the external catalog.</p>
-          </div>
-          <div class="task">
-            <strong>Run direct-load notebook</strong>
-            <p>Upload and run <code>04_Claims_Star_AI_Lakehouse_Load.ipynb</code> or the corresponding PySpark notebook.</p>
-          </div>
-          <div class="task">
-            <strong>Validate table counts</strong>
-            <p>Run the SQL validation pack to confirm expected dimension rows, fact rows, and business totals.</p>
-          </div>
-          <div class="task">
-            <strong>Prepare OAC handoff</strong>
-            <p>Only after validation succeeds should OAC connect to the Claims star schema.</p>
-          </div>
+        <div class="lab-step-block" id="lab2-step-target-schema">
+          <h3>Step 1: Confirm the Claims target schema</h3>
+          <span class="role">Participant step</span>
+          <p>
+            Admin creates the Claims target tables in AI Lakehouse during Lab 0. Participants confirm they can read the target schema through the AIDP external catalog before running the load notebook.
+          </p>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/external_schema_tables_lab4style.png" alt="Claims fact and dimension tables visible in the AI Lakehouse external catalog" />
+            <figcaption>Schema checkpoint: the target schema contains the Claims fact and dimension tables required by the direct-load notebook.</figcaption>
+          </figure>
         </div>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/ailh_load_notebook_lab4style.png" alt="Claims star schema load notebook in AIDP" />
-          <figcaption>The Claims star schema load notebook writes directly to the AI Lakehouse external catalog.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="live_aidp_screens_lab4_style/external_schema_tables_lab4style.png" alt="Claims fact and dimension tables visible in the AI Lakehouse external catalog" />
-          <figcaption>Validation checkpoint: the target schema contains the Claims fact and dimension tables required by OAC.</figcaption>
-        </figure>
+
+        <div class="lab-step-block" id="lab2-step-load-notebook">
+          <h3>Step 2: Run the Claims star schema load notebook</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Upload <code>04_Claims_Star_AI_Lakehouse_Load.ipynb</code> or the matching PySpark notebook into <code>03a_GoldAILHLoad</code>.</li>
+            <li>Attach the shared Spark compute.</li>
+            <li>Confirm <code>target_catalog</code> and <code>target_schema</code>.</li>
+            <li>Run all cells to write dimensions and <code>mpha_fact_claims_monthly</code> into AI Lakehouse.</li>
+          </ol>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/ailh_load_notebook_lab4style.png" alt="Claims star schema load notebook in AIDP" />
+            <figcaption>Load checkpoint: the Claims star schema load notebook writes directly to the AI Lakehouse external catalog.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab2-step-validate">
+          <h3>Step 3: Validate the loaded Claims star schema</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Open Database Actions or the approved SQL execution surface.</li>
+            <li>Run <code>sql/claims_star_validation.sql</code>.</li>
+            <li>Confirm all five Claims star schema tables return non-zero row counts.</li>
+            <li>Confirm the orphan-row check returns <code>0</code>.</li>
+          </ol>
+          <figure class="shot">
+            <img src="live_aidp_screens_lab4_style/external_schema_tables_lab4style.png" alt="Validated Claims star schema tables visible in the external catalog" />
+            <figcaption>Validation checkpoint: the loaded Claims star schema is visible and ready for OAC connection.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab2-step-oac-handoff">
+          <h3>Step 4: Hand off the validated star schema to OAC</h3>
+          <span class="role">Participant step</span>
+          <p>
+            Only after validation succeeds should OAC connect to the Claims star schema. This avoids building dashboards on partial or failed loads.
+          </p>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/01_oac_home.png" alt="Oracle Analytics Cloud home page" />
+            <figcaption>Handoff checkpoint: OAC is ready for Lab 3 after the Claims star schema is validated.</figcaption>
+          </figure>
+        </div>
       </section>
 
-      <section class="lab" id="lab4">
+      <section class="lab" id="lab3">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 4</p>
+            <p class="eyebrow">Lab 3</p>
             <h2>Create the OAC self-service model and Executive Overview dashboard</h2>
           </div>
           <div class="duration">Admin prep plus participant build · 45 minutes</div>
@@ -780,58 +1000,103 @@
         <p>
           OAC connects to the validated Claims star schema. The dataset is prepared as a self-service model, indexed for Assistant, and then used to build the MPHA Claims Processing Command Center.
         </p>
-        <ol>
-          <li>Create or confirm the OAC connection to Autonomous AI Lakehouse.</li>
-          <li>Create the <code>MPHAClaimAnalysis</code> dataset from the Claims fact and dimensions.</li>
-          <li>Expand the connected AI Lakehouse schema and select the five Claims star schema tables.</li>
-          <li>Drag the tables into the Join Diagram and verify the self-service model before creating the workbook.</li>
-          <li>Use the data profiling view to confirm distributions and sample rows.</li>
-          <li>Index the dataset for <code>Assistants and Homepage Search</code>.</li>
-          <li>Build the Executive Overview canvas with filters, KPI tiles, diagnostic visuals, trend, and Assistant prompts.</li>
-        </ol>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/04_ailh_connection_form.png" alt="OAC Autonomous AI Lakehouse connection form" />
-          <figcaption>OAC connection checkpoint: use the facilitator-provided Lakehouse service and credentials.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/05_create_dataset_choose_connection.png" alt="OAC Create Dataset dialog showing the AI Lakehouse connection list" />
-          <figcaption>Create Dataset checkpoint: participants select the AI Lakehouse connection before browsing schemas.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/38_oac_live_expanded_schema_self_service_model.png" alt="Actual OAC dataset editor showing expanded AI Lakehouse schema, Claims tables, Join Diagram, and profiling grid" />
-          <figcaption>Expanded schema and self-service model checkpoint: the connected AI Lakehouse schema is expanded, Claims star schema tables are visible, the Join Diagram is prepared, and the profiling grid is available for validation.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/37_oac_live_self_service_model_profile.png" alt="Actual OAC MPHAClaimAnalysis dataset editor showing Join Diagram and data profiling view" />
-          <figcaption>Self-service model and profiling checkpoint: the upper panel confirms the Claims star schema relationships; the lower panel shows data profiling and sample rows.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/26_dataset_inspect_search_indexing.png" alt="OAC dataset search indexing settings" />
-          <figcaption>Assistant checkpoint: the dataset is indexed for Assistants and Homepage Search before participants test prompts.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/39_oac_live_executive_overview_preview.png" alt="Actual MPHA Claims Executive Overview dashboard in OAC consumer preview mode" />
-          <figcaption>Dashboard target: the actual OAC consumer/preview canvas with filters, six KPI tiles, denial hotspot heatmap, district donut, claim-type review table, bubble analysis, and denial-rate trend.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png" alt="Actual OAC Assistant responses for denied claims and claim-type review with Additional Insights expanded" />
-          <figcaption>Assistant checkpoint: the real OAC Assistant drawer is shown in consumer mode with the first denied-claims response expanded for Additional Insights and a second claim-type follow-up response visible.</figcaption>
-        </figure>
-        <table>
-          <thead>
-            <tr><th>Assistant prompt</th><th>Expected response pattern</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Which districts contribute the most denied claims?</td><td>Ranks districts using denied-claim volume and points users to the donut and claim-type review table.</td></tr>
-            <tr><td>Which claim types need denial review?</td><td>Highlights Outpatient and Emergency as high-priority review areas when they combine denial volume with processing pressure.</td></tr>
-          </tbody>
-        </table>
+        <div class="lab-step-block" id="lab3-step-connection">
+          <h3>Step 1: Create or confirm the OAC connection to AI Lakehouse</h3>
+          <span class="role">Participant step</span>
+          <p>
+            In OAC, create or confirm the Autonomous AI Lakehouse connection that points to the validated Claims star schema from Lab 2.
+          </p>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/04_ailh_connection_form.png" alt="OAC Autonomous AI Lakehouse connection form" />
+            <figcaption>OAC connection checkpoint: use the facilitator-provided Lakehouse service and credentials.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab3-step-dataset">
+          <h3>Step 2: Create the MPHAClaimAnalysis dataset</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Create a dataset from the AI Lakehouse connection.</li>
+            <li>Expand the connected schema.</li>
+            <li>Select <code>mpha_fact_claims_monthly</code> and the four Claims dimensions.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/05_create_dataset_choose_connection.png" alt="OAC Create Dataset dialog showing the AI Lakehouse connection list" />
+            <figcaption>Create Dataset checkpoint: participants select the AI Lakehouse connection before browsing schemas.</figcaption>
+          </figure>
+          <p class="shot-lead">In the dataset editor, expand the AI Lakehouse connection schema and confirm the Claims star schema tables are available for modeling.</p>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/38_oac_live_expanded_schema_self_service_model.png" alt="Actual OAC dataset editor showing expanded AI Lakehouse schema, Claims tables, Join Diagram, and profiling grid" />
+            <figcaption>Schema checkpoint: the connected AI Lakehouse schema is expanded and the Claims star schema tables are visible.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab3-step-model-profile">
+          <h3>Step 3: Prepare the self-service model and inspect the data profile</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Drag the tables into the Join Diagram.</li>
+            <li>Confirm the Claims fact joins cleanly to Date, District, Coverage Program, and Claim Type.</li>
+            <li>Use the data profiling panel to validate distributions, nulls, and sample rows.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/37_oac_live_self_service_model_profile.png" alt="Actual OAC MPHAClaimAnalysis dataset editor showing Join Diagram and data profiling view" />
+            <figcaption>Self-service model and profiling checkpoint: the upper panel confirms the Claims star schema relationships; the lower panel shows data profiling and sample rows.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab3-step-indexing">
+          <h3>Step 4: Index the dataset for OAC Assistant</h3>
+          <span class="role">Participant step</span>
+          <ol>
+            <li>Open dataset inspection settings.</li>
+            <li>Enable indexing for <code>Assistants and Homepage Search</code>.</li>
+            <li>Review the indexed field scope, save, and run indexing if needed.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/26_dataset_inspect_search_indexing.png" alt="OAC dataset search indexing settings" />
+            <figcaption>Assistant checkpoint: the dataset is indexed for Assistants and Homepage Search before participants test prompts.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab3-step-dashboard">
+          <h3>Step 5: Build or open the Executive Overview canvas</h3>
+          <span class="role">Participant step</span>
+          <p>
+            Build the Executive Overview canvas with filters, KPI tiles, denial hotspot heatmap, district donut, claim-type review table, bubble analysis, denial-rate trend, and business-question chart titles.
+          </p>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/39_oac_live_executive_overview_preview.png" alt="Actual MPHA Claims Executive Overview dashboard in OAC consumer preview mode" />
+            <figcaption>Dashboard target: the actual OAC consumer/preview canvas with filters, six KPI tiles, denial hotspot heatmap, district donut, claim-type review table, bubble analysis, and denial-rate trend.</figcaption>
+          </figure>
+        </div>
+
+        <div class="lab-step-block" id="lab3-step-assistant">
+          <h3>Step 6: Test OAC Assistant on the indexed Claims dataset</h3>
+          <span class="role">Participant step</span>
+          <p>
+            Ask claims-focused questions only. Playbook or policy questions belong in Optional Lab 6B because they require the RAG knowledge base.
+          </p>
+          <table>
+            <thead>
+              <tr><th>Assistant prompt</th><th>Expected response pattern</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Which districts contribute the most denied claims?</td><td>Ranks districts using denied-claim volume and points users to the donut and claim-type review table.</td></tr>
+              <tr><td>Which claim types need denial review?</td><td>Highlights Outpatient and Emergency as high-priority review areas when they combine denial volume with processing pressure.</td></tr>
+            </tbody>
+          </table>
+          <figure class="shot">
+            <img src="assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png" alt="Actual OAC Assistant responses for denied claims and claim-type review with Additional Insights expanded" />
+            <figcaption>Assistant checkpoint: the real OAC Assistant drawer is shown in consumer mode with the first denied-claims response expanded for Additional Insights and a second claim-type follow-up response visible.</figcaption>
+          </figure>
+        </div>
       </section>
 
-      <section class="lab" id="lab4b">
+      <section class="lab" id="lab4">
         <div class="lab-head">
           <div>
-            <p class="eyebrow">Lab 4B</p>
+            <p class="eyebrow">Lab 4</p>
             <h2>Extend Claims analytics with JSON and spatial context</h2>
           </div>
           <div class="duration">Guided extension · 25 minutes</div>
@@ -851,73 +1116,92 @@
           <div class="flow-step"><strong>Silver to Gold</strong><span>Aggregate district-month Claims context.</span></div>
           <div class="flow-step"><strong>Extend</strong><span>Load context to AI Lakehouse, add it to the workbook, and index it for Assistant.</span></div>
         </div>
-        <h3>Task 1 - Upload the Round 2 Silver extension notebook</h3>
-        <ol>
-          <li>Download <code>02B_Silver_Claims_Context_Extension.ipynb</code> from the workshop assets.</li>
-          <li>Open the existing AIDP workspace and go to the <code>O2_Silver</code> folder.</li>
-          <li>Upload the notebook. This is an add-on notebook; it does not replace <code>02_silver.ipynb</code>.</li>
-          <li>Attach the same Spark compute used in Lab 2 and run all cells.</li>
-        </ol>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/01_existing_workspace_for_round2_extension.png" alt="Existing AIDP workspace before adding Round 2 extension notebooks" />
-          <figcaption>Round 2 starts in the same AIDP workspace. The existing Bronze, Silver, Gold, AI Lakehouse load, ML, and Agent folders remain untouched.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/02_upload_silver_context_extension_to_o2_silver.png" alt="AIDP O2 Silver folder where the Round 2 Silver context extension notebook is uploaded" />
-          <figcaption>Upload checkpoint: place <code>02B_Silver_Claims_Context_Extension.ipynb</code> in <code>O2_Silver</code> as a new add-on notebook.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/04_silver_extension_notebook_attached.png" alt="AIDP Silver extension notebook attached to the active Spark cluster" />
-          <figcaption>Run checkpoint: open <code>02B_Silver_Claims_Context_Extension.ipynb</code>, attach the active Spark cluster, and keep the original <code>02_silver.ipynb</code> untouched.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/05_silver_extension_success.png" alt="AIDP Silver extension notebook showing successful output for silver_operations_access_context" />
-          <figcaption>Success checkpoint: the notebook writes <code>silver_operations_access_context</code> and prints district-level capacity and spatial access bands.</figcaption>
-        </figure>
-        <table>
-          <thead>
-            <tr><th>Bronze input</th><th>Silver enrichment</th><th>Business meaning</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>bronze_facility_capacity_events</code></td><td>Parse JSON timestamps, flatten triage counts, derive supply/diversion flags, and classify <code>capacity_pressure_band</code>.</td><td>Turns operational JSON events into comparable district/facility pressure signals.</td></tr>
-            <tr><td><code>bronze_healthcare_service_areas_geojson</code></td><td>Explode GeoJSON features, classify boundaries, facility points, and catchments, then derive access coverage signals.</td><td>Turns spatial service-area data into district access context.</td></tr>
-            <tr><td>Facility and district reference data</td><td>Join JSON and spatial signals to facility and district master data.</td><td>Creates one conformed table: <code>silver_operations_access_context</code>.</td></tr>
-          </tbody>
-        </table>
-        <h3>Task 2 - Create the AI Lakehouse extension table</h3>
-        <ol>
-          <li>Open Autonomous AI Lakehouse Database Actions or the approved SQL execution surface.</li>
-          <li>Run <code>sql/create_ai_lakehouse_claims_context_extension.sql</code>.</li>
-          <li>Confirm <code>mpha_fact_district_claims_context</code> and <code>mpha_claims_district_context_v</code> are created in the same schema as the Claims star schema.</li>
-        </ol>
-        <div class="callout warning">
-          <strong>Admin step</strong>
-          This SQL adds only the extension table and view. It does not change <code>mpha_fact_claims_monthly</code> or any Claims dimension.
+        <div class="lab-step-block" id="lab4-step-silver-extension">
+          <h3>Step 1: Upload and run the Round 2 Silver extension notebook</h3>
+          <span class="role">Guided extension</span>
+          <ol>
+            <li>Download <code>02B_Silver_Claims_Context_Extension.ipynb</code> from the workshop assets.</li>
+            <li>Open the existing AIDP workspace and go to the <code>O2_Silver</code> folder.</li>
+            <li>Upload the notebook. This is an add-on notebook; it does not replace <code>02_silver.ipynb</code>.</li>
+            <li>Attach the same Spark compute used in Lab 1 and run all cells.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/01_existing_workspace_for_round2_extension.png" alt="Existing AIDP workspace before adding Round 2 extension notebooks" />
+            <figcaption>Round 2 starts in the same AIDP workspace. The existing Bronze, Silver, Gold, AI Lakehouse load, ML, and Agent folders remain untouched.</figcaption>
+          </figure>
+          <p class="shot-lead">Upload the Round 2 Silver extension notebook into the O2_Silver folder without replacing the original Silver notebook.</p>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/02_upload_silver_context_extension_to_o2_silver.png" alt="AIDP O2 Silver folder where the Round 2 Silver context extension notebook is uploaded" />
+            <figcaption>Upload checkpoint: place <code>02B_Silver_Claims_Context_Extension.ipynb</code> in <code>O2_Silver</code> as a new add-on notebook.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the uploaded Silver extension notebook and attach the active Spark cluster before running it.</p>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/04_silver_extension_notebook_attached.png" alt="AIDP Silver extension notebook attached to the active Spark cluster" />
+            <figcaption>Run checkpoint: open <code>02B_Silver_Claims_Context_Extension.ipynb</code>, attach the active Spark cluster, and keep the original <code>02_silver.ipynb</code> untouched.</figcaption>
+          </figure>
+          <p class="shot-lead">Run the Silver extension notebook and confirm it creates the district access context output.</p>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/05_silver_extension_success.png" alt="AIDP Silver extension notebook showing successful output for silver_operations_access_context" />
+            <figcaption>Success checkpoint: the notebook writes <code>silver_operations_access_context</code> and prints district-level capacity and spatial access bands.</figcaption>
+          </figure>
+          <table>
+            <thead>
+              <tr><th>Bronze input</th><th>Silver enrichment</th><th>Business meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>bronze_facility_capacity_events</code></td><td>Parse JSON timestamps, flatten triage counts, derive supply/diversion flags, and classify <code>capacity_pressure_band</code>.</td><td>Turns operational JSON events into comparable district/facility pressure signals.</td></tr>
+              <tr><td><code>bronze_healthcare_service_areas_geojson</code></td><td>Explode GeoJSON features, classify boundaries, facility points, and catchments, then derive access coverage signals.</td><td>Turns spatial service-area data into district access context.</td></tr>
+              <tr><td>Facility and district reference data</td><td>Join JSON and spatial signals to facility and district master data.</td><td>Creates one conformed table: <code>silver_operations_access_context</code>.</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="callout">
-          <strong>Validated run note</strong>
-          In the validation run, the fact table was created from AIDP against the connected <code>goldailh.e2eaidpuser</code> external catalog, then the Gold notebook inserted 5 district-month context rows. Database Actions remains the recommended delivery path for the SQL script.
+
+        <div class="lab-step-block" id="lab4-step-extension-ddl">
+          <h3>Step 2: Create the AI Lakehouse extension table</h3>
+          <span class="role admin">Admin step</span>
+          <ol>
+            <li>Open Autonomous AI Lakehouse Database Actions or the approved SQL execution surface.</li>
+            <li>Run <code>sql/create_ai_lakehouse_claims_context_extension.sql</code>.</li>
+            <li>Confirm <code>mpha_fact_district_claims_context</code> and <code>mpha_claims_district_context_v</code> are created in the same schema as the Claims star schema.</li>
+          </ol>
+          <div class="callout warning">
+            <strong>Admin step</strong>
+            This SQL adds only the extension table and view. It does not change <code>mpha_fact_claims_monthly</code> or any Claims dimension.
+          </div>
+          <div class="callout">
+            <strong>Validated run note</strong>
+            In the validation run, the fact table was created from AIDP against the connected <code>goldailh.e2eaidpuser</code> external catalog, then the Gold notebook inserted 5 district-month context rows. Database Actions remains the recommended delivery path for the SQL script.
+          </div>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/08_gold_extension_validation.png" alt="AIDP validation query showing five AI Lakehouse context fact rows" />
+            <figcaption>DDL checkpoint: after the extension table exists, the validation query can read <code>mpha_fact_district_claims_context</code> from AI Lakehouse.</figcaption>
+          </figure>
         </div>
-        <h3>Task 3 - Upload and run the Gold plus AI Lakehouse extension notebook</h3>
-        <ol>
-          <li>Download <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> from the workshop assets.</li>
-          <li>Open the existing <code>03a_GoldAILHLoad</code> folder in AIDP.</li>
-          <li>Upload the notebook. Confirm <code>target_catalog</code>, <code>target_schema</code>, and <code>table_prefix</code>.</li>
-          <li>Run all cells. The notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>mpha_fact_district_claims_context</code>.</li>
-        </ol>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/03_upload_gold_context_extension_to_lakehouse_folder.png" alt="AIDP AI Lakehouse load folder where the Round 2 Gold context extension notebook is uploaded" />
-          <figcaption>Gold load checkpoint: upload the extension notebook beside the existing AI Lakehouse load notebook so the Round 2 context remains separate from the original Claims publish path.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/06_gold_extension_notebook_attached.png" alt="AIDP Gold extension notebook attached to the active Spark cluster" />
-          <figcaption>Run checkpoint: attach <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> to the same active Spark cluster before execution.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/07_gold_extension_success.png" alt="AIDP Gold extension notebook showing successful write to AI Lakehouse" />
-          <figcaption>Success checkpoint: the Gold notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>goldailh.e2eaidpuser.mpha_fact_district_claims_context</code>.</figcaption>
-        </figure>
-        <table>
+
+        <div class="lab-step-block" id="lab4-step-gold-extension">
+          <h3>Step 3: Upload and run the Gold plus AI Lakehouse extension notebook</h3>
+          <span class="role">Guided extension</span>
+          <ol>
+            <li>Download <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> from the workshop assets.</li>
+            <li>Open the existing <code>03a_GoldAILHLoad</code> folder in AIDP.</li>
+            <li>Upload the notebook. Confirm <code>target_catalog</code>, <code>target_schema</code>, and <code>table_prefix</code>.</li>
+            <li>Run all cells. The notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>mpha_fact_district_claims_context</code>.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/03_upload_gold_context_extension_to_lakehouse_folder.png" alt="AIDP AI Lakehouse load folder where the Round 2 Gold context extension notebook is uploaded" />
+            <figcaption>Gold load checkpoint: upload the extension notebook beside the existing AI Lakehouse load notebook so the Round 2 context remains separate from the original Claims publish path.</figcaption>
+          </figure>
+          <p class="shot-lead">Open the Gold extension notebook and attach the same active Spark cluster used for the prior extension.</p>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/06_gold_extension_notebook_attached.png" alt="AIDP Gold extension notebook attached to the active Spark cluster" />
+            <figcaption>Run checkpoint: attach <code>03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb</code> to the same active Spark cluster before execution.</figcaption>
+          </figure>
+          <p class="shot-lead">Run the Gold extension notebook and confirm the district context fact table is loaded into AI Lakehouse.</p>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/07_gold_extension_success.png" alt="AIDP Gold extension notebook showing successful write to AI Lakehouse" />
+            <figcaption>Success checkpoint: the Gold notebook writes <code>gold_district_claims_context</code> and inserts new rows into <code>goldailh.e2eaidpuser.mpha_fact_district_claims_context</code>.</figcaption>
+          </figure>
+          <table>
           <thead>
             <tr><th>Gold output</th><th>Grain</th><th>Key measures</th></tr>
           </thead>
@@ -927,42 +1211,43 @@
             <tr><td><code>mpha_claims_district_context_v</code></td><td>OAC-ready view</td><td>District-level context for adding extension visuals to the existing Claims dashboard.</td></tr>
           </tbody>
         </table>
-        <h3>Task 4 - Validate and extend OAC</h3>
-        <ol>
-          <li>Run <code>sql/claims_context_extension_validation.sql</code>.</li>
-          <li>In OAC, open the existing MPHA Claims workbook and add <code>mpha_claims_district_context_v</code> to the workbook data model or as an additional dataset.</li>
-          <li>Join the context view at district and month grain where the workbook model allows it, or keep it as a separate dataset for Assistant questions.</li>
-          <li>Inspect the added context fields and enable indexing so OAC Assistant can use the new JSON capacity and spatial access signals.</li>
-          <li>Do not create a new canvas for this workshop step. The objective is to demonstrate that the existing workbook can be extended with new Lakehouse data and tested through natural-language questions.</li>
-        </ol>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/08_gold_extension_validation.png" alt="AIDP validation query showing five AI Lakehouse context fact rows" />
-          <figcaption>Validation checkpoint: a Spark query against <code>mpha_fact_district_claims_context</code> returns 5 AI Lakehouse context rows and top priority scores.</figcaption>
-        </figure>
-        <figure class="shot">
-          <img src="assets/aidp_context_extension_lab/screenshots/09_context_view_validation.png" alt="AIDP validation query showing the OAC-ready context view and five rows" />
-          <figcaption>OAC readiness checkpoint: <code>mpha_claims_district_context_v</code> exists in the external catalog and returns 5 rows for dashboard extension.</figcaption>
-        </figure>
-        <div class="task-grid">
-          <div class="task">
-            <strong>Question 1</strong>
-            <p>Which denial hotspots also have high capacity pressure?</p>
-          </div>
-          <div class="task">
-            <strong>Question 2</strong>
-            <p>Which districts combine high denial rate and poor spatial access?</p>
-          </div>
-          <div class="task">
-            <strong>Question 3</strong>
-            <p>Which districts have supply alerts or diversion events that may explain claims processing pressure?</p>
-          </div>
-          <div class="task">
-            <strong>Question 4</strong>
-            <p>Where are residents per facility highest, and how does that compare with denial rate?</p>
-          </div>
-          <div class="task">
-            <strong>Question 5</strong>
-            <p>Where should MPHA prioritize claims review, provider outreach, and mobile clinic intervention together?</p>
+        </div>
+
+        <div class="lab-step-block" id="lab4-step-oac-extension">
+          <h3>Step 4: Validate and extend OAC</h3>
+          <span class="role">Guided extension</span>
+          <ol>
+            <li>Run <code>sql/claims_context_extension_validation.sql</code>.</li>
+            <li>In OAC, open the existing MPHA Claims workbook and add <code>mpha_claims_district_context_v</code> to the workbook data model or as an additional dataset.</li>
+            <li>Join the context view at district and month grain where the workbook model allows it, or keep it as a separate dataset for Assistant questions.</li>
+            <li>Inspect the added context fields and enable indexing so OAC Assistant can use the new JSON capacity and spatial access signals.</li>
+            <li>Do not create a new canvas for this workshop step. The objective is to demonstrate that the existing workbook can be extended with new Lakehouse data and tested through natural-language questions.</li>
+          </ol>
+          <figure class="shot">
+            <img src="assets/aidp_context_extension_lab/screenshots/09_context_view_validation.png" alt="AIDP validation query showing the OAC-ready context view and five rows" />
+            <figcaption>OAC readiness checkpoint: <code>mpha_claims_district_context_v</code> exists in the external catalog and returns 5 rows for dashboard extension.</figcaption>
+          </figure>
+          <div class="task-grid">
+            <div class="task">
+              <strong>Question 1</strong>
+              <p>Which denial hotspots also have high capacity pressure?</p>
+            </div>
+            <div class="task">
+              <strong>Question 2</strong>
+              <p>Which districts combine high denial rate and poor spatial access?</p>
+            </div>
+            <div class="task">
+              <strong>Question 3</strong>
+              <p>Which districts have supply alerts or diversion events that may explain claims processing pressure?</p>
+            </div>
+            <div class="task">
+              <strong>Question 4</strong>
+              <p>Where are residents per facility highest, and how does that compare with denial rate?</p>
+            </div>
+            <div class="task">
+              <strong>Question 5</strong>
+              <p>Where should MPHA prioritize claims review, provider outreach, and mobile clinic intervention together?</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1006,11 +1291,12 @@
           <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/models.html">AIDP Models</a>: model registry, versions, metrics, artifacts, lineage, and batch inference usage.</li>
           <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/customer-managed-mlflow-servers.html">Customer-managed MLflow servers</a>: optional external tracking server pattern and its tradeoff with built-in AIDP Experiments and Models integration.</li>
         </ul>
-        <h3>Task 1 - Confirm ML prerequisites and upload the notebook</h3>
+        <div class="lab-step-block" id="lab5-step-ml-prereqs">
+        <h3>Step 1: Confirm ML prerequisites and upload the notebook</h3>
         <ol>
           <li><strong>Admin step: confirm compute compatibility.</strong> Oracle documents that Experiments and Models require Intel- or AMD-based compute and are not currently supported on ARM-based compute clusters.</li>
           <li><strong>Admin step: confirm the ML folder.</strong> Confirm that <code>04_ML</code> exists in the AIDP workspace and the shared Spark cluster can be attached to notebooks.</li>
-          <li><strong>Admin step: confirm Gold inputs.</strong> Lab 2 and Lab 3 must be complete so the Gold feature sources and Claims star schema are available.</li>
+          <li><strong>Admin step: confirm Gold inputs.</strong> Lab 1 and Lab 2 must be complete so the Gold feature sources and Claims star schema are available.</li>
           <li><strong>Participant step: upload the notebook.</strong> Download <code>notebooks/aidp_ml_claims_denial_risk_pyspark.py</code>, upload it into <code>04_ML</code>, and open the file.</li>
           <li><strong>Participant step: attach compute.</strong> Attach the workshop Spark cluster before running the notebook.</li>
           <li><strong>Participant step: confirm notebook parameters.</strong> The validated notebook uses <code>gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"</code>, <code>experiment_name = "MPHA Claims Denial Risk Prediction"</code>, <code>mlflow_run_name = "claims_denial_risk_v1_baseline"</code>, and <code>model_artifact_path = "claims_denial_risk_pipeline"</code>.</li>
@@ -1019,15 +1305,19 @@
           <img src="assets/aidp_ml_lab/screenshots/01_workspace_ml_folder.png" alt="AIDP workspace showing the 04_ML folder" />
           <figcaption>Admin checkpoint: the AIDP workspace contains <code>04_ML</code> alongside the Bronze, Silver, Gold, AI Lakehouse load, and Agent folders.</figcaption>
         </figure>
+        <p class="shot-lead">Upload the ML notebook into the 04_ML folder so it is separated from the core medallion notebooks.</p>
         <figure class="shot">
           <img src="assets/aidp_ml_lab/screenshots/01b_ml_folder_notebook_uploaded.png" alt="AIDP 04_ML folder with the uploaded notebook" />
           <figcaption>Participant checkpoint: the ML notebook is uploaded into <code>04_ML</code>. In the delivered workshop kit, use the file named <code>aidp_ml_claims_denial_risk_pyspark.py</code>.</figcaption>
         </figure>
+        <p class="shot-lead">Open the ML notebook, attach compute, and check the Gold-stage input path before running the cells.</p>
         <figure class="shot">
           <img src="assets/aidp_ml_lab/screenshots/01c_ml_notebook_open.png" alt="AIDP ML notebook opened with claims denial risk code" />
           <figcaption>Participant checkpoint: open the notebook, attach compute, confirm the Gold-stage volume path, then run the notebook cells.</figcaption>
         </figure>
-        <h3>Task 2 - Create or confirm the AIDP Experiment</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-experiment">
+        <h3>Step 2: Create or confirm the AIDP Experiment</h3>
         <ol>
           <li><strong>Admin step: create the experiment if it does not already exist.</strong> Open <strong>Experiments</strong> from AIDP Workbench and click <strong>Create</strong>.</li>
           <li>Name the experiment <code>MPHA Claims Denial Risk Prediction</code>.</li>
@@ -1043,7 +1333,9 @@
           <strong>Expected result</strong>
           The experiment is visible in the Experiments page and can receive MLflow runs from the notebook.
         </div>
-        <h3>Task 3 - Run training and review the experiment run</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-training-run">
+        <h3>Step 3: Run training and review the experiment run</h3>
         <ol>
           <li><strong>Participant step: run all notebook cells.</strong> The notebook builds the training frame at Claims star schema grain: service month, district, coverage program, and claim type.</li>
           <li>Confirm the run name is <code>claims_denial_risk_v1_baseline</code> and the status is <code>FINISHED</code>.</li>
@@ -1063,7 +1355,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_ml_lab/screenshots/03_experiment_runs_list.png" alt="AIDP experiment run list with claims denial risk metrics" />
           <figcaption>Expected result: the latest run is finished and exposes model metrics. In the validated run, <code>model_auc_training</code> is <code>0.9798100365704998</code>, <code>avg_denial_risk_score</code> is <code>0.1605</code>, and <code>scored_row_count</code> is <code>102</code>.</figcaption>
         </figure>
-        <h3>Task 4 - Open the run and confirm the logged model artifact</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-run-detail">
+        <h3>Step 4: Open the run and confirm the logged model artifact</h3>
         <ol>
           <li><strong>Participant step: open the latest finished run.</strong> Click the newest <code>claims_denial_risk_v1_baseline</code> run.</li>
           <li>Confirm the run information shows status <code>FINISHED</code>, start time, end time, and duration.</li>
@@ -1086,7 +1380,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
             <tr><td><code>feature_count</code></td><td>Confirms which engineered signal set was used for that run.</td></tr>
           </tbody>
         </table>
-        <h3>Task 5 - Register the selected model</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-register-model">
+        <h3>Step 5: Register the selected model</h3>
         <ol>
           <li><strong>Guided step:</strong> From the run details page, click <strong>Register</strong>.</li>
           <li>Enter or select the model name <code>claim_denial_risk</code>.</li>
@@ -1104,7 +1400,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <strong>Expected result</strong>
           The model is registered as <code>claim_denial_risk</code>, version <code>v1</code>, with lineage back to the experiment run that produced it.
         </div>
-        <h3>Task 6 - Verify the registered model in Master Catalog</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-verify-model">
+        <h3>Step 6: Verify the registered model in Master Catalog</h3>
         <ol>
           <li><strong>Participant step: open Master Catalog.</strong> Navigate to <strong>Master catalog - e2eindustrydemos - default - Models</strong>.</li>
           <li>Confirm <code>claim_denial_risk</code> appears in the Models list.</li>
@@ -1116,11 +1414,14 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_ml_lab/screenshots/06_models_catalog_list.png" alt="AIDP Models list showing claim_denial_risk" />
           <figcaption>Expected result: the registered model appears under <code>e2eindustrydemos.default.Models</code> with latest version <code>1</code>.</figcaption>
         </figure>
+        <p class="shot-lead">Open the registered model details and verify version v1 is available for the denial risk model.</p>
         <figure class="shot">
           <img src="assets/aidp_ml_lab/screenshots/07_registered_model_detail.png" alt="AIDP registered model detail page for claim_denial_risk" />
           <figcaption>Expected result: the model detail page shows version count, latest version number, creation timestamp, and <code>Version: v1</code>.</figcaption>
         </figure>
-        <h3>Task 7 - Batch score and publish the risk output</h3>
+        </div>
+        <div class="lab-step-block" id="lab5-step-score-output">
+        <h3>Step 7: Batch score and publish the risk output</h3>
         <ol>
           <li><strong>Participant step: run the scoring cells.</strong> The notebook scores the latest service month after training is complete.</li>
           <li>Publish <code>gold_claims_denial_risk_scores</code> to Gold-stage storage for downstream analytics.</li>
@@ -1154,6 +1455,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         <div class="callout expected">
           <strong>Lab 5 handoff</strong>
           The lab is complete when an experiment run is visible, the selected model is registered or ready to register, and the scored Gold-stage output is ready to be added to AI Lakehouse, OAC, or the copilot story.
+        </div>
         </div>
       </section>
 
@@ -1192,7 +1494,8 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
             <tr><td>Knowledge base</td><td><code>e2eindustrydemos.default.mphapolicy</code></td><td>Stores document chunks and vector embeddings for the RAG tool.</td></tr>
           </tbody>
         </table>
-        <h3>Task 1 - Open the standard catalog schema</h3>
+        <div class="lab-step-block" id="lab6a-step-schema">
+        <h3>Step 1: Open the standard catalog schema</h3>
         <ol>
           <li><strong>Participant step:</strong> In AIDP Workbench, click <strong>Master catalog</strong>.</li>
           <li>Open the standard catalog <code>e2eindustrydemos</code>.</li>
@@ -1203,7 +1506,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/03_schema_types_knowledge_bases_visible.png" alt="AIDP standard catalog default schema with Knowledge Bases visible" />
           <figcaption>Readiness checkpoint: <code>e2eindustrydemos.default</code> is the schema where the MPHA knowledge base will be created.</figcaption>
         </figure>
-        <h3>Task 2 - Confirm the playbook source in the external volume</h3>
+        </div>
+        <div class="lab-step-block" id="lab6a-step-playbook-source">
+        <h3>Step 2: Confirm the playbook source in the external volume</h3>
         <ol>
           <li><strong>Participant step:</strong> Open <strong>Volumes</strong> and confirm <code>e2eindustrydemovol</code> is listed as an <strong>External</strong> volume.</li>
           <li>Open <code>e2eindustrydemovol</code> and then open <code>RawData</code>.</li>
@@ -1214,11 +1519,14 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/04_external_volume_for_playbook_source.png" alt="AIDP Volumes page showing e2eindustrydemovol as an external volume" />
           <figcaption>Volume checkpoint: the document source is exposed to AIDP through the external volume <code>e2eindustrydemovol</code>.</figcaption>
         </figure>
+        <p class="shot-lead">Open the RawData folder and confirm the MPHA playbook document is available for the knowledge base.</p>
         <figure class="shot">
           <img src="assets/aidp_rag_knowledge_lab/screenshots/06_rawdata_playbook_docx_visible.png" alt="AIDP RawData folder showing MPHA playbook DOCX file" />
           <figcaption>Document checkpoint: the RawData folder includes <code>MPHA_Winter_Respiratory_Response_Playbook.docx</code>.</figcaption>
         </figure>
-        <h3>Task 3 - Create the knowledge base shell</h3>
+        </div>
+        <div class="lab-step-block" id="lab6a-step-create-kb">
+        <h3>Step 3: Create the knowledge base shell</h3>
         <ol>
           <li><strong>Participant step:</strong> Return to <code>e2eindustrydemos.default</code>.</li>
           <li>Click <strong>Add to schema</strong> and choose <strong>Knowledge base</strong>.</li>
@@ -1232,11 +1540,14 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/12_add_to_schema_knowledge_base_menu.png" alt="AIDP Add to schema menu with Knowledge base option" />
           <figcaption>Create checkpoint: use <strong>Add to schema</strong> from the standard catalog schema to create the knowledge base.</figcaption>
         </figure>
+        <p class="shot-lead">Complete the Create Knowledge Base dialog with workspace, cluster, embedding model, and chunking settings.</p>
         <figure class="shot">
           <img src="assets/aidp_rag_knowledge_lab/screenshots/13_create_knowledge_base_dialog_advanced_settings.png" alt="AIDP Create Knowledge Base dialog with advanced settings" />
           <figcaption>Configuration checkpoint: the knowledge base shell captures the ingestion workspace, cluster, embedding model, chunk size, and chunk overlap.</figcaption>
         </figure>
-        <h3>Task 4 - Add the RawData folder as the knowledge-base data source</h3>
+        </div>
+        <div class="lab-step-block" id="lab6a-step-data-source">
+        <h3>Step 4: Add the RawData folder as the knowledge-base data source</h3>
         <ol>
           <li><strong>Participant step:</strong> Open the <code>mphapolicy</code> knowledge base.</li>
           <li>On the <strong>Data Source</strong> tab, click <strong>Add data source to knowledge base</strong>.</li>
@@ -1248,7 +1559,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/14_add_data_source_dialog_file_filters_ingestion.png" alt="AIDP Add data source dialog with file filters and ingestion option" />
           <figcaption>Data-source checkpoint: select the folder in the external volume and start ingestion when the source is added.</figcaption>
         </figure>
-        <h3>Task 5 - Validate source parameters and run ingestion if needed</h3>
+        </div>
+        <div class="lab-step-block" id="lab6a-step-ingestion-source">
+        <h3>Step 5: Validate source parameters and run ingestion if needed</h3>
         <ol>
           <li><strong>Participant step:</strong> After the data source is added, confirm the source row appears under <strong>Data Source</strong>.</li>
           <li>Open the <code>RawData</code> source.</li>
@@ -1260,11 +1573,14 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/08_mphapolicy_data_source_rawdata_volume.png" alt="AIDP mphapolicy knowledge base data source row for RawData volume" />
           <figcaption>Source checkpoint: <code>mphapolicy</code> points to the RawData folder in the external volume.</figcaption>
         </figure>
+        <p class="shot-lead">Open the knowledge base data source parameters and review the path, file pattern, workspace, cluster, and ingest control.</p>
         <figure class="shot">
           <img src="assets/aidp_rag_knowledge_lab/screenshots/09_kb_data_source_parameters_ingest_now.png" alt="AIDP knowledge base data source parameters with ingest now button" />
           <figcaption>Ingestion checkpoint: the source parameters show the folder path, supported file patterns, ingestion workspace, ingestion cluster, and <strong>Ingest now</strong>.</figcaption>
         </figure>
-        <h3>Task 6 - Verify the ingestion job completed</h3>
+        </div>
+        <div class="lab-step-block" id="lab6a-step-ingestion-success">
+        <h3>Step 6: Verify the ingestion job completed</h3>
         <ol>
           <li><strong>Participant step:</strong> Open the <strong>Job runs</strong> tab for the <code>RawData</code> source.</li>
           <li>Wait until the latest run shows <strong>Succeeded</strong>.</li>
@@ -1275,6 +1591,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_rag_knowledge_lab/screenshots/10_kb_ingestion_job_runs_succeeded.png" alt="AIDP knowledge base ingestion job run succeeded" />
           <figcaption>Success checkpoint: the ingestion job run shows <strong>Succeeded</strong>, meaning the playbook chunks and embeddings are ready for RAG retrieval.</figcaption>
         </figure>
+        <p class="shot-lead">Open the knowledge base details and confirm the completed knowledge base is ready for the RAG tool.</p>
         <figure class="shot">
           <img src="assets/aidp_rag_knowledge_lab/screenshots/11_mphapolicy_knowledge_base_details.png" alt="AIDP mphapolicy knowledge base details tab" />
           <figcaption>Knowledge-base checkpoint: <code>mphapolicy</code> is a knowledge base in <code>e2eindustrydemos.default</code> and is ready to be selected by the RAG tool.</figcaption>
@@ -1286,6 +1603,7 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
         <p class="source-note">
           Product reference: <a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/knowledge-bases.html">Oracle AI Data Platform Knowledge Bases</a>.
         </p>
+        </div>
       </section>
 
       <span class="anchor-alias" id="optional-lab6b"></span>
@@ -1324,25 +1642,28 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <li><strong>Admin step: Validate the Claims star schema.</strong> Confirm <code>mpha_fact_claims_monthly</code>, <code>mpha_dim_date</code>, <code>mpha_dim_district</code>, <code>mpha_dim_coverage_program</code>, and <code>mpha_dim_claim_type</code> are populated in AI Lakehouse.</li>
           <li><strong>Admin step: Confirm the external catalog.</strong> Confirm AIDP can read the AI Lakehouse catalog and schema, for example <code>goldailh.e2eaidpuser</code>.</li>
           <li><strong>Participant step: Confirm the playbook knowledge base from Lab 6A.</strong> The MPHA playbook must be indexed as <code>e2eindustrydemos.default.mphapolicy</code> or the equivalent workshop knowledge base.</li>
-          <li><strong>Admin step: Confirm AI compute.</strong> Create or reuse an AI compute such as <code>AIComputeForAgents</code> and make sure it is active before testing.</li>
+          <li><strong>Admin step: Confirm the prepared shell and AI compute.</strong> Lab 0 should leave an empty <code>MPHA_Claims_Policy_Copilot</code> shell and an active or starting <code>AIComputeForAgents</code> compute. The shell should not contain supervisor, SQL, or RAG logic yet.</li>
           <li><strong>Participant step: Open AIDP Workbench.</strong> Use the shared workspace <code>E2EAIDPIndustryDemos</code> and open <strong>Agent flows</strong>.</li>
         </ol>
         <figure class="shot">
           <img src="assets/aidp_agent_lab/screenshots/00_agent_flows_landing_page.png" alt="AIDP Agent flows landing page showing the MPHA copilot" />
-          <figcaption>Start from Agent flows in the AIDP workspace. The finished row should show <code>MPHA_Claims_Policy_Copilot</code> as deployed and connected to active AI compute.</figcaption>
+          <figcaption>Start from Agent flows in the AIDP workspace. Open the prepared blank shell created by the facilitator during Lab 0.</figcaption>
         </figure>
-        <h3>Task 1 - Create or open the copilot flow</h3>
+        <div class="lab-step-block" id="lab6b-step-create-flow">
+        <h3>Step 1: Open the prepared blank copilot shell</h3>
         <ol>
           <li>Open <strong>Agent flows</strong> from the AIDP workspace navigation.</li>
-          <li>Click <strong>Create</strong> to create a new flow, or open the prepared <code>MPHA_Claims_Policy_Copilot</code> flow.</li>
-          <li>Name the flow <code>MPHA_Claims_Policy_Copilot</code>.</li>
-          <li>Use visual authoring mode so participants can see the supervisor, executor agents, and tools on one canvas.</li>
+          <li>Open the prepared <code>MPHA_Claims_Policy_Copilot</code> shell. If the facilitator did not run Lab 0, create a new visual-builder flow with that name.</li>
+          <li>Confirm the canvas is empty and ready for participant build-out.</li>
+          <li>Confirm AI compute is active or can be attached before Playground testing.</li>
         </ol>
         <figure class="shot">
-          <img src="assets/aidp_agent_lab/screenshots/01_agent_flow_development_canvas.png" alt="AIDP agent flow canvas with supervisor, SQL agent, RAG agent, SQL tool and RAG tool" />
-          <figcaption>The target flow contains one chat trigger, one supervisor, two executor agents, one SQL tool, and one RAG tool.</figcaption>
+          <img src="assets/aidp_agent_lab/screenshots/10c_blank_agent_flow_shell_created_no_compute.png" alt="Blank AIDP Claims Policy Copilot shell before participant build-out" />
+          <figcaption>Starting checkpoint: participants begin with an empty visual-builder shell. They add the supervisor, executor agents, SQL tool, and RAG tool in the next steps.</figcaption>
         </figure>
-        <h3>Task 2 - Configure the supervisor agent</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-supervisor">
+        <h3>Step 2: Configure the supervisor agent</h3>
         <ol>
           <li>Select the supervisor node and name it <code>SUPERVISOR_AGENT_1</code>.</li>
           <li>Select the approved generative model. In the validated workshop run, the model is <code>google.gemini-2.5-flash</code>.</li>
@@ -1361,7 +1682,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_agent_lab/screenshots/02_supervisor_agent_instructions.png" alt="AIDP supervisor agent configuration and routing instructions" />
           <figcaption>Supervisor checkpoint: the routing instructions clearly separate structured claims analytics from playbook retrieval, and require both agents for combined questions.</figcaption>
         </figure>
-        <h3>Task 3 - Configure the Claims SQL executor</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-sql-agent">
+        <h3>Step 3: Configure the Claims SQL executor</h3>
         <ol>
           <li>Add an Agent node and name it <code>AGENT_1</code>.</li>
           <li>Describe it as the Claims SQL executor for denial-rate, payment, district, program, claim type, and processing-day metrics.</li>
@@ -1373,7 +1696,9 @@ with mlflow.start_run(run_name="claims_denial_risk_v1_baseline"):
           <img src="assets/aidp_agent_lab/screenshots/03_sql_agent_instructions.png" alt="AIDP SQL executor agent instructions" />
           <figcaption>SQL executor checkpoint: <code>AGENT_1</code> is scoped to claims metrics and must use only rows returned by <code>SQL_1</code>.</figcaption>
         </figure>
-        <h3>Task 4 - Configure the Claims star schema SQL tool</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-sql-tool">
+        <h3>Step 4: Configure the Claims star schema SQL tool</h3>
         <ol>
           <li>Add a SQL tool and name it <code>SQL_1</code>.</li>
           <li>Use table or SQL-query mode depending on the AIDP environment available to the workshop team.</li>
@@ -1405,7 +1730,9 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <img src="assets/aidp_agent_lab/screenshots/04_sql_tool_claims_star_query.png" alt="AIDP SQL tool configured for the MPHA Claims star schema query" />
           <figcaption>SQL tool checkpoint: <code>SQL_1</code> retrieves denial hotspots from the AI Lakehouse Claims star schema and returns a compact business-ready result set.</figcaption>
         </figure>
-        <h3>Task 5 - Configure the Policy RAG executor</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-rag-agent">
+        <h3>Step 5: Configure the Policy RAG executor</h3>
         <ol>
           <li>Add a second Agent node and name it <code>AGENT_2</code>.</li>
           <li>Describe it as the Policy RAG executor for playbook, accreditation, prior authorization, denial remediation, disbursement, membership, and facility-pressure guidance.</li>
@@ -1417,7 +1744,9 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <img src="assets/aidp_agent_lab/screenshots/05_rag_agent_instructions.png" alt="AIDP RAG executor agent instructions" />
           <figcaption>RAG executor checkpoint: <code>AGENT_2</code> answers only with evidence retrieved from the policy knowledge base.</figcaption>
         </figure>
-        <h3>Task 6 - Configure the MPHA playbook RAG tool</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-rag-tool">
+        <h3>Step 6: Configure the MPHA playbook RAG tool</h3>
         <ol>
           <li>Add a RAG tool and name it <code>RAG_1</code>.</li>
           <li>Select the knowledge base <code>e2eindustrydemos.default.mphapolicy</code>, or the equivalent knowledge base created for this workshop.</li>
@@ -1429,18 +1758,29 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <img src="assets/aidp_agent_lab/screenshots/06_rag_tool_playbook_knowledge_base.png" alt="AIDP RAG tool connected to the MPHA policy knowledge base" />
           <figcaption>RAG tool checkpoint: <code>RAG_1</code> retrieves chunks from the MPHA playbook knowledge base and returns source-aware evidence.</figcaption>
         </figure>
-        <h3>Task 7 - Deploy the flow to AI compute</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-deploy">
+        <h3>Step 7: Deploy the flow to AI compute</h3>
         <ol>
           <li>Confirm the canvas contains the chat trigger, supervisor, SQL executor, RAG executor, SQL tool, and RAG tool.</li>
-          <li>Open the compute selector and choose <code>AIComputeForAgents</code> or the AI compute prepared by the facilitator.</li>
+          <li>Click <strong>Compute</strong> on the agent flow page and attach the Lab 0 compute <code>AIComputeForAgents</code> if it is not already attached.</li>
+          <li>Open <strong>Playground</strong> only after the active AI compute badge appears.</li>
           <li>Deploy the flow.</li>
-          <li>Wait until the banner shows the AI compute as active and the page shows <strong>Undeploy</strong>, which confirms the flow is deployed.</li>
+          <li>In the deployment dialog, select the AI compute that will host the deployed endpoint.</li>
+          <li>Wait until the page shows <strong>Undeploy</strong>, which confirms the flow is deployed.</li>
         </ol>
+        <figure class="shot">
+          <img src="assets/aidp_agent_lab/screenshots/10_agent_compute_menu_create_attach.png" alt="AIDP agent flow Compute menu with attach and create AI compute actions" />
+          <figcaption>Compute checkpoint: in the participant lab, attach the Lab 0 compute if it is not already active on the flow. Creating compute here should be a fallback, not the normal participant path.</figcaption>
+        </figure>
+        <p class="shot-lead">After deployment, confirm the agent flow is attached to AIComputeForAgents and the compute badge is active.</p>
         <figure class="shot">
           <img src="assets/aidp_agent_lab/screenshots/07_deployed_ai_compute_active.png" alt="AIDP agent flow deployed to active AI compute" />
           <figcaption>Deployment checkpoint: the flow is deployed and the AI compute badge shows <code>AIComputeForAgents (ACTIVE)</code>.</figcaption>
         </figure>
-        <h3>Task 8 - Open Playground and start a clean session</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-playground">
+        <h3>Step 8: Open Playground and start a clean session</h3>
         <ol>
           <li>Switch from <strong>Development</strong> to <strong>Playground</strong>.</li>
           <li>Select <code>SUPERVISOR_AGENT_1</code> as the test target.</li>
@@ -1451,7 +1791,9 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <img src="assets/aidp_agent_lab/screenshots/08_supervisor_playground_entry.png" alt="AIDP Playground with supervisor agent selected for testing" />
           <figcaption>Playground checkpoint: test through the supervisor so routing, SQL execution, RAG retrieval, and synthesis are all validated together.</figcaption>
         </figure>
-        <h3>Task 9 - Test SQL, RAG, and combined questions</h3>
+        </div>
+        <div class="lab-step-block" id="lab6b-step-test">
+        <h3>Step 9: Test SQL, RAG, and combined questions</h3>
         <p>Run these prompts in order. The first two isolate the executor branches. The third proves the supervisor can combine structured claims evidence with playbook evidence.</p>
         <table>
           <thead>
@@ -1483,6 +1825,7 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
         <div class="callout expected">
           <strong>Lab 6B handoff</strong>
           The lab is complete when the supervisor can answer SQL-only, RAG-only, and combined prompts without bypassing the executor agents.
+        </div>
         </div>
       </section>
 
@@ -1532,9 +1875,8 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
         <div class="task-grid">
           <div class="task">
             <strong>Core guides</strong>
-            <p>Markdown and PDF execution guides for facilitators and participants.</p>
+            <p>Downloadable PDF execution guide for facilitators and participants.</p>
             <p>
-              <a href="asset_viewer.html?file=workshop_guide.md&amp;label=Workshop%20guide&amp;kind=markdown">Open guide</a><br />
               <a href="asset_viewer.html?file=workshop_guide.pdf&amp;label=Workshop%20guide%20PDF&amp;kind=pdf">Open PDF guide</a>
             </p>
           </div>
@@ -1601,6 +1943,7 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
             <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/experiments.html">Oracle AI Data Platform Experiments</a></li>
             <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/models.html">Oracle AI Data Platform Models</a></li>
             <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/knowledge-bases.html">Oracle AI Data Platform Knowledge Bases</a></li>
+            <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/ai-agent-flows.html">Oracle AI Data Platform AI Agents and Agent Flows</a></li>
             <li><a href="https://docs.oracle.com/en/cloud/paas/ai-data-platform/aidug/customer-managed-mlflow-servers.html">Oracle AI Data Platform customer-managed MLflow servers</a></li>
             <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-create-connection-to-oawd/index.html">Oracle Analytics tutorial: create a connection to Autonomous Data Warehouse / AI Lakehouse-style data</a></li>
             <li><a href="https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-mutli-table-data-set/index.html">Oracle Analytics tutorial: create a multi-table dataset</a></li>
