@@ -1,5 +1,5 @@
 # Public Healthcare AIDP Workshop
-# ML notebook: Gold-serving claims inputs -> denial-risk scoring output for the Claims star schema.
+# ML notebook: Gold-serving claims inputs -> train, test, evaluate, and score denial risk.
 #
 # Run `aidp_gold_pyspark.py` first so the Gold stage files exist.
 
@@ -11,6 +11,11 @@ from pyspark.ml.evaluation import BinaryClassificationEvaluator
 from pyspark.ml.feature import OneHotEncoder, StringIndexer, VectorAssembler
 from pyspark.ml.functions import vector_to_array
 
+# -----------------------------------------------------------------------------
+# 1. Import MLflow when it is available.
+# AIDP Experiments use MLflow tracking; the notebook still runs in notebook-only
+# mode if the runtime does not expose MLflow packages.
+# -----------------------------------------------------------------------------
 try:
     import mlflow
     import mlflow.pyfunc as mlflow_pyfunc
@@ -22,7 +27,11 @@ except ImportError:
     MLFLOW_AVAILABLE = False
 
 
-gold_stage_base = "oci://<bucket>@<namespace>/mpha/gold_stage"
+# -----------------------------------------------------------------------------
+# 2. Configure Gold-stage input, experiment names, and scoring metadata.
+# The Gold-stage path should match the mounted AIDP volume used in Labs 1-4.
+# -----------------------------------------------------------------------------
+gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"
 model_version = "claims_denial_risk_v1"
 experiment_name = "MPHA Claims Denial Risk Prediction"
 mlflow_run_name = f"{model_version}_baseline"
@@ -31,6 +40,11 @@ enable_mlflow_tracking = True
 score_run_date = F.to_date(F.lit("2025-07-01"))
 
 
+# -----------------------------------------------------------------------------
+# 3. Shared CSV and ratio helpers.
+# Gold-stage CSVs are read as strings, then typed in each business-specific
+# select block below.
+# -----------------------------------------------------------------------------
 def read_stage_csv(name):
     return spark.read.option("header", "true").csv(f"{gold_stage_base}/{name}")
 
@@ -43,6 +57,11 @@ def safe_ratio(numerator, denominator):
     return F.when(F.col(denominator) > 0, F.col(numerator) / F.col(denominator)).otherwise(F.lit(0.0))
 
 
+# -----------------------------------------------------------------------------
+# 4. Optional model artifact for registry demonstration.
+# The Spark model does the workshop scoring. This lightweight pyfunc model is
+# logged as an artifact so participants can register a model from the experiment.
+# -----------------------------------------------------------------------------
 if MLFLOW_AVAILABLE:
     class ClaimsDenialRiskPyfuncModel(mlflow_pyfunc.PythonModel):
         def predict(self, context, model_input):
@@ -77,6 +96,11 @@ else:
     ClaimsDenialRiskPyfuncModel = None
 
 
+# -----------------------------------------------------------------------------
+# 5. Load the Claims Gold summary and derive payment yield.
+# This is the core ML grain: service month, district, coverage program, and claim
+# type.
+# -----------------------------------------------------------------------------
 claims = (
     read_stage_csv("gold_claims_summary")
     .select(
@@ -99,6 +123,11 @@ claims = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 6. Add provider, capacity, and spatial context.
+# These context tables let the model learn from accreditation risk, facility
+# pressure, supply alerts, public-health pressure, and access distance.
+# -----------------------------------------------------------------------------
 provider_raw = read_stage_csv("gold_provider_accreditation_summary")
 accreditation_band_column = (
     "accreditation_risk_band"
@@ -170,6 +199,11 @@ spatial_context = read_stage_csv("gold_spatial_access_insights").select(
 )
 
 
+# -----------------------------------------------------------------------------
+# 7. Build the ML feature frame and label.
+# `high_denial_flag` is the supervised target; additional flags expose operations
+# stress and slow processing as model features.
+# -----------------------------------------------------------------------------
 scoring_frame = (
     claims.join(capacity_context, "district_id", "left")
     .join(provider_context, "district_id", "left")
@@ -198,22 +232,42 @@ scoring_frame = (
 )
 
 
-latest_service_month = scoring_frame.agg(F.max("service_month").alias("latest_service_month")).first()["latest_service_month"]
+# -----------------------------------------------------------------------------
+# 8. Split the data by time.
+# The validated workshop split trains on historical months, evaluates on the
+# held-out May 2025 month, and scores the latest June 2025 month.
+# -----------------------------------------------------------------------------
+service_months = [
+    row["service_month"]
+    for row in scoring_frame.select("service_month").distinct().orderBy("service_month").collect()
+]
 
-historical_frame = scoring_frame.filter(F.col("service_month") < F.lit(latest_service_month))
-latest_frame = scoring_frame.filter(F.col("service_month") == F.lit(latest_service_month))
+if len(service_months) >= 3:
+    latest_service_month = service_months[-1]
+    test_service_month = service_months[-2]
+    train_frame = scoring_frame.filter(F.col("service_month") < F.lit(test_service_month))
+    test_frame = scoring_frame.filter(F.col("service_month") == F.lit(test_service_month))
+    score_frame = scoring_frame.filter(F.col("service_month") == F.lit(latest_service_month))
+else:
+    latest_service_month = service_months[-1]
+    test_service_month = latest_service_month
+    train_frame, test_frame = scoring_frame.randomSplit([0.8, 0.2], seed=42)
+    score_frame = scoring_frame.filter(F.col("service_month") == F.lit(latest_service_month))
 
-initial_historical_row_count = historical_frame.count()
-initial_label_class_count = historical_frame.select("high_denial_flag").distinct().count()
-
-if initial_historical_row_count < 20 or initial_label_class_count < 2:
-    historical_frame = scoring_frame
-    latest_frame = scoring_frame
-
-training_row_count = historical_frame.count()
-scoring_row_count = latest_frame.count()
+training_row_count = train_frame.count()
+test_row_count = test_frame.count()
+scoring_row_count = score_frame.count()
+train_label_class_count = train_frame.select("high_denial_flag").distinct().count()
+test_label_class_count = test_frame.select("high_denial_flag").distinct().count()
+can_train_model = training_row_count >= 20 and train_label_class_count >= 2
+can_evaluate_model = test_row_count > 0 and test_label_class_count >= 2
 
 
+# -----------------------------------------------------------------------------
+# 9. Define feature columns and Spark ML pipeline.
+# Categorical features are indexed and one-hot encoded; numeric and encoded
+# columns are assembled into a single feature vector for logistic regression.
+# -----------------------------------------------------------------------------
 numeric_features = [
     "claims_submitted",
     "approved_claims",
@@ -254,11 +308,16 @@ classifier = LogisticRegression(
 )
 
 training_pipeline = Pipeline(stages=indexers + [encoder, assembler, classifier])
-label_class_count = historical_frame.select("high_denial_flag").distinct().count()
 mlflow_run_active = False
 model_artifact_logged = False
-model_auc = None
+model_auc_training = None
+model_auc_test = None
 
+# -----------------------------------------------------------------------------
+# 10. Start AIDP Experiment tracking.
+# Parameters record the exact split, grain, feature counts, and row counts so the
+# run is auditable after the notebook completes.
+# -----------------------------------------------------------------------------
 if enable_mlflow_tracking and MLFLOW_AVAILABLE:
     try:
         mlflow.set_experiment(experiment_name)
@@ -268,8 +327,14 @@ if enable_mlflow_tracking and MLFLOW_AVAILABLE:
         mlflow.log_param("model_version", model_version)
         mlflow.log_param("target", "high_denial_flag")
         mlflow.log_param("grain", "service_month|district_id|program_code|claim_type")
+        mlflow.log_param("train_months", f"{service_months[0]} to {service_months[-3]}" if len(service_months) >= 3 else "random_split_train")
+        mlflow.log_param("test_service_month", str(test_service_month))
+        mlflow.log_param("scored_service_month", str(latest_service_month))
         mlflow.log_param("training_row_count", training_row_count)
+        mlflow.log_param("test_row_count", test_row_count)
         mlflow.log_param("scoring_row_count", scoring_row_count)
+        mlflow.log_param("train_label_class_count", train_label_class_count)
+        mlflow.log_param("test_label_class_count", test_label_class_count)
         mlflow.log_param("numeric_feature_count", len(numeric_features))
         mlflow.log_param("categorical_feature_count", len(categorical_features))
         mlflow.log_param("model_artifact_path", model_artifact_path)
@@ -279,20 +344,27 @@ if enable_mlflow_tracking and MLFLOW_AVAILABLE:
 elif enable_mlflow_tracking:
     print("MLflow package is not available in this runtime. Continuing with notebook-only scoring.")
 
-if label_class_count >= 2:
-    training_model = training_pipeline.fit(historical_frame)
+# -----------------------------------------------------------------------------
+# 11. Train, evaluate, and score.
+# If the data slice is too small or has only one label class, the notebook falls
+# back to an explainable weighted-score formula instead of failing the workshop.
+# -----------------------------------------------------------------------------
+if can_train_model:
+    training_model = training_pipeline.fit(train_frame)
     try:
         evaluator = BinaryClassificationEvaluator(
             labelCol="high_denial_flag",
             rawPredictionCol="rawPrediction",
             metricName="areaUnderROC",
         )
-        model_auc = float(evaluator.evaluate(training_model.transform(historical_frame)))
+        model_auc_training = float(evaluator.evaluate(training_model.transform(train_frame)))
+        if can_evaluate_model:
+            model_auc_test = float(evaluator.evaluate(training_model.transform(test_frame)))
     except Exception as exc:
         print(f"Model AUC calculation was skipped: {exc}")
     if mlflow_run_active:
         try:
-            input_example = historical_frame.select(numeric_features).limit(5).toPandas()
+            input_example = train_frame.select(numeric_features).limit(5).toPandas()
             mlflow_pyfunc.log_model(
                 artifact_path=model_artifact_path,
                 python_model=ClaimsDenialRiskPyfuncModel(),
@@ -302,12 +374,12 @@ if label_class_count >= 2:
             mlflow.log_param("model_artifact_logged", "true")
         except Exception as exc:
             print(f"MLflow model artifact logging was skipped: {exc}")
-    scored_frame = training_model.transform(latest_frame).withColumn(
+    scored_frame = training_model.transform(score_frame).withColumn(
         "denial_risk_score",
         F.round(vector_to_array("probability")[1], 2),
     )
 else:
-    scored_frame = latest_frame.withColumn(
+    scored_frame = score_frame.withColumn(
         "denial_risk_score",
         F.round(
             F.least(
@@ -324,6 +396,11 @@ else:
         ),
     )
 
+# -----------------------------------------------------------------------------
+# 12. Convert model scores into an operational review queue.
+# The bucket and row-number priority turn model output into something Claims
+# operations can triage in OAC or AI Lakehouse.
+# -----------------------------------------------------------------------------
 priority_window = Window.partitionBy("service_month").orderBy(
     F.col("denial_risk_score").desc(),
     F.col("denial_rate").desc(),
@@ -363,6 +440,11 @@ gold_claims_denial_risk_scores = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 13. Log final run metrics.
+# These are the values participants should verify in the AIDP Experiments run:
+# training AUC, held-out test AUC, scored rows, and review-queue size.
+# -----------------------------------------------------------------------------
 score_metrics = gold_claims_denial_risk_scores.agg(
     F.count("*").alias("scored_row_count"),
     F.round(F.avg("denial_risk_score"), 4).alias("avg_denial_risk_score"),
@@ -372,7 +454,8 @@ score_metrics = gold_claims_denial_risk_scores.agg(
 
 if mlflow_run_active:
     try:
-        mlflow.log_metric("model_auc_training", float(model_auc) if model_auc is not None else -1.0)
+        mlflow.log_metric("model_auc_training", float(model_auc_training) if model_auc_training is not None else -1.0)
+        mlflow.log_metric("model_auc_test", float(model_auc_test) if model_auc_test is not None else -1.0)
         mlflow.log_metric("avg_denial_risk_score", float(score_metrics["avg_denial_risk_score"]))
         mlflow.log_metric("high_risk_slice_count", int(score_metrics["high_risk_slice_count"]))
         mlflow.log_metric("medium_risk_slice_count", int(score_metrics["medium_risk_slice_count"]))
@@ -381,16 +464,26 @@ if mlflow_run_active:
     except Exception as exc:
         print(f"MLflow metric logging was skipped: {exc}")
 
+# -----------------------------------------------------------------------------
+# 14. Build a compact run-summary table.
+# This summary is written beside the score output so the batch score can be tied
+# back to the model version and experiment run context.
+# -----------------------------------------------------------------------------
 model_run_summary = spark.createDataFrame(
     [
         (
             model_version,
             experiment_name,
+            f"{service_months[0]} to {service_months[-3]}" if len(service_months) >= 3 else "random_split_train",
+            str(test_service_month),
             str(latest_service_month),
             int(training_row_count),
+            int(test_row_count),
             int(scoring_row_count),
-            int(label_class_count),
-            float(model_auc) if model_auc is not None else -1.0,
+            int(train_label_class_count),
+            int(test_label_class_count),
+            float(model_auc_training) if model_auc_training is not None else -1.0,
+            float(model_auc_test) if model_auc_test is not None else -1.0,
             float(score_metrics["avg_denial_risk_score"]),
             int(score_metrics["high_risk_slice_count"]),
             int(score_metrics["medium_risk_slice_count"]),
@@ -400,11 +493,16 @@ model_run_summary = spark.createDataFrame(
     [
         "model_version",
         "experiment_name",
+        "training_months",
+        "test_service_month",
         "scored_service_month",
         "training_row_count",
+        "test_row_count",
         "scoring_row_count",
-        "label_class_count",
+        "train_label_class_count",
+        "test_label_class_count",
         "model_auc_training",
+        "model_auc_test",
         "avg_denial_risk_score",
         "high_risk_slice_count",
         "medium_risk_slice_count",
@@ -412,11 +510,21 @@ model_run_summary = spark.createDataFrame(
     ],
 )
 
+# -----------------------------------------------------------------------------
+# 15. Publish outputs and print the handoff.
+# Downstream users can add `gold_claims_denial_risk_scores` to AI Lakehouse or
+# OAC and use `gold_claims_denial_model_run_summary` for lineage.
+# -----------------------------------------------------------------------------
 write_stage_csv(gold_claims_denial_risk_scores, "gold_claims_denial_risk_scores")
 write_stage_csv(model_run_summary, "gold_claims_denial_model_run_summary")
 
-print(f"Scored claims denial risk for service month {latest_service_month}.")
-if label_class_count < 2:
-    print("Used the fallback weighted-score path because the training slice did not contain both label classes.")
+print(
+    f"Trained claims denial model on months before {test_service_month}, "
+    f"evaluated on {test_service_month}, and scored {latest_service_month}."
+)
+if not can_train_model:
+    print("Used the fallback weighted-score path because the training slice did not contain enough rows or both label classes.")
+elif not can_evaluate_model:
+    print("Model was trained, but test AUC was skipped because the test slice did not contain both label classes.")
 print(f"Published gold_claims_denial_risk_scores under {gold_stage_base}/gold_claims_denial_risk_scores")
 print(f"Published gold_claims_denial_model_run_summary under {gold_stage_base}/gold_claims_denial_model_run_summary")

@@ -883,6 +883,7 @@ Use `optional_labs/claims_denial_risk_scoring.md` and `data/gold/gold_claims_den
 ### Objectives
 
 - Derive ML-ready features from claims, event, district, and provider-accreditation context.
+- Train on historical months and evaluate on a held-out month before scoring the latest month.
 - Produce a score that estimates which district-program-claim-type combinations are most likely to need manual review.
 - Publish compact scoring outputs that can be added to the Claims star schema story in OAC.
 
@@ -905,14 +906,29 @@ Participants: you can skip this section if the facilitator has already prepared 
    - claim type
 5. Derive scoring features such as denial rate, average processing days, payment yield, triage total, supply alert count, public health pressure index, and accreditation risk band.
 6. Define the first target such as `high_denial_flag` or `denial_risk_score`.
-7. Train a simple baseline model using historical months.
-8. Score the newest month and create:
+7. Split the feature frame by time:
+   - Train: January 2025 through April 2025
+   - Test/evaluate: May 2025
+   - Score: June 2025
+8. Train a simple baseline model using the training months and log the training metric.
+9. Evaluate the model on the held-out test month and log `model_auc_test`.
+10. Score the newest month and create:
    - `denial_risk_score`
    - `likely_denial_bucket`
    - `review_priority`
-9. Publish the result as `gold_claims_denial_risk_scores.csv` in Gold-stage storage or an equivalent serving table.
-10. Register the selected run as `claim_denial_risk` in AIDP Models, version `v1`.
-11. Optional consumption path: load the score output into AI Lakehouse or add it to the OAC workbook as an additional dataset, then index it for Assistant questions about denial risk.
+11. In AIDP Experiments, confirm the newest `claims_denial_risk_v1_baseline` run is `FINISHED`.
+12. Open the run and validate:
+   - `model_auc_training`
+   - `model_auc_test`
+   - `training_row_count = 410`
+   - `test_row_count = 110`
+   - `scoring_row_count = 102`
+   - `train_months = 2025-01-01 to 2025-04-01`
+   - `test_service_month = 2025-05-01`
+   - `scored_service_month = 2025-06-01`
+13. Publish the result as `gold_claims_denial_risk_scores.csv` and the run summary as `gold_claims_denial_model_run_summary` in Gold-stage storage or equivalent serving tables.
+14. Optional governance path: register the selected run as `claim_denial_risk` in AIDP Models, version `v1`, after the training and held-out test metrics are accepted.
+15. Optional consumption path: load the score output into AI Lakehouse or add it to the OAC workbook as an additional dataset, then index it for Assistant questions about denial risk.
 
 ### Expected Outcome
 
