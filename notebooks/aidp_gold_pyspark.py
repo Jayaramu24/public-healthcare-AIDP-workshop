@@ -1,3 +1,42 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 03 Gold - Prepare Business-Ready Serving Outputs
+#
+# What this section does and why it matters:
+# - Aggregates Silver data into Gold-stage outputs that support facility operations, public-health, claims, disbursement, membership, accreditation, JSON event, spatial, and document use cases.
+# - Why it matters: Gold expresses the business decisions MPHA can make from trusted data, and it provides the staging layer for AI Lakehouse and analytics assets.
+#
+# Inputs and outputs:
+# - Inputs:
+# - Silver Delta folders from the Silver notebook
+# - Outputs:
+# - Gold-stage CSV folders including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview
+#
+# Important parameters participants may change:
+# - silver_base
+# - gold_stage_base
+# - gold_snapshot_date
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - gold_claims_summary: about 622 rows
+# - gold_facility_access_daily: 1,810 rows
+# - gold_immunization_equity_weekly: 780 rows
+# - gold_spatial_access_insights: 5 rows
+# - gold_executive_overview: 5 rows
+#
+# Safe rerun behaviour:
+# - Safe for reruns. Gold-stage CSV folders are overwritten, so consumers should refresh or reload after rerunning.
+#
+# Common errors and troubleshooting:
+# - CSV datasource array/map errors: nested columns must be converted to JSON text before writing.
+# - Duplicate district columns: use the provided selected columns and avoid rejoining district attributes already present in Silver.
+# - Missing Silver table: rerun Silver and verify silver_base.
+#
+# What you learned:
+# - You learned how business-ready Gold outputs are shaped from trusted Silver data for dashboards, ML, and AI Lakehouse publishing.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # Gold notebook: Silver Delta tables -> Gold-serving stage files for AI Lakehouse and OAC.
 #
@@ -8,11 +47,21 @@ from pyspark.sql.window import Window
 from pyspark.sql.types import ArrayType, MapType, StructType
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure Silver input and Gold-stage output paths.
+# Gold-stage files are intentionally compact CSV outputs because they can be
+# inspected easily and loaded into AI Lakehouse or OAC.
+# -----------------------------------------------------------------------------
 silver_base = "oci://<bucket>@<namespace>/mpha/silver"
 gold_stage_base = "oci://<bucket>@<namespace>/mpha/gold_stage"
 gold_snapshot_date = F.to_date(F.lit("2025-06-30"))
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared read/write helpers.
+# CSV cannot store Spark arrays, maps, or structs directly, so nested fields are
+# converted to JSON text before staging.
+# -----------------------------------------------------------------------------
 def read_delta(name):
     return spark.read.format("delta").load(f"{silver_base}/{name}")
 
@@ -25,6 +74,11 @@ def write_stage_csv(frame, name):
     csv_ready.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{gold_stage_base}/{name}")
 
 
+# -----------------------------------------------------------------------------
+# 3. Load all Silver tables needed for Gold analytics.
+# These inputs combine payer-side claims, provider accreditation, facility
+# operations, population health, JSON event context, and spatial context.
+# -----------------------------------------------------------------------------
 silver_district = read_delta("silver_district")
 silver_facility_provider = read_delta("silver_facility_provider")
 silver_facility_day = read_delta("silver_facility_day")
@@ -36,6 +90,11 @@ silver_facility_capacity_event = read_delta("silver_facility_capacity_event")
 silver_spatial_feature = read_delta("silver_spatial_feature")
 
 
+# -----------------------------------------------------------------------------
+# 4. Gold facility-access daily view.
+# This supports the DIY Facility Access Daily challenge and basic operations
+# analytics without changing the Claims star schema.
+# -----------------------------------------------------------------------------
 gold_facility_access_daily = (
     silver_facility_day.alias("f")
     .join(
@@ -45,6 +104,11 @@ gold_facility_access_daily = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 5. Gold public-health and immunization equity views.
+# `gold_district_public_health_weekly` already contains district attributes from
+# Silver, while the immunization view adds deprivation and age context.
+# -----------------------------------------------------------------------------
 # `silver_district_health_week` already carries district attributes from the
 # Silver-layer conformance join, so keep it as-is and avoid reintroducing
 # duplicate columns such as `district_name`.
@@ -56,6 +120,11 @@ gold_immunization_equity_weekly = silver_population_health_week.join(
     "left",
 )
 
+# -----------------------------------------------------------------------------
+# 6. Gold claims summary at analytics grain.
+# This is the source for the instructor-led Claims star schema fact table and
+# exposes denial, approval, payment, and processing-time measures.
+# -----------------------------------------------------------------------------
 gold_claims_summary = (
     silver_claims_membership_disbursement.withColumn(
         "service_month",
@@ -78,6 +147,11 @@ gold_claims_summary = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 7. Gold disbursement summary.
+# This gives the workshop the disbursement flavor requested in the raw-data and
+# dashboard storyline.
+# -----------------------------------------------------------------------------
 gold_disbursement_summary = (
     silver_claims_membership_disbursement.withColumn(
         "disbursement_month",
@@ -94,6 +168,11 @@ gold_disbursement_summary = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 8. Gold membership snapshot.
+# This aggregates member eligibility and risk-segment context without exposing
+# member-level details in the dashboard layer.
+# -----------------------------------------------------------------------------
 membership_snapshot = silver_claims_membership_disbursement.select(
     "member_id",
     "district_id",
@@ -128,6 +207,11 @@ gold_membership_summary = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 9. Gold provider-accreditation snapshot.
+# This view keeps the accreditation score, status, corrective actions, and
+# expiry pressure available for OAC and ML enrichment.
+# -----------------------------------------------------------------------------
 gold_provider_accreditation_summary = (
     silver_provider_accreditation.withColumn("snapshot_date", gold_snapshot_date)
     .select(
@@ -149,6 +233,11 @@ gold_provider_accreditation_summary = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 10. Latest JSON capacity event per facility.
+# This turns event-style operational data into a small, latest-state context
+# table that can be joined into ML or OAC extensions.
+# -----------------------------------------------------------------------------
 latest_capacity_window = Window.partitionBy("facility_id").orderBy(F.col("event_timestamp").desc())
 gold_capacity_event_latest = (
     silver_facility_capacity_event.withColumn("facility_event_rank", F.row_number().over(latest_capacity_window))
@@ -156,6 +245,11 @@ gold_capacity_event_latest = (
     .drop("facility_event_rank")
 )
 
+# -----------------------------------------------------------------------------
+# 11. Spatial access insights.
+# GeoJSON service-area features are summarized to district-level access signals
+# such as residents per facility and suggested access actions.
+# -----------------------------------------------------------------------------
 latest_district_window = Window.partitionBy("district_id").orderBy(F.col("week_start_date").desc())
 latest_district_pressure = (
     silver_district_health_week.withColumn("district_week_rank", F.row_number().over(latest_district_window))
@@ -218,6 +312,10 @@ gold_spatial_access_insights = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 12. Executive overview metrics.
+# This lightweight summary is useful for a quick workbook or SQL sanity check.
+# -----------------------------------------------------------------------------
 gold_executive_overview = (
     silver_facility_day.agg(
         F.lit("2025 H1").alias("reporting_period"),
@@ -228,6 +326,11 @@ gold_executive_overview = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 13. Write all Gold-stage outputs.
+# The Claims star schema load notebook consumes the claims-oriented outputs;
+# optional labs can consume the context and ML-ready outputs.
+# -----------------------------------------------------------------------------
 gold_tables = {
     "gold_facility_access_daily": gold_facility_access_daily,
     "gold_district_public_health_weekly": gold_district_public_health_weekly,
@@ -242,6 +345,11 @@ gold_tables = {
 }
 
 
+# -----------------------------------------------------------------------------
+# 14. Handoff checkpoint.
+# After this notebook succeeds, run the Claims star schema AI Lakehouse load
+# notebook or inspect the staged CSV outputs directly.
+# -----------------------------------------------------------------------------
 for table_name, frame in gold_tables.items():
     write_stage_csv(frame, table_name)
     print(f"Staged {table_name} under {gold_stage_base}/{table_name}")

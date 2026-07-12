@@ -1,3 +1,47 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 03B Gold Extension - Publish District Claims Context
+#
+# What this section does and why it matters:
+# - Aggregates Silver operations/access context and claims metrics to district-month grain, writes Gold context, and optionally inserts new rows into AI Lakehouse.
+# - Why it matters: This gives OAC and Assistant new district-level context for explaining why denial hotspots may align with capacity pressure or spatial access gaps.
+#
+# Inputs and outputs:
+# - Inputs:
+# - silver_operations_access_context
+# - silver_claims_membership_disbursement
+# - mpha_fact_district_claims_context target table
+# - Outputs:
+# - gold_district_claims_context
+# - mpha_fact_district_claims_context
+# - mpha_claims_district_context_v
+#
+# Important parameters participants may change:
+# - silver_base
+# - gold_stage_base
+# - target_catalog
+# - target_schema
+# - table_prefix
+# - write_to_ai_lakehouse
+# - write_mode
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - The workshop sample inserts about 5 district-month context rows
+# - Validation display should show priority score, denial rate, occupancy, wait pressure, and access gap fields
+#
+# Safe rerun behaviour:
+# - Designed for safe reruns. The notebook writes the Delta output and inserts only target keys that do not already exist.
+#
+# Common errors and troubleshooting:
+# - Extension target table missing: run create_ai_lakehouse_claims_context_extension.sql first.
+# - Target schema not found: check target_catalog and target_schema.
+# - No new rows message: expected when rerunning after a successful insert.
+#
+# What you learned:
+# - You learned how to add a new AI Lakehouse context table beside an existing star schema without disrupting the original dashboard.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # Round 2 extension notebook: Silver operations/access context -> Gold district Claims context -> AI Lakehouse.
 #
@@ -18,6 +62,11 @@
 from pyspark.sql import functions as F
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure mounted paths and AI Lakehouse target.
+# The Gold context table is an extension fact table that sits beside the
+# existing Claims star schema rather than replacing it.
+# -----------------------------------------------------------------------------
 silver_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver"
 gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"
 
@@ -29,6 +78,11 @@ write_to_ai_lakehouse = True
 write_mode = "append"
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared helpers.
+# Namespace validation catches missing external-catalog setup before any rows are
+# written, and `write_catalog_table` avoids duplicate inserts on rerun.
+# -----------------------------------------------------------------------------
 def read_delta(name):
     return spark.read.format("delta").load(f"{silver_base}/{name}")
 
@@ -73,10 +127,20 @@ def write_catalog_table(frame, name, columns, key_columns):
     print(f"Wrote {new_row_count} new rows to {table_name}")
 
 
+# -----------------------------------------------------------------------------
+# 3. Load the Round 2 Silver context and claims source.
+# The context table contains JSON/spatial enrichment; claims supply the monthly
+# denial and processing measures that make the context actionable.
+# -----------------------------------------------------------------------------
 silver_operations_access_context = read_delta("silver_operations_access_context")
 silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
 
 
+# -----------------------------------------------------------------------------
+# 4. Aggregate operations/access context to district-month grain.
+# This is the bridge from event-level facility context to the monthly Claims
+# analytics grain.
+# -----------------------------------------------------------------------------
 operations_monthly = (
     silver_operations_access_context.withColumn(
         "context_month",
@@ -102,6 +166,11 @@ operations_monthly = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 5. Aggregate claims to the same district-month grain.
+# The measures here align the context extension with the existing Claims
+# dashboard questions: denial rate, processing days, and paid/submitted amounts.
+# -----------------------------------------------------------------------------
 claims_monthly = (
     silver_claims_membership_disbursement.withColumn(
         "context_month",
@@ -122,6 +191,11 @@ claims_monthly = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 6. Build the Gold district Claims context table.
+# The priority score blends claims performance, capacity pressure, diversion
+# events, and access gaps into a single action-oriented score.
+# -----------------------------------------------------------------------------
 gold_district_claims_context = (
     operations_monthly.join(claims_monthly, ["context_month", "district_id"], "left")
     .withColumn("claims_submitted", F.coalesce(F.col("claims_submitted"), F.lit(0)))
@@ -192,10 +266,20 @@ gold_district_claims_context = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 7. Stage the Gold context output to Delta.
+# This gives participants a file-based checkpoint even if AI Lakehouse loading is
+# skipped or retried.
+# -----------------------------------------------------------------------------
 gold_district_claims_context.write.format("delta").mode("overwrite").save(f"{gold_stage_base}/gold_district_claims_context")
 print(f"Wrote Gold context Delta output to {gold_stage_base}/gold_district_claims_context")
 
 
+# -----------------------------------------------------------------------------
+# 8. Optionally load the extension fact into AI Lakehouse.
+# The existing Date and District dimensions are reused so the workbook can add
+# the extension table without rebuilding the original Claims star schema.
+# -----------------------------------------------------------------------------
 if write_to_ai_lakehouse:
     validate_target_namespace()
     validate_target_tables(["fact_district_claims_context", "dim_date", "dim_district"])
@@ -276,5 +360,10 @@ if write_to_ai_lakehouse:
     )
 
 
+# -----------------------------------------------------------------------------
+# 9. Final validation display.
+# Sorting by priority score makes the highest-impact districts visible
+# immediately after the notebook completes.
+# -----------------------------------------------------------------------------
 print("Round 2 Gold context complete.")
 gold_district_claims_context.orderBy(F.desc("claims_context_priority_score")).show(25, truncate=False)

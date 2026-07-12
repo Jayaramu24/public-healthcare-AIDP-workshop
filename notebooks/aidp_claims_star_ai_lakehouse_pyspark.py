@@ -1,3 +1,48 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 04 Claims Star Schema - Publish Gold to AI Lakehouse
+#
+# What this section does and why it matters:
+# - Builds Date, District, Coverage Program, Claim Type dimensions and the monthly Claims fact, then inserts only new rows into the connected AI Lakehouse external catalog.
+# - Why it matters: This is the governed business data product used by OAC, OAC Assistant, ML features, and the Claims SQL Agent.
+#
+# Inputs and outputs:
+# - Inputs:
+# - silver_district
+# - silver_claims_membership_disbursement
+# - pre-created AI Lakehouse target tables
+# - Outputs:
+# - mpha_dim_date
+# - mpha_dim_district
+# - mpha_dim_coverage_program
+# - mpha_dim_claim_type
+# - mpha_fact_claims_monthly
+#
+# Important parameters participants may change:
+# - silver_base
+# - target_catalog
+# - target_schema
+# - table_prefix
+# - write_mode
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - mpha_fact_claims_monthly: about 622 rows on first successful load
+# - dimension row counts should be non-zero, and the validation SQL should return zero orphan rows
+#
+# Safe rerun behaviour:
+# - Designed for safe reruns. Existing natural keys are read from target tables and only new keys are inserted.
+#
+# Common errors and troubleshooting:
+# - Target schema not found: confirm external catalog, schema, and AIDP connection.
+# - Required table missing: run the Claims star schema DDL before this notebook.
+# - Executor memory failure: use the validated 1G driver/executor memory setting from the workshop troubleshooting notes.
+# - Table does not support truncate: do not truncate from Spark; use the idempotent append pattern.
+#
+# What you learned:
+# - You learned how AIDP can publish a governed Claims star schema directly into AI Lakehouse while remaining safe for repeat execution.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # Claims star schema notebook: Silver Delta tables -> connected Autonomous AI Lakehouse external catalog tables.
 #
@@ -21,6 +66,11 @@ from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure source and target catalog values.
+# Update these before running in a new tenancy. The target catalog must point to
+# the connected Autonomous AI Lakehouse external catalog in AIDP.
+# -----------------------------------------------------------------------------
 silver_base = "oci://<bucket>@<namespace>/mpha/silver"
 target_catalog = "MPHA_AILH_CAT"
 target_schema = "MPHA_GOLD_OWNER"
@@ -28,6 +78,11 @@ table_prefix = "mpha"
 write_mode = "append"
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared helpers.
+# `write_catalog_table` appends only rows that do not already exist by the
+# natural key, making reruns safer for workshop participants.
+# -----------------------------------------------------------------------------
 def read_delta(name):
     return spark.read.format("delta").load(f"{silver_base}/{name}")
 
@@ -73,10 +128,20 @@ def write_catalog_table(frame, name, columns, key_columns):
     print(f"Wrote {new_row_count} new rows to {table_name}")
 
 
+# -----------------------------------------------------------------------------
+# 3. Load the Silver sources used for the Claims star schema.
+# District is used as a dimension; the claims-membership-disbursement table is
+# the transactional source for date, program, claim-type, and fact tables.
+# -----------------------------------------------------------------------------
 silver_district = read_delta("silver_district")
 silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
 
 
+# -----------------------------------------------------------------------------
+# 4. Validate the external AI Lakehouse schema before doing any writes.
+# Failing early gives a clear error if the schema or required tables were not
+# created in Autonomous AI Lakehouse.
+# -----------------------------------------------------------------------------
 validate_target_namespace()
 validate_target_tables(
     [
@@ -88,12 +153,21 @@ validate_target_tables(
     ]
 )
 
+# -----------------------------------------------------------------------------
+# 5. Add service-month grain to the claims source.
+# The final fact table is monthly by district, coverage program, and claim type.
+# -----------------------------------------------------------------------------
 claims_with_service_month = silver_claims_membership_disbursement.withColumn(
     "service_month",
     F.to_date(F.date_format(F.col("service_date"), "yyyy-MM-01")),
 )
 
 
+# -----------------------------------------------------------------------------
+# 6. Build the Date dimension from all claim lifecycle dates.
+# Including enrollment, renewal, service, receipt, and disbursement dates makes
+# the date dimension useful for future dashboard extensions.
+# -----------------------------------------------------------------------------
 date_values = (
     silver_claims_membership_disbursement.select(F.col("service_date").alias("full_date"))
     .union(silver_claims_membership_disbursement.select(F.col("claim_received_date").alias("full_date")))
@@ -106,6 +180,11 @@ date_values = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 7. Build dimension tables.
+# Surrogate keys are generated deterministically from sorted business keys so
+# fact rows can resolve to compact integer keys in AI Lakehouse.
+# -----------------------------------------------------------------------------
 dim_date = (
     date_values.withColumn("date_key", F.date_format("full_date", "yyyyMMdd").cast("int"))
     .withColumn("calendar_year", F.year("full_date"))
@@ -189,6 +268,10 @@ dim_claim_type = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 8. Prepare lookup tables for fact-key resolution.
+# These are not written directly; they map business columns to dimension keys.
+# -----------------------------------------------------------------------------
 district_lookup = dim_district.select("district_id", "district_key")
 program_lookup = dim_coverage_program.select(
     "program_code",
@@ -205,6 +288,11 @@ claim_type_lookup = dim_claim_type.select(
 )
 
 
+# -----------------------------------------------------------------------------
+# 9. Build the monthly Claims fact table.
+# The fact table carries the dashboard measures: submitted, approved, denied,
+# pending claims, submitted/approved/paid amount, processing days, and denial rate.
+# -----------------------------------------------------------------------------
 fact_claims_monthly = (
     claims_with_service_month.groupBy(
         "service_month",
@@ -261,6 +349,11 @@ fact_claims_monthly = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 10. Write dimensions first, then the fact table.
+# This order keeps referential intent clear for participants inspecting the
+# external catalog in AIDP or AI Lakehouse.
+# -----------------------------------------------------------------------------
 write_catalog_table(
     dim_date,
     "dim_date",

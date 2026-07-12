@@ -1,3 +1,41 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 02B Silver Extension - Add JSON and Spatial Context
+#
+# What this section does and why it matters:
+# - Parses JSON facility capacity events, flattens GeoJSON service-area features, joins reference data, and creates a Silver operations/access context table.
+# - Why it matters: This shows progressive enhancement: MPHA can add new operational signals after the original Claims dashboard is live without rebuilding the original Claims star schema.
+#
+# Inputs and outputs:
+# - Inputs:
+# - bronze_facility_capacity_events
+# - bronze_healthcare_service_areas_geojson
+# - bronze_facility_provider_master
+# - bronze_district_health_profile
+# - Outputs:
+# - silver_operations_access_context
+#
+# Important parameters participants may change:
+# - bronze_base
+# - silver_base
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - The validation display should show 5 district-level records in the workshop sample
+# - Displayed fields include capacity_pressure_band, spatial_access_band, residents_per_facility, access_gap_score, and operations_access_risk_score
+#
+# Safe rerun behaviour:
+# - Safe for reruns. The Silver extension output is overwritten without changing the original Claims star schema flow.
+#
+# Common errors and troubleshooting:
+# - Missing JSON/GeoJSON Bronze tables: rerun Bronze and confirm the additional raw formats were uploaded.
+# - Null spatial fields: inspect GeoJSON properties and district identifiers.
+# - Array-to-CSV issues do not apply here because this notebook writes Delta, not CSV.
+#
+# What you learned:
+# - You learned how to extend an existing lakehouse product with JSON and spatial signals while keeping the original Claims flow stable.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # Round 2 extension notebook: Bronze JSON + Spatial -> Silver operations/access context.
 #
@@ -15,10 +53,18 @@
 from pyspark.sql import functions as F
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure mounted AIDP volume paths.
+# This extension reads Bronze JSON and GeoJSON outputs and writes a new Silver
+# context table without changing the original Claims star schema flow.
+# -----------------------------------------------------------------------------
 bronze_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Bronze"
 silver_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver"
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared Delta read/write helpers.
+# -----------------------------------------------------------------------------
 def read_delta(name):
     return spark.read.format("delta").load(f"{bronze_base}/{name}")
 
@@ -27,12 +73,21 @@ def write_delta(frame, name):
     frame.write.format("delta").mode("overwrite").save(f"{silver_base}/{name}")
 
 
+# -----------------------------------------------------------------------------
+# 3. Load Bronze sources for Round 2 context enrichment.
+# Capacity events come from JSONL; service areas come from GeoJSON; facility and
+# district references provide the join keys and business labels.
+# -----------------------------------------------------------------------------
 bronze_capacity_events = read_delta("bronze_facility_capacity_events")
 bronze_service_areas = read_delta("bronze_healthcare_service_areas_geojson")
 bronze_facility_provider = read_delta("bronze_facility_provider_master")
 bronze_district = read_delta("bronze_district_health_profile")
 
 
+# -----------------------------------------------------------------------------
+# 4. Create conformed facility and district reference tables.
+# These lookups prevent repeated casting and keep the enrichment joins readable.
+# -----------------------------------------------------------------------------
 facility_ref = (
     bronze_facility_provider.select(
         "facility_id",
@@ -62,6 +117,11 @@ district_ref = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 5. Parse JSON capacity events into operational signals.
+# This section flattens triage counts, counts supply alerts, and labels pressure
+# bands so downstream analytics can ask operational questions.
+# -----------------------------------------------------------------------------
 capacity_events = (
     bronze_capacity_events.select(
         "event_id",
@@ -109,6 +169,11 @@ capacity_events = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 6. Flatten GeoJSON features and flag spatial quality.
+# The geometry is retained as GeoJSON text while each feature is tagged as
+# usable or needing review.
+# -----------------------------------------------------------------------------
 spatial_features = (
     bronze_service_areas.select(F.explode("features").alias("feature"))
     .select(
@@ -128,6 +193,11 @@ spatial_features = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 7. Aggregate spatial features to district access context.
+# These counts support map-style questions such as coverage gaps and mapped
+# facilities per district.
+# -----------------------------------------------------------------------------
 spatial_district_context = (
     spatial_features.groupBy("district_id")
     .agg(
@@ -140,6 +210,11 @@ spatial_district_context = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 8. Calculate district-level access-gap indicators.
+# Residents per facility, catchment coverage, and deprivation combine into a
+# simple access-gap score for claims-context enrichment.
+# -----------------------------------------------------------------------------
 facility_district_counts = (
     facility_ref.groupBy("district_id")
     .agg(
@@ -181,6 +256,11 @@ district_access_context = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 9. Build the final Silver operations/access context table.
+# This table combines JSON event pressure and spatial access signals at the
+# facility-event grain, ready for Gold monthly aggregation.
+# -----------------------------------------------------------------------------
 silver_operations_access_context = (
     capacity_events.join(facility_ref, "facility_id", "left")
     .join(district_access_context, "district_id", "left")
@@ -238,6 +318,11 @@ silver_operations_access_context = (
 )
 
 
+# -----------------------------------------------------------------------------
+# 10. Persist and display a compact validation summary.
+# The group-by output gives the instructor an immediate smoke test after the
+# notebook finishes.
+# -----------------------------------------------------------------------------
 write_delta(silver_operations_access_context, "silver_operations_access_context")
 
 print("Round 2 Silver context complete.")

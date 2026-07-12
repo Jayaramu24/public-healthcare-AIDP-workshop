@@ -1,3 +1,46 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 05 ML - Train, Test, Evaluate, and Score Claims Denial Risk
+#
+# What this section does and why it matters:
+# - Builds a claims denial risk feature frame, trains a Spark ML model, evaluates a held-out month, logs experiment metrics, and writes a scored review queue.
+# - Why it matters: This turns trusted Gold data into a predictive action queue that claims operations can use before denial leakage grows.
+#
+# Inputs and outputs:
+# - Inputs:
+# - Gold-stage claims summary plus provider accreditation, capacity, and spatial context outputs
+# - Outputs:
+# - gold_claims_denial_risk_scores
+# - AIDP Experiment run metrics
+# - optional registered model artifact
+#
+# Important parameters participants may change:
+# - gold_stage_base
+# - model_version
+# - experiment_name
+# - mlflow_run_name
+# - model_artifact_path
+# - enable_mlflow_tracking
+# - score_run_date
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - Training uses January-April 2025; test uses May 2025; scoring uses June 2025
+# - Output review queue should include likely_denial_bucket and denial_risk_score
+# - Experiment metrics should include train/test counts, AUC values, and high-risk counts
+#
+# Safe rerun behaviour:
+# - Safe for repeat scoring. The output score folder is overwritten; MLflow runs create additional run history unless the run name is reused by the platform.
+#
+# Common errors and troubleshooting:
+# - MLflow import unavailable: the notebook still runs but skips tracking and model logging.
+# - AUC cannot be computed: confirm the test period has both positive and negative labels.
+# - Missing Gold files: rerun the Gold-stage notebook and context extension if needed.
+#
+# What you learned:
+# - You learned how to use the Gold layer for train/test/evaluate ML and publish a business-friendly review queue.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # ML notebook: Gold-serving claims inputs -> train, test, evaluate, and score denial risk.
 #

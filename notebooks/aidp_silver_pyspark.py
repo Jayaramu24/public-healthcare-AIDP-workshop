@@ -1,3 +1,39 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# 02 Silver - Conform MPHA Operational Context
+#
+# What this section does and why it matters:
+# - Reads Bronze Delta folders, types and cleans raw fields, standardizes entities, derives operational flags, and publishes reusable Silver Delta tables.
+# - Why it matters: Silver is where MPHA decides whether the data can be trusted across claims, provider, facility, membership, public-health, JSON, and spatial use cases.
+#
+# Inputs and outputs:
+# - Inputs:
+# - Bronze Delta folders from the Bronze notebook
+# - Outputs:
+# - Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables
+#
+# Important parameters participants may change:
+# - bronze_base
+# - silver_base
+# - risk_reference_date
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - Silver row counts should broadly match source grains: 5 districts, 10 facilities, 1,810 facility-days, 780 weekly population rows, and 1,400 claims rows
+# - Derived displays should show access risk, public-health pressure, denial rates, accreditation bands, JSON capacity fields, and spatial access context
+#
+# Safe rerun behaviour:
+# - Safe for repeat classroom runs. Silver outputs are overwritten from Bronze, so downstream notebooks should be rerun after a Silver rerun.
+#
+# Common errors and troubleshooting:
+# - Missing Bronze table: rerun Bronze and verify bronze_base.
+# - Unexpected nulls after casts: inspect raw CSV values and confirm headers were not modified.
+# - Duplicate or ambiguous columns: keep the selected Silver joins and aliases unchanged.
+#
+# What you learned:
+# - You learned how raw operational signals become trusted, typed, and reusable Silver data products.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # Silver notebook: Bronze Delta tables -> typed, conformed Silver Delta tables in AIDP.
 #
@@ -6,11 +42,21 @@
 from pyspark.sql import functions as F
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure Bronze input and Silver output paths.
+# Silver is where raw strings and nested JSON become typed, business-friendly
+# tables that can safely feed Gold, ML, and OAC.
+# -----------------------------------------------------------------------------
 bronze_base = "oci://<bucket>@<namespace>/mpha/bronze"
 silver_base = "oci://<bucket>@<namespace>/mpha/silver"
 risk_reference_date = F.to_date(F.lit("2025-06-30"))
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared helpers.
+# `safe_rate` avoids divide-by-zero errors while still returning a numeric value
+# that downstream dashboards and models can consume.
+# -----------------------------------------------------------------------------
 def read_delta(name):
     return spark.read.format("delta").load(f"{bronze_base}/{name}")
 
@@ -23,6 +69,11 @@ def safe_rate(numerator, denominator):
     return F.when(F.col(denominator) > 0, F.col(numerator) / F.col(denominator)).otherwise(F.lit(0.0))
 
 
+# -----------------------------------------------------------------------------
+# 3. Load all Bronze inputs produced by the Bronze notebook.
+# The JSON capacity events and GeoJSON service areas remain nested until their
+# dedicated Silver transformations below.
+# -----------------------------------------------------------------------------
 bronze_district_health_profile = read_delta("bronze_district_health_profile")
 bronze_facility_provider_master = read_delta("bronze_facility_provider_master")
 bronze_facility_operations_daily = read_delta("bronze_facility_operations_daily")
@@ -32,6 +83,11 @@ bronze_facility_capacity_events = read_delta("bronze_facility_capacity_events")
 bronze_healthcare_service_areas_geojson = read_delta("bronze_healthcare_service_areas_geojson")
 
 
+# -----------------------------------------------------------------------------
+# 4. Conform district reference data.
+# This becomes the common district lookup for facility, claims, population, and
+# spatial analytics.
+# -----------------------------------------------------------------------------
 silver_district = (
     bronze_district_health_profile.select(
         "district_id",
@@ -45,6 +101,10 @@ silver_district = (
     .dropDuplicates(["district_id"])
 )
 
+# -----------------------------------------------------------------------------
+# 5. Conform facilities, providers, and accreditation attributes.
+# The join to district adds local public-health context to each provider row.
+# -----------------------------------------------------------------------------
 silver_facility_provider = (
     bronze_facility_provider_master.select(
         "facility_id",
@@ -72,6 +132,11 @@ silver_facility_provider = (
     .dropDuplicates(["facility_id"])
 )
 
+# -----------------------------------------------------------------------------
+# 6. Clean daily facility operations and derive access-risk signals.
+# This step standardizes negative or out-of-range operational measures and
+# calculates wait-time variance, occupancy flags, and an access risk score.
+# -----------------------------------------------------------------------------
 silver_facility_day = (
     bronze_facility_operations_daily.select(
         F.to_date("service_date").alias("service_date"),
@@ -125,6 +190,10 @@ silver_facility_day = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 7. Clean population-health weekly measures.
+# These fields support equity and public-health pressure calculations.
+# -----------------------------------------------------------------------------
 silver_population_health_week = (
     bronze_population_health_weekly.select(
         F.to_date("week_start_date").alias("week_start_date"),
@@ -144,6 +213,11 @@ silver_population_health_week = (
     .withColumn("immunization_no_show_rate", F.round(safe_rate("missed_appointments", "appointments_booked"), 4))
 )
 
+# -----------------------------------------------------------------------------
+# 8. Aggregate district-week public-health pressure.
+# The pressure index blends positivity, appointment no-shows, deprivation, and
+# immunization completion into a single signal for planning.
+# -----------------------------------------------------------------------------
 silver_district_health_week = (
     silver_population_health_week.groupBy("week_start_date", "district_id")
     .agg(
@@ -174,6 +248,10 @@ silver_district_health_week = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 9. Clean claims, membership, and disbursement data.
+# This is the main payer-side table used by the Claims star schema and ML lab.
+# -----------------------------------------------------------------------------
 silver_claims_membership_disbursement = (
     bronze_claims_membership_disbursement.select(
         "claim_id",
@@ -213,6 +291,11 @@ silver_claims_membership_disbursement = (
     .dropDuplicates(["claim_id"])
 )
 
+# -----------------------------------------------------------------------------
+# 10. Derive provider-accreditation pressure.
+# `days_to_expiry` and corrective actions turn accreditation metadata into a
+# business-friendly risk band.
+# -----------------------------------------------------------------------------
 silver_provider_accreditation = (
     silver_facility_provider.select(
         "facility_id",
@@ -240,6 +323,11 @@ silver_provider_accreditation = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 11. Parse the JSON facility-capacity events.
+# Nested triage counts and supply alerts become structured columns that can be
+# used in Round 2 context enrichment and ML scoring.
+# -----------------------------------------------------------------------------
 silver_facility_capacity_event = (
     bronze_facility_capacity_events.select(
         "event_id",
@@ -265,6 +353,11 @@ silver_facility_capacity_event = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 12. Flatten GeoJSON service-area features.
+# The geometry is retained as GeoJSON text so it can be loaded into spatial
+# tooling while the properties are exposed for joins.
+# -----------------------------------------------------------------------------
 silver_spatial_feature = (
     bronze_healthcare_service_areas_geojson.select(F.explode("features").alias("feature"))
     .select(
@@ -276,6 +369,11 @@ silver_spatial_feature = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 13. Register all Silver outputs in one write map.
+# Keeping the write list together makes it easy to audit what this notebook
+# creates and what downstream notebooks can consume.
+# -----------------------------------------------------------------------------
 silver_tables = {
     "silver_district": silver_district,
     "silver_facility_provider": silver_facility_provider,
@@ -289,6 +387,9 @@ silver_tables = {
 }
 
 
+# -----------------------------------------------------------------------------
+# 14. Persist Silver Delta tables and print the completion handoff.
+# -----------------------------------------------------------------------------
 for table_name, frame in silver_tables.items():
     write_delta(frame, table_name)
     print(f"Wrote {table_name} to {silver_base}/{table_name}")

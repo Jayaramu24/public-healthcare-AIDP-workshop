@@ -1,3 +1,34 @@
+# PARTICIPANT NOTEBOOK GUIDE
+# Legacy Refinement - Bronze to Curated Outputs
+#
+# What this section does and why it matters:
+# - Refines earlier public healthcare sample data into curated outputs used by preview assets.
+# - Why it matters: This file is kept for compatibility with earlier workshop assets and demonstrates the same raw-to-curated pattern.
+#
+# Inputs and outputs:
+# - Inputs:
+# - Earlier raw/curated sample files
+# - Outputs:
+# - Curated facility, district, and public-health preview outputs
+#
+# Important parameters participants may change:
+# - Input and output paths at the top of the file
+#
+# Plain-language explanation before the code:
+# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+#
+# Expected row counts or displayed results:
+# - Displayed previews should show facility, district, and pressure-index rows
+#
+# Safe rerun behaviour:
+# - Safe when output folders can be overwritten in the local or AIDP environment.
+#
+# Common errors and troubleshooting:
+# - Missing legacy source files: use the current Bronze/Silver/Gold notebooks for the main workshop path.
+#
+# What you learned:
+# - You learned how the earlier refinement path relates to the current medallion flow.
+# END PARTICIPANT NOTEBOOK GUIDE
 # Public Healthcare AIDP Workshop
 # AIDP medallion notebook: simplified raw sources -> Bronze -> Silver -> AI Lakehouse Gold
 #
@@ -14,6 +45,11 @@
 from pyspark.sql import functions as F
 
 
+# -----------------------------------------------------------------------------
+# 1. Configure raw, Bronze, Silver, and Gold-stage paths.
+# This legacy combined notebook is useful for reference, but the workshop now
+# prefers separate Bronze, Silver, Gold, and AI Lakehouse load notebooks.
+# -----------------------------------------------------------------------------
 raw_base = "oci://<bucket>@<namespace>/mpha/raw"
 raw_json_base = "oci://<bucket>@<namespace>/mpha/raw_json"
 raw_spatial_base = "oci://<bucket>@<namespace>/mpha/raw_spatial"
@@ -24,6 +60,11 @@ gold_stage_base = "oci://<bucket>@<namespace>/mpha/gold_stage"
 ingest_batch_id = "mpha_2025_h1_simplified_workshop"
 
 
+# -----------------------------------------------------------------------------
+# 2. Shared readers and writers.
+# Each raw format has a dedicated reader so CSV, JSONL, and GeoJSON behavior is
+# explicit for participants reviewing the combined flow.
+# -----------------------------------------------------------------------------
 def read_raw_csv(name):
     return (
         spark.read.option("header", "true")
@@ -59,7 +100,9 @@ def safe_rate(numerator, denominator):
     return F.when(F.col(denominator) > 0, F.col(numerator) / F.col(denominator)).otherwise(F.lit(0.0))
 
 
-# Bronze: keep source values intact and add ingestion metadata.
+# -----------------------------------------------------------------------------
+# 3. Bronze: keep source values intact and add ingestion metadata.
+# -----------------------------------------------------------------------------
 bronze_district_health_profile = add_bronze_metadata(read_raw_csv("district_health_profile"))
 bronze_facility_provider_master = add_bronze_metadata(read_raw_csv("facility_provider_master"))
 bronze_facility_operations_daily = add_bronze_metadata(read_raw_csv("facility_operations_daily"))
@@ -77,7 +120,11 @@ write_delta(bronze_facility_capacity_events, f"{bronze_base}/bronze_facility_cap
 write_delta(bronze_healthcare_service_areas, f"{bronze_base}/bronze_healthcare_service_areas_geojson")
 
 
-# Silver: typed, validated, conformed Delta tables in AIDP.
+# -----------------------------------------------------------------------------
+# 4. Silver: district and provider conformance.
+# District and provider tables provide common keys and context for facility,
+# claims, accreditation, and spatial transformations.
+# -----------------------------------------------------------------------------
 district = (
     bronze_district_health_profile.select(
         "district_id",
@@ -118,6 +165,11 @@ silver_facility_provider = (
     .dropDuplicates(["facility_id"])
 )
 
+# -----------------------------------------------------------------------------
+# 5. Silver: facility operations and public-health measures.
+# These transformations clean operational values and derive access and pressure
+# metrics used later in Gold summaries.
+# -----------------------------------------------------------------------------
 silver_facility_day = (
     bronze_facility_operations_daily.select(
         F.to_date("service_date").alias("service_date"),
@@ -206,6 +258,11 @@ silver_district_health_week = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 6. Silver: claims, JSON events, and GeoJSON features.
+# Claims become typed payer records; JSON events become capacity signals; GeoJSON
+# becomes joinable spatial context.
+# -----------------------------------------------------------------------------
 silver_claims_membership_disbursement = (
     bronze_claims_membership_disbursement.select(
         "claim_id",
@@ -281,6 +338,9 @@ silver_spatial_feature = (
     )
 )
 
+# -----------------------------------------------------------------------------
+# 7. Persist Silver outputs.
+# -----------------------------------------------------------------------------
 for name, frame in {
     "silver_district": district,
     "silver_facility_provider": silver_facility_provider,
@@ -294,7 +354,11 @@ for name, frame in {
     write_delta(frame, f"{silver_base}/{name}")
 
 
-# Gold examples staged for AI Lakehouse loading.
+# -----------------------------------------------------------------------------
+# 8. Gold examples staged for AI Lakehouse loading.
+# These outputs are a compact legacy subset. Use `aidp_gold_pyspark.py` for the
+# current full Gold-stage asset list.
+# -----------------------------------------------------------------------------
 gold_facility_access_daily = (
     silver_facility_day.alias("f")
     .join(silver_facility_provider.select("facility_id", "facility_name", "district_name").alias("d"), "facility_id", "left")
@@ -318,6 +382,9 @@ gold_claims_summary = (
     .withColumn("denial_rate", F.round(F.col("denied_claims") / F.greatest(F.col("claims_submitted"), F.lit(1)), 4))
 )
 
+# -----------------------------------------------------------------------------
+# 9. Persist the legacy Gold-stage outputs.
+# -----------------------------------------------------------------------------
 for name, frame in {
     "gold_facility_access_daily": gold_facility_access_daily,
     "gold_district_public_health_weekly": gold_district_public_health_weekly,
