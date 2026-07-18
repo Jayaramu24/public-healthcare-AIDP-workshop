@@ -1,0 +1,197 @@
+{"kind":"deck","id":"pr/swlq9g","name":"Deck"}
+{"kind":"layout","layoutId":"05b92808-c061-46b5-aa01-c807c0180746","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"2b48bf5a-40bf-4849-af85-dacabfb49379","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/labn8u","slide":1,"title":"AIDP WORKSHOP FACTORY","textShapes":12}
+{"kind":"shape","id":"sh/2lszqtcj","slide":1,"bbox":[0,0,1280,720]}
+{"kind":"textbox","id":"sh/d8bat47y","slide":1,"text":"AIDP WORKSHOP FACTORY","textPreview":"AIDP WORKSHOP FACTORY","textChars":21,"textLines":1,"bbox":[64,52,210,28]}
+{"kind":"textbox","id":"sh/knih4byh","slide":1,"text":"One validated workshop became a repeatable industry pattern","textPreview":"One validated workshop became a repeatable industry pattern","textChars":59,"textLines":1,"bbox":[64,118,690,150]}
+{"kind":"textbox","id":"sh/vu9knih4","slide":1,"text":"Built a Public Healthcare AIDP workshop and captured the product learning, validation steps, screenshots, data standards, and publishing workflow so other teams can repeat the method.","textPreview":"Built a Public Healthcare AIDP workshop and captured the product learning, validation steps, screenshots, data standards, and publishing ...","textChars":183,"textLines":1,"bbox":[68,292,620,92]}
+{"kind":"shape","id":"sh/29gr2p8n","slide":1,"bbox":[70,440,196,112]}
+{"kind":"textbox","id":"sh/d0z61032","slide":1,"text":"Business problem","textPreview":"Business problem","textChars":16,"textLines":1,"bbox":[88,462,160,28]}
+{"kind":"textbox","id":"sh/kf6dcbul","slide":1,"text":"Claims, membership, disbursement, accreditation","textPreview":"Claims, membership, disbursement, accreditation","textChars":47,"textLines":1,"bbox":[88,494,160,45]}
+{"kind":"shape","id":"sh/vixczed8","slide":1,"bbox":[255,482,54,28]}
+{"kind":"shape","id":"sh/2x4nap4r","slide":1,"bbox":[288,440,196,112]}
+{"kind":"textbox","id":"sh/gfmlkjm1","slide":1,"text":"Validated build","textPreview":"Validated build","textChars":15,"textLines":1,"bbox":[306,462,160,28]}
+{"kind":"textbox","id":"sh/90je9cvi","slide":1,"text":"OCI, AIDP, AI Lakehouse, OAC, ML, Agent","textPreview":"OCI, AIDP, AI Lakehouse, OAC, ML, Agent","textChars":39,"textLines":1,"bbox":[306,494,160,45]}
+{"kind":"shape","id":"sh/yd0z6103","slide":1,"bbox":[473,482,54,28]}
+{"kind":"shape","id":"sh/rytsvu9k","slide":1,"bbox":[506,440,196,112]}
+{"kind":"textbox","id":"sh/g7adsji5","slide":1,"text":"Reusable factory","textPreview":"Reusable factory","textChars":16,"textLines":1,"bbox":[524,462,160,28]}
+{"kind":"textbox","id":"sh/9s36hcrm","slide":1,"text":"Single upload package, quality checklist, GitHub flow","textPreview":"Single upload package, quality checklist, GitHub flow","textChars":53,"textLines":1,"bbox":[524,494,160,45]}
+{"kind":"textbox","id":"sh/rmhk3q5o","slide":1,"text":"Actual OAC executive overview dashboard from the workshop","textPreview":"Actual OAC executive overview dashboard from the workshop","textChars":57,"textLines":1,"bbox":[790,548,390,28]}
+{"kind":"shape","id":"sh/g3ex0nux","slide":1,"bbox":[64,676,1152,0]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":1,"text":"Public Healthcare AIDP Workshop","textPreview":"Public Healthcare AIDP Workshop","textChars":31,"textLines":1,"bbox":[64,686,520,20]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":1,"text":"Codex-enabled workshop factory pattern","textPreview":"Codex-enabled workshop factory pattern","textChars":38,"textLines":1,"bbox":[860,686,356,20]}
+{"kind":"image","id":"im/d0z61032","slide":1,"name":"","geometry":"roundRect","alt":"MPHA OAC executive dashboard","bbox":[768,100,440,430]}
+{"kind":"notes","id":"nt/labn8u","slide":1,"text":""}
+{"kind":"slide","id":"sl/hehh3a","slide":2,"title":"The architecture has one core path and two AI extensions","textShapes":39}
+{"kind":"textbox","id":"sh/7u54zido","slide":2,"text":"The architecture has one core path and two AI extensions","textPreview":"The architecture has one core path and two AI extensions","textChars":56,"textLines":1,"bbox":[64,40,1080,82]}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":2,"text":"OAC consumes the AI Lakehouse star schema. ML uses AIDP Gold feature data. The Agent combines AI Lakehouse SQL with AIDP knowledge base retrieval.","textPreview":"OAC consumes the AI Lakehouse star schema. ML uses AIDP Gold feature data. The Agent combines AI Lakehouse SQL with AIDP knowledge base r...","textChars":146,"textLines":1,"bbox":[66,122,1040,34]}
+{"kind":"shape","id":"sh/l0rqd4vm","slide":2,"bbox":[64,176,174,104]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":2,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[82,191,38,28]}
+{"kind":"textbox","id":"sh/36hcrmhk","slide":2,"text":"Core data to insights","textPreview":"Core data to insights","textChars":21,"textLines":1,"bbox":[122,190,92,34]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":2,"text":"Instructor-led path","textPreview":"Instructor-led path","textChars":19,"textLines":1,"bbox":[84,234,132,32]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":2,"bbox":[270,176,170,104]}
+{"kind":"textbox","id":"sh/epkzupwb","slide":2,"text":"Object Storage","textPreview":"Object Storage","textChars":14,"textLines":1,"bbox":[283,191,144,28]}
+{"kind":"textbox","id":"sh/7adsji5s","slide":2,"text":"Raw CSV, JSONL, GeoJSON, documents","textPreview":"Raw CSV, JSONL, GeoJSON, documents","textChars":34,"textLines":1,"bbox":[286,232,138,34]}
+{"kind":"shape","id":"sh/nqxs72x4","slide":2,"bbox":[450,214,34,28]}
+{"kind":"shape","id":"sh/u54zidon","slide":2,"bbox":[498,176,170,104]}
+{"kind":"textbox","id":"sh/5sneloj2","slide":2,"text":"AIDP medallion","textPreview":"AIDP medallion","textChars":14,"textLines":1,"bbox":[511,191,144,28]}
+{"kind":"textbox","id":"sh/cbulwval","slide":2,"text":"Bronze, Silver, Gold processing","textPreview":"Bronze, Silver, Gold processing","textChars":31,"textLines":1,"bbox":[514,232,138,34]}
+{"kind":"shape","id":"sh/neloj2t8","slide":2,"bbox":[678,214,34,28]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":2,"bbox":[726,176,170,104]}
+{"kind":"textbox","id":"sh/5kb6xkf6","slide":2,"text":"AI Lakehouse","textPreview":"AI Lakehouse","textChars":12,"textLines":1,"bbox":[739,191,144,28]}
+{"kind":"textbox","id":"sh/czed8v6p","slide":2,"text":"Claims star schema serving layer","textPreview":"Claims star schema serving layer","textChars":32,"textLines":1,"bbox":[742,232,138,34]}
+{"kind":"shape","id":"sh/n29gr2p8","slide":2,"bbox":[906,214,34,28]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":2,"bbox":[954,176,170,104]}
+{"kind":"textbox","id":"sh/6hcrmhk3","slide":2,"text":"OAC","textPreview":"OAC","textChars":3,"textLines":1,"bbox":[967,191,144,28]}
+{"kind":"textbox","id":"sh/z25kb6xk","slide":2,"text":"Dashboard plus AI Assistant","textPreview":"Dashboard plus AI Assistant","textChars":27,"textLines":1,"bbox":[970,232,138,34]}
+{"kind":"shape","id":"sh/onyd0z61","slide":2,"bbox":[64,334,174,104]}
+{"kind":"textbox","id":"sh/d8v6psfi","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[82,349,38,28]}
+{"kind":"textbox","id":"sh/6tovahoz","slide":2,"text":"ML and MLOps","textPreview":"ML and MLOps","textChars":12,"textLines":1,"bbox":[122,348,92,34]}
+{"kind":"textbox","id":"sh/vahoza1g","slide":2,"text":"AIDP extension","textPreview":"AIDP extension","textChars":14,"textLines":1,"bbox":[84,392,132,32]}
+{"kind":"shape","id":"sh/ovahoza1","slide":2,"bbox":[270,334,170,104]}
+{"kind":"textbox","id":"sh/dg7adsji","slide":2,"text":"AIDP Gold","textPreview":"AIDP Gold","textChars":9,"textLines":1,"bbox":[283,349,144,28]}
+{"kind":"textbox","id":"sh/61032lsz","slide":2,"text":"Feature-ready claims and context data","textPreview":"Feature-ready claims and context data","textChars":37,"textLines":1,"bbox":[286,390,138,34]}
+{"kind":"shape","id":"sh/vmtwra5g","slide":2,"bbox":[450,372,34,28]}
+{"kind":"shape","id":"sh/loj2t83i","slide":2,"bbox":[498,334,170,104]}
+{"kind":"textbox","id":"sh/w3m94fu1","slide":2,"text":"AIDP ML","textPreview":"AIDP ML","textChars":7,"textLines":1,"bbox":[511,349,144,28]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":2,"text":"Train, test, evaluate, score","textPreview":"Train, test, evaluate, score","textChars":28,"textLines":1,"bbox":[514,390,138,34]}
+{"kind":"shape","id":"sh/ex0nuxc3","slide":2,"bbox":[678,372,34,28]}
+{"kind":"shape","id":"sh/lwval87e","slide":2,"bbox":[726,334,170,104]}
+{"kind":"textbox","id":"sh/wb2hwfyx","slide":2,"text":"Experiments","textPreview":"Experiments","textChars":11,"textLines":1,"bbox":[739,349,144,28]}
+{"kind":"textbox","id":"sh/3q5o7qpg","slide":2,"text":"Tracking and model registry","textPreview":"Tracking and model registry","textChars":27,"textLines":1,"bbox":[742,390,138,34]}
+{"kind":"shape","id":"sh/e9cvixcz","slide":2,"bbox":[906,372,34,28]}
+{"kind":"shape","id":"sh/l87ed8ba","slide":2,"bbox":[954,334,170,104]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":2,"text":"Scored output","textPreview":"Scored output","textChars":13,"textLines":1,"bbox":[967,349,144,28]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":2,"text":"Optional AI Lakehouse or OAC use","textPreview":"Optional AI Lakehouse or OAC use","textChars":32,"textLines":1,"bbox":[970,390,138,34]}
+{"kind":"shape","id":"sh/tcj6tova","slide":2,"bbox":[64,492,174,104]}
+{"kind":"textbox","id":"sh/il0rqd4v","slide":2,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[82,507,38,28]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":2,"text":"AI Agent flow","textPreview":"AI Agent flow","textChars":13,"textLines":1,"bbox":[122,506,92,34]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":2,"text":"SQL plus RAG","textPreview":"SQL plus RAG","textChars":12,"textLines":1,"bbox":[84,550,132,32]}
+{"kind":"shape","id":"sh/t47y1kre","slide":2,"bbox":[270,492,170,104]}
+{"kind":"textbox","id":"sh/idonyd0z","slide":2,"text":"AI Lakehouse","textPreview":"AI Lakehouse","textChars":12,"textLines":1,"bbox":[283,507,144,28]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":2,"text":"Claims star schema for SQL tool","textPreview":"Claims star schema for SQL tool","textChars":31,"textLines":1,"bbox":[286,548,138,34]}
+{"kind":"shape","id":"sh/0fepkzup","slide":2,"bbox":[450,530,34,28]}
+{"kind":"shape","id":"sh/p0bi9s36","slide":2,"bbox":[498,492,170,104]}
+{"kind":"textbox","id":"sh/zed8v6ps","slide":2,"text":"AIDP knowledge base","textPreview":"AIDP knowledge base","textChars":19,"textLines":1,"bbox":[511,507,144,28]}
+{"kind":"textbox","id":"sh/6xkf6dcb","slide":2,"text":"Policy playbook chunks for RAG","textPreview":"Policy playbook chunks for RAG","textChars":30,"textLines":1,"bbox":[514,548,138,34]}
+{"kind":"shape","id":"sh/hk3q5o7q","slide":2,"bbox":[678,530,34,28]}
+{"kind":"shape","id":"sh/oza1gvy9","slide":2,"bbox":[726,492,170,104]}
+{"kind":"textbox","id":"sh/zqtcj6to","slide":2,"text":"SQL + RAG tools","textPreview":"SQL + RAG tools","textChars":15,"textLines":1,"bbox":[739,507,144,28]}
+{"kind":"textbox","id":"sh/65wjudg7","slide":2,"text":"Structured facts plus policy evidence","textPreview":"Structured facts plus policy evidence","textChars":37,"textLines":1,"bbox":[742,548,138,34]}
+{"kind":"shape","id":"sh/hwfyxobm","slide":2,"bbox":[906,530,34,28]}
+{"kind":"shape","id":"sh/obm58z25","slide":2,"bbox":[954,492,170,104]}
+{"kind":"textbox","id":"sh/zupwb2hw","slide":2,"text":"Supervisor Agent","textPreview":"Supervisor Agent","textChars":16,"textLines":1,"bbox":[967,507,144,28]}
+{"kind":"textbox","id":"sh/a9w3m94f","slide":2,"text":"Claims and Policy Copilot response","textPreview":"Claims and Policy Copilot response","textChars":34,"textLines":1,"bbox":[970,548,138,34]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":2,"text":"Key message","textPreview":"Key message","textChars":11,"textLines":1,"bbox":[64,628,150,24]}
+{"kind":"textbox","id":"sh/36hcrmhk","slide":2,"text":"The trusted Gold layer is reused differently: OAC reads AI Lakehouse, ML engineers from AIDP Gold feature data, and the Agent combines AI Lakehouse SQL with document RAG.","textPreview":"The trusted Gold layer is reused differently: OAC reads AI Lakehouse, ML engineers from AIDP Gold feature data, and the Agent combines AI...","textChars":170,"textLines":1,"bbox":[210,629,880,30]}
+{"kind":"shape","id":"sh/wra5gbq1","slide":2,"bbox":[64,676,1152,0]}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":2,"text":"Public Healthcare AIDP Workshop","textPreview":"Public Healthcare AIDP Workshop","textChars":31,"textLines":1,"bbox":[64,686,520,20]}
+{"kind":"textbox","id":"sh/ed8bat47","slide":2,"text":"Codex-enabled workshop factory pattern","textPreview":"Codex-enabled workshop factory pattern","textChars":38,"textLines":1,"bbox":[860,686,356,20]}
+{"kind":"notes","id":"nt/hehh3a","slide":2,"text":""}
+{"kind":"slide","id":"sl/gbdpu2","slide":3,"title":"Participants get a guided lab path, not a static demo","textShapes":28}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":3,"text":"Participants get a guided lab path, not a static demo","textPreview":"Participants get a guided lab path, not a static demo","textChars":53,"textLines":1,"bbox":[64,40,1080,82]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":3,"text":"The guide separates admin setup from participant work and places screenshots beside the exact steps they support.","textPreview":"The guide separates admin setup from participant work and places screenshots beside the exact steps they support.","textChars":113,"textLines":1,"bbox":[66,122,1040,34]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":3,"bbox":[68,184,140,164]}
+{"kind":"textbox","id":"sh/t47y1kre","slide":3,"text":"Lab 0","textPreview":"Lab 0","textChars":5,"textLines":1,"bbox":[84,200,108,24]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":3,"text":"Admin setup","textPreview":"Admin setup","textChars":11,"textLines":1,"bbox":[84,232,108,40]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":3,"text":"OCI bucket, AIDP, AI Lakehouse, OAC, compute","textPreview":"OCI bucket, AIDP, AI Lakehouse, OAC, compute","textChars":44,"textLines":1,"bbox":[84,278,108,54]}
+{"kind":"shape","id":"sh/idonyd0z","slide":3,"bbox":[200,252,42,28]}
+{"kind":"shape","id":"sh/p0bi9s36","slide":3,"bbox":[234,184,140,164]}
+{"kind":"textbox","id":"sh/0fepkzup","slide":3,"text":"Lab 1","textPreview":"Lab 1","textChars":5,"textLines":1,"bbox":[250,200,108,24]}
+{"kind":"textbox","id":"sh/itgfmlkj","slide":3,"text":"Medallion","textPreview":"Medallion","textChars":9,"textLines":1,"bbox":[250,232,108,40]}
+{"kind":"textbox","id":"sh/7ed8bat4","slide":3,"text":"Upload and run Bronze and Silver notebooks","textPreview":"Upload and run Bronze and Silver notebooks","textChars":42,"textLines":1,"bbox":[250,278,108,54]}
+{"kind":"shape","id":"sh/0z61032l","slide":3,"bbox":[366,252,42,28]}
+{"kind":"shape","id":"sh/pkzupwb2","slide":3,"bbox":[400,184,140,164]}
+{"kind":"textbox","id":"sh/ih4byhgn","slide":3,"text":"Lab 2","textPreview":"Lab 2","textChars":5,"textLines":1,"bbox":[416,200,108,24]}
+{"kind":"textbox","id":"sh/72x4nap4","slide":3,"text":"Claims star schema","textPreview":"Claims star schema","textChars":18,"textLines":1,"bbox":[416,232,108,40]}
+{"kind":"textbox","id":"sh/0nuxc3yl","slide":3,"text":"Load fact and dimensions into AI Lakehouse","textPreview":"Load fact and dimensions into AI Lakehouse","textChars":42,"textLines":1,"bbox":[416,278,108,54]}
+{"kind":"shape","id":"sh/p8nqxs72","slide":3,"bbox":[532,252,42,28]}
+{"kind":"shape","id":"sh/ed8v6psf","slide":3,"bbox":[566,184,140,164]}
+{"kind":"textbox","id":"sh/7y1kre1w","slide":3,"text":"Lab 3","textPreview":"Lab 3","textChars":5,"textLines":1,"bbox":[582,200,108,24]}
+{"kind":"textbox","id":"sh/j6tovaho","slide":3,"text":"OAC and Assistant","textPreview":"OAC and Assistant","textChars":17,"textLines":1,"bbox":[582,232,108,40]}
+{"kind":"textbox","id":"sh/ulwval87","slide":3,"text":"Build dashboard and test natural language","textPreview":"Build dashboard and test natural language","textChars":41,"textLines":1,"bbox":[582,278,108,54]}
+{"kind":"shape","id":"sh/1cfa9w3m","slide":3,"bbox":[698,252,42,28]}
+{"kind":"shape","id":"sh/crmhk3q5","slide":3,"bbox":[732,184,140,164]}
+{"kind":"textbox","id":"sh/ji5snelo","slide":3,"text":"Lab 4","textPreview":"Lab 4","textChars":5,"textLines":1,"bbox":[748,200,108,24]}
+{"kind":"textbox","id":"sh/uxc3ylc7","slide":3,"text":"Context extension","textPreview":"Context extension","textChars":17,"textLines":1,"bbox":[748,232,108,40]}
+{"kind":"textbox","id":"sh/1kre1w7m","slide":3,"text":"Add JSON and spatial context without rebuild","textPreview":"Add JSON and spatial context without rebuild","textChars":44,"textLines":1,"bbox":[748,278,108,54]}
+{"kind":"shape","id":"sh/c3ylc7u5","slide":3,"bbox":[864,252,42,28]}
+{"kind":"shape","id":"sh/jqh0fepk","slide":3,"bbox":[898,184,140,164]}
+{"kind":"textbox","id":"sh/q5o7qpg3","slide":3,"text":"Lab 5","textPreview":"Lab 5","textChars":5,"textLines":1,"bbox":[914,200,108,24]}
+{"kind":"textbox","id":"sh/0fepkzup","slide":3,"text":"Optional ML","textPreview":"Optional ML","textChars":11,"textLines":1,"bbox":[914,232,108,40]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":3,"text":"Train, test, evaluate, score, register","textPreview":"Train, test, evaluate, score, register","textChars":38,"textLines":1,"bbox":[914,278,108,54]}
+{"kind":"shape","id":"sh/i9s36hcr","slide":3,"bbox":[1030,252,42,28]}
+{"kind":"shape","id":"sh/bulwval8","slide":3,"bbox":[1064,184,140,164]}
+{"kind":"textbox","id":"sh/032lszqt","slide":3,"text":"Lab 6","textPreview":"Lab 6","textChars":5,"textLines":1,"bbox":[1080,200,108,24]}
+{"kind":"textbox","id":"sh/tovahoza","slide":3,"text":"Optional RAG and Agent","textPreview":"Optional RAG and Agent","textChars":22,"textLines":1,"bbox":[1080,232,108,40]}
+{"kind":"textbox","id":"sh/ixczed8v","slide":3,"text":"Knowledge base plus SQL/RAG copilot","textPreview":"Knowledge base plus SQL/RAG copilot","textChars":35,"textLines":1,"bbox":[1080,278,108,54]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":3,"text":"AIDP notebooks","textPreview":"AIDP notebooks","textChars":14,"textLines":1,"bbox":[86,550,300,22]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":3,"text":"AI Lakehouse load","textPreview":"AI Lakehouse load","textChars":17,"textLines":1,"bbox":[466,550,300,22]}
+{"kind":"textbox","id":"sh/32lszqtc","slide":3,"text":"OAC Assistant","textPreview":"OAC Assistant","textChars":13,"textLines":1,"bbox":[846,550,300,22]}
+{"kind":"shape","id":"sh/ahoza1gv","slide":3,"bbox":[64,676,1152,0]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":3,"text":"Public Healthcare AIDP Workshop","textPreview":"Public Healthcare AIDP Workshop","textChars":31,"textLines":1,"bbox":[64,686,520,20]}
+{"kind":"textbox","id":"sh/szqtcj6t","slide":3,"text":"Codex-enabled workshop factory pattern","textPreview":"Codex-enabled workshop factory pattern","textChars":38,"textLines":1,"bbox":[860,686,356,20]}
+{"kind":"image","id":"im/8jqh0fep","slide":3,"name":"","geometry":"roundRect","alt":"AIDP notebooks","bbox":[86,408,300,132]}
+{"kind":"image","id":"im/q1orytsv","slide":3,"name":"","geometry":"roundRect","alt":"AI Lakehouse load","bbox":[466,408,300,132]}
+{"kind":"image","id":"im/zqtcj6to","slide":3,"name":"","geometry":"roundRect","alt":"OAC Assistant","bbox":[846,408,300,132]}
+{"kind":"notes","id":"nt/gbdpu2","slide":3,"text":""}
+{"kind":"slide","id":"sl/09i8ye","slide":4,"title":"Codex learned the Oracle service patterns through guided validation","textShapes":19}
+{"kind":"textbox","id":"sh/2lszqtcj","slide":4,"text":"Codex learned the Oracle service patterns through guided validation","textPreview":"Codex learned the Oracle service patterns through guided validation","textChars":67,"textLines":1,"bbox":[64,40,1080,82]}
+{"kind":"textbox","id":"sh/d8bat47y","slide":4,"text":"Official tutorials and real OCI product navigation were converted into a reusable workshop-building method.","textPreview":"Official tutorials and real OCI product navigation were converted into a reusable workshop-building method.","textChars":107,"textLines":1,"bbox":[66,122,1040,34]}
+{"kind":"shape","id":"sh/knih4byh","slide":4,"bbox":[320,172,220,90]}
+{"kind":"textbox","id":"sh/vu9knih4","slide":4,"text":"Official Oracle tutorials","textPreview":"Official Oracle tutorials","textChars":25,"textLines":1,"bbox":[338,191,184,28]}
+{"kind":"shape","id":"sh/29gr2p8n","slide":4,"bbox":[552,202,170,28]}
+{"kind":"shape","id":"sh/d0z61032","slide":4,"bbox":[760,172,220,90]}
+{"kind":"textbox","id":"sh/kf6dcbul","slide":4,"text":"Human product validation","textPreview":"Human product validation","textChars":24,"textLines":1,"bbox":[778,191,184,28]}
+{"kind":"shape","id":"sh/vixczed8","slide":4,"bbox":[850,274,40,142]}
+{"kind":"shape","id":"sh/2x4nap4r","slide":4,"bbox":[760,468,220,90]}
+{"kind":"textbox","id":"sh/gfmlkjm1","slide":4,"text":"Screenshots and lab steps","textPreview":"Screenshots and lab steps","textChars":25,"textLines":1,"bbox":[778,487,184,28]}
+{"kind":"shape","id":"sh/90je9cvi","slide":4,"bbox":[552,498,170,28]}
+{"kind":"shape","id":"sh/yd0z6103","slide":4,"bbox":[320,468,220,90]}
+{"kind":"textbox","id":"sh/rytsvu9k","slide":4,"text":"Reusable Codex package","textPreview":"Reusable Codex package","textChars":22,"textLines":1,"bbox":[338,487,184,28]}
+{"kind":"shape","id":"sh/g7adsji5","slide":4,"bbox":[424,274,40,142]}
+{"kind":"shape","id":"sh/9s36hcrm","slide":4,"bbox":[558,268,184,184]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":4,"text":"Validated service skill loop","textPreview":"Validated service skill loop","textChars":28,"textLines":1,"bbox":[588,318,124,86]}
+{"kind":"textbox","id":"sh/rmhk3q5o","slide":4,"text":"Captured services","textPreview":"Captured services","textChars":17,"textLines":1,"bbox":[82,184,190,28]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":4,"text":"Object Storage","textPreview":"Object Storage","textChars":14,"textLines":1,"bbox":[82,226,210,28]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":4,"text":"AIDP Workbench","textPreview":"AIDP Workbench","textChars":14,"textLines":1,"bbox":[82,268,210,28]}
+{"kind":"textbox","id":"sh/p0bi9s36","slide":4,"text":"Autonomous AI Lakehouse","textPreview":"Autonomous AI Lakehouse","textChars":23,"textLines":1,"bbox":[82,310,210,28]}
+{"kind":"textbox","id":"sh/0fepkzup","slide":4,"text":"Oracle Analytics Cloud","textPreview":"Oracle Analytics Cloud","textChars":22,"textLines":1,"bbox":[82,352,210,28]}
+{"kind":"textbox","id":"sh/bulwval8","slide":4,"text":"AIDP ML","textPreview":"AIDP ML","textChars":7,"textLines":1,"bbox":[82,394,210,28]}
+{"kind":"textbox","id":"sh/i9s36hcr","slide":4,"text":"RAG Knowledge Base","textPreview":"RAG Knowledge Base","textChars":18,"textLines":1,"bbox":[82,436,210,28]}
+{"kind":"textbox","id":"sh/tovahoza","slide":4,"text":"AI Agent Flow","textPreview":"AI Agent Flow","textChars":13,"textLines":1,"bbox":[82,478,210,28]}
+{"kind":"textbox","id":"sh/032lszqt","slide":4,"text":"Why this matters","textPreview":"Why this matters","textChars":16,"textLines":1,"bbox":[988,184,180,28]}
+{"kind":"textbox","id":"sh/bi9s36hc","slide":4,"text":"The team does not start from a blank prompt next time. Codex has a validated pattern for product setup, lab sequencing, screenshots, assets, and publishing.","textPreview":"The team does not start from a blank prompt next time. Codex has a validated pattern for product setup, lab sequencing, screenshots, asse...","textChars":156,"textLines":1,"bbox":[988,226,192,170]}
+{"kind":"shape","id":"sh/ixczed8v","slide":4,"bbox":[64,676,1152,0]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":4,"text":"Public Healthcare AIDP Workshop","textPreview":"Public Healthcare AIDP Workshop","textChars":31,"textLines":1,"bbox":[64,686,520,20]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":4,"text":"Codex-enabled workshop factory pattern","textPreview":"Codex-enabled workshop factory pattern","textChars":38,"textLines":1,"bbox":[860,686,356,20]}
+{"kind":"notes","id":"nt/09i8ye","slide":4,"text":""}
+{"kind":"slide","id":"sl/rfcnna","slide":5,"title":"The same method can now create new industry workshops faster","textShapes":24}
+{"kind":"textbox","id":"sh/udg7adsj","slide":5,"text":"The same method can now create new industry workshops faster","textPreview":"The same method can now create new industry workshops faster","textChars":60,"textLines":1,"bbox":[64,40,1080,82]}
+{"kind":"textbox","id":"sh/54zidony","slide":5,"text":"A teammate uploads one package, names an industry, validates product steps, and publishes a GitHub Pages workshop.","textPreview":"A teammate uploads one package, names an industry, validates product steps, and publishes a GitHub Pages workshop.","textChars":114,"textLines":1,"bbox":[66,122,1040,34]}
+{"kind":"textbox","id":"sh/cj6tovah","slide":5,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[90,168,42,42]}
+{"kind":"textbox","id":"sh/nap4r65w","slide":5,"text":"Upload package","textPreview":"Upload package","textChars":14,"textLines":1,"bbox":[146,167,414,26]}
+{"kind":"textbox","id":"sh/upwb2hwf","slide":5,"text":"Use the single Markdown factory file in a new Codex chat.","textPreview":"Use the single Markdown factory file in a new Codex chat.","textChars":57,"textLines":1,"bbox":[146,195,414,50]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":5,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[650,168,42,42]}
+{"kind":"textbox","id":"sh/cvixczed","slide":5,"text":"Name industry","textPreview":"Name industry","textChars":13,"textLines":1,"bbox":[706,167,414,26]}
+{"kind":"textbox","id":"sh/jm1cfa9w","slide":5,"text":"Codex researches current public business challenges first.","textPreview":"Codex researches current public business challenges first.","textChars":58,"textLines":1,"bbox":[706,195,414,50]}
+{"kind":"textbox","id":"sh/u18jqh0f","slide":5,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[90,310,42,42]}
+{"kind":"textbox","id":"sh/w3m94fu1","slide":5,"text":"Approve design","textPreview":"Approve design","textChars":14,"textLines":1,"bbox":[146,309,414,26]}
+{"kind":"textbox","id":"sh/loj2t83i","slide":5,"text":"Business story, data model, labs, ML, and agent plan are reviewed.","textPreview":"Business story, data model, labs, ML, and agent plan are reviewed.","textChars":66,"textLines":1,"bbox":[146,337,414,50]}
+{"kind":"textbox","id":"sh/ex0nuxc3","slide":5,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[650,310,42,42]}
+{"kind":"textbox","id":"sh/3itgfmlk","slide":5,"text":"Validate services","textPreview":"Validate services","textChars":17,"textLines":1,"bbox":[706,309,414,26]}
+{"kind":"textbox","id":"sh/wb2hwfyx","slide":5,"text":"Human logs in, Codex captures real OCI, AIDP, AI Lakehouse, and OAC steps.","textPreview":"Human logs in, Codex captures real OCI, AIDP, AI Lakehouse, and OAC steps.","textChars":74,"textLines":1,"bbox":[706,337,414,50]}
+{"kind":"textbox","id":"sh/lwval87e","slide":5,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[90,452,42,42]}
+{"kind":"textbox","id":"sh/e9cvixcz","slide":5,"text":"Deploy on GitHub Pages","textPreview":"Deploy on GitHub Pages","textChars":22,"textLines":1,"bbox":[146,451,414,26]}
+{"kind":"textbox","id":"sh/3q5o7qpg","slide":5,"text":"Commit assets, push to GitHub, enable Pages, and verify the live workshop URL.","textPreview":"Commit assets, push to GitHub, enable Pages, and verify the live workshop URL.","textChars":78,"textLines":1,"bbox":[146,479,414,50]}
+{"kind":"shape","id":"sh/sneloj2t","slide":5,"bbox":[682,430,446,152]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":5,"text":"Reusable data design standard","textPreview":"Reusable data design standard","textChars":29,"textLines":1,"bbox":[708,450,360,24]}
+{"kind":"textbox","id":"sh/l0rqd4vm","slide":5,"text":"Rich raw data creates trend, hierarchy, geography, segment, ML, and Assistant depth.","textPreview":"Rich raw data creates trend, hierarchy, geography, segment, ML, and Assistant depth.","textChars":84,"textLines":1,"bbox":[708,482,382,30]}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":5,"text":"Controlled noise makes Bronze-to-Silver-to-Gold cleansing visible and meaningful.","textPreview":"Controlled noise makes Bronze-to-Silver-to-Gold cleansing visible and meaningful.","textChars":81,"textLines":1,"bbox":[708,520,382,30]}
+{"kind":"textbox","id":"sh/7u54zido","slide":5,"text":"Next pilots: Banking | Manufacturing | Insurance | Public Sector | Telecom","textPreview":"Next pilots: Banking | Manufacturing | Insurance | Public Sector | Telecom","textChars":74,"textLines":1,"bbox":[708,558,382,18]}
+{"kind":"textbox","id":"sh/ed8bat47","slide":5,"text":"Takeaway: this is a reusable human-plus-Codex factory for industry-specific Oracle data and AI workshops.","textPreview":"Takeaway: this is a reusable human-plus-Codex factory for industry-specific Oracle data and AI workshops.","textChars":105,"textLines":1,"bbox":[88,608,1040,34]}
+{"kind":"shape","id":"sh/lc7u54zi","slide":5,"bbox":[64,676,1152,0]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":5,"text":"Public Healthcare AIDP Workshop","textPreview":"Public Healthcare AIDP Workshop","textChars":31,"textLines":1,"bbox":[64,686,520,20]}
+{"kind":"textbox","id":"sh/36hcrmhk","slide":5,"text":"Codex-enabled workshop factory pattern","textPreview":"Codex-enabled workshop factory pattern","textChars":38,"textLines":1,"bbox":[860,686,356,20]}
+{"kind":"notes","id":"nt/rfcnna","slide":5,"text":""}

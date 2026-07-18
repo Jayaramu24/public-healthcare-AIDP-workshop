@@ -9,9 +9,11 @@
 # - Inputs:
 # - Bronze Delta folders from the Bronze notebook
 # - Outputs:
-# - Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables
+# - Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - bronze_base
 # - silver_base
 # - risk_reference_date
@@ -45,10 +47,18 @@ from pyspark.sql import functions as F
 # -----------------------------------------------------------------------------
 # 1. Configure Bronze input and Silver output paths.
 # Silver is where raw strings and nested JSON become typed, business-friendly
-# tables that can safely feed Gold, ML, and OAC.
+# tables that can safely feed Gold, ML, and OAC. Use the same participant_id
+# used in the Bronze notebook so this notebook reads your Bronze output and
+# writes your own Silver output.
 # -----------------------------------------------------------------------------
-bronze_base = "oci://<bucket>@<namespace>/mpha/bronze"
-silver_base = "oci://<bucket>@<namespace>/mpha/silver"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 01_TFI_Allan_FM or 02_TF1_Joselito_BDC.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
 risk_reference_date = F.to_date(F.lit("2025-06-30"))
 
 

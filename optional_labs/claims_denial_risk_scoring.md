@@ -126,7 +126,7 @@ Admin confirms:
 Participant confirms:
 
 1. The starter notebook is available: `notebooks/aidp_ml_claims_denial_risk_pyspark.py`.
-2. The Gold-stage path is known, for example `oci://mpha-workshop-bucket@<namespace>/mpha/gold_stage`.
+2. The participant Gold-stage path is known, for example `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/gold_stage`.
 
 ![AIDP workspace folders](assets/aidp_ml_lab/screenshots/01_workspace_ml_folder.png)
 
@@ -156,7 +156,8 @@ The experiment exists and can receive MLflow runs from the notebook.
 4. Set:
 
 ```python
-gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"
+gold_stage_base = f"/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/gold_stage"
 model_version = "claims_denial_risk_v1"
 experiment_name = "MPHA Claims Denial Risk Prediction"
 enable_mlflow_tracking = True

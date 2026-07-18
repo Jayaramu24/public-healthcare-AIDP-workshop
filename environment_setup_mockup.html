@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 1 Environment Setup Mockup - Public Healthcare AIDP Workshop</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --line: #e2e5e9;
+        --muted: #5f6368;
+        --text: #1f1f1f;
+        --accent: #c74634;
+        --accent-soft: #fde9e4;
+        --ok: #167c52;
+        --ok-soft: #eef9f2;
+        --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: inherit; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 22px;
+        background: #202124;
+        color: #fff;
+      }
+
+      .topbar strong { font-size: 1rem; }
+      .topbar span { color: rgba(255,255,255,0.78); font-size: 0.9rem; }
+
+      .wrap {
+        width: min(1380px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 42px;
+      }
+
+      .intro,
+      .shell,
+      .step-card,
+      .image-card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .intro {
+        padding: 22px 24px;
+        margin-bottom: 20px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1, h2, h3, h4, p { margin-top: 0; }
+      h1 { margin-bottom: 10px; font-size: 2rem; }
+      h2 { margin-bottom: 8px; font-size: 1.3rem; }
+      h3 { margin-bottom: 4px; font-size: 1rem; }
+      p, li { color: #374151; }
+
+      .muted { color: var(--muted); }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: #eef2f7;
+        color: #4b5563;
+        font-size: 0.84rem;
+        font-weight: 600;
+      }
+
+      .pill.admin {
+        background: var(--accent-soft);
+        color: #9f2f24;
+      }
+
+      .pill.asset {
+        background: var(--ok-soft);
+        color: var(--ok);
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        overflow: hidden;
+      }
+
+      .sidebar {
+        background: #fafafa;
+        border-right: 1px solid var(--line);
+        padding: 14px 12px 18px;
+      }
+
+      .sidebar-head {
+        padding: 4px 6px 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 12px;
+      }
+
+      .sidebar-head strong {
+        display: block;
+        font-size: 0.98rem;
+      }
+
+      .sidebar-head span {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .side-item {
+        padding: 9px 10px;
+        border-radius: 8px;
+        color: #4b5563;
+        font-size: 0.93rem;
+        margin-bottom: 6px;
+      }
+
+      .side-item.active {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .main {
+        background: #fff;
+      }
+
+      .section-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .content {
+        padding: 22px;
+      }
+
+      .step-card + .step-card {
+        margin-top: 18px;
+      }
+
+      .step-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfbfc;
+      }
+
+      .step-kicker {
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      .step-meta {
+        color: var(--muted);
+        font-size: 0.88rem;
+        text-align: right;
+      }
+
+      .step-body {
+        padding: 16px;
+      }
+
+      .step-body ol {
+        margin: 0 0 14px;
+        padding-left: 18px;
+      }
+
+      .note {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-left: 4px solid var(--ok);
+        border-radius: 8px;
+        background: var(--ok-soft);
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .image-card {
+        overflow: hidden;
+      }
+
+      .image-head {
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfbfc;
+      }
+
+      .image-head div {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .image-shell {
+        background: #eef2f5;
+      }
+
+      .image-shell img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .annotated-shell {
+        position: relative;
+        background: #eef2f5;
+        overflow: hidden;
+      }
+
+      .annotated-shell img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .mask {
+        position: absolute;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(16px) saturate(1.15);
+        -webkit-backdrop-filter: blur(16px) saturate(1.15);
+        border: 1px solid rgba(199, 70, 52, 0.22);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+        padding: 10px 12px;
+        color: #7f1d1d;
+        font-size: 0.8rem;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .mask::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(
+          180deg,
+          rgba(255,255,255,0.26) 0%,
+          rgba(255,255,255,0.18) 100%
+        );
+        pointer-events: none;
+      }
+
+      .mask > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .mask strong {
+        display: block;
+        margin-bottom: 2px;
+        color: var(--accent);
+        overflow-wrap: anywhere;
+      }
+
+      .mask.small {
+        font-size: 0.76rem;
+        padding: 8px 10px;
+      }
+
+      .mask code {
+        display: inline-block;
+        max-width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        line-height: 1.35;
+      }
+
+      .catalog-split {
+        display: grid;
+        gap: 18px;
+      }
+
+      .subsection {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px;
+        background: #fcfcfd;
+      }
+
+      .subsection h4 {
+        margin-bottom: 8px;
+        font-size: 1rem;
+      }
+
+      .caption {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        color: #4b5563;
+        font-size: 0.92rem;
+      }
+
+      .sql-block {
+        margin-top: 16px;
+        border: 1px solid #d7dce3;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #0f172a;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      }
+
+      .sql-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 14px;
+        background: #111827;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        color: #e5e7eb;
+        font-size: 0.86rem;
+      }
+
+      .sql-head span {
+        color: #94a3b8;
+      }
+
+      .sql-block pre {
+        margin: 0;
+        padding: 16px;
+        overflow-x: auto;
+        color: #e2e8f0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        white-space: pre;
+      }
+
+      code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef2f7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      @media (max-width: 1100px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+
+      @media (max-width: 820px) {
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>Public Healthcare AIDP Workshop</strong><br />
+        <span>Lab 1 mock-up using the approved LiveLabs setup tasks and screenshots</span>
+      </div>
+      <a href="lab1_livelabs_source_image_pack.html" style="color:#fff;">Source image pack</a>
+    </header>
+
+    <div class="wrap">
+      <section class="intro">
+        <p class="eyebrow">Environment Setup Mockup</p>
+        <h1>Lab 1: Set up the workshop environment</h1>
+        <p class="muted">
+          This version uses only the tasks you approved from the LiveLabs source flow: <code>Task 1</code>, <code>Task 6</code>, <code>Task 7</code>, <code>Task 10</code>, <code>Task 11</code>, and <code>Task 12</code>. The goal is to show a much calmer setup experience for first-time participants.
+        </p>
+        <div class="pill-row">
+          <span class="pill admin">Admin-led setup</span>
+          <span class="pill asset">Uses approved LiveLabs screenshots only</span>
+          <span class="pill">Compartment, AI Lakehouse, Gold schema, AIDP, Object Storage, OAC</span>
+        </div>
+      </section>
+
+      <section class="shell">
+        <aside class="sidebar">
+          <div class="sidebar-head">
+            <strong>Lab 1 Navigation</strong>
+            <span>Focused environment setup flow</span>
+          </div>
+          <div class="side-item active">Overview</div>
+          <div class="side-item">Task 1: Create compartment</div>
+          <div class="side-item">Task 6: Create AI Lakehouse</div>
+          <div class="side-item">Task 7: Create GOLD schema</div>
+          <div class="side-item">Task 10: Create AIDP</div>
+          <div class="side-item">Catalog setup: External and standard catalog</div>
+          <div class="side-item">Task 11: Create Object Storage bucket</div>
+          <div class="side-item">Task 12: Create OAC</div>
+        </aside>
+
+        <main class="main">
+          <div class="section-head">
+            <p class="eyebrow">Lab 1 Preview</p>
+            <h2>Admin completes the environment before participant labs begin</h2>
+            <p class="muted">
+              Participants can still view this section for context, but the execution is positioned as an admin preparation flow so beginners are not overloaded before the data engineering labs start.
+            </p>
+          </div>
+
+          <div class="content">
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 1</div>
+                  <h3>Create the workshop compartment</h3>
+                </div>
+                <div class="step-meta">Admin step<br />OCI tenancy preparation</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Open the OCI console and navigate to <code>Identity &amp; Security &gt; Compartments</code>.</li>
+                  <li>Create a dedicated compartment for the public healthcare workshop resources.</li>
+                  <li>Use a consistent naming convention so all services for the workshop sit under the same logical boundary.</li>
+                  <li>Confirm the compartment is visible and ready before moving to database services.</li>
+                </ol>
+                <div class="gallery">
+                  <article class="image-card">
+                    <div class="image-head"><strong>comp-1.png</strong><div>Compartments landing page</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-1.png" alt="Compartments" /></div>
+                    <div class="caption">Start from the Compartments page in OCI.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>comp-3.png</strong><div>Create compartment form</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-3.png" alt="Compartments" /></div>
+                    <div class="caption">Enter the workshop compartment name and description.</div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 6</div>
+                  <h3>Provision Autonomous AI Lakehouse</h3>
+                </div>
+                <div class="step-meta">Admin step<br />Gold data landing zone</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Navigate to <code>Oracle Database &gt; Autonomous AI Database</code>.</li>
+                  <li>Create a new AI Lakehouse instance in the workshop compartment.</li>
+                  <li>Set administrator credentials and confirm the workload and sizing settings.</li>
+                  <li>After provisioning, open <code>SQL Developer</code> / Database Actions for follow-on schema work.</li>
+                </ol>
+                <div class="gallery">
+                  <article class="image-card">
+                    <div class="image-head"><strong>ai-database.png</strong><div>AI Database navigation</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/ai-database.png" alt="AI Database" /></div>
+                    <div class="caption">Navigate to the Autonomous AI Database service.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>create-aidp-db.png</strong><div>Create AI Database</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-db.png" alt="Create AI Database" /></div>
+                    <div class="caption">Create the AI Lakehouse instance used for the gold star schema layer.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>create-aidp-db-2.png</strong><div>Credentials and settings</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-db-2.png" alt="Create AI Database" /></div>
+                    <div class="caption">Complete the access and configuration settings for the instance.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>sql-developer.png</strong><div>SQL Developer entry</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sql-developer.png" alt="SQL Developer" /></div>
+                    <div class="caption">Open Database Actions to continue with schema preparation.</div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 7</div>
+                  <h3>Create the <code>GOLD_XX</code> schema for claims processing</h3>
+                </div>
+                <div class="step-meta">Admin step<br />SQL shown in the main working area</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Inside AI Lakehouse Database Actions, open the SQL worksheet as the admin user.</li>
+                  <li>Create the workshop gold schema user and grant the privileges needed for the claims processing star schema.</li>
+                  <li>Use this schema as the target for the participant load steps in the later labs.</li>
+                </ol>
+                <div class="sql-block">
+                  <div class="sql-head">
+                    <strong>SQL Worksheet</strong>
+                    <span>Claims processing gold schema setup</span>
+                  </div>
+                  <pre>CREATE USER GOLD_HLTH IDENTIFIED BY "Welcome_12345";
+
+GRANT CONNECT, RESOURCE TO GOLD_HLTH;
+GRANT UNLIMITED TABLESPACE TO GOLD_HLTH;
+
+ALTER USER GOLD_HLTH DEFAULT TABLESPACE DATA;
+
+GRANT CREATE SESSION TO GOLD_HLTH;
+GRANT CREATE TABLE TO GOLD_HLTH;
+GRANT CREATE VIEW TO GOLD_HLTH;
+GRANT CREATE SEQUENCE TO GOLD_HLTH;
+GRANT CREATE PROCEDURE TO GOLD_HLTH;
+
+-- Claims processing gold objects
+CREATE TABLE GOLD_HLTH.MPHA_DIM_DATE (
+  DATE_KEY NUMBER PRIMARY KEY,
+  FULL_DATE DATE,
+  CALENDAR_YEAR NUMBER,
+  CALENDAR_QUARTER NUMBER,
+  MONTH_NUMBER NUMBER,
+  MONTH_NAME VARCHAR2(20),
+  WEEK_START_DATE DATE,
+  DAY_OF_WEEK VARCHAR2(12),
+  IS_WEEK_START CHAR(1)
+);
+
+CREATE TABLE GOLD_HLTH.MPHA_DIM_MEMBER (
+  MEMBER_KEY NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+  MEMBER_ID VARCHAR2(40),
+  MEMBER_NAME VARCHAR2(120),
+  GENDER VARCHAR2(20),
+  DATE_OF_BIRTH DATE,
+  AGE_BAND VARCHAR2(30),
+  DISTRICT_NAME VARCHAR2(80),
+  ENROLLMENT_CHANNEL VARCHAR2(40),
+  COVERAGE_START_DATE DATE,
+  COVERAGE_END_DATE DATE
+);
+
+CREATE TABLE GOLD_HLTH.MPHA_DIM_PROVIDER (
+  PROVIDER_KEY NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+  PROVIDER_ID VARCHAR2(40),
+  PROVIDER_NAME VARCHAR2(140),
+  PROVIDER_TYPE VARCHAR2(40),
+  SPECIALTY_GROUP VARCHAR2(80),
+  DISTRICT_NAME VARCHAR2(80),
+  ACCREDITATION_STATUS VARCHAR2(40),
+  ACCREDITATION_SCORE NUMBER(10,2)
+);
+
+CREATE TABLE GOLD_HLTH.MPHA_DIM_CLAIM_STATUS (
+  CLAIM_STATUS_KEY NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+  CLAIM_STATUS_CODE VARCHAR2(20),
+  CLAIM_STATUS_DESC VARCHAR2(80),
+  DENIAL_FLAG CHAR(1)
+);
+
+CREATE TABLE GOLD_HLTH.MPHA_FACT_CLAIMS (
+  CLAIM_KEY NUMBER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+  CLAIM_ID VARCHAR2(40),
+  DATE_KEY NUMBER REFERENCES GOLD_HLTH.MPHA_DIM_DATE(DATE_KEY),
+  MEMBER_KEY NUMBER REFERENCES GOLD_HLTH.MPHA_DIM_MEMBER(MEMBER_KEY),
+  PROVIDER_KEY NUMBER REFERENCES GOLD_HLTH.MPHA_DIM_PROVIDER(PROVIDER_KEY),
+  CLAIM_STATUS_KEY NUMBER REFERENCES GOLD_HLTH.MPHA_DIM_CLAIM_STATUS(CLAIM_STATUS_KEY),
+  CLAIM_TYPE VARCHAR2(40),
+  DIAGNOSIS_CATEGORY VARCHAR2(80),
+  BILLED_AMOUNT NUMBER(14,2),
+  APPROVED_AMOUNT NUMBER(14,2),
+  DISBURSED_AMOUNT NUMBER(14,2),
+  DENIED_AMOUNT NUMBER(14,2),
+  LENGTH_OF_STAY_DAYS NUMBER,
+  PROCESSING_DAYS NUMBER,
+  CLAIM_COUNT NUMBER
+);</pre>
+                </div>
+                <div class="note">
+                  This gives the admin a concrete schema creation moment on screen even though the source lab does not provide a separate screenshot sequence for Task 7.
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 10</div>
+                  <h3>Provision the AI Data Platform instance</h3>
+                </div>
+                <div class="step-meta">Admin step<br />Notebook and pipeline workspace</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Open the <code>AI Data Platform</code> service from the OCI console.</li>
+                  <li>Create the AIDP instance in the workshop compartment.</li>
+                  <li>Add the standard policies required for notebooks, job execution, and platform access.</li>
+                  <li>Optionally review the optional policies for broader service integrations.</li>
+                </ol>
+                <div class="gallery">
+                  <article class="image-card">
+                    <div class="image-head"><strong>create-aidp.png</strong><div>AI Data Platform navigation</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp.png" alt="AI Data Platform" /></div>
+                    <div class="caption">Enter the AI Data Platform service from OCI.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>create-aidp-2.png</strong><div>Create AIDP</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-2.png" alt="Create AIDP" /></div>
+                    <div class="caption">Create the platform instance used for bronze, silver, gold, ML, and AI agent labs.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>aidp-standard-policies-1.png</strong><div>Add standard policies</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-standard-policies-1.png" alt="Add Standard Policies" /></div>
+                    <div class="caption">Apply the standard policies required by the service.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>aidp-optional-policies-1.png</strong><div>Optional policies</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-optional-policies-1.png" alt="Add Optional Policies" /></div>
+                    <div class="caption">Review optional policy extensions if your tenancy requires them.</div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Catalog Setup</div>
+                  <h3>Set up the external catalog and populate the standard catalog</h3>
+                </div>
+                <div class="step-meta">Admin step<br />Adapted from LiveLabs Task 3 and Task 4</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Open the newly created AIDP Workbench instance and access the master catalog.</li>
+                  <li>Create an external catalog that points to the claims-processing gold schema in Autonomous AI Lakehouse.</li>
+                  <li>Create a standard catalog for curated workshop assets and populate it with healthcare-oriented schemas, tables, and managed volumes.</li>
+                  <li>Use on-screen labels to map the generic LiveLabs screens to this workshop's catalog names and business content.</li>
+                </ol>
+
+                <div class="catalog-split">
+                  <section class="subsection">
+                    <h4>Part A: External catalog for claims processing gold schema</h4>
+                    <p class="muted">
+                      These screens are adapted from LiveLabs Task 3 and relabeled for the public healthcare workshop. The blurred areas cover the source workshop context so participants see only the setup story relevant to our lab.
+                    </p>
+                    <div class="gallery">
+                      <article class="image-card">
+                        <div class="image-head"><strong>access-aidp-instance.png</strong><div>Open the workbench and master catalog</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/access-aidp-instance.png" alt="Select AIDP Instance" />
+                          <div class="mask small" style="left:6%; top:10%; width:32%;">
+                            <strong>Workshop workbench</strong>
+                            Public Healthcare AIDP workspace
+                          </div>
+                          <div class="mask small" style="right:6%; top:24%; width:34%;">
+                            <strong>Catalog focus</strong>
+                            Open <code>Master Catalog</code> to define external data access
+                          </div>
+                        </div>
+                        <div class="caption">Enter the AIDP Workbench instance that will host catalog connections and notebooks.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>name-external-catalog.png</strong><div>Name the external catalog</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/name-external-catalog.png" alt="Select Master Catalog" />
+                          <div class="mask" style="left:7%; top:12%; width:38%;">
+                            <strong>Catalog name</strong>
+                            <code>claims_gold_external_catalog</code>
+                          </div>
+                          <div class="mask small" style="right:7%; bottom:11%; width:36%;">
+                            <strong>Description</strong>
+                            External catalog for claims star schema tables in AI Lakehouse
+                          </div>
+                        </div>
+                        <div class="caption">Replace the generic catalog name with a claims-processing external catalog for this workshop.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>configure-catalog-db-access.png</strong><div>Configure AI Lakehouse access</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/configure-catalog-db-access.png" alt="Select Master Catalog" />
+                          <div class="mask" style="left:6%; top:10%; width:40%;">
+                            <strong>Connection target</strong>
+                            Autonomous AI Lakehouse: claims processing gold schema
+                          </div>
+                          <div class="mask small" style="right:8%; top:44%; width:31%;">
+                            <strong>Schema</strong>
+                            <code>GOLD_HLTH</code>
+                          </div>
+                          <div class="mask small" style="left:10%; bottom:10%; width:37%;">
+                            <strong>Objects exposed</strong>
+                            <code>MPHA_FACT_CLAIMS</code> and related dimensions
+                          </div>
+                        </div>
+                        <div class="caption">Map the external catalog to the claims processing star schema in AI Lakehouse.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>view-external-catalog.png</strong><div>Validate exposed tables</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/view-external-catalog.png" alt="View DB tables" />
+                          <div class="mask small" style="left:8%; top:12%; width:33%;">
+                            <strong>Claims star schema</strong>
+                            Fact and dimension tables ready for downstream use
+                          </div>
+                          <div class="mask small" style="right:7%; bottom:12%; width:36%;">
+                            <strong>Workshop expectation</strong>
+                            Participants will read these tables later from notebooks and dashboards
+                          </div>
+                        </div>
+                        <div class="caption">Confirm that the external catalog exposes the claims star schema objects for notebook and dashboard consumption.</div>
+                      </article>
+                    </div>
+                  </section>
+
+                  <section class="subsection">
+                    <h4>Part B: Standard catalog for healthcare workshop managed assets</h4>
+                    <p class="muted">
+                      These screens are adapted from LiveLabs Task 4 and reframed for the workshop's internal catalog content. Here we use a standard catalog for curated schemas, managed tables, and document volumes used across the labs.
+                    </p>
+                    <div class="gallery">
+                      <article class="image-card">
+                        <div class="image-head"><strong>create-supplier-catalog.png</strong><div>Create standard catalog</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/create-supplier-catalog.png" alt="create catalog" />
+                          <div class="mask" style="left:8%; top:14%; width:38%;">
+                            <strong>Standard catalog name</strong>
+                            <code>public_healthcare_workshop_catalog</code>
+                          </div>
+                          <div class="mask small" style="right:8%; bottom:13%; width:34%;">
+                            <strong>Purpose</strong>
+                            Curated managed objects for data prep, ML, and document use cases
+                          </div>
+                        </div>
+                        <div class="caption">Create a healthcare-specific standard catalog inside the workbench.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>create-supplier-schema.png</strong><div>Create internal schema</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/create-supplier-schema.png" alt="create supplier schema" />
+                          <div class="mask small" style="left:8%; top:14%; width:35%;">
+                            <strong>Schema</strong>
+                            <code>healthcare_curated</code>
+                          </div>
+                          <div class="mask small" style="right:8%; top:40%; width:36%;">
+                            <strong>Use</strong>
+                            Managed schema for reference tables and catalog-side assets
+                          </div>
+                        </div>
+                        <div class="caption">Set up an internal schema that will hold curated workshop-managed objects.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>create-basic-supplier.png</strong><div>Create managed table</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/create-basic-supplier.png" alt="create table" />
+                          <div class="mask" style="left:8%; top:12%; width:37%;">
+                            <strong>Managed table</strong>
+                            <code>provider_accreditation_rules</code>
+                          </div>
+                          <div class="mask small" style="right:8%; bottom:12%; width:34%;">
+                            <strong>Example content</strong>
+                            Accreditation thresholds, specialty rules, and risk bands
+                          </div>
+                        </div>
+                        <div class="caption">Use the standard catalog for workshop-managed reference content rather than the source lab's supplier example.</div>
+                      </article>
+
+                      <article class="image-card">
+                        <div class="image-head"><strong>create-supplier-volume.png</strong><div>Create managed volume</div></div>
+                        <div class="annotated-shell">
+                          <img src="https://livelabs.oracle.com/cdn/analytics-ai/aidp-essentials/1-create-aidp-instance-and-populate-catalog/images/create-supplier-volume.png" alt="set as managed volume" />
+                          <div class="mask small" style="left:8%; top:13%; width:35%;">
+                            <strong>Managed volume</strong>
+                            <code>policy_playbooks_volume</code>
+                          </div>
+                          <div class="mask small" style="right:7%; bottom:11%; width:38%;">
+                            <strong>Stored assets</strong>
+                            Provider policy documents and public health operating playbooks
+                          </div>
+                        </div>
+                        <div class="caption">Create a managed volume to hold the workshop document assets used for vectorization and chat.</div>
+                      </article>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="note">
+                  Placement in the flow: this catalog setup step should come immediately after AIDP provisioning and before Object Storage setup, so the workshop environment clearly shows where external tables and internally managed catalog assets live.
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 11</div>
+                  <h3>Create the Object Storage bucket and folder structure</h3>
+                </div>
+                <div class="step-meta">Admin step<br />Raw and staged workshop assets</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Create the workshop Object Storage bucket in the same compartment.</li>
+                  <li>Open the bucket and create the folder structure needed for raw, bronze, silver, and gold-stage content.</li>
+                  <li>Use the bucket later for workshop data files, notebook inputs, and intermediate outputs.</li>
+                </ol>
+                <div class="gallery">
+                  <article class="image-card">
+                    <div class="image-head"><strong>os-buckets-1.png</strong><div>Open Buckets</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-1.png" alt="Create OS Bucket" /></div>
+                    <div class="caption">Navigate to Buckets in Object Storage.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>os-buckets-3.png</strong><div>Create bucket form</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-3.png" alt="Create OS Bucket" /></div>
+                    <div class="caption">Create the bucket used by the workshop execution flow.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>os-buckets-5.png</strong><div>Create folder path</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-5.png" alt="Create OS Bucket" /></div>
+                    <div class="caption">Create the folder structure inside the bucket.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>os-buckets-6.png</strong><div>Folder confirmation</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-6.png" alt="Create OS Bucket" /></div>
+                    <div class="caption">Confirm the folders that will hold the workshop data assets.</div>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <section class="step-card">
+              <div class="step-head">
+                <div>
+                  <div class="step-kicker">Task 12</div>
+                  <h3>Provision the Oracle Analytics Cloud instance</h3>
+                </div>
+                <div class="step-meta">Admin step<br />Dashboard delivery layer</div>
+              </div>
+              <div class="step-body">
+                <ol>
+                  <li>Open the <code>Analytics Cloud</code> service in OCI.</li>
+                  <li>Create an OAC instance in the workshop compartment.</li>
+                  <li>Use this instance later for the claims star schema dashboards and AI assistant experience.</li>
+                </ol>
+                <div class="gallery">
+                  <article class="image-card">
+                    <div class="image-head"><strong>oac.png</strong><div>Analytics Cloud navigation</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/oac.png" alt="Analytics Cloud" /></div>
+                    <div class="caption">Open the Analytics Cloud service from OCI.</div>
+                  </article>
+                  <article class="image-card">
+                    <div class="image-head"><strong>create-oac.png</strong><div>Create OAC</div></div>
+                    <div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-oac.png" alt="Create OAC" /></div>
+                    <div class="caption">Create the OAC instance used in the dashboarding lab.</div>
+                  </article>
+                </div>
+                <div class="note">
+                  Suggested handoff after Lab 1: once these resources are ready, participants can start the bronze, silver, gold, and AI Lakehouse load exercises without needing to create infrastructure themselves.
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </section>
+    </div>
+  </body>
+</html>

@@ -7,15 +7,18 @@
 #
 # Inputs and outputs:
 # - Inputs:
+# - Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
 # - silver_operations_access_context
 # - silver_claims_membership_disbursement
-# - mpha_fact_district_claims_context target table
+# - mpha_fact_district_claims_context target table in the assigned AI Lakehouse schema
 # - Outputs:
 # - gold_district_claims_context
 # - mpha_fact_district_claims_context
 # - mpha_claims_district_context_v
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - silver_base
 # - gold_stage_base
 # - target_catalog
@@ -67,12 +70,22 @@ from pyspark.sql import functions as F
 # The Gold context table is an extension fact table that sits beside the
 # existing Claims star schema rather than replacing it.
 # -----------------------------------------------------------------------------
-silver_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver"
-gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+gold_stage_base = f"{volume_base}/workshop_runs/{participant_id}/gold_stage"
 
 # Update these three values if your external catalog, schema, or table prefix differ.
 target_catalog = "goldailh"
-target_schema = "e2eaidpuser"
+target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Example: MPHA_P17.
+
+if target_schema == "REPLACE_WITH_YOUR_AILH_SCHEMA":
+    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, for example MPHA_P17.")
+
 table_prefix = "mpha"
 write_to_ai_lakehouse = True
 write_mode = "append"

@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LiveLabs Full Preview - Public Healthcare AIDP Workshop</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --line: #e2e5e9;
+        --muted: #5f6368;
+        --text: #1f1f1f;
+        --accent: #c74634;
+        --accent-soft: #fde9e4;
+        --blue: #2f6fb2;
+        --green: #167c52;
+        --amber: #b7791f;
+        --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: var(--blue); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 18px 22px;
+        background: #202124;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .topbar strong { font-size: 1rem; }
+      .topbar span { color: rgba(255,255,255,0.76); font-size: 0.9rem; }
+
+      .wrap {
+        width: min(1280px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .intro, .sample {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .intro {
+        margin-bottom: 22px;
+        padding: 22px 24px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { margin-bottom: 10px; font-size: 2rem; }
+      h2 { margin-bottom: 6px; font-size: 1.3rem; }
+      .intro p { max-width: 980px; color: var(--muted); }
+
+      .legend {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: #eef2f7;
+        color: var(--muted);
+        font-size: 0.84rem;
+        font-weight: 600;
+      }
+
+      .pill.admin { background: #fde9e4; color: #9f2f24; }
+      .pill.participant { background: #e7f2ff; color: #1956a8; }
+      .pill.optional { background: #fff2dc; color: #8a5b04; }
+
+      .sample-grid { display: grid; gap: 22px; }
+      .sample-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .sample-head p { margin-bottom: 0; color: var(--muted); }
+
+      .mock-shell {
+        display: grid;
+        grid-template-columns: 290px 1fr;
+        min-height: 720px;
+        background: #fff;
+      }
+
+      .mock-sidebar {
+        border-right: 1px solid var(--line);
+        background: #fafafa;
+        padding: 14px 12px 18px;
+      }
+
+      .mock-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        padding: 4px 6px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .burger {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+      }
+
+      .sidebar-list { display: grid; gap: 7px; }
+      .sidebar-item, .sidebar-subitem {
+        padding: 8px 10px;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+      .sidebar-item.active, .sidebar-subitem.active {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .sidebar-subgroup {
+        margin-left: 10px;
+        padding-left: 10px;
+        border-left: 2px solid #eceff3;
+      }
+
+      .mock-main { padding: 0; background: #fff; }
+      .mock-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .mock-toolbar-title { font-weight: 700; }
+      .toolbar-actions { display: flex; gap: 10px; color: var(--muted); font-size: 0.9rem; }
+      .mock-content { padding: 24px; }
+
+      .article { max-width: 880px; }
+      .article h3 { margin: 22px 0 10px; font-size: 1.02rem; }
+      .article p, .article li { color: #374151; }
+      .article ul, .article ol { padding-left: 20px; }
+
+      .quote, .note {
+        margin: 16px 0;
+        padding: 12px 14px;
+        border-left: 4px solid var(--accent);
+        background: #faf4f2;
+        border-radius: 6px;
+      }
+
+      .note.green {
+        border-left-color: var(--green);
+        background: #eef9f2;
+      }
+
+      .task-card {
+        margin-top: 16px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .task-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfbfc;
+      }
+
+      .task-card-title { font-weight: 700; }
+      .task-card-meta { color: var(--muted); font-size: 0.86rem; }
+
+      .screenshot-card {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .screenshot-frame { position: relative; background: #f0f2f5; }
+      .screenshot-frame img { display: block; width: 100%; height: auto; }
+
+      .callout-tag {
+        position: absolute;
+        max-width: 250px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.97);
+        border: 1px solid rgba(199, 70, 52, 0.26);
+        box-shadow: 0 8px 20px rgba(16, 24, 40, 0.1);
+        font-size: 0.8rem;
+        line-height: 1.35;
+      }
+
+      .callout-tag strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--accent);
+      }
+
+      .tl { top: 22px; left: 22px; }
+      .tr { top: 22px; right: 22px; }
+      .bl { bottom: 24px; left: 24px; }
+      .br { bottom: 24px; right: 24px; }
+      .midr { top: 45%; right: 24px; transform: translateY(-50%); }
+
+      .caption {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef2f7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      @media (max-width: 980px) {
+        .mock-shell { grid-template-columns: 1fr; }
+        .mock-sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>LiveLabs Full Workshop Preview</strong><br />
+        <span>Public Healthcare AIDP Workshop preview before update</span>
+      </div>
+      <a href="index.html" style="color:#fff;">Back to current workshop page</a>
+    </header>
+
+    <div class="wrap">
+      <section class="intro">
+        <p class="eyebrow">Full Preview</p>
+        <h1>End-to-end LiveLabs-style preview for the healthcare workshop</h1>
+        <p>
+          This preview extends the LiveLabs-style treatment across the full workshop flow: Introduction, Getting Started, Lab 1 through Lab 4, and Optional Labs. The screenshots are reused as references, but the visible explanation, task framing, folder names, and table names have been rewritten for the Public Healthcare AIDP Workshop.
+        </p>
+        <div class="legend">
+          <span class="pill admin">Admin-led setup</span>
+          <span class="pill participant">Participant hands-on</span>
+          <span class="pill optional">Optional extension</span>
+          <span class="pill">Claims star schema = guided path</span>
+          <span class="pill">Facility Access Daily = participant challenge</span>
+        </div>
+      </section>
+
+      <div class="sample-grid">
+        <section class="sample">
+          <div class="sample-head">
+            <h2>1. Introduction</h2>
+            <p>Workshop landing and learning contract in a calmer, LiveLabs-like structure.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Workshop navigation</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item active">Introduction</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem active">About this Workshop</div>
+                  <div class="sidebar-subitem">Objectives</div>
+                  <div class="sidebar-subitem">Lab Sequence</div>
+                </div>
+                <div class="sidebar-item">Getting Started</div>
+                <div class="sidebar-item">Lab 1: Set Up Core Resources</div>
+                <div class="sidebar-item">Lab 2: Build Bronze and Silver</div>
+                <div class="sidebar-item">Lab 3: Publish Claims Star Schema</div>
+                <div class="sidebar-item">Lab 4: Analyze in OAC</div>
+                <div class="sidebar-item">Optional Labs</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Public Healthcare AIDP Workshop</div>
+                <div class="toolbar-actions"><span>Translate</span><span>Help</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Introduction</h2>
+                  <h3>About this Workshop</h3>
+                  <p>Welcome to <strong>Public Healthcare AIDP Workshop</strong>. This workshop helps you build a healthcare lakehouse analytics flow on Oracle Cloud using <strong>Oracle AI Data Platform</strong>, <strong>Autonomous AI Lakehouse</strong>, and <strong>Oracle Analytics Cloud</strong>.</p>
+                  <p>You will start from public-health and claims source data, refine it through Bronze and Silver medallion layers, publish a <strong>Claims star schema</strong> to AI Lakehouse, and use OAC to analyze service pressure, denial hotspots, funding gaps, and operational patterns.</p>
+                  <div class="quote"><strong>Estimated Workshop Time:</strong> 3 hours for the core labs</div>
+                  <h3>Objectives</h3>
+                  <ul>
+                    <li>Understand the healthcare lakehouse architecture in Oracle Cloud</li>
+                    <li>Build Bronze and Silver layers in AIDP</li>
+                    <li>Publish a Claims star schema to Autonomous AI Lakehouse</li>
+                    <li>Create an OAC dashboard with filters, map context, and assistant prompts</li>
+                  </ul>
+                  <h3>Lab Sequence</h3>
+                  <ul>
+                    <li><strong>Lab 1:</strong> Set Up Core Resources</li>
+                    <li><strong>Lab 2:</strong> Build Bronze and Silver</li>
+                    <li><strong>Lab 3:</strong> Publish Claims Star Schema</li>
+                    <li><strong>Lab 4:</strong> Analyze in OAC</li>
+                  </ul>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>2. Getting Started</h2>
+            <p>A dedicated page to separate admin responsibilities from participant expectations before any lab begins.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Onboarding</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Introduction</div>
+                <div class="sidebar-item active">Getting Started</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem active">Roles and Responsibilities</div>
+                  <div class="sidebar-subitem">Required Services</div>
+                  <div class="sidebar-subitem">Execution Assets</div>
+                </div>
+                <div class="sidebar-item">Lab 1: Set Up Core Resources</div>
+                <div class="sidebar-item">Lab 2: Build Bronze and Silver</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Getting Started</div>
+                <div class="toolbar-actions"><span>Prev</span><span>Next</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Roles and responsibilities</h2>
+                  <p>This page exists to remove the most common beginner confusion: who does what, and when. In the LiveLabs-style version, participants see the admin setup expectation before the labs start rather than discovering it inside the middle of a task.</p>
+                  <div class="note">
+                    <strong>Admin / facilitator</strong><br />
+                    Provision shared AIDP, AI Lakehouse, OAC, Object Storage, users, catalogs, and starter assets.
+                  </div>
+                  <div class="note green">
+                    <strong>Participant</strong><br />
+                    Sign in to the prepared environment, run notebooks, validate outputs, and complete the guided OAC flow.
+                  </div>
+                  <h3>Required services</h3>
+                  <ul>
+                    <li>Oracle Object Storage</li>
+                    <li>Oracle AI Data Platform with Spark</li>
+                    <li>Autonomous AI Lakehouse</li>
+                    <li>Oracle Analytics Cloud</li>
+                  </ul>
+                  <h3>Execution assets</h3>
+                  <p>Participants should start with the guide, the raw source bundle, and the Bronze/Silver starter notebooks. That is enough to begin without seeing the full asset inventory up front.</p>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>3. Lab 1 - Set Up Core Resources</h2>
+            <p>Admin-led setup page using the same teaching rhythm as LiveLabs, but with this workshop’s bucket names, folders, and Gold-serving connections.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Lab 1</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Introduction</div>
+                <div class="sidebar-item">Getting Started</div>
+                <div class="sidebar-item active">Lab 1: Set Up Core Resources</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem active">Task 2: Create Object Storage Bucket</div>
+                  <div class="sidebar-subitem">Task 3: Create Folder Structure</div>
+                  <div class="sidebar-subitem">Task 4: Create AIDP Volumes</div>
+                </div>
+                <div class="sidebar-item">Lab 2: Build Bronze and Silver</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Lab 1: Set Up Core Resources</div>
+                <div class="toolbar-actions"><span>Admin-led</span><span>Estimated time: 1 hour</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Task 2: Create Object Storage Bucket</h2>
+                  <p>In the healthcare version, this task explicitly sets up the bucket and folder paths before volume creation so the workshop path is easier for first-time users to follow.</p>
+                  <ol>
+                    <li>Create the bucket <code>mpha-workshop-bucket</code>.</li>
+                    <li>Confirm the bucket namespace for later AIDP volume mapping.</li>
+                    <li>Create the folder prefixes used across raw, Bronze, Silver, Gold stage, Gold dimensional, and vector content.</li>
+                  </ol>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oci_agent_lab/aidp_catalogs.png" alt="Reference AIDP catalog screenshot" />
+                      <div class="callout-tag tl">
+                        <strong>Workshop bucket</strong>
+                        Create <code>mpha-workshop-bucket</code> in the workshop compartment.
+                      </div>
+                      <div class="callout-tag br">
+                        <strong>Required folder paths</strong>
+                        Use <code>mpha/raw/</code>, <code>mpha/raw_json/</code>, <code>mpha/raw_spatial/</code>, <code>mpha/documents/</code>, <code>mpha/bronze/</code>, <code>mpha/silver/</code>, <code>mpha/gold_stage/</code>, <code>mpha/gold_dimensional/</code>, and <code>mpha/vector/</code>.
+                      </div>
+                    </div>
+                    <div class="caption">Reference screenshot treatment for Lab 1, rewritten for the healthcare workshop’s Object Storage setup rather than generic workshop labels.</div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>4. Lab 2 - Build Bronze and Silver</h2>
+            <p>AIDP notebook steps with screenshot-led guidance, but using Bronze/Silver notebook names and healthcare table references.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Lab 2</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Lab 1: Set Up Core Resources</div>
+                <div class="sidebar-item active">Lab 2: Build Bronze and Silver</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem">Task 1: Open Shared Workspace</div>
+                  <div class="sidebar-subitem active">Task 2: Run Bronze Notebook</div>
+                  <div class="sidebar-subitem">Task 3: Run Silver Notebook</div>
+                </div>
+                <div class="sidebar-item">Lab 3: Publish Claims Star Schema</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Lab 2: Build Bronze and Silver</div>
+                <div class="toolbar-actions"><span>Participant hands-on</span><span>Estimated time: 45 min</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Task 2: Run Bronze Notebook</h2>
+                  <p>Participants begin with the Bronze notebook and only later move to Silver. That keeps the medallion story easier to understand than mixing raw, Bronze, Silver, and Gold logic in a single long page.</p>
+                  <ul>
+                    <li>Open <code>aidp_bronze_pyspark.py</code></li>
+                    <li>Set <code>raw_base</code>, <code>raw_json_base</code>, <code>raw_spatial_base</code>, <code>document_base</code>, and <code>bronze_base</code></li>
+                    <li>Confirm Bronze outputs such as <code>bronze_claims_membership_disbursement</code> and <code>bronze_facility_operations_daily</code></li>
+                  </ul>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oci_agent_lab/aidp_notebooks_folder.png" alt="AIDP notebook folders" />
+                      <div class="callout-tag tl">
+                        <strong>Notebook order</strong>
+                        Start with <code>01_bronze</code>, then move to <code>02_silver</code>.
+                      </div>
+                      <div class="callout-tag midr">
+                        <strong>Healthcare source focus</strong>
+                        The Bronze step lands raw claims, facility operations, district profile, weekly population health, JSON events, and spatial files.
+                      </div>
+                      <div class="callout-tag bl">
+                        <strong>Bronze outputs</strong>
+                        Expect tables such as <code>bronze_claims_membership_disbursement</code>, <code>bronze_facility_capacity_events</code>, and <code>bronze_healthcare_service_areas_geojson</code>.
+                      </div>
+                    </div>
+                    <div class="caption">Sample notebook step with healthcare-specific notebook flow and Bronze table names.</div>
+                  </div>
+
+                  <div class="task-card">
+                    <div class="task-card-head">
+                      <div>
+                        <div class="task-card-title">Silver follow-on</div>
+                        <div class="task-card-meta">Conform, type, derive, and validate</div>
+                      </div>
+                      <span class="pill participant">Participant</span>
+                    </div>
+                    <div style="padding:16px;">
+                      Run <code>aidp_silver_pyspark.py</code> next and confirm outputs such as <code>silver_claims_membership_disbursement</code>, <code>silver_facility_day</code>, <code>silver_district_health_week</code>, and <code>silver_facility_capacity_event</code>.
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>5. Lab 3 - Publish Claims Star Schema</h2>
+            <p>The Gold-serving path is centered on the Claims star schema and the direct-load AIDP notebook to AI Lakehouse.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Lab 3</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Lab 2: Build Bronze and Silver</div>
+                <div class="sidebar-item active">Lab 3: Publish Claims Star Schema</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem">Task 1: Create Claims Star Schema Tables</div>
+                  <div class="sidebar-subitem active">Task 2: Run Direct-Load Notebook</div>
+                  <div class="sidebar-subitem">Task 3: Validate Load</div>
+                </div>
+                <div class="sidebar-item">Lab 4: Analyze in OAC</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Lab 3: Publish Claims Star Schema</div>
+                <div class="toolbar-actions"><span>Guided path</span><span>Claims only</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Task 2: Run the direct-load Claims star schema notebook</h2>
+                  <p>This page should make it clear that the guided Gold path uses the direct-load notebook, while the older broad Gold staging notebook becomes optional or secondary.</p>
+                  <ol>
+                    <li>Open <code>aidp_claims_star_ai_lakehouse_pyspark.py</code></li>
+                    <li>Set the external catalog and target Gold-serving schema</li>
+                    <li>Load the Claims star schema dimensions and fact to AI Lakehouse</li>
+                  </ol>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oci_agent_lab/aidp_workflow.png" alt="AIDP workflow reference" />
+                      <div class="callout-tag tl">
+                        <strong>Direct-load notebook</strong>
+                        Use <code>aidp_claims_star_ai_lakehouse_pyspark.py</code> as the primary Gold path.
+                      </div>
+                      <div class="callout-tag tr">
+                        <strong>Target AI Lakehouse schema</strong>
+                        Load to the connected Gold-serving schema, for example <code>MPHA_GOLD_OWNER</code>.
+                      </div>
+                      <div class="callout-tag br">
+                        <strong>Claims star schema outputs</strong>
+                        Create and populate dimensions such as <code>mpha_dim_date</code>, <code>mpha_dim_district</code>, <code>mpha_dim_claim_type</code>, <code>mpha_dim_coverage_program</code>, and fact <code>mpha_fact_claims_monthly</code>.
+                      </div>
+                    </div>
+                    <div class="caption">Sample Gold path page framed around the Claims star schema and AI Lakehouse target, using this workshop’s dimensional object names.</div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>6. Lab 4 - Analyze in OAC</h2>
+            <p>Guided workbook flow with healthcare-specific dashboard names, assistant grounding, and LiveLabs-style task presentation.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Lab 4</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Lab 3: Publish Claims Star Schema</div>
+                <div class="sidebar-item active">Lab 4: Analyze in OAC</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem">Task 1: Connect OAC</div>
+                  <div class="sidebar-subitem active">Task 2: Build Claims Workbook</div>
+                  <div class="sidebar-subitem">Task 3: Configure Assistant</div>
+                  <div class="sidebar-subitem">Task 4: Participant DIY Extension</div>
+                </div>
+                <div class="sidebar-item">Optional Labs</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Lab 4: Analyze in OAC</div>
+                <div class="toolbar-actions"><span>Workbook</span><span>Assistant</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Task 2: Build the guided Claims workbook</h2>
+                  <p>This screen keeps the LiveLabs-style task narrative but names the workbook tabs and metrics from the healthcare workshop. The guided workbook should stay focused on the Claims star schema. Facility Access Daily remains the participant build challenge afterward.</p>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oac_dashboard_lab/oac_reference_layout.png" alt="OAC reference layout" />
+                      <div class="callout-tag tl">
+                        <strong>Workbook tabs</strong>
+                        Use <code>Claims Overview</code>, <code>Denial Analysis</code>, <code>Program Performance</code>, and <code>Claim Type Mix</code>.
+                      </div>
+                      <div class="callout-tag tr">
+                        <strong>Workbook filter context</strong>
+                        District, Program, Claim Type, Funding Source, and Period.
+                      </div>
+                      <div class="callout-tag bl">
+                        <strong>Claims star schema measures</strong>
+                        Claims submitted, denied claims, denial rate, submitted amount, paid amount, and average processing days.
+                      </div>
+                      <div class="callout-tag br">
+                        <strong>Assistant grounding</strong>
+                        Responses stay grounded in <code>mpha_fact_claims_monthly</code>, conformed dimensions, and the MPHA playbook document chunks.
+                      </div>
+                    </div>
+                    <div class="caption">Reference OAC layout rewritten as a healthcare Claims workbook rather than a banking or customer demo.</div>
+                  </div>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oac_dashboard_lab/oac_claims_overview.png" alt="Claims overview reference" />
+                      <div class="callout-tag tl">
+                        <strong>Claims Overview tab</strong>
+                        Highlight district volume, month trend, denial exposure, and payment realization.
+                      </div>
+                      <div class="callout-tag br">
+                        <strong>Instructor-led story</strong>
+                        This is the guided path. Participants create the Facility Access Daily dashboard separately afterward.
+                      </div>
+                    </div>
+                    <div class="caption">A more concrete Claims tab example using the workshop’s healthcare story arc.</div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>7. Optional Labs - ML and Agent extensions</h2>
+            <p>Optional content clearly separated from the core learning path so first-time users are not overwhelmed.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color:var(--muted);font-size:0.85rem;">Extensions</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Lab 4: Analyze in OAC</div>
+                <div class="sidebar-item active">Optional Labs</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem active">Claims Denial Risk Scoring</div>
+                  <div class="sidebar-subitem">Claims and Policy Copilot</div>
+                </div>
+                <div class="sidebar-item">Need Help?</div>
+              </div>
+            </aside>
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Optional Labs</div>
+                <div class="toolbar-actions"><span>Optional</span><span>Post-core path</span></div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Claims and Policy Copilot</h2>
+                  <p>These pages should only appear after the core workshop path is complete. They build on the Claims star schema, the MPHA playbook document, and the healthcare assistant scenario rather than interrupting the earlier foundational labs.</p>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oci_agent_lab/oci_genai_playground_experience_reference.png" alt="GenAI playground reference" />
+                      <div class="callout-tag tl">
+                        <strong>Healthcare copilot prompt</strong>
+                        Ask about denial hotspots, payment leakage, policy exceptions, or district-level claims patterns.
+                      </div>
+                      <div class="callout-tag br">
+                        <strong>Grounding sources</strong>
+                        Claims star schema metrics plus the vectorized <code>MPHA_Winter_Respiratory_Response_Playbook.docx</code>.
+                      </div>
+                    </div>
+                    <div class="caption">Optional agent-lab page with healthcare-specific grounding and claims/policy prompts.</div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

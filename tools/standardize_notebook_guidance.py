@@ -77,16 +77,18 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "what": "Loads the five CSV files, one JSONL event extract, and one GeoJSON document into Bronze Delta folders while preserving source fidelity and adding ingestion metadata.",
         "why": "Bronze is the audit and replay layer. It lets participants explain exactly which raw operational signals entered the workshop before any cleansing or business rules are applied.",
         "inputs": [
-            "data/raw/*.csv copied to the Object Storage raw prefix",
-            "data/raw_json/facility_capacity_events.jsonl",
-            "data/raw_spatial/healthcare_service_areas.geojson",
-            "documents/MPHA_Winter_Respiratory_Response_Playbook.docx remains in the document landing area",
+            "Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw/*.csv",
+            "Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw_json/facility_capacity_events.jsonl",
+            "Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw_spatial/healthcare_service_areas.geojson",
+            "Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/documents/MPHA_Winter_Respiratory_Response_Playbook.docx remains available for RAG",
         ],
         "outputs": [
-            "7 Bronze Delta folders under the configured bronze path",
+            "7 Bronze Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/bronze`",
             "The playbook document remains available for the later RAG knowledge-base lab",
         ],
         "parameters": [
+            "volume_base",
+            "participant_id",
             "raw_base, raw_json_base, raw_spatial_base, document_base, bronze_base",
             "ingest_batch_id",
         ],
@@ -114,9 +116,9 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "why": "Silver is where MPHA decides whether the data can be trusted across claims, provider, facility, membership, public-health, JSON, and spatial use cases.",
         "inputs": ["Bronze Delta folders from the Bronze notebook"],
         "outputs": [
-            "Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables",
+            "Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`",
         ],
-        "parameters": ["bronze_base", "silver_base", "risk_reference_date"],
+        "parameters": ["volume_base", "participant_id", "bronze_base", "silver_base", "risk_reference_date"],
         "expected": [
             "Silver row counts should broadly match source grains: 5 districts, 10 facilities, 1,810 facility-days, 780 weekly population rows, and 1,400 claims rows",
             "Derived displays should show access risk, public-health pressure, denial rates, accreditation bands, JSON capacity fields, and spatial access context",
@@ -136,9 +138,9 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "why": "Gold expresses the business decisions MPHA can make from trusted data, and it provides the staging layer for AI Lakehouse and analytics assets.",
         "inputs": ["Silver Delta folders from the Silver notebook"],
         "outputs": [
-            "Gold-stage CSV folders including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview",
+            "Gold-stage CSV folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/gold_stage` including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview",
         ],
-        "parameters": ["silver_base", "gold_stage_base", "gold_snapshot_date"],
+        "parameters": ["volume_base", "participant_id", "silver_base", "gold_stage_base", "gold_snapshot_date"],
         "expected": [
             "gold_claims_summary: about 622 rows",
             "gold_facility_access_daily: 1,810 rows",
@@ -159,7 +161,11 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "title": "04 Claims Star Schema - Publish Gold to AI Lakehouse",
         "what": "Builds Date, District, Coverage Program, Claim Type dimensions and the monthly Claims fact, then inserts only new rows into the connected AI Lakehouse external catalog.",
         "why": "This is the governed business data product used by OAC, OAC Assistant, ML features, and the Claims SQL Agent.",
-        "inputs": ["silver_district", "silver_claims_membership_disbursement", "pre-created AI Lakehouse target tables"],
+        "inputs": [
+            "Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`",
+            "Pre-created Claims star schema tables in the assigned AI Lakehouse schema, such as `goldailh.MPHA_P17`",
+            "AIDP external catalog refresh completed so the participant schema is visible under `goldailh`",
+        ],
         "outputs": [
             "mpha_dim_date",
             "mpha_dim_district",
@@ -167,14 +173,14 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
             "mpha_dim_claim_type",
             "mpha_fact_claims_monthly",
         ],
-        "parameters": ["silver_base", "target_catalog", "target_schema", "table_prefix", "write_mode"],
+        "parameters": ["volume_base", "participant_id", "silver_base", "target_catalog", "target_schema", "table_prefix", "write_mode"],
         "expected": [
             "mpha_fact_claims_monthly: about 622 rows on first successful load",
             "dimension row counts should be non-zero, and the validation SQL should return zero orphan rows",
         ],
         "rerun": "Designed for safe reruns. Existing natural keys are read from target tables and only new keys are inserted.",
         "errors": [
-            "Target schema not found: confirm external catalog, schema, and AIDP connection.",
+            "Target schema not found: refresh the `goldailh` external catalog in AIDP and confirm the assigned schema, for example `MPHA_P17`, is visible.",
             "Required table missing: run the Claims star schema DDL before this notebook.",
             "Executor memory failure: use the validated 1G driver/executor memory setting from the workshop troubleshooting notes.",
             "Table does not support truncate: do not truncate from Spark; use the idempotent append pattern.",
@@ -193,7 +199,7 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
             "bronze_district_health_profile",
         ],
         "outputs": ["silver_operations_access_context"],
-        "parameters": ["bronze_base", "silver_base"],
+        "parameters": ["volume_base", "participant_id", "bronze_base", "silver_base"],
         "expected": [
             "The validation display should show 5 district-level records in the workshop sample",
             "Displayed fields include capacity_pressure_band, spatial_access_band, residents_per_facility, access_gap_score, and operations_access_risk_score",
@@ -212,16 +218,17 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "what": "Aggregates Silver operations/access context and claims metrics to district-month grain, writes Gold context, and optionally inserts new rows into AI Lakehouse.",
         "why": "This gives OAC and Assistant new district-level context for explaining why denial hotspots may align with capacity pressure or spatial access gaps.",
         "inputs": [
+            "Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`",
             "silver_operations_access_context",
             "silver_claims_membership_disbursement",
-            "mpha_fact_district_claims_context target table",
+            "mpha_fact_district_claims_context target table in the assigned AI Lakehouse schema",
         ],
         "outputs": [
             "gold_district_claims_context",
             "mpha_fact_district_claims_context",
             "mpha_claims_district_context_v",
         ],
-        "parameters": ["silver_base", "gold_stage_base", "target_catalog", "target_schema", "table_prefix", "write_to_ai_lakehouse", "write_mode"],
+        "parameters": ["volume_base", "participant_id", "silver_base", "gold_stage_base", "target_catalog", "target_schema", "table_prefix", "write_to_ai_lakehouse", "write_mode"],
         "expected": [
             "The workshop sample inserts about 5 district-month context rows",
             "Validation display should show priority score, denial rate, occupancy, wait pressure, and access gap fields",
@@ -240,7 +247,7 @@ NOTEBOOK_SPECS: dict[str, dict[str, object]] = {
         "why": "This turns trusted Gold data into a predictive action queue that claims operations can use before denial leakage grows.",
         "inputs": ["Gold-stage claims summary plus provider accreditation, capacity, and spatial context outputs"],
         "outputs": ["gold_claims_denial_risk_scores", "AIDP Experiment run metrics", "optional registered model artifact"],
-        "parameters": ["gold_stage_base", "model_version", "experiment_name", "mlflow_run_name", "model_artifact_path", "enable_mlflow_tracking", "score_run_date"],
+        "parameters": ["volume_base", "participant_id", "gold_stage_base", "model_version", "experiment_name", "mlflow_run_name", "model_artifact_path", "enable_mlflow_tracking", "score_run_date"],
         "expected": [
             "Training uses January-April 2025; test uses May 2025; scoring uses June 2025",
             "Output review queue should include likely_denial_bucket and denial_risk_score",

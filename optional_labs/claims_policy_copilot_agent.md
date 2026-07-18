@@ -27,7 +27,7 @@ Before participants build or test the agent, the facilitator confirms:
    - `mpha_dim_district`
    - `mpha_dim_coverage_program`
    - `mpha_dim_claim_type`
-2. AIDP can read the AI Lakehouse external catalog, for example `goldailh.e2eaidpuser`.
+2. AIDP can read the AI Lakehouse external catalog and assigned participant schema, for example `goldailh.MPHA_P17`.
 3. The MPHA playbook is indexed in the AIDP knowledge base prepared in Part A, for example `e2eindustrydemos.default.mphapolicy`.
 4. The facilitator created a blank `MPHA_Claims_Policy_Copilot` shell in Lab 0.
 5. The Lab 0 AI compute `AIComputeForAgents` is active or available to attach from the shell **Compute** menu.
@@ -53,11 +53,11 @@ Open **Volumes** and confirm `e2eindustrydemovol` is listed as an **External** v
 
 ![External volume for MPHA document source](assets/aidp_rag_knowledge_lab/screenshots/04_external_volume_for_playbook_source.png)
 
-Open `e2eindustrydemovol`, then open `RawData`. Confirm the folder contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
+Open `e2eindustrydemovol`, then open `documents`. Confirm the folder contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
 
-![MPHA playbook file in RawData](assets/aidp_rag_knowledge_lab/screenshots/06_rawdata_playbook_docx_visible.png)
+![MPHA playbook file in documents](assets/aidp_rag_knowledge_lab/screenshots/06_rawdata_playbook_docx_visible.png)
 
-Expected result: the playbook document is available through `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`.
+Expected result: the playbook document is available through `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/documents`.
 
 ### Step A3 - Create the knowledge base shell
 
@@ -79,27 +79,27 @@ Create the knowledge base with these values:
 
 Expected result: `e2eindustrydemos.default.mphapolicy` exists as a knowledge base.
 
-### Step A4 - Add RawData as the data source
+### Step A4 - Add documents as the data source
 
 Open `mphapolicy`, go to the **Data Source** tab, and click **Add data source to knowledge base**.
 
-In the tree selector, choose the RawData folder from the external volume:
+In the tree selector, choose the documents folder from the external volume:
 
-`/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`
+`/Volumes/e2eindustrydemos/default/e2eindustrydemovol/documents`
 
 Keep **DOCX** selected. It is acceptable to keep PDF and TEXT selected if the folder may later include those supported file types. Keep **Start ingestion job on add** selected for the workshop.
 
 ![Add data source dialog](assets/aidp_rag_knowledge_lab/screenshots/14_add_data_source_dialog_file_filters_ingestion.png)
 
-Expected result: the `RawData` folder appears as a volume data source for `mphapolicy`.
+Expected result: the `documents` folder appears as a volume data source for `mphapolicy`.
 
 ### Step A5 - Validate parameters and run ingestion
 
-Open the `RawData` data source from the knowledge base.
+Open the `documents` data source from the knowledge base.
 
 Confirm:
 
-- Path: `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData`
+- Path: `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/documents`
 - File pattern includes `docx`
 - Workspace and cluster keys are populated
 
@@ -115,7 +115,7 @@ Expected result: the playbook source is ready to be chunked and embedded.
 
 ### Step A6 - Verify ingestion succeeded
 
-Open the **Job runs** tab for the `RawData` source and confirm the latest run shows **Succeeded**.
+Open the **Job runs** tab for the `documents` source and confirm the latest run shows **Succeeded**.
 
 ![Knowledge base ingestion succeeded](assets/aidp_rag_knowledge_lab/screenshots/10_kb_ingestion_job_runs_succeeded.png)
 

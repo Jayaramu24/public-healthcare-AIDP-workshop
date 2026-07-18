@@ -50,13 +50,17 @@ from pyspark.sql import functions as F
 # This legacy combined notebook is useful for reference, but the workshop now
 # prefers separate Bronze, Silver, Gold, and AI Lakehouse load notebooks.
 # -----------------------------------------------------------------------------
-raw_base = "oci://<bucket>@<namespace>/mpha/raw"
-raw_json_base = "oci://<bucket>@<namespace>/mpha/raw_json"
-raw_spatial_base = "oci://<bucket>@<namespace>/mpha/raw_spatial"
-document_base = "oci://<bucket>@<namespace>/mpha/documents"
-bronze_base = "oci://<bucket>@<namespace>/mpha/bronze"
-silver_base = "oci://<bucket>@<namespace>/mpha/silver"
-gold_stage_base = "oci://<bucket>@<namespace>/mpha/gold_stage"
+# This legacy reference uses the same folder contract as the current workshop.
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"
+
+raw_base = f"{volume_base}/raw"
+raw_json_base = f"{volume_base}/raw_json"
+raw_spatial_base = f"{volume_base}/raw_spatial"
+document_base = f"{volume_base}/documents"
+bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+gold_stage_base = f"{volume_base}/workshop_runs/{participant_id}/gold_stage"
 ingest_batch_id = "mpha_2025_h1_simplified_workshop"
 
 

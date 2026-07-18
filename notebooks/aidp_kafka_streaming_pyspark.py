@@ -58,10 +58,12 @@ from pyspark.sql.types import DoubleType, IntegerType, StringType, StructField, 
 # -----------------------------------------------------------------------------
 kafka_bootstrap_servers = "<bootstrap-server>:9092"
 kafka_topic = "mpha.facility.waittime.v1"
-checkpoint_base = "oci://<bucket>@<namespace>/mpha/checkpoints/wait_time_stream"
-bronze_stream_path = "oci://<bucket>@<namespace>/mpha/bronze_stream/facility_wait_time"
-silver_stream_path = "oci://<bucket>@<namespace>/mpha/silver_stream/facility_wait_time"
-gold_stream_path = "oci://<bucket>@<namespace>/mpha/gold_stream/wait_time_minute"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"
+checkpoint_base = f"{volume_base}/workshop_runs/{participant_id}/checkpoints/wait_time_stream"
+bronze_stream_path = f"{volume_base}/workshop_runs/{participant_id}/bronze_stream/facility_wait_time"
+silver_stream_path = f"{volume_base}/workshop_runs/{participant_id}/silver_stream/facility_wait_time"
+gold_stream_path = f"{volume_base}/workshop_runs/{participant_id}/gold_stream/wait_time_minute"
 
 
 # -----------------------------------------------------------------------------

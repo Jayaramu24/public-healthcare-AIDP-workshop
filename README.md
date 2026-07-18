@@ -40,13 +40,14 @@ The workshop now follows Oracle's AIDP quick-start flow, contextualized for the 
 
 1. Provision or reuse the AIDP instance
 2. Assign user access with AIDP roles
-3. Create the workshop workspace
-4. Create a Spark cluster and attach it to notebooks
-5. Create the standard Object Storage-backed catalog and schema
-6. Create external volumes for `raw`, `raw_json`, `raw_spatial`, `documents`, `bronze`, `silver`, and `gold_stage`
-7. Create the external Autonomous AI Lakehouse catalog
-8. Organize notebook folders for Bronze, Silver, Gold, ML, and agent work
-9. Run the medallion notebooks in order
+3. Create or confirm the shared AIDP workspace `E2EAIDPIndustryDemos`
+4. Create or confirm the Spark compute `E2EAIDPIndustrydemos`
+5. Create the standard Object Storage-backed catalog `e2eindustrydemos.default`
+6. Create external volume `e2eindustrydemovol` mapped to the Object Storage `mpha` prefix
+7. Create the external Autonomous AI Lakehouse catalog `goldailh`
+8. Create participant AI Lakehouse schemas such as `MPHA_P01` through `MPHA_P17`, apply quota, create Claims star schema tables, grant `E2EAIDPUSER`, and refresh the external catalog
+9. Organize participant notebook folders under `Participants/<participant_id>`
+10. Run the medallion notebooks in order
 
 See [workshop_guide.md](workshop_guide.md) for the full step-by-step walkthrough and workshop-specific naming guidance.
 
@@ -156,13 +157,13 @@ Use the Spark assets as separate notebooks in Oracle AI Data Platform:
   Produces optional broader Gold-stage compatibility outputs and business-serving views.
 
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)  
-  Loads the instructor-led Claims star schema directly into the connected Autonomous AI Lakehouse catalog.
+  Loads the instructor-led Claims star schema directly into each participant's assigned Autonomous AI Lakehouse schema, such as `goldailh.MPHA_P17`.
 
 Recommended notebook path for the instructor-led Claims workshop:
 
 - Run `notebooks/aidp_bronze_pyspark.py`
 - Run `notebooks/aidp_silver_pyspark.py`
-- Run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to write directly into the connected Autonomous AI Lakehouse catalog
+- Run `notebooks/aidp_claims_star_ai_lakehouse_pyspark.py` to write directly into the connected Autonomous AI Lakehouse catalog and assigned participant schema
 - Use `notebooks/aidp_gold_pyspark.py` only as the optional staged-file path
 
 Use [workflows/aidp_incremental_medallion_workflow.md](workflows/aidp_incremental_medallion_workflow.md) to create the validated AIDP Workflow that orchestrates Bronze, Silver, Gold staging, and AI Lakehouse load tasks. Set a 60-minute timeout on each task. The AI Lakehouse load notebook uses a key-based left-anti join so repeated workflow runs insert only new Claims star schema rows.

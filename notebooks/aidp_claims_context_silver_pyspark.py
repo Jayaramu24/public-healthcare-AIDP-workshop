@@ -15,6 +15,8 @@
 # - silver_operations_access_context
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - bronze_base
 # - silver_base
 #
@@ -58,8 +60,14 @@ from pyspark.sql import functions as F
 # This extension reads Bronze JSON and GeoJSON outputs and writes a new Silver
 # context table without changing the original Claims star schema flow.
 # -----------------------------------------------------------------------------
-bronze_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Bronze"
-silver_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
 
 
 # -----------------------------------------------------------------------------

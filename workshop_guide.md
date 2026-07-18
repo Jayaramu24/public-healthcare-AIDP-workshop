@@ -4,7 +4,7 @@
 
 Public healthcare organizations need to balance service access, clinical capacity, staffing, immunization campaigns, claims adjudication, public-program disbursement, membership eligibility, provider accreditation, and emerging public-health risks. In this workshop, you will build a lakehouse analytics pipeline for Metro Public Health Authority (MPHA), a fictional public healthcare network serving five districts through hospitals, urgent-care centers, and community clinics.
 
-You will load synthetic healthcare operations data, refine it through a medallion architecture using Spark and Delta Lake in Oracle AI Data Platform, and serve the Gold business layer through dimensional stars in Autonomous AI Lakehouse. The workshop then branches into two outcomes: a guided Claims star schema with an OAC workbook, and a participant-built Facility Access Daily star schema used to test whether participants can model and visualize the same pattern on their own.
+You will load synthetic healthcare operations data, refine it through a medallion architecture using Spark and Delta Lake in Oracle AI Data Platform, and serve the Gold business layer through dimensional stars in Autonomous AI Lakehouse. The workshop demonstrates an Agentic AI with Human-in-Loop pattern: operational signals become trusted data products, analytics, AI explanations, recommendations, and action briefs. The core flow builds a guided Claims star schema with an OAC workbook; extensions add JSON and spatial context, ML scoring, a Claims and Policy Copilot, and a participant-built Facility Access Daily challenge.
 
 ## Business Use Case
 
@@ -20,6 +20,19 @@ MPHA leadership wants a daily and weekly decision-support view that answers:
 - Which membership segments need eligibility renewal or high-risk care management?
 - Which providers have accreditation gaps, corrective actions, or expiry risk?
 - Where should leaders prioritize staffing, clinic sessions, outreach, and capacity relief?
+
+The value story is:
+
+`Operational signals -> AIDP medallion data products -> AI Lakehouse Claims star schema -> OAC insight -> SQL and RAG explanation -> recommended business action`
+
+The workshop proves these benefits:
+
+- Reduce manual claims investigation by giving users dashboards, Assistant prompts, and a SQL-plus-RAG copilot over the same trusted data.
+- Improve decision speed by moving from denial hotspots to operational recommendations.
+- Create trusted, reusable data products through Bronze, Silver, Gold, and AI Lakehouse serving layers.
+- Ground AI recommendations in governed claims data and indexed MPHA playbook evidence.
+- Demonstrate progressive enhancement when new JSON event and spatial access context is added after the original dashboard is already built.
+- Move from insight to workflow action through a claims review, provider outreach, or district escalation brief.
 
 ## Workshop Info
 
@@ -42,6 +55,16 @@ MPHA leadership wants a daily and weekly decision-support view that answers:
 Use `workshop_single_flow.html` as the main facilitator and participant runbook. It combines environment setup, AIDP medallion processing, Claims star schema publishing, OAC dashboarding, the Facility Access Daily challenge, and optional ML and agent extensions into one end-to-end path.
 
 Use the detailed lab pages and this guide as drill-down references when a participant needs screenshots, SQL details, validation checks, or troubleshooting notes.
+
+Each lab is framed by personas and a business moment:
+
+- Lab 0: platform admin, data engineer, and governance owner prepare the managed foundation.
+- Lab 1: data engineer turns raw signals into trusted Silver context.
+- Lab 2: data engineer and analytics user publish the Claims star schema as the governed data product.
+- Lab 3: business executive, claims operations owner, and analytics user analyze denial leakage and district risk.
+- Lab 4: operations owner and data engineer extend the lakehouse with JSON and spatial context without rebuilding the original flow.
+- Optional Lab 5: AI builder and claims operations owner create a denial-risk review-prioritization model.
+- Optional Lab 6A and 6B: AI builder and policy owner ground recommendations in SQL evidence and playbook evidence.
 
 ## Architecture
 
@@ -159,17 +182,17 @@ Folder contract:
 | `mpha/raw/` | Five CSV source files |
 | `mpha/raw_json/` | Facility capacity event JSONL |
 | `mpha/raw_spatial/` | Healthcare service area GeoJSON |
-| `mpha/documents/` | MPHA playbook document |
-| `mpha/bronze/` | Bronze Delta outputs |
-| `mpha/silver/` | Silver conformed outputs |
-| `mpha/gold_stage/` | Intermediate Gold-stage files |
+| `mpha/documents/` | MPHA playbook document source for RAG |
+| `mpha/workshop_runs/<participant_id>/bronze/` | Participant-specific Bronze Delta outputs |
+| `mpha/workshop_runs/<participant_id>/silver/` | Participant-specific Silver conformed outputs |
+| `mpha/workshop_runs/<participant_id>/gold_stage/` | Participant-specific intermediate Gold-stage files |
 | `mpha/gold_dimensional/` | Dimensional outputs and validation extracts |
-| `mpha/vector/` | Document chunk and embedding-ready outputs |
 
 4. Open AIDP Workbench and confirm the workspace.
    - Open the AIDP Workbench after the instance becomes available.
-   - Create or confirm a workspace such as `mpha-core-workshop`.
-   - Create or confirm a Spark cluster such as `mpha-spark-cluster`.
+   - Create or confirm the shared workspace `E2EAIDPIndustryDemos`.
+   - Create or confirm the Spark compute `E2EAIDPIndustrydemos`.
+   - Use the `E2E...` names for shared workshop environment objects and the `mpha` prefix for the public-healthcare data product and table names.
    - Verify participants can attach the cluster to notebooks.
 
 ![AIDP Workbench home page](live_aidp_screens_lab4_style/home_lab4style.png)
@@ -180,8 +203,9 @@ Open the shared AIDP workspace and confirm the participant notebook folders are 
 
 5. Create the standard catalog, schema, and external volume.
    - Open `Master Catalog`.
-   - Create or confirm the standard catalog and schema used for the workshop landing area.
-   - Create external volumes that point to the Object Storage bucket and folder prefixes.
+   - Create or confirm standard catalog `e2eindustrydemos` and schema `default`.
+   - Create external volume `e2eindustrydemovol` mapped to the Object Storage `mpha` prefix.
+   - Confirm the volume exposes `raw`, `raw_json`, `raw_spatial`, `documents`, and `workshop_runs`.
 
 ![AIDP Master Catalog page](live_aidp_screens_lab4_style/master_catalog_lab4style.png)
 
@@ -198,9 +222,12 @@ Open the external volume and confirm the workshop folder structure is visible th
 ![AIDP volume with workshop medallion folders](live_aidp_screens_lab4_style/volume_contents_lab4style.png)
 
 6. Create the AI Lakehouse catalog, user, and Claims target schema.
-   - Create the AIDP external catalog connection to Autonomous AI Lakehouse.
-   - Test connectivity and confirm the participant schema is visible.
-   - In Autonomous AI Lakehouse Database Actions, create the workshop user or schema, set quota, REST-enable the user if needed, and run the Claims star schema table creation SQL.
+   - Create the AIDP external catalog connection `goldailh` to Autonomous AI Lakehouse.
+   - In Autonomous AI Lakehouse Database Actions, create participant users such as `MPHA_P01` through `MPHA_P17`.
+   - For each participant user, enable DW Role, OML, Graph, and REST API.
+   - Set quota on tablespace `DATA` to at least `1G`.
+   - Run `sql/admin_prepare_participant_claims_star_schemas.sql` as `ADMIN` to create the Claims star schema tables in every participant schema and grant `SELECT`/`INSERT` access to the AIDP external catalog user `E2EAIDPUSER`.
+   - Refresh the `goldailh` external catalog in AIDP and confirm participant schemas such as `mpha_p01` and `mpha_p17` are visible.
 
 ![AIDP external AI Lakehouse catalog](live_aidp_screens_lab4_style/external_catalog_lab4style.png)
 
@@ -209,8 +236,10 @@ Open the AI Lakehouse external schema and confirm the Claims star schema tables 
 ![Claims star schema tables visible in AI Lakehouse external catalog](live_aidp_screens_lab4_style/external_schema_tables_lab4style.png)
 
 7. Create the workspace notebook folders.
-   - In AIDP, create folders such as `O1_Bronze`, `O2_Silver`, `03_Gold`, `03a_GoldAILHLoad`, `04_ML`, `05_Agent`, and `Shared`.
-   - Participants upload the downloaded notebooks into these folders during the labs.
+   - In AIDP, create `Shared` and `Participants`.
+   - Under `Participants`, create one folder per participant, for example `Participants/17_Jayaram_Krishnamachar`.
+   - Place the latest commented notebooks in each participant folder before the workshop: `01_Bronze_Public_Healthcare.ipynb`, `02_Silver_Public_Healthcare.ipynb`, `03_Gold_Public_Healthcare.ipynb`, and `04_Claims_Star_AI_Lakehouse_Load.ipynb`.
+   - Keep the downloadable notebook bundle as a backup, not the normal classroom path.
 
 ![AIDP workspace root with workshop folders](live_aidp_screens_lab4_style/workspace_root_lab4style.png)
 
@@ -317,16 +346,16 @@ Workflow parameters to explain:
 | `watermark_start` | Lower bound for the incremental source window. |
 | `watermark_end` | Upper bound for the incremental source window. |
 | `target_catalog` | AIDP external AI Lakehouse catalog, such as `goldailh`. |
-| `target_schema` | Participant Gold schema, such as `e2eaidpuser`. |
+| `target_schema` | Assigned participant AI Lakehouse schema, such as `MPHA_P17`. |
 
 Workflow task sequence:
 
 | Task | Validated asset | Dependency | Incremental concept |
 | --- | --- | --- | --- |
-| `bronzeingest` | `/Workspace/O1_Bronze/aidp_bronze_pyspark.py` | None | Append or deduplicate new raw records by batch id and source file. |
-| `silverrefine` | `/Workspace/O2_Silver/02_silver.ipynb` | `bronzeingest` | Recompute impacted Silver records or partitions. |
-| `goldstage` | `/Workspace/03_Gold/03_Gold.ipynb` | `silverrefine` | Stage broader Gold compatibility outputs when needed. |
-| `lakehouseload` | `/Workspace/03a_GoldAILHLoad/03a_GoldAILHLoad.ipynb` | `goldstage` | Insert only new Claims star schema dimension and fact rows into AI Lakehouse. |
+| `bronzeingest` | `/Workspace/Participants/<participant_id>/01_Bronze_Public_Healthcare.ipynb` | None | Append or deduplicate new raw records by batch id and source file. |
+| `silverrefine` | `/Workspace/Participants/<participant_id>/02_Silver_Public_Healthcare.ipynb` | `bronzeingest` | Recompute impacted Silver records or partitions. |
+| `goldstage` | `/Workspace/Participants/<participant_id>/03_Gold_Public_Healthcare.ipynb` | `silverrefine` | Stage broader Gold compatibility outputs when needed. |
+| `lakehouseload` | `/Workspace/Participants/<participant_id>/04_Claims_Star_AI_Lakehouse_Load.ipynb` | `goldstage` | Insert only new Claims star schema dimension and fact rows into the participant AI Lakehouse schema. |
 | Claims validation | `sql/claims_star_validation.sql` | `lakehouseload` | Block OAC, ML, and agent use until validation passes. |
 
 Discussion points:
@@ -536,7 +565,7 @@ Participants: you can skip this section and join once the facilitator confirms t
    - Sign in as `ADMIN`.
    - Open the left navigation, then go to `Administration -> Database Users`.
    - Click `+ Create User`.
-   - Create the shared Gold-serving owner such as `MPHA_GOLD_OWNER` and the participant or team users such as `MPHA_P01`, `MPHA_P02`, or `MPHA_TEAM1`.
+   - Create participant users such as `MPHA_P01` through `MPHA_P17`.
    - Assign strong temporary passwords and enable `Web Access`.
    - Set `Quota on tablespace DATA`:
      - participant quota: `1G`
@@ -545,16 +574,17 @@ Participants: you can skip this section and join once the facilitator confirms t
    - Confirm the users are `REST Enabled`.
    - Set quota on tablespace `DATA` high enough for workshop loading. For the direct AIDP Claims star schema notebook path, `1G` is a practical minimum; use `2G` to `5G` for facilitator or shared schemas when you want more headroom.
    - Copy the Database Actions URL from the user card and share it with the participant together with the username and temporary password.
-3. Create the Claims star schema target tables in the Gold-serving schema.
-   - Use `sql/create_ai_lakehouse_claims_star_schema.sql` for the guided Claims path.
-   - Use a schema such as `MPHA_GOLD_OWNER` or the assigned participant/team schema.
+3. Create the Claims star schema target tables in each participant schema.
+   - Use `sql/admin_prepare_participant_claims_star_schemas.sql` when preparing the full classroom because it creates the five Claims star schema tables for `MPHA_P01` through `MPHA_P17`, applies quota, and grants the AIDP external catalog user `E2EAIDPUSER` the permissions required for Spark inserts.
+   - Use `sql/create_ai_lakehouse_claims_star_schema.sql` only when preparing a single schema manually.
+   - Use the assigned participant schema, such as `MPHA_P17`.
    - Confirm these tables exist before participants run the direct-load notebook:
      - `mpha_dim_date`
      - `mpha_dim_district`
      - `mpha_dim_coverage_program`
      - `mpha_dim_claim_type`
      - `mpha_fact_claims_monthly`
-4. Confirm the AIDP external catalog can see the target AI Lakehouse schema.
+4. Refresh the `goldailh` external catalog in AIDP and confirm it can see the target AI Lakehouse schema.
 5. Share the target catalog and schema names with participants before the notebook execution step.
 
 ### Participant Steps
@@ -565,7 +595,7 @@ Participants: you can skip this section and join once the facilitator confirms t
    - `silver_base`
    - `target_catalog`
    - `target_schema`
-4. Use the connected external Autonomous AI Lakehouse catalog, such as `MPHA_AILH_CAT`, and the assigned Gold-serving schema, such as `MPHA_GOLD_OWNER`.
+4. Use the connected external Autonomous AI Lakehouse catalog `goldailh` and the assigned participant schema, such as `MPHA_P17`.
 5. Confirm these prerequisites before running the write step:
    - the target schema exists in the external catalog
    - the target tables already exist in Autonomous AI Lakehouse
@@ -600,8 +630,8 @@ Alternative loading path:
 
 Recommended workshop pattern:
 
-- keep one shared Gold-serving owner such as `MPHA_GOLD_OWNER` for loading the Claims star schema, Facility Access Daily star schema, and the OAC-facing views
-- create separate participant users such as `MPHA_P01` to `MPHA_P20` for hands-on SQL checks and learning exercises
+- use participant schemas such as `MPHA_P01` through `MPHA_P17` for hands-on Claims star schema loading, then connect OAC to the validated participant or facilitator schema selected for the class
+- create separate participant users such as `MPHA_P01` to `MPHA_P17` for hands-on SQL checks and learning exercises
 
 Why these settings matter:
 
@@ -766,12 +796,13 @@ Run `notebooks/02B_Silver_Claims_Context_Extension.ipynb`.
 
 Validated AIDP execution:
 
-1. Create or upload `02B_Silver_Claims_Context_Extension.ipynb` in the `O2_Silver` folder.
+1. Open `02B_Silver_Claims_Context_Extension.ipynb` in the selected `Participants/<participant_id>` folder.
 2. Attach the active Spark cluster `E2EAIDPIndustrydemos`.
-3. Run the notebook cell.
-4. Confirm the output includes:
+3. Confirm `participant_id` matches the selected participant folder.
+4. Run the notebook cell.
+5. Confirm the output includes:
    - `Round 2 Silver context complete.`
-   - `Wrote silver_operations_access_context to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/Silver/silver_operations_access_context`
+   - `Wrote silver_operations_access_context to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/silver/silver_operations_access_context`
 
 Screenshots captured:
 
@@ -810,13 +841,14 @@ Then run `notebooks/03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb`.
 
 Validated AIDP execution:
 
-1. Create or upload `03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb` in the `03a_GoldAILHLoad` folder.
+1. Open `03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb` in the selected `Participants/<participant_id>` folder.
 2. Attach the active Spark cluster `E2EAIDPIndustrydemos`.
-3. Confirm the AI Lakehouse extension table exists before the insert.
-4. Run the notebook cell.
-5. Confirm the output includes:
-   - `Wrote Gold context Delta output to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage/gold_district_claims_context`
-   - `Wrote 5 new rows to goldailh.e2eaidpuser.mpha_fact_district_claims_context`
+3. Confirm `participant_id`, `target_catalog = "goldailh"`, and `target_schema` matches the assigned AI Lakehouse schema, such as `MPHA_P17`.
+4. Confirm the AI Lakehouse extension table exists before the insert.
+5. Run the notebook cell.
+6. Confirm the output includes:
+   - `Wrote Gold context Delta output to /Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/gold_stage/gold_district_claims_context`
+   - `Wrote 5 new rows to goldailh.MPHA_P17.mpha_fact_district_claims_context`
    - `Round 2 Gold context complete.`
 
 Screenshots captured:
@@ -954,9 +986,9 @@ Participants: you can skip this section if the facilitator has already prepared 
 ### Participant Steps
 
 1. Open AIDP Workbench, go to **Master catalog**, and open `e2eindustrydemos.default`.
-2. Open **Volumes**, then `e2eindustrydemovol`, and confirm `RawData` contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
+2. Open **Volumes**, then `e2eindustrydemovol`, and confirm `documents` contains `MPHA_Winter_Respiratory_Response_Playbook.docx`.
 3. Return to `e2eindustrydemos.default`, choose **Add to schema > Knowledge base**, and create `mphapolicy`.
-4. In `mphapolicy`, add the `RawData` folder as a data source.
+4. In `mphapolicy`, add the `documents` folder as a data source.
 5. Keep the supported document filters enabled, including `DOCX`, and start ingestion.
 6. Confirm the latest ingestion job run shows `Succeeded`.
 7. Record the knowledge base path: `e2eindustrydemos.default.mphapolicy`.
@@ -994,11 +1026,12 @@ Participants: you can skip this section if the facilitator has already prepared 
 5. Attach the Lab 0 AI compute from the agent flow `Compute` menu if it is not already attached.
 6. Deploy the agent flow to active AI compute.
 7. Test three question types: SQL-only, policy-only, and combined claims-and-policy.
-8. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
+8. Convert the combined answer into a closed-loop action brief that identifies the risk, business impact, policy evidence, recommended action, owner, and follow-up metric.
+9. Use the copilot as a sidecar experience during the workshop and explain how it differs from OAC Assistant.
 
 ### Expected Outcome
 
-You can explain a practical agent pattern for this workshop: AI Data Platform prepares the Gold layer, stores playbook chunks in an AIDP knowledge base, and runs an executable SQL-plus-RAG copilot grounded in the curated Claims star schema and the MPHA playbook.
+You can explain a practical agent pattern for this workshop: AI Data Platform prepares the Gold layer, stores playbook chunks in an AIDP knowledge base, runs an executable SQL-plus-RAG copilot grounded in the curated Claims star schema and the MPHA playbook, and turns the answer into a claims review, provider outreach, or district escalation brief.
 
 ## DIY Facility Access Daily Dashboard Challenge
 
@@ -1053,13 +1086,14 @@ Participants: this is primarily a facilitator or platform-owner extension lab.
 
 You have completed the workshop when you can:
 
-- Explain the MPHA business use case.
-- Trace data from raw files to Bronze, Silver, and Gold layers.
-- Explain how Claims star schema and Facility Access Daily star schema branch from the same Silver foundation.
-- Analyze claims signals from the Gold schema.
-- Build the guided Claims star schema workbook in OAC.
-- Create your own Facility Access Daily dashboard as a participant challenge.
-- Explain the optional ML scoring and Claims and Policy Copilot extension patterns.
+- Explain the MPHA business problem: reduce claims leakage, explain denial hotspots, improve provider and district accountability, and convert policy guidance into action.
+- Identify the signals used: Claims, membership, disbursement, provider, facility, district, JSON capacity events, spatial service areas, and the MPHA playbook document.
+- Trace data from raw files to Bronze, Silver, Gold, and AI Lakehouse serving layers.
+- Explain how the Claims star schema and Facility Access Daily star schema branch from the same Silver foundation.
+- Analyze claims signals from the Gold schema in OAC and ask Assistant questions over the indexed dataset.
+- Explain how ML and the Claims and Policy Copilot reuse the same trusted Gold layer and governed playbook evidence.
+- Convert the final copilot answer into a practical action brief for claims review, provider outreach, or district escalation.
+- Explain why the workshop is differentiated from a generic data and AI demo: it connects operational signals, governed data products, analytics, GenAI explanation, enterprise policy context, and closed-loop action in one managed Oracle flow.
 
 ## Official References
 

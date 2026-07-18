@@ -30,9 +30,9 @@ The workflow is also where the incremental story becomes clear:
 
 ```mermaid
 flowchart LR
-  A["bronzeingest<br/>Python task<br/>O1_Bronze/aidp_bronze_pyspark.py"] --> B["silverrefine<br/>Notebook task<br/>O2_Silver/02_silver.ipynb"]
-  B --> C["goldstage<br/>Notebook task<br/>03_Gold/03_Gold.ipynb"]
-  C --> D["lakehouseload<br/>Notebook task<br/>03a_GoldAILHLoad/03a_GoldAILHLoad.ipynb"]
+  A["bronzeingest<br/>Notebook task<br/>Participants/&lt;participant_id&gt;/01_Bronze"] --> B["silverrefine<br/>Notebook task<br/>Participants/&lt;participant_id&gt;/02_Silver"]
+  B --> C["goldstage<br/>Notebook task<br/>Participants/&lt;participant_id&gt;/03_Gold"]
+  C --> D["lakehouseload<br/>Notebook task<br/>Participants/&lt;participant_id&gt;/04_Claims_Load"]
   D --> E["Manual validation<br/>sql/claims_star_validation.sql"]
 ```
 
@@ -42,10 +42,10 @@ flowchart LR
 
 | Task | Type used in validated run | Workspace path | Depends on | Timeout |
 | --- | --- | --- | --- | --- |
-| `bronzeingest` | Python task | `/Workspace/O1_Bronze/aidp_bronze_pyspark.py` | None | 30 minutes |
-| `silverrefine` | Notebook task | `/Workspace/O2_Silver/02_silver.ipynb` | `bronzeingest` | 30 minutes |
-| `goldstage` | Notebook task | `/Workspace/03_Gold/03_Gold.ipynb` | `silverrefine` | 30 minutes |
-| `lakehouseload` | Notebook task | `/Workspace/03a_GoldAILHLoad/03a_GoldAILHLoad.ipynb` | `goldstage` | 30 minutes |
+| `bronzeingest` | Notebook task | `/Workspace/Participants/<participant_id>/01_Bronze_Public_Healthcare.ipynb` | None | 30 minutes |
+| `silverrefine` | Notebook task | `/Workspace/Participants/<participant_id>/02_Silver_Public_Healthcare.ipynb` | `bronzeingest` | 30 minutes |
+| `goldstage` | Notebook task | `/Workspace/Participants/<participant_id>/03_Gold_Public_Healthcare.ipynb` | `silverrefine` | 30 minutes |
+| `lakehouseload` | Notebook task | `/Workspace/Participants/<participant_id>/04_Claims_Star_AI_Lakehouse_Load.ipynb` | `goldstage` | 30 minutes |
 
 Important behavior observed in AIDP:
 
@@ -65,8 +65,8 @@ Important behavior observed in AIDP:
 ![Create the workflow job](assets/aidp_workflow_lab/screenshots_fresh/00_workflow_create_job_dialog_fresh.png)
 
 5. Configure the first task as `bronzeingest`.
-6. Select the correct task type for the uploaded Bronze file. In the validated run, the Bronze asset was a Python file.
-7. Select the Bronze file from `/Workspace/O1_Bronze`.
+6. Select Notebook task.
+7. Select the Bronze file from `/Workspace/Participants/<participant_id>`.
 8. Select the shared compute `E2EAIDPIndustrydemos`.
 9. Enter timeout `30` minutes. Increase this value if your compute startup is slower.
 
@@ -74,7 +74,7 @@ Important behavior observed in AIDP:
 
 10. Add `silverrefine`.
 11. Select Notebook task.
-12. Select the uploaded Silver notebook from `/Workspace/O2_Silver`.
+12. Select the uploaded Silver notebook from `/Workspace/Participants/<participant_id>`.
 13. Set dependency to `bronzeingest`.
 14. Set timeout to `30` minutes.
 
@@ -82,7 +82,7 @@ Important behavior observed in AIDP:
 
 15. Add `goldstage`.
 16. Select Notebook task.
-17. Select the uploaded Gold notebook from `/Workspace/03_Gold`.
+17. Select the uploaded Gold notebook from `/Workspace/Participants/<participant_id>`.
 18. Set dependency to `silverrefine`.
 19. Set timeout to `30` minutes.
 
@@ -90,23 +90,24 @@ Important behavior observed in AIDP:
 
 20. Add `lakehouseload`.
 21. Select Notebook task.
-22. Select the AI Lakehouse load notebook from `/Workspace/03a_GoldAILHLoad`.
-23. Set dependency to `goldstage`.
-24. Set timeout to `30` minutes.
+22. Select the AI Lakehouse load notebook from `/Workspace/Participants/<participant_id>`.
+23. Confirm the notebook parameters use the same `participant_id`, `target_catalog = "goldailh"`, and the assigned `target_schema`, such as `MPHA_P17`.
+24. Set dependency to `goldstage`.
+25. Set timeout to `30` minutes.
 
 ![AI Lakehouse load task configured](assets/aidp_workflow_lab/screenshots_fresh/05_workflow_tasks_lakehouse_load_config_fresh.png)
 
-25. Review the full chain before running.
+26. Review the full chain before running.
 
 ![Validated four-task workflow chain](assets/aidp_workflow_lab/screenshots_fresh/02_workflow_tasks_bronze_config_fresh_wide.png)
 
-26. Run the workflow.
-27. Confirm that the run opens in graph view.
-28. If compute is starting, wait until it becomes active and the first task begins.
+27. Run the workflow.
+28. Confirm that the run opens in graph view.
+29. If compute is starting, wait until it becomes active and the first task begins.
 
 ![Workflow run success list](assets/aidp_workflow_lab/screenshots_fresh/06_workflow_runs_success_list_fresh.png)
 
-29. Confirm the final `lakehouseload` node is successful.
+30. Confirm the final `lakehouseload` node is successful.
 
 ![Final AI Lakehouse load success](assets/aidp_workflow_lab/screenshots_fresh/08_workflow_run_detail_lakehouse_success_fresh.png)
 
@@ -123,11 +124,11 @@ The connected AI Lakehouse catalog did not support table `TRUNCATE` or Spark SQL
 Validated successful output from the repaired workflow:
 
 ```text
-No new rows to write for goldailh.e2eaidpuser.mpha_dim_date
-No new rows to write for goldailh.e2eaidpuser.mpha_dim_district
-No new rows to write for goldailh.e2eaidpuser.mpha_dim_coverage_program
-No new rows to write for goldailh.e2eaidpuser.mpha_dim_claim_type
-No new rows to write for goldailh.e2eaidpuser.mpha_fact_claims_monthly
+No new rows to write for goldailh.MPHA_P17.mpha_dim_date
+No new rows to write for goldailh.MPHA_P17.mpha_dim_district
+No new rows to write for goldailh.MPHA_P17.mpha_dim_coverage_program
+No new rows to write for goldailh.MPHA_P17.mpha_dim_claim_type
+No new rows to write for goldailh.MPHA_P17.mpha_fact_claims_monthly
 Claims star schema write complete in the connected Autonomous AI Lakehouse catalog.
 ```
 

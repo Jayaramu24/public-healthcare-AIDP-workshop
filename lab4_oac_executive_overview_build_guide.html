@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lab 4 OAC Executive Overview Build Guide - Public Healthcare AIDP Workshop</title>
+  <style>
+    :root {
+      --ink: #252525;
+      --muted: #5f6368;
+      --line: #d9dde3;
+      --page: #fff;
+      --side: #f5f6f7;
+      --oracle: #c74634;
+      --oracle-soft: #fbe9e5;
+      --blue: #245ea6;
+      --blue-soft: #edf5ff;
+      --green: #167c52;
+      --green-soft: #eef8f2;
+      --amber: #946200;
+      --amber-soft: #fff7df;
+      --code: #f6f8fa;
+      --shadow: 0 10px 28px rgba(16, 24, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+
+    a { color: #1a5a96; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    code { overflow-wrap: anywhere; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 10px 22px;
+      background: #252629;
+      color: #fff;
+      border-bottom: 3px solid var(--oracle);
+    }
+    .topbar strong { font-size: 17px; }
+    .topbar span { display: block; color: #d5d7da; font-size: 13px; }
+    .topbar a { color: #fff; font-size: 14px; }
+
+    .mobile-nav { display: none; }
+    .layout { display: grid; grid-template-columns: 292px minmax(0, 1fr); min-height: calc(100vh - 58px); }
+
+    .sidebar {
+      position: sticky;
+      top: 61px;
+      align-self: start;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      padding: 22px 16px 30px;
+      background: var(--side);
+      border-right: 1px solid var(--line);
+    }
+    .sidebar h2 { margin: 0 8px 8px; font-size: 16px; }
+    .sidebar p { margin: 0 8px 18px; color: var(--muted); font-size: 13px; }
+    .sidebar a {
+      display: block;
+      margin: 2px 0;
+      padding: 9px 10px;
+      border-left: 3px solid transparent;
+      color: #3f454b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .sidebar a:hover, .sidebar a:focus { background: #fff; border-left-color: var(--oracle); color: #111; }
+    .sidebar .section-link { margin-top: 10px; font-weight: 700; }
+
+    main { width: min(1080px, calc(100% - 48px)); margin: 0 auto; padding: 38px 0 80px; }
+    .hero { padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 8px; color: var(--oracle); font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    h1 { margin: 0 0 12px; font-size: 36px; line-height: 1.18; }
+    h2 { margin: 0 0 10px; font-size: 26px; line-height: 1.25; }
+    h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.3; }
+    p { margin: 0 0 14px; }
+    .lede { max-width: 850px; color: #41464c; font-size: 18px; }
+
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .tag { padding: 6px 10px; border-radius: 4px; background: #eef0f2; font-size: 13px; font-weight: 700; }
+    .tag.participant { background: var(--blue-soft); color: var(--blue); }
+    .tag.admin { background: var(--oracle-soft); color: #9f2f24; }
+
+    .task { padding: 38px 0 4px; scroll-margin-top: 76px; }
+    .task + .task { border-top: 1px solid var(--line); }
+    .task-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .task-number { color: var(--oracle); font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    .duration { flex: 0 0 auto; color: var(--muted); font-size: 13px; }
+
+    ol, ul { padding-left: 24px; }
+    li { margin-bottom: 9px; }
+    li::marker { font-weight: 700; }
+
+    .role {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 6px 9px;
+      border: 1px solid #b9d3f2;
+      border-radius: 4px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .role.admin { border-color: #e6b5ad; background: var(--oracle-soft); color: #9f2f24; }
+
+    .callout {
+      margin: 18px 0;
+      padding: 15px 17px;
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+    }
+    .callout strong { display: block; margin-bottom: 3px; }
+    .callout.expected { border-left-color: var(--green); background: var(--green-soft); }
+    .callout.warning { border-left-color: var(--amber); background: var(--amber-soft); }
+
+    .shot {
+      margin: 22px 0 28px;
+      border: 1px solid #cfd4da;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .shot img { display: block; width: 100%; height: auto; }
+    .shot figcaption { padding: 11px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+    pre {
+      margin: 16px 0 20px;
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid #d8dde3;
+      border-radius: 4px;
+      background: var(--code);
+      color: #24292f;
+      font-size: 13px;
+      line-height: 1.48;
+      white-space: pre;
+    }
+
+    table { width: 100%; margin: 18px 0 24px; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f4f5f6; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .flow div { min-height: 86px; padding: 13px; border: 1px solid var(--line); background: #fafafa; }
+    .flow strong { display: block; margin-bottom: 4px; }
+    .flow span { color: var(--muted); font-size: 13px; }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+    .visual-card {
+      min-height: 150px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 24, 40, 0.05);
+    }
+    .visual-card strong { display: block; margin-bottom: 6px; color: #1f2937; }
+    .visual-card span { display: block; color: var(--muted); font-size: 13px; }
+
+    .next { margin-top: 34px; padding: 22px; border: 1px solid var(--line); background: #fafafa; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .mobile-nav { display: block; padding: 12px 18px; background: var(--side); border-bottom: 1px solid var(--line); }
+      .mobile-nav select { width: 100%; min-height: 42px; padding: 8px; }
+      main { width: min(100% - 30px, 760px); padding-top: 28px; }
+      h1 { font-size: 30px; }
+      .flow, .visual-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>Public Healthcare AIDP Workshop</strong><span>Lab 4 OAC Executive Overview build guide</span></div>
+    <a href="index.html#lab4">Back to workshop</a>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Lab tasks">
+    <select onchange="if(this.value) location.hash=this.value" aria-label="Jump to a task">
+      <option value="">Jump to a task</option>
+      <option value="objective">Objectives</option>
+      <option value="target">Target canvas</option>
+      <option value="task-1">Task 1 - Connect OAC</option>
+      <option value="task-2">Task 2 - Create dataset</option>
+      <option value="task-3">Task 3 - Index for Assistant</option>
+      <option value="task-4">Task 4 - Create workbook shell</option>
+      <option value="task-5">Task 5 - Build KPI band</option>
+      <option value="task-6">Task 6 - Add diagnostic visuals</option>
+      <option value="task-7">Task 7 - Validate and save</option>
+    </select>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="Lab navigation">
+      <h2>Lab 4</h2>
+      <p>Analyze the Claims star schema in Oracle Analytics Cloud.</p>
+      <a class="section-link" href="#objective">Objectives</a>
+      <a class="section-link" href="#target">Target canvas</a>
+      <a class="section-link" href="#task-1">Task 1 - Connect OAC</a>
+      <a class="section-link" href="#task-2">Task 2 - Create dataset</a>
+      <a class="section-link" href="#task-3">Task 3 - Index for Assistant</a>
+      <a class="section-link" href="#task-4">Task 4 - Create shell</a>
+      <a class="section-link" href="#task-5">Task 5 - KPI band</a>
+      <a class="section-link" href="#task-6">Task 6 - Diagnostic visuals</a>
+      <a class="section-link" href="#task-7">Task 7 - Validate and save</a>
+      <a class="section-link" href="#challenge">DIY challenge handoff</a>
+    </aside>
+
+    <main>
+      <section class="hero" id="objective">
+        <p class="eyebrow">Participant Lab</p>
+        <h1>Build the MPHA Claims Executive Overview in OAC</h1>
+        <p class="lede">
+          In this lab, participants build the same Executive Overview canvas used in the instructor-led workbook. The canvas connects to the Claims star schema in Autonomous AI Lakehouse and presents claim volume, denial, payment, processing, and risk signals in one command-center view.
+        </p>
+        <div class="meta">
+          <span class="tag participant">Participant hands-on</span>
+          <span class="tag">Estimated time: 45 minutes</span>
+          <span class="tag">Oracle Analytics Cloud</span>
+          <span class="tag">Claims star schema</span>
+        </div>
+      </section>
+
+      <section class="task" id="target">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Target outcome</div>
+            <h2>Executive Overview canvas</h2>
+          </div>
+          <div class="duration">Reference build</div>
+        </div>
+        <p>
+          The completed canvas should use a compact command-center layout: filters at the top, six KPI tiles with sparklines, a denial-rate hotspot heatmap, denied-claims donut, claim-type review table, bubble analysis, and a month-over-month denial-rate trend.
+        </p>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/42_oac_live_consumer_assistant_denied_claims_additional_insights.png" alt="Completed MPHA Claims dashboard in OAC preview mode with two Assistant responses and Additional Insights expanded" />
+          <figcaption>Completed Executive Overview canvas in OAC consumer/preview mode with Assistant open, the first response expanded for Additional Insights, and a second claim-type response visible. Use this as the participant target state after indexing and prompt validation.</figcaption>
+        </figure>
+        <div class="callout expected">
+          <strong>Assistant validation prompt</strong>
+          Ask <code>Which districts contribute the most denied claims, and what should the claims operations team prioritize?</code>. Expand <code>Additional Insights</code> in the response so participants can see the generated follow-on analysis, not just the first chart.
+        </div>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/28_mpha_claims_command_center_executive_overview.png" alt="MPHA Claims Command Center opened in OAC authoring mode" />
+          <figcaption>Authoring mode shows the same canvas with the Claims star schema dataset and filters available for editing.</figcaption>
+        </figure>
+        <div class="callout">
+          <strong>Teaching intent</strong>
+          This canvas answers executive questions rather than just showing field names. Every major visual title is phrased as a business question so first-time participants understand why the visual exists.
+        </div>
+      </section>
+
+      <section class="task" id="task-1">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 1</div>
+            <h2>Connect OAC to Autonomous AI Lakehouse</h2>
+          </div>
+          <div class="duration">8 minutes</div>
+        </div>
+        <span class="role admin">Admin preparation</span>
+        <ol>
+          <li>From the OAC home page, open <code>Create</code> and select <code>Connection</code>.</li>
+          <li>Select <code>Oracle Autonomous AI Lakehouse</code> as the connection type.</li>
+          <li>Name the connection clearly, for example <code>AIAnalyticsForGoldData</code>.</li>
+          <li>Choose the environment-specific encryption mode: <code>TLS</code> for wallet-free connectivity or <code>Mutual TLS</code> when a wallet is required.</li>
+          <li>Enter the Lakehouse user, password, and service name provided by the facilitator, then save the connection.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/01_oac_home.png" alt="Oracle Analytics Cloud home page" />
+          <figcaption>Start from OAC home. The Create menu is used for both connections and datasets.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/02_oac_create_menu.png" alt="OAC Create menu showing workbook, dataset, data flow, sequence, connection, and semantic model" />
+          <figcaption>Open Create and choose Connection when the Lakehouse connection is not already prepared.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/03_create_connection_select_type.png" alt="Create Connection dialog showing Oracle Autonomous AI Lakehouse connection type" />
+          <figcaption>Select Oracle Autonomous AI Lakehouse as the connection type.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/04_ailh_connection_form.png" alt="Oracle Autonomous AI Lakehouse connection form in OAC" />
+          <figcaption>Enter the connection details. Use the exact Lakehouse service and credentials assigned for the workshop.</figcaption>
+        </figure>
+        <div class="callout expected">
+          <strong>Expected result</strong>
+          The OAC home page has a saved connection that can browse the Gold-serving Claims star schema in Autonomous AI Lakehouse.
+        </div>
+      </section>
+
+      <section class="task" id="task-2">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 2</div>
+            <h2>Create and verify the Claims self-service dataset</h2>
+          </div>
+          <div class="duration">10 minutes</div>
+        </div>
+        <span class="role admin">Admin preparation, then participant verification</span>
+        <ol>
+          <li>From OAC home, choose <code>Create -> Dataset</code>.</li>
+          <li>Select the Autonomous AI Lakehouse connection created in Task 1.</li>
+          <li>In the Create Dataset page, expand the connected schema and add these Claims star schema tables:
+            <code>MPHA_FACT_CLAIMS_MONTHLY</code>, <code>MPHA_DIM_DATE</code>, <code>MPHA_DIM_DISTRICT</code>, <code>MPHA_DIM_COVERAGE_PROGRAM</code>, and <code>MPHA_DIM_CLAIM_TYPE</code>.</li>
+          <li>Drag or double-click the five tables onto the Join Diagram canvas.</li>
+          <li>Prepare the self-service data model by confirming that the Claims fact table connects to the Date, District, Coverage Program, and Claim Type dimensions.</li>
+          <li>Right-click the fact table and preserve grain before saving the dataset.</li>
+          <li>Use the profiling view to confirm values, distributions, nulls, and sample rows before creating the workbook.</li>
+          <li>Open the dataset in a workbook and confirm the Claims fact and dimensions appear in the data panel.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/05_create_dataset_choose_connection.png" alt="OAC Create Dataset dialog showing available connections" />
+          <figcaption>Create Dataset begins by selecting the Lakehouse connection.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/10_dataset_search_lakehouse_connection.png" alt="OAC Create Dataset dialog filtered to the AI Lakehouse connection" />
+          <figcaption>Search for the Lakehouse connection when the OAC environment has many available connections.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/38_oac_live_expanded_schema_self_service_model.png" alt="Actual OAC dataset editor showing expanded AI Lakehouse schema, Claims star schema tables, Join Diagram, and profiling grid" />
+          <figcaption>Expanded schema checkpoint: the connected AI Lakehouse schema, Claims star schema tables, Join Diagram, and profiling grid are visible together for <code>MPHAClaimAnalysis</code>.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/37_oac_live_self_service_model_profile.png" alt="MPHAClaimAnalysis dataset editor showing the self-service Join Diagram and data profiling view" />
+          <figcaption>The live MPHA self-service data model in OAC. The upper panel confirms the drag-and-drop Join Diagram; the lower panel provides the data profiling and sample-row view.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/17_open_mpha_dataset_workbook.png" alt="OAC workbook opened from MPHAClaimAnalysis dataset" />
+          <figcaption>Participant verification: the Claims fact and conformed dimensions are visible in the workbook data panel.</figcaption>
+        </figure>
+        <div class="flow" aria-label="Workbook shell flow">
+          <div><strong>Fact</strong><span>Monthly claims measures</span></div>
+          <div><strong>Date</strong><span>Service month</span></div>
+          <div><strong>District</strong><span>Geographic accountability</span></div>
+          <div><strong>Program and type</strong><span>Coverage and claim mix</span></div>
+        </div>
+      </section>
+
+      <section class="task" id="task-3">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 3</div>
+            <h2>Enable indexing for OAC Assistant</h2>
+          </div>
+          <div class="duration">7 minutes</div>
+        </div>
+        <span class="role admin">Admin preparation</span>
+        <ol>
+          <li>In the workbook data panel, right-click the dataset name <code>MPHAClaimAnalysis</code>.</li>
+          <li>Select <code>Inspect</code>.</li>
+          <li>Open the <code>Search</code> tab.</li>
+          <li>Set the index target to <code>Assistants and Homepage Search</code>.</li>
+          <li>Use recommended index settings or choose the searchable business columns manually.</li>
+          <li>Click <code>Run Now</code> and wait for indexing to complete before using Assistant prompts.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/24_dataset_tree_context_menu.png" alt="OAC dataset context menu showing Inspect" />
+          <figcaption>Right-click the dataset in the workbook data panel and choose Inspect.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/26_dataset_inspect_search_indexing.png" alt="OAC dataset Inspect Search settings showing Assistants and Homepage Search and Run Now" />
+          <figcaption>The Search settings tab confirms the dataset is indexed for Assistants and Homepage Search.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/27_dataset_inspect_search_scope.png" alt="OAC dataset Inspect Search Scope table showing indexed columns" />
+          <figcaption>Review the Scope tab so participants understand which Claims star schema fields Assistant can use.</figcaption>
+        </figure>
+        <div class="callout">
+          <strong>Assistant boundary</strong>
+          OAC Assistant answers questions against indexed Claims star schema fields only. Playbook or policy-document questions belong in the Claims and Policy Copilot lab.
+        </div>
+      </section>
+
+      <section class="task" id="task-4">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 4</div>
+            <h2>Create the Executive Overview workbook shell</h2>
+          </div>
+          <div class="duration">7 minutes</div>
+        </div>
+        <span class="role">Participant step</span>
+        <ol>
+          <li>Create a workbook from <code>MPHAClaimAnalysis</code> or the prepared dataset.</li>
+          <li>Rename the first canvas to <code>Executive Overview</code>.</li>
+          <li>Set the canvas layout to <code>Freeform</code>.</li>
+          <li>Add a title text box: <code>MPHA Claims Processing Command Center</code>.</li>
+          <li>Add dashboard filters for <code>DISTRICT_NAME</code> and <code>CLAIM_TYPE</code>.</li>
+          <li>Use round visual borders, light center shadow, and equal spacing across all cards.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/21_mpha_dataset_workbook_reopened.png" alt="OAC workbook shell opened from MPHAClaimAnalysis dataset" />
+          <figcaption>Start the workbook from the Claims dataset. The fact and dimensions stay visible while building the canvas.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/28_mpha_claims_command_center_executive_overview.png" alt="OAC authoring mode showing filters and Claims Executive Overview layout" />
+          <figcaption>Authoring mode shows the target shell: top filters, KPI band, diagnostic visuals, and canvas tabs.</figcaption>
+        </figure>
+      </section>
+
+      <section class="task" id="task-5">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 5</div>
+            <h2>Build the six KPI tiles with sparklines</h2>
+          </div>
+          <div class="duration">12 minutes</div>
+        </div>
+        <span class="role">Participant step</span>
+        <p>
+          Use the native OAC KPI tile visualization. Put the metric value at the top and use <code>SERVICE_MONTH_DATE_KEY (Month)</code> as the category column for the sparkline. Remove the metric field title inside each tile and keep only the custom tile title.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>KPI title</th>
+              <th>Measure</th>
+              <th>Sparkline style</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Claims submitted</td><td><code>CLAIMS_SUBMITTED</code></td><td>Bar</td></tr>
+            <tr><td>Claims denied</td><td><code>DENIED_CLAIMS</code></td><td>Line</td></tr>
+            <tr><td>Denial rate</td><td><code>DENIAL_RATE</code></td><td>Area</td></tr>
+            <tr><td>Submitted amount</td><td><code>TOTAL_SUBMITTED_AMOUNT</code></td><td>Line with area</td></tr>
+            <tr><td>Paid amount</td><td><code>TOTAL_PAID_AMOUNT</code></td><td>Bar</td></tr>
+            <tr><td>Processing days</td><td><code>AVG_PROCESSING_DAYS</code></td><td>Line</td></tr>
+          </tbody>
+        </table>
+        <ul>
+          <li>Set sparkline height and width to stretched.</li>
+          <li>Enable high and low markers where available.</li>
+          <li>Use consistent sizing so all six KPI tiles align in one row.</li>
+        </ul>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/29_mpha_claims_command_center_preview.png" alt="OAC preview showing six KPI tile visualizations with sparklines" />
+          <figcaption>The KPI band uses mixed sparkline styles so the cards do not feel repetitive.</figcaption>
+        </figure>
+      </section>
+
+      <section class="task" id="task-6">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 6</div>
+            <h2>Add diagnostic visuals, trend, and Assistant prompts</h2>
+          </div>
+          <div class="duration">14 minutes</div>
+        </div>
+        <span class="role">Participant step</span>
+        <div class="visual-grid">
+          <div class="visual-card">
+            <strong>Where are denial-rate hotspots by program and claim type?</strong>
+            <span>Build a heatmap using coverage program on rows, claim type on columns, and denial rate as the color measure.</span>
+          </div>
+          <div class="visual-card">
+            <strong>Which districts contribute the most denied claims?</strong>
+            <span>Build a donut chart with denied claims as the value and district name as the color/category.</span>
+          </div>
+          <div class="visual-card">
+            <strong>Which claim types need denial review?</strong>
+            <span>Build a table with claim type, denied claims, and denial rate. Add data bars or conditional formatting for fast scanning.</span>
+          </div>
+          <div class="visual-card">
+            <strong>Do high-volume claim types also take longer or get denied more?</strong>
+            <span>Build a bubble chart using claim type labels, claims submitted on the X axis, average processing days on the Y axis, and denial risk/outlier coloring where available.</span>
+          </div>
+          <div class="visual-card">
+            <strong>How is the denial rate trending month over month?</strong>
+            <span>Build a line chart using service month as the category and denial rate as the measure. Add a forecast if available.</span>
+          </div>
+          <div class="visual-card">
+            <strong>What can Assistant answer from the indexed dataset?</strong>
+            <span>Open Assistant and ask claims-only prompts based on the indexed star schema fields.</span>
+          </div>
+        </div>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/22_oac_assistant_panel_mpha_dataset.png" alt="OAC Assistant panel opened on the MPHA dataset workbook" />
+          <figcaption>Assistant is available after dataset indexing. Keep prompts grounded in the Claims star schema.</figcaption>
+        </figure>
+        <pre><code>Which districts have the highest claims denial rate?
+Which claim types need denial review?
+Compare denied claims and processing days by claim type.
+How is denial rate trending by month?</code></pre>
+        <div class="callout warning">
+          <strong>Design note</strong>
+          Keep visual titles as questions. They make the dashboard easier to explain to first-time users and stop the canvas from reading like a list of database columns.
+        </div>
+      </section>
+
+      <section class="task" id="task-7">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Task 7</div>
+            <h2>Validate, save, and explain the canvas</h2>
+          </div>
+          <div class="duration">5 minutes</div>
+        </div>
+        <span class="role">Participant step</span>
+        <ol>
+          <li>Confirm the filter controls update all visuals together.</li>
+          <li>Confirm KPI tiles show sparklines and do not show duplicate metric field labels.</li>
+          <li>Confirm all visual titles are business questions.</li>
+          <li>Check that no visual overlaps another visual at the standard workshop display size.</li>
+          <li>Save the workbook as <code>MPHA Claims Command Center</code>.</li>
+        </ol>
+        <figure class="shot">
+          <img src="assets/oac_dashboard_lab/screenshots/29_mpha_claims_command_center_preview.png" alt="Final OAC Claims Executive Overview used for validation" />
+          <figcaption>Final validation view: filters, KPI band, diagnostic visuals, and trend are visible on one canvas.</figcaption>
+        </figure>
+        <div class="callout expected">
+          <strong>Expected result</strong>
+          The workbook gives executives one clean page for claims submitted, denied, paid, and delayed, with clear diagnostic paths into district, program, and claim-type issues.
+        </div>
+      </section>
+
+      <section class="task" id="challenge">
+        <div class="task-head">
+          <div>
+            <div class="task-number">Next step</div>
+            <h2>DIY Facility Access Daily dashboard challenge</h2>
+          </div>
+          <div class="duration">Participant extension</div>
+        </div>
+        <p>
+          After the instructor-led Claims Executive Overview, participants should build their own Facility Access Daily dashboard. They should reuse the same pattern: one star schema, a small filter strip, six high-value KPIs, and business-question titles for each diagnostic visual.
+        </p>
+        <div class="next">
+          <strong>Challenge prompt:</strong>
+          Build a facility-operations executive view that explains where wait times, occupancy, staffing pressure, and access risk require immediate leadership action.
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

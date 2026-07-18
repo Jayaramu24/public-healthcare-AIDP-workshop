@@ -7,7 +7,7 @@
 -- comparison.
 --
 -- Gold is the business serving layer. AIDP stages Gold outputs under:
---   oci://<bucket>@<namespace>/mpha/gold_stage/<gold_object_name>/
+--   oci://<bucket>@<namespace>/mpha/workshop_runs/<participant_id>/gold_stage/<gold_object_name>/
 --
 -- Replace <gold_stage_uri> with the object storage URI that contains the
 -- AIDP-generated Gold CSV folders, then run these statements in Autonomous AI

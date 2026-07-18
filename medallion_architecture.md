@@ -34,7 +34,7 @@ Bronze is schema-preserving and append-friendly. It should keep raw values intac
 | `bronze_healthcare_service_areas_geojson` | `healthcare_service_areas.geojson` | Preserve one mixed GeoJSON FeatureCollection for spatial analytics. |
 | Document source | `MPHA_Winter_Respiratory_Response_Playbook.docx` | Chunk and vectorize the single playbook document for grounded chat. |
 
-Recommended storage: Delta tables in AIDP under `mpha/bronze/`.
+Recommended storage: Delta tables in AIDP under `mpha/workshop_runs/<participant_id>/bronze/`.
 
 ## Silver Layer in AIDP
 
@@ -53,7 +53,7 @@ Silver is cleaned, typed, validated, and conformed. It is still detailed enough 
 | `silver_spatial_feature` | `bronze_healthcare_service_areas_geojson` | Explode the single GeoJSON source and classify district, facility, and catchment features by `source_layer`. |
 | `silver_playbook_chunk` | DOCX document vectorization | Standardize document id, chunk id, page, section, text, embedding model, and embedding JSON after chunking the single playbook. |
 
-Recommended storage: Delta tables in AIDP under `mpha/silver/`.
+Recommended storage: Delta tables in AIDP under `mpha/workshop_runs/<participant_id>/silver/`.
 
 ## AIDP Workflow for Incremental Medallion Operation
 

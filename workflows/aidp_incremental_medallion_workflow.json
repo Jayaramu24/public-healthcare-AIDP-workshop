@@ -1,0 +1,75 @@
+{
+  "workflow_name": "MPHA_INCREMENTAL_MEDALLION_FLOW",
+  "purpose": "Reference task graph for orchestrating the public healthcare Bronze, Silver, Gold staging, and AI Lakehouse load notebooks in Oracle AI Data Platform Workflow.",
+  "note": "This is a workshop reference spec, not an OCI import artifact. Create the workflow in the AIDP UI using these task names, dependencies, task types, compute, and timeout values.",
+  "validated_workspace": "E2EAIDPIndustryDemos",
+  "validated_compute": "E2EAIDPIndustrydemos",
+  "validated_timeout_minutes": 60,
+  "parameters": {
+    "run_mode": "FULL_REFRESH",
+    "batch_id": "mpha_2025_07_01_daily",
+    "watermark_start": "2025-07-01",
+    "watermark_end": "2025-07-01",
+    "volume_root": "/Volumes/e2eindustrydemos/default/e2eindustrydemovol",
+    "participant_id": "17_Jayaram_Krishnamachar",
+    "target_catalog": "goldailh",
+    "target_schema": "MPHA_P17",
+    "table_prefix": "mpha"
+  },
+  "tasks": [
+    {
+      "task_name": "bronzeingest",
+      "task_type": "notebook",
+      "workspace_path": "/Workspace/Participants/<participant_id>/01_Bronze_Public_Healthcare.ipynb",
+      "depends_on": [],
+      "timeout_minutes": 60,
+      "success_check": "Bronze Delta outputs exist under /Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/bronze for five CSV sources, one JSONL source, and one GeoJSON source."
+    },
+    {
+      "task_name": "silverrefine",
+      "task_type": "notebook",
+      "workspace_path": "/Workspace/Participants/<participant_id>/02_Silver_Public_Healthcare.ipynb",
+      "depends_on": [
+        "bronzeingest"
+      ],
+      "timeout_minutes": 60,
+      "success_check": "Silver claims, facility, district, event, spatial, and population-health outputs are written under /Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/silver."
+    },
+    {
+      "task_name": "goldstage",
+      "task_type": "notebook",
+      "workspace_path": "/Workspace/Participants/<participant_id>/03_Gold_Public_Healthcare.ipynb",
+      "depends_on": [
+        "silverrefine"
+      ],
+      "timeout_minutes": 60,
+      "success_check": "Gold compatibility outputs are written under /Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/<participant_id>/gold_stage."
+    },
+    {
+      "task_name": "lakehouseload",
+      "task_type": "notebook",
+      "workspace_path": "/Workspace/Participants/<participant_id>/04_Claims_Star_AI_Lakehouse_Load.ipynb",
+      "depends_on": [
+        "goldstage"
+      ],
+      "timeout_minutes": 60,
+      "success_check": "mpha_fact_claims_monthly and four Claims dimensions are current in the assigned AI Lakehouse target schema, for example goldailh.MPHA_P17."
+    },
+    {
+      "task_name": "claims_star_validation",
+      "task_type": "manual_sql_gate",
+      "asset": "sql/claims_star_validation.sql",
+      "depends_on": [
+        "lakehouseload"
+      ],
+      "success_check": "All five Claims star schema tables have rows, orphan facts equal zero, and joined preview returns readable business rows."
+    }
+  ],
+  "incremental_talk_track": [
+    "AIDP requires a timeout value on each task before the downstream chain is completed; use 60 minutes for this workshop.",
+    "Bronze appends or deduplicates new batches using batch_id, source file, ingestion timestamp, and natural keys.",
+    "Silver recomputes impacted records or partitions rather than rebuilding all conformed detail.",
+    "The AI Lakehouse load notebook reads existing target keys and inserts only new Claims dimension and monthly fact rows.",
+    "Validation gates decide whether OAC, ML, and agent workloads can consume the new Gold state."
+  ]
+}

@@ -7,15 +7,17 @@
 #
 # Inputs and outputs:
 # - Inputs:
-# - data/raw/*.csv copied to the Object Storage raw prefix
-# - data/raw_json/facility_capacity_events.jsonl
-# - data/raw_spatial/healthcare_service_areas.geojson
-# - documents/MPHA_Winter_Respiratory_Response_Playbook.docx remains in the document landing area
+# - Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw/*.csv
+# - Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw_json/facility_capacity_events.jsonl
+# - Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/raw_spatial/healthcare_service_areas.geojson
+# - Shared AIDP volume path /Volumes/e2eindustrydemos/default/e2eindustrydemovol/documents/MPHA_Winter_Respiratory_Response_Playbook.docx remains available for RAG
 # - Outputs:
-# - 7 Bronze Delta folders under the configured bronze path
+# - 7 Bronze Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/bronze`
 # - The playbook document remains available for the later RAG knowledge-base lab
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - raw_base, raw_json_base, raw_spatial_base, document_base, bronze_base
 # - ingest_batch_id
 #
@@ -45,21 +47,29 @@
 # Public Healthcare AIDP Workshop
 # Bronze notebook: simplified raw sources -> Bronze Delta tables in AIDP.
 #
-# Update the bucket and namespace placeholders before running in Oracle AI Data Platform.
+# This notebook uses the shared AIDP external volume created in Lab 0.
+# Change only `participant_id` so each participant writes to their own area.
 
 from pyspark.sql import functions as F
 
 
 # -----------------------------------------------------------------------------
 # 1. Configure landing-zone and Bronze-layer paths.
-# Replace the bucket and namespace placeholders with the Object Storage location
-# used by your workshop tenancy before running the notebook.
+# All participants read the same shared raw data folders. Each participant writes
+# Bronze output under their own workshop_runs/<participant_id> prefix so nobody
+# overwrites another participant's work.
 # -----------------------------------------------------------------------------
-raw_base = "oci://<bucket>@<namespace>/mpha/raw"
-raw_json_base = "oci://<bucket>@<namespace>/mpha/raw_json"
-raw_spatial_base = "oci://<bucket>@<namespace>/mpha/raw_spatial"
-document_base = "oci://<bucket>@<namespace>/mpha/documents"
-bronze_base = "oci://<bucket>@<namespace>/mpha/bronze"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 01_TFI_Allan_FM or 02_TF1_Joselito_BDC.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+raw_base = f"{volume_base}/raw"
+raw_json_base = f"{volume_base}/raw_json"
+raw_spatial_base = f"{volume_base}/raw_spatial"
+document_base = f"{volume_base}/documents"
+bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
 ingest_batch_id = "mpha_2025_h1_simplified_workshop"
 
 

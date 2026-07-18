@@ -9,9 +9,11 @@
 # - Inputs:
 # - Silver Delta folders from the Silver notebook
 # - Outputs:
-# - Gold-stage CSV folders including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview
+# - Gold-stage CSV folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/gold_stage` including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - silver_base
 # - gold_stage_base
 # - gold_snapshot_date
@@ -50,10 +52,18 @@ from pyspark.sql.types import ArrayType, MapType, StructType
 # -----------------------------------------------------------------------------
 # 1. Configure Silver input and Gold-stage output paths.
 # Gold-stage files are intentionally compact CSV outputs because they can be
-# inspected easily and loaded into AI Lakehouse or OAC.
+# inspected easily and loaded into AI Lakehouse or OAC. Use the same
+# participant_id used in Bronze and Silver so your Gold-stage files are isolated
+# from every other participant.
 # -----------------------------------------------------------------------------
-silver_base = "oci://<bucket>@<namespace>/mpha/silver"
-gold_stage_base = "oci://<bucket>@<namespace>/mpha/gold_stage"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 01_TFI_Allan_FM or 02_TF1_Joselito_BDC.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+gold_stage_base = f"{volume_base}/workshop_runs/{participant_id}/gold_stage"
 gold_snapshot_date = F.to_date(F.lit("2025-06-30"))
 
 

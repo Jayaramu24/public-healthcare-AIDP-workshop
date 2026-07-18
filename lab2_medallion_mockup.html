@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Labs 1 and 2 - Environment Setup and Healthcare Medallion Architecture</title>
+  <style>
+    :root {
+      --ink: #252525;
+      --muted: #5f6368;
+      --line: #d9dde3;
+      --page: #fff;
+      --side: #f5f6f7;
+      --oracle: #c74634;
+      --oracle-soft: #fbe9e5;
+      --blue: #245ea6;
+      --blue-soft: #edf5ff;
+      --green: #167c52;
+      --green-soft: #eef8f2;
+      --amber: #946200;
+      --amber-soft: #fff7df;
+      --code: #f6f8fa;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+
+    a { color: #1a5a96; }
+    code, pre { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    code { overflow-wrap: anywhere; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 10px 22px;
+      background: #252629;
+      color: #fff;
+      border-bottom: 3px solid var(--oracle);
+    }
+    .topbar strong { font-size: 17px; }
+    .topbar span { display: block; color: #d5d7da; font-size: 13px; }
+    .topbar a { color: #fff; font-size: 14px; }
+
+    .mobile-nav { display: none; }
+    .layout { display: grid; grid-template-columns: 292px minmax(0, 1fr); min-height: calc(100vh - 58px); }
+
+    .sidebar {
+      position: sticky;
+      top: 61px;
+      align-self: start;
+      height: calc(100vh - 61px);
+      overflow-y: auto;
+      padding: 22px 16px 30px;
+      background: var(--side);
+      border-right: 1px solid var(--line);
+    }
+    .sidebar h2 { margin: 0 8px 8px; font-size: 16px; }
+    .sidebar p { margin: 0 8px 18px; color: var(--muted); font-size: 13px; }
+    .sidebar a {
+      display: block;
+      margin: 2px 0;
+      padding: 9px 10px;
+      border-left: 3px solid transparent;
+      color: #3f454b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .sidebar a:hover, .sidebar a:focus { background: #fff; border-left-color: var(--oracle); color: #111; }
+    .sidebar .section-link { margin-top: 10px; font-weight: 700; }
+
+    main { width: min(1080px, calc(100% - 48px)); margin: 0 auto; padding: 38px 0 80px; }
+    .hero { padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 8px; color: var(--oracle); font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    h1 { margin: 0 0 12px; font-size: 36px; line-height: 1.18; }
+    h2 { margin: 0 0 10px; font-size: 26px; line-height: 1.25; }
+    h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.3; }
+    p { margin: 0 0 14px; }
+    .lede { max-width: 850px; color: #41464c; font-size: 18px; }
+
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .tag { padding: 6px 10px; border-radius: 4px; background: #eef0f2; font-size: 13px; font-weight: 700; }
+    .tag.participant { background: var(--blue-soft); color: var(--blue); }
+
+    .task { padding: 38px 0 4px; scroll-margin-top: 76px; }
+    .task + .task { border-top: 1px solid var(--line); }
+    .task-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .task-number { color: var(--oracle); font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    .duration { flex: 0 0 auto; color: var(--muted); font-size: 13px; }
+
+    ol, ul { padding-left: 24px; }
+    li { margin-bottom: 9px; }
+    li::marker { font-weight: 700; }
+
+    .role {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 6px 9px;
+      border: 1px solid #b9d3f2;
+      border-radius: 4px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .role.admin { border-color: #e6b5ad; background: var(--oracle-soft); color: #9f2f24; }
+
+    .lab-divider {
+      margin: 50px 0 0;
+      padding: 26px 28px;
+      border-top: 5px solid var(--oracle);
+      background: #f7f7f8;
+      scroll-margin-top: 76px;
+    }
+    .lab-divider p:last-child { margin-bottom: 0; }
+
+    .handoff-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 24px;
+      margin: 18px 0;
+    }
+    .handoff-grid div { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .handoff-grid strong { display: block; }
+
+    .callout {
+      margin: 18px 0;
+      padding: 15px 17px;
+      border-left: 4px solid var(--blue);
+      background: var(--blue-soft);
+    }
+    .callout strong { display: block; margin-bottom: 3px; }
+    .callout.expected { border-left-color: var(--green); background: var(--green-soft); }
+    .callout.warning { border-left-color: var(--amber); background: var(--amber-soft); }
+
+    .shot {
+      margin: 22px 0 28px;
+      border: 1px solid #cfd4da;
+      background: #fff;
+    }
+    .shot img { display: block; width: 100%; height: auto; }
+    .shot figcaption { padding: 11px 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+    .workflow-steps {
+      margin: 24px 0 30px;
+      border-top: 1px solid var(--line);
+    }
+    .workflow-step-detail {
+      padding: 24px 0 8px;
+      border-bottom: 1px solid var(--line);
+    }
+    .workflow-step-detail h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+    .workflow-step-detail .step-label {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--oracle);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .workflow-step-detail .shot { margin: 14px 0 18px; }
+
+    pre {
+      margin: 16px 0 20px;
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid #d8dde3;
+      border-radius: 4px;
+      background: var(--code);
+      color: #24292f;
+      font-size: 13px;
+      line-height: 1.48;
+      white-space: pre;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .flow div { position: relative; min-height: 86px; padding: 13px; border: 1px solid var(--line); background: #fafafa; }
+    .flow strong { display: block; margin-bottom: 4px; }
+    .flow span { color: var(--muted); font-size: 13px; }
+
+    table { width: 100%; margin: 18px 0 24px; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f4f5f6; }
+
+    .next { margin-top: 34px; padding: 22px; border: 1px solid var(--line); background: #fafafa; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .mobile-nav { display: block; padding: 12px 18px; background: var(--side); border-bottom: 1px solid var(--line); }
+      .mobile-nav select { width: 100%; min-height: 42px; padding: 8px; }
+      main { width: min(100% - 30px, 760px); padding-top: 28px; }
+      h1 { font-size: 30px; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .handoff-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .topbar { align-items: flex-start; }
+      .topbar a { display: none; }
+      .task-head { display: block; }
+      .duration { margin-top: 5px; }
+      .flow { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div><strong>Public Healthcare AIDP Workshop</strong><span>Combined Lab 1 and Lab 2 review preview</span></div>
+    <a href="live_aidp_capture_mockup.html">Approved screenshot pack</a>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Lab tasks">
+    <select onchange="if(this.value) location.hash=this.value" aria-label="Jump to a task">
+      <option value="">Jump to a task</option>
+      <option value="lab1">Lab 1 - Admin environment setup</option>
+      <option value="lab1-task-1">Lab 1 Task 1 - OCI foundation</option>
+      <option value="lab1-task-2">Lab 1 Task 2 - AI Lakehouse</option>
+      <option value="lab1-task-3">Lab 1 Task 3 - AIDP</option>
+      <option value="lab1-task-4">Lab 1 Task 4 - Storage and catalogs</option>
+      <option value="lab1-task-5">Lab 1 Task 5 - OAC</option>
+      <option value="handoff">Lab 1 completion gate</option>
+      <option value="lab2">Lab 2 - Medallion architecture</option>
+      <option value="task-1">Lab 2 Task 1 - Confirm prerequisites</option>
+      <option value="task-2">Lab 2 Task 2 - Inspect the volume</option>
+      <option value="task-3">Lab 2 Task 3 - Build Bronze</option>
+      <option value="task-4">Lab 2 Task 4 - Build Silver</option>
+      <option value="task-5">Lab 2 Task 5 - Review Gold</option>
+      <option value="task-6">Lab 2 Task 6 - Load Claims star schema</option>
+      <option value="task-7">Lab 2 Task 7 - Verify tables</option>
+      <option value="task-8">Lab 2 Task 8 - Validate data</option>
+      <option value="task-9">Lab 2 Task 9 - Create workflow</option>
+    </select>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Labs 1 and 2</h2>
+      <p>Admin setup followed by the participant medallion and Claims star schema flow.</p>
+      <a class="section-link" href="#introduction">Introduction</a>
+      <a class="section-link" href="#lab1">Lab 1: Admin setup</a>
+      <a href="#lab1-task-1">1. OCI foundation</a>
+      <a href="#lab1-task-2">2. AI Lakehouse and schema</a>
+      <a href="#lab1-task-3">3. AIDP and policies</a>
+      <a href="#lab1-task-4">4. Storage and catalogs</a>
+      <a href="#lab1-task-5">5. OAC</a>
+      <a href="#handoff">Lab 1 completion gate</a>
+      <a class="section-link" href="#lab2">Lab 2: Medallion build</a>
+      <a href="#objectives">Objectives</a>
+      <a href="#task-1">1. Confirm prerequisites</a>
+      <a href="#task-2">2. Inspect the volume</a>
+      <a href="#task-3">3. Build Bronze</a>
+      <a href="#task-4">4. Build Silver</a>
+      <a href="#task-5">5. Review Gold</a>
+      <a href="#task-6">6. Load Claims star schema</a>
+      <a href="#task-7">7. Verify tables</a>
+      <a href="#task-8">8. Validate data</a>
+      <a href="#task-9">9. Create workflow</a>
+      <a class="section-link" href="#summary">Summary</a>
+    </aside>
+
+    <main>
+      <section class="hero" id="introduction">
+        <p class="eyebrow">Combined execution preview</p>
+        <h1>Set Up the Environment and Build the Healthcare Medallion Architecture</h1>
+        <p class="lede">Lab 1 prepares the shared OCI, AIDP, Autonomous AI Lakehouse, Object Storage, catalog, volume, and OAC resources. Lab 2 then hands control to participants to build Bronze and Silver and load the instructor-led Claims star schema.</p>
+        <div class="meta"><span class="tag">Lab 1: Admin-led</span><span class="tag participant">Lab 2: Participant-led</span><span class="tag">Total estimated time: 120 minutes</span></div>
+      </section>
+
+      <section class="lab-divider" id="lab1">
+        <p class="eyebrow">Lab 1</p>
+        <h2>Set Up the Shared Workshop Environment</h2>
+        <p>This is an admin-led lab. Participants may read it for context, but they begin hands-on execution only after the Lab 1 completion gate is passed.</p>
+        <div class="meta"><span class="tag">Admin lab</span><span class="tag">Estimated time: 60 minutes</span><span class="tag">Run once per shared environment</span></div>
+      </section>
+
+      <section class="task" id="lab1-task-1">
+        <div class="task-head"><div><div class="task-number">Lab 1 - Task 1</div><h2>Create the OCI foundation</h2></div><div class="duration">Admin step · 8 minutes</div></div>
+        <div class="role admin">Admin step</div>
+        <ol>
+          <li>In the OCI Console, open <strong>Identity &amp; Security → Compartments</strong>.</li>
+          <li>Create a dedicated workshop compartment such as <code>MPHA-AIDP-WORKSHOP</code>.</li>
+          <li>Use this same compartment for AIDP, Autonomous AI Lakehouse, Object Storage, and OAC.</li>
+          <li>Record the region and compartment name in the facilitator run sheet.</li>
+        </ol>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-3.png" alt="OCI create compartment screen" /><figcaption>Create one clearly named compartment for all shared workshop resources.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The workshop compartment is active and selectable from OCI service creation pages.</div>
+      </section>
+
+      <section class="task" id="lab1-task-2">
+        <div class="task-head"><div><div class="task-number">Lab 1 - Task 2</div><h2>Create Autonomous AI Lakehouse and the Claims target schema</h2></div><div class="duration">Admin step · 18 minutes</div></div>
+        <div class="role admin">Admin step</div>
+        <ol>
+          <li>Open <strong>Oracle Database → Autonomous AI Database</strong> and create the workshop AI Lakehouse instance in the workshop compartment.</li>
+          <li>Wait until the instance is available, then launch Database Actions and sign in as <code>ADMIN</code>.</li>
+          <li>Open <strong>Administration → Database Users</strong> and create the Gold-serving user used by the workshop, such as <code>E2EAIDPUSER</code>.</li>
+          <li>Enable Web Access and REST access, and assign at least <code>1G</code> quota on tablespace <code>DATA</code>. Use <code>2G</code> to <code>5G</code> for a shared facilitator schema.</li>
+          <li>Open the SQL worksheet as the Gold-serving user and run <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_star_schema.sql&amp;label=Claims%20star%20schema%20DDL&amp;kind=code"><code>sql/create_ai_lakehouse_claims_star_schema.sql</code></a>.</li>
+          <li>Confirm that the script creates exactly the target used in Lab 2: four dimensions and <code>mpha_fact_claims_monthly</code>.</li>
+        </ol>
+        <div class="callout warning"><strong>Schema contract for Lab 2</strong>The target fact table must be <code>mpha_fact_claims_monthly</code>, supported by the date, district, coverage-program, and claim-type dimensions. These names must match the AIDP load notebook exactly.</div>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-db.png" alt="Create Autonomous AI Database screen" /><figcaption>Provision the shared Autonomous AI Lakehouse instance in the workshop compartment.</figcaption></figure>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sql-developer.png" alt="Open SQL Developer from Autonomous AI Database" /><figcaption>Use Database Actions to create the workshop user and run the Claims star schema DDL.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The Gold-serving schema exists, has sufficient quota, and contains the five empty Claims star schema tables required by the AIDP load notebook.</div>
+      </section>
+
+      <section class="task" id="lab1-task-3">
+        <div class="task-head"><div><div class="task-number">Lab 1 - Task 3</div><h2>Create AIDP and apply the required policies</h2></div><div class="duration">Admin step · 12 minutes</div></div>
+        <div class="role admin">Admin step</div>
+        <ol>
+          <li>Open <strong>AI Data Platform</strong> in OCI and create the AIDP instance in the workshop compartment.</li>
+          <li>Use the standard network and capacity settings approved for the workshop tenancy.</li>
+          <li>Select <strong>Add Standard Policies</strong> and review the generated IAM statements before applying them.</li>
+          <li>Open the AIDP Workbench after the instance becomes active.</li>
+          <li>Create or confirm the shared workspace <code>E2EAIDPIndustryDemos</code> and shared Spark compute.</li>
+        </ol>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp.png" alt="Create AIDP instance screen" /><figcaption>Create the AIDP instance that will host the workspace, compute, notebooks, catalogs, and volume.</figcaption></figure>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-standard-policies-1.png" alt="AIDP standard policies screen" /><figcaption>Apply the standard policies required for the AIDP instance to use the workshop resources.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>AIDP Workbench opens successfully and the shared workspace and Spark compute are available.</div>
+      </section>
+
+      <section class="task" id="lab1-task-4">
+        <div class="task-head"><div><div class="task-number">Lab 1 - Task 4</div><h2>Create storage, catalogs, volume, and notebook folders</h2></div><div class="duration">Admin step · 17 minutes</div></div>
+        <div class="role admin">Admin step</div>
+        <ol>
+          <li>Create an Object Storage bucket in the workshop compartment and upload the workshop raw bundle.</li>
+          <li>Create the logical folders for <code>RawData</code>, <code>Bronze</code>, <code>Silver</code>, <code>gold_stage</code>, and <code>vector</code>.</li>
+          <li>In AIDP Master Catalog, create or confirm the standard catalog <code>e2eindustrydemos</code> and its <code>default</code> schema.</li>
+          <li>Create the external volume <code>e2eindustrydemovol</code> and map it to the Object Storage bucket and base folder.</li>
+          <li>Create the Autonomous AI Lakehouse external catalog <code>goldailh</code> and verify that <code>e2eaidpuser</code> is visible.</li>
+          <li>Create the empty workspace folders <code>O1_Bronze</code>, <code>O2_Silver</code>, <code>03_Gold</code>, and <code>03a_GoldAILHLoad</code>. Participants upload their downloaded notebooks during Lab 2.</li>
+        </ol>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-3.png" alt="Create Object Storage bucket screen" /><figcaption>Create the shared Object Storage bucket before configuring the AIDP volume.</figcaption></figure>
+        <figure class="shot"><img src="live_aidp_screens_hires/volume_contents_hires.png" alt="Configured AIDP volume folders" /><figcaption>Admin readiness evidence: all medallion folders are visible through the external volume.</figcaption></figure>
+        <figure class="shot"><img src="live_aidp_screens_hires/external_catalog_hires.png" alt="AIDP Master Catalog with standard and external catalogs" /><figcaption>Admin readiness evidence: both the standard catalog and <code>goldailh</code> external catalog are active.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The raw assets, medallion folders, empty notebook destination folders, standard catalog, external volume, and AI Lakehouse external catalog are accessible from AIDP.</div>
+      </section>
+
+      <section class="task" id="lab1-task-5">
+        <div class="task-head"><div><div class="task-number">Lab 1 - Task 5</div><h2>Create Oracle Analytics Cloud</h2></div><div class="duration">Admin step · 5 minutes</div></div>
+        <div class="role admin">Admin step</div>
+        <ol>
+          <li>Open <strong>Analytics &amp; AI → Analytics Cloud</strong>.</li>
+          <li>Create or confirm the shared OAC instance in the workshop compartment.</li>
+          <li>Record the OAC URL and verify that the facilitator can sign in.</li>
+          <li>Do not create the claims dataset yet; that is introduced after Lab 2 validates the loaded star schema.</li>
+        </ol>
+        <figure class="shot"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-oac.png" alt="Create Oracle Analytics Cloud instance screen" /><figcaption>Provision OAC now so it is ready when the validated Claims star schema reaches the dashboard lab.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The shared OAC instance is active and its URL is available to the facilitator.</div>
+      </section>
+
+      <section class="task" id="handoff">
+        <div class="task-head"><div><div class="task-number">Lab 1 completion gate</div><h2>Hand the prepared environment to participants</h2></div><div class="duration">Admin and participant checkpoint</div></div>
+        <p>The facilitator verifies the left column; participants verify the right column. Lab 2 starts only after every item is confirmed.</p>
+        <div class="handoff-grid">
+          <div><strong>Admin: OCI resources</strong>Compartment, AIDP, AI Lakehouse, Object Storage, and OAC are active.</div>
+          <div><strong>Participant: Sign-in</strong>The participant can open AIDP Workbench and the shared workspace.</div>
+          <div><strong>Admin: Data target</strong><code>e2eaidpuser</code> has quota and the five Claims star schema tables exist.</div>
+          <div><strong>Participant: Catalogs</strong><code>e2eindustrydemos</code> and <code>goldailh</code> are visible in Master Catalog.</div>
+          <div><strong>Admin: Data assets</strong>The raw bundle is uploaded and the four downloadable <code>.ipynb</code> assets are available on the workshop page.</div>
+          <div><strong>Participant: Volume</strong><code>RawData</code>, <code>Bronze</code>, <code>Silver</code>, <code>gold_stage</code>, and <code>vector</code> are visible.</div>
+          <div><strong>Admin: Compute</strong>The shared Spark compute is running or ready to start.</div>
+          <div><strong>Participant: Notebook folders</strong>The four destination folders are visible and the participant has permission to upload files.</div>
+        </div>
+        <figure class="shot"><img src="live_aidp_screens_hires/workspace_root_hires.png" alt="Shared AIDP workspace prepared for participants" /><figcaption>This is the participant starting point. Lab 2 no longer asks beginners to perform service provisioning.</figcaption></figure>
+        <div class="callout expected"><strong>Handoff complete</strong>The facilitator announces that Lab 1 is complete. Participants continue directly to Lab 2 Task 1 using the same workspace and catalogs.</div>
+      </section>
+
+      <section class="lab-divider" id="lab2">
+        <p class="eyebrow">Lab 2</p>
+        <h2>Build the Healthcare Medallion Architecture</h2>
+        <p>Participants now use the environment prepared in Lab 1. No OCI provisioning, user creation, policy creation, catalog creation, or target-table DDL is repeated here.</p>
+        <div class="meta"><span class="tag participant">Participant lab</span><span class="tag">Estimated time: 60 minutes</span><span class="tag">Starts from the Lab 1 completion gate</span></div>
+      </section>
+
+      <section class="task" id="objectives">
+        <h2>Objectives</h2>
+        <p>In this lab, you will:</p>
+        <ul>
+          <li>Confirm the shared workspace, Spark compute, volume, standard catalog, and external catalog are available.</li>
+          <li>Preserve the five CSV, one JSONL, and one GeoJSON sources in Bronze Delta tables with ingestion metadata.</li>
+          <li>Create typed, conformed Silver tables with healthcare quality rules and derived measures.</li>
+          <li>Build and load the Claims star schema through the connected <code>goldailh</code> external catalog.</li>
+          <li>Validate row counts, dimensional joins, and readable business results.</li>
+        </ul>
+        <div class="flow" aria-label="Medallion flow">
+          <div><strong>Raw</strong><span>CSV, JSONL, GeoJSON and playbook document</span></div>
+          <div><strong>Bronze</strong><span>Source-preserving Delta tables plus ingestion metadata</span></div>
+          <div><strong>Silver</strong><span>Typed, cleaned and conformed healthcare detail</span></div>
+          <div><strong>Gold</strong><span>Claims star schema in Autonomous AI Lakehouse</span></div>
+        </div>
+      </section>
+
+      <section class="task" id="task-1">
+        <div class="task-head"><div><div class="task-number">Task 1</div><h2>Confirm the participant prerequisites</h2></div><div class="duration">5 minutes</div></div>
+        <div class="role">Participant step</div>
+        <div class="callout warning"><strong>Admin preparation must already be complete</strong>The facilitator creates the AIDP instance, workspace, Spark compute, standard catalog, volume, Autonomous AI Lakehouse external catalog, target schema, and target tables before this lab begins. Participants do not repeat those provisioning steps.</div>
+        <ol>
+          <li>Sign in to Oracle AI Data Platform Workbench and open the shared workspace <code>E2EAIDPIndustryDemos</code>.</li>
+          <li>Confirm that the workspace contains the empty <code>O1_Bronze</code>, <code>O2_Silver</code>, <code>03_Gold</code>, and <code>03a_GoldAILHLoad</code> folders.</li>
+          <li>Confirm that the shared Spark cluster is available. Attach it only when instructed by the facilitator.</li>
+          <li>Open <strong>Master catalog</strong> and verify that both <code>e2eindustrydemos</code> and <code>goldailh</code> are visible.</li>
+        </ol>
+        <figure class="shot"><img src="live_aidp_screens_hires/workspace_root_hires.png" alt="AIDP participant workspace showing the workshop folders" /><figcaption>Participant checkpoint: the shared workspace and destination folders for the downloadable notebooks are visible.</figcaption></figure>
+        <figure class="shot"><img src="live_aidp_screens_hires/external_catalog_hires.png" alt="Master Catalog showing the standard and external catalogs" /><figcaption>Catalog checkpoint: <code>e2eindustrydemos</code> is the AIDP standard catalog and <code>goldailh</code> is the Autonomous AI Lakehouse external catalog.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>You can open the shared workspace and see both required catalogs. Stop and contact the facilitator if either catalog is missing.</div>
+      </section>
+
+      <section class="task" id="task-2">
+        <div class="task-head"><div><div class="task-number">Task 2</div><h2>Inspect the medallion volume</h2></div><div class="duration">5 minutes</div></div>
+        <div class="role">Participant step</div>
+        <ol>
+          <li>From <strong>Master catalog</strong>, open <code>e2eindustrydemos</code>.</li>
+          <li>Open the <code>default</code> schema, select <strong>Volumes</strong>, and open <code>e2eindustrydemovol</code>.</li>
+          <li>Confirm that the volume contains <code>RawData</code>, <code>Bronze</code>, <code>Silver</code>, <code>gold_stage</code>, and <code>vector</code>.</li>
+          <li>Do not rename or delete any shared folder.</li>
+        </ol>
+        <figure class="shot"><img src="live_aidp_screens_hires/volume_contents_hires.png" alt="AIDP volume showing RawData, Bronze, Silver, gold stage and vector folders" /><figcaption>The shared volume provides the persistent storage locations used by the medallion notebooks.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The raw landing area and all medallion output folders are visible in the shared volume.</div>
+      </section>
+
+      <section class="task" id="task-3">
+        <div class="task-head"><div><div class="task-number">Task 3</div><h2>Build the Bronze layer</h2></div><div class="duration">12 minutes</div></div>
+        <div class="role">Participant step</div>
+        <p>Bronze preserves source values and adds only technical ingestion metadata. It is the replayable foundation for every downstream transformation.</p>
+        <ol>
+          <li>Download <a href="notebooks/01_Bronze_Public_Healthcare.ipynb" download><code>01_Bronze_Public_Healthcare.ipynb</code></a> from the workshop assets.</li>
+          <li>In AIDP Workbench, open the shared workspace and enter the <code>O1_Bronze</code> folder.</li>
+          <li>Choose the folder action for uploading a file, select the downloaded <code>.ipynb</code>, and wait until it appears in the folder.</li>
+          <li>Open the uploaded notebook and review the configured raw CSV, JSON, spatial, document, and Bronze output locations.</li>
+          <li>Confirm the notebook reads five CSV datasets, one JSONL dataset, and one GeoJSON dataset.</li>
+          <li>Attach the shared Spark cluster and run all cells.</li>
+          <li>Review the output messages and confirm that each Bronze table was written successfully.</li>
+        </ol>
+        <pre><code>raw_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/RawData"
+bronze_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/Bronze"
+
+# Technical metadata added to every Bronze row
+_source_file
+_ingest_batch_id
+_ingested_at</code></pre>
+        <figure class="shot"><img src="live_aidp_screens_hires/bronze_notebook_hires.png" alt="Bronze PySpark notebook in AIDP" /><figcaption>After upload, open the Bronze notebook, confirm its volume paths, attach compute, and run all cells.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>Seven source-preserving Bronze Delta outputs exist: five CSV-derived tables, one JSON-derived table, and one GeoJSON-derived table. The playbook document remains in the landing area for the later vector workflow.</div>
+      </section>
+
+      <section class="task" id="task-4">
+        <div class="task-head"><div><div class="task-number">Task 4</div><h2>Build the Silver layer</h2></div><div class="duration">15 minutes</div></div>
+        <div class="role">Participant step</div>
+        <p>Silver converts raw strings into governed analytics fields while retaining reusable row-level detail.</p>
+        <ol>
+          <li>Download <a href="notebooks/02_Silver_Public_Healthcare.ipynb" download><code>02_Silver_Public_Healthcare.ipynb</code></a> from the workshop assets.</li>
+          <li>Open the <code>O2_Silver</code> workspace folder and upload the downloaded <code>.ipynb</code>.</li>
+          <li>Open the uploaded notebook and confirm it reads from the Bronze folder and writes to the Silver folder.</li>
+          <li>Review the transformations for type casting, date parsing, valid non-negative measures, standardised status values, and duplicate removal.</li>
+          <li>Review the derived columns, including access risk, wait variance, occupancy flags, public-health pressure, triage totals, supply-alert count, pressure band, and provider accreditation expiry risk.</li>
+          <li>Attach the shared Spark cluster, run all cells, and review the final write messages.</li>
+        </ol>
+        <table>
+          <thead><tr><th>Silver output</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>silver_claims_membership_disbursement</code></td><td>Conformed claims, membership, and payment detail used by the instructor-led Claims star schema.</td></tr>
+            <tr><td><code>silver_facility_day</code></td><td>Daily facility operations detail used later for the participant DIY challenge.</td></tr>
+            <tr><td><code>silver_provider_accreditation</code></td><td>Accreditation status, score, corrective actions, and expiry risk.</td></tr>
+            <tr><td><code>silver_facility_capacity_event</code></td><td>Flattened JSON event data with triage and supply pressure measures.</td></tr>
+            <tr><td><code>silver_spatial_feature</code></td><td>District, facility, and catchment features extracted from GeoJSON.</td></tr>
+          </tbody>
+        </table>
+        <figure class="shot"><img src="live_aidp_screens_hires/silver_notebook_hires.png" alt="Silver PySpark notebook and successful Silver output messages" /><figcaption>The completed Silver notebook shows both the transformation logic and successful writes to the shared Silver folder.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The notebook reports successful writes for district, facility/provider, facility-day, public-health, claims/membership/disbursement, accreditation, capacity-event, and spatial outputs.</div>
+      </section>
+
+      <section class="task" id="task-5">
+        <div class="task-head"><div><div class="task-number">Task 5</div><h2>Review the Gold business derivations</h2></div><div class="duration">5 minutes</div></div>
+        <div class="role">Participant step</div>
+        <p>The Gold notebook demonstrates how reusable Silver detail becomes business measures. The instructor-led execution path in this workshop loads the Claims star schema directly in Task 6.</p>
+        <ol>
+          <li>Download <a href="notebooks/03_Gold_Public_Healthcare.ipynb" download><code>03_Gold_Public_Healthcare.ipynb</code></a> from the workshop assets.</li>
+          <li>Open the <code>03_Gold</code> workspace folder and upload the downloaded <code>.ipynb</code>.</li>
+          <li>Open the uploaded notebook and review how Silver claims rows are grouped by service month, district, coverage program, and claim type.</li>
+          <li>Identify the derived measures: submitted, approved, denied and pending claims; submitted, approved and paid amounts; average processing days; and denial rate.</li>
+          <li>Review the facility, membership, accreditation, spatial, and public-health outputs to understand the optional broader Gold staging pattern.</li>
+          <li>Do not attach compute or run this optional notebook unless the facilitator asks you to create the broader flat Gold compatibility outputs in <code>gold_stage</code>.</li>
+        </ol>
+        <figure class="shot"><img src="live_aidp_screens_hires/gold_notebook_hires.png" alt="Gold PySpark notebook showing business aggregations" /><figcaption>The Gold notebook is a guided review of business derivations. The Claims star schema notebook is the primary load path for this workshop.</figcaption></figure>
+        <div class="callout"><strong>Why this distinction matters</strong><code>03_Gold_Public_Healthcare.ipynb</code> prepares broader flat serving outputs. The notebook downloaded in Task 6 builds dimensions and a fact table and loads the instructor-led Claims star schema directly through the external catalog.</div>
+      </section>
+
+      <section class="task" id="task-6">
+        <div class="task-head"><div><div class="task-number">Task 6</div><h2>Load the Claims star schema into Autonomous AI Lakehouse</h2></div><div class="duration">12 minutes</div></div>
+        <div class="role">Participant step</div>
+        <div class="callout warning"><strong>Before running the load</strong>The facilitator must have created the target tables and assigned at least <code>1G</code> quota on tablespace <code>DATA</code> to the target user. The external catalog must be active.</div>
+        <ol>
+          <li>Download <a href="notebooks/04_Claims_Star_AI_Lakehouse_Load.ipynb" download><code>04_Claims_Star_AI_Lakehouse_Load.ipynb</code></a> from the workshop assets.</li>
+          <li>Open the <code>03a_GoldAILHLoad</code> workspace folder and upload the downloaded <code>.ipynb</code>.</li>
+          <li>Open the uploaded notebook and set <code>silver_base</code> to the shared Silver location.</li>
+          <li>Set <code>target_catalog = "goldailh"</code> and <code>target_schema = "e2eaidpuser"</code>.</li>
+          <li>Attach the shared Spark cluster and run the schema and table visibility checks before executing any write.</li>
+          <li>Confirm the five required Claims star schema tables appear in the check output.</li>
+          <li>Run the remaining cells to build surrogate keys, dimension rows, monthly claims aggregates, and foreign-key lookups.</li>
+          <li>Review the final messages confirming that all five target tables were written.</li>
+        </ol>
+        <pre><code>target_catalog = "goldailh"
+target_schema = "e2eaidpuser"
+table_prefix = "mpha"
+
+spark.sql(f"SHOW SCHEMAS IN {target_catalog}").show(200, truncate=False)
+spark.sql(f"SHOW TABLES IN {target_catalog}.{target_schema}").show(200, truncate=False)</code></pre>
+        <figure class="shot"><img src="live_aidp_screens_hires/ailh_load_notebook_hires.png" alt="Claims star schema AI Lakehouse load notebook" /><figcaption>The load notebook creates the dimension and fact data frames and writes them to existing AI Lakehouse tables through <code>insertInto()</code>.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The notebook completes without quota, schema, table, or data-type errors and writes <code>mpha_dim_date</code>, <code>mpha_dim_district</code>, <code>mpha_dim_coverage_program</code>, <code>mpha_dim_claim_type</code>, and <code>mpha_fact_claims_monthly</code>.</div>
+      </section>
+
+      <section class="task" id="task-7">
+        <div class="task-head"><div><div class="task-number">Task 7</div><h2>Verify the target schema and tables</h2></div><div class="duration">3 minutes</div></div>
+        <div class="role">Participant step</div>
+        <ol>
+          <li>Return to <strong>Master catalog</strong> and open <code>goldailh</code>.</li>
+          <li>Open the <code>e2eaidpuser</code> schema.</li>
+          <li>Confirm that the Claims fact and its supporting dimensions are visible.</li>
+          <li>Ignore the additional facility, accreditation, document, and pressure-band tables during the instructor-led Claims dashboard path.</li>
+        </ol>
+        <figure class="shot"><img src="live_aidp_screens_hires/external_catalog_schema_hires.png" alt="The e2eaidpuser schema inside the goldailh external catalog" /><figcaption>Open the participant target schema inside the Autonomous AI Lakehouse external catalog.</figcaption></figure>
+        <figure class="shot"><img src="live_aidp_screens_hires/external_schema_tables_hires.png" alt="Claims fact and dimension tables visible in AI Lakehouse" /><figcaption>The target schema contains <code>mpha_fact_claims_monthly</code> and the Claims dimensions required by the next OAC lab.</figcaption></figure>
+        <div class="callout expected"><strong>Expected result</strong>The five instructor-led Claims star schema tables are visible in <code>goldailh.e2eaidpuser</code>.</div>
+      </section>
+
+      <section class="task" id="task-8">
+        <div class="task-head"><div><div class="task-number">Task 8</div><h2>Validate the Claims star schema data</h2></div><div class="duration">8 minutes</div></div>
+        <div class="role">Participant step</div>
+        <p>Run the supplied validation pack in Autonomous AI Lakehouse Database Actions or another approved SQL worksheet connected to the target schema.</p>
+        <ol>
+          <li>Open <a href="asset_viewer.html?file=sql/claims_star_validation.sql&amp;label=Claims%20star%20schema%20validation&amp;kind=code"><code>sql/claims_star_validation.sql</code></a>.</li>
+          <li>Run the row-count query. Confirm all five tables return a non-zero count.</li>
+          <li>Run the orphan-row query. Confirm the result is <code>0</code>.</li>
+          <li>Run the joined preview. Confirm it returns readable service month, district, program, claim type, and claims measures.</li>
+        </ol>
+        <pre><code>-- Check 1: all five tables must contain rows
+select 'mpha_dim_date' table_name, count(*) row_count from mpha_dim_date
+union all select 'mpha_dim_district', count(*) from mpha_dim_district
+union all select 'mpha_dim_coverage_program', count(*) from mpha_dim_coverage_program
+union all select 'mpha_dim_claim_type', count(*) from mpha_dim_claim_type
+union all select 'mpha_fact_claims_monthly', count(*) from mpha_fact_claims_monthly;
+
+-- Check 2: expected result is 0 orphan rows
+-- Run the complete query from sql/claims_star_validation.sql
+
+-- Check 3: joined business preview
+-- Expected columns include service_month, district_name,
+-- coverage_program, claim_type, claims_submitted and denial_rate.</code></pre>
+        <div class="callout expected"><strong>Expected result</strong>All tables contain data, the orphan count is zero, and the joined preview produces business-readable claims rows. The Claims star schema is ready for the instructor-led OAC dashboard lab.</div>
+      </section>
+
+      <section class="task" id="task-9">
+        <div class="task-head"><div><div class="task-number">Task 9</div><h2>Create the AIDP workflow for incremental medallion runs</h2></div><div class="duration">10 minutes</div></div>
+        <div class="role">Instructor demo with participant review</div>
+        <p>After participants have run the notebooks manually, show the validated AIDP Workflow that turns those notebooks into an operational pipeline. This section intentionally comes after the manual notebook work so first-time participants understand the layers before seeing orchestration.</p>
+        <div class="workflow-steps">
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 1</span>
+            <h4>Open Workflow and create the job</h4>
+            <p>In AIDP Workbench, open the shared workshop workspace, click <strong>Workflow</strong>, and create a workflow named <code>MPHA_INCREMENTAL_MEDALLION_FLOW</code>.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/01_workflow_jobs_empty.png" alt="AIDP Workflow page before creating the workflow" /><figcaption>Start from the Workflow page in the workshop workspace.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/03_create_job_filled.png" alt="Create workflow job dialog filled for MPHA incremental medallion flow" /><figcaption>Create the workflow job using the workshop name so participants can recognize it later in Activity.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 2</span>
+            <h4>Configure the Bronze ingest task</h4>
+            <p>Rename the first task to <code>bronzeingest</code>. Select the task type that matches the uploaded asset. In the validated run, Bronze used a Python task pointing to <code>/Workspace/O1_Bronze/aidp_bronze_pyspark.py</code>.</p>
+            <ul>
+              <li>Select the Bronze file from the <code>O1_Bronze</code> folder.</li>
+              <li>Select compute <code>E2EAIDPIndustrydemos</code>.</li>
+              <li>Set timeout to <code>60</code> minutes before adding the next task.</li>
+            </ul>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/10_bronze_task_python_type.png" alt="Bronze workflow task configured as Python task" /><figcaption>The task type must match the uploaded file type. Use Notebook task if participants upload the notebook wrapper instead.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/16_bronze_task_file_selected_and_cluster.png" alt="Bronze task with file and compute selected" /><figcaption>The Bronze task is ready after the file, compute, and timeout are set.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 3</span>
+            <h4>Add Silver after the timeout is set</h4>
+            <p>Add <code>silverrefine</code> only after the Bronze task has a timeout value. Set the dependency to <code>bronzeingest</code>, choose the Silver notebook, select the same compute, and set timeout to <code>60</code> minutes.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/19_after_timeout_fix_second_task_created.png" alt="Second workflow task created after timeout was added" /><figcaption>Validated behavior: the downstream task was added after the timeout issue was corrected.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/20_silver_name_timeout_entered.png" alt="Silver task name and timeout entered" /><figcaption>AIDP displays a 60-minute timeout as <code>1 hour</code>.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/23_silver_task_configured.png" alt="Silver workflow task configured" /><figcaption>Silver is chained after Bronze and uses the shared workshop compute.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 4</span>
+            <h4>Add Gold staging and AI Lakehouse load tasks</h4>
+            <p>Add <code>goldstage</code> after <code>silverrefine</code>. Then add <code>lakehouseload</code> after <code>goldstage</code>. For both tasks, select Notebook task, choose the file from the correct workspace folder, select compute, and set timeout to <code>60</code> minutes.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/25_gold_task_configured.png" alt="Gold workflow task configured" /><figcaption>The Gold task stages broader Gold outputs from the Silver layer.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/27_lakehouse_load_task_configured.png" alt="AI Lakehouse load workflow task configured" /><figcaption>The AI Lakehouse load task writes the Claims star schema into the connected external catalog.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 5</span>
+            <h4>Review and run the workflow</h4>
+            <p>Before running, confirm the chain is <code>bronzeingest</code> to <code>silverrefine</code> to <code>goldstage</code> to <code>lakehouseload</code>. Run the workflow and watch the graph view.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/28_configured_workflow_chain_before_run.png" alt="Configured AIDP workflow chain before run" /><figcaption>Full task graph before execution.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/29_run_created_success_toast.png" alt="Workflow run created successfully toast" /><figcaption>The run opens from the success message after submission.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/32_compute_starting_for_workflow_run.png" alt="Workflow waiting for compute to start" /><figcaption>If compute is starting, wait. The task moves from pending to running when compute is active.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 step 6</span>
+            <h4>Confirm task progress and final success</h4>
+            <p>Open task details as the workflow runs. The Bronze output proves the raw files were written to the shared volume. The final <code>lakehouseload</code> task confirms the Claims star schema load.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/33_bronze_task_running_with_output.png" alt="Bronze workflow task running with output" /><figcaption>Bronze output shows raw datasets being written into the Bronze layer.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/34_bronze_task_success.png" alt="Bronze workflow task completed successfully" /><figcaption>Each upstream task should turn green before the dependent task starts.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/63_lakehouse_repair3_success_selected.png" alt="AI Lakehouse load task successful after repair" /><figcaption>Validated final state: <code>lakehouseload</code> succeeded and the notebook skipped rows already present in AI Lakehouse.</figcaption></figure>
+          </div>
+
+          <div class="workflow-step-detail">
+            <span class="step-label">Task 9 troubleshooting</span>
+            <h4>Use Repair run for a failed downstream task</h4>
+            <p>If Bronze, Silver, and Gold already succeeded, do not rerun the full chain. Fix the notebook issue, click <strong>Repair run</strong>, select only <code>lakehouseload</code>, and run the repair.</p>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/44_repair_run_dialog.png" alt="AIDP repair run dialog" /><figcaption>The repair dialog lets the instructor choose which task to rerun.</figcaption></figure>
+            <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/60_repair3_lakehouse_selected.png" alt="Only lakehouseload selected for repair" /><figcaption>Select only the failed downstream task after correcting the notebook.</figcaption></figure>
+          </div>
+        </div>
+        <div class="flow">
+          <div><strong>bronzeingest</strong><span>Preserve new raw files and stamp the batch.</span></div>
+          <div><strong>silverrefine</strong><span>Clean and standardize impacted records.</span></div>
+          <div><strong>goldstage</strong><span>Stage broader Gold outputs.</span></div>
+          <div><strong>lakehouseload</strong><span>Insert only new Claims star schema rows into AI Lakehouse.</span></div>
+        </div>
+        <table>
+          <thead><tr><th>Concept</th><th>Workshop explanation</th><th>Production incrementality</th></tr></thead>
+          <tbody>
+            <tr><td>Batch id</td><td>Use a readable value such as <code>mpha_2025_07_01_daily</code>.</td><td>Labels every run and supports replay, audit, and duplicate detection.</td></tr>
+            <tr><td>Watermark</td><td>Use <code>watermark_start</code> and <code>watermark_end</code> to describe the new data window.</td><td>Filters raw files or records so only new or changed data is processed.</td></tr>
+            <tr><td>Timeout</td><td>Every workflow task uses <code>60</code> minutes in the validated run.</td><td>Prevents long-running jobs from hanging indefinitely.</td></tr>
+            <tr><td>Gold load</td><td>The Claims star schema load reads existing target keys and writes only new rows.</td><td>Production logic can evolve into true dimension upserts and fact-grain refreshes.</td></tr>
+            <tr><td>Repair run</td><td>If only <code>lakehouseload</code> fails, fix the notebook and repair just that task.</td><td>Reduces rerun cost while preserving successful upstream lineage.</td></tr>
+          </tbody>
+        </table>
+        <figure class="shot"><img src="assets/aidp_workflow_lab/screenshots/63_lakehouse_repair3_success_selected.png" alt="Successful lakehouse workflow repair" /><figcaption>Validated success: the repaired AI Lakehouse load skipped rows that already existed and completed successfully.</figcaption></figure>
+        <div class="callout">
+          <strong>Workflow asset</strong>
+          Open <a href="asset_viewer.html?file=workflows/aidp_incremental_medallion_workflow.md&amp;label=AIDP%20Incremental%20Medallion%20Workflow&amp;kind=markdown">workflows/aidp_incremental_medallion_workflow.md</a> for the detailed task graph, workflow parameters, and facilitator talk track.
+        </div>
+        <div class="callout expected"><strong>Expected result</strong>The execution team can explain that the same notebook sequence can be orchestrated as a workflow and evolved from a classroom full refresh into an incremental medallion pipeline.</div>
+      </section>
+
+      <section class="task" id="summary">
+        <h2>Summary</h2>
+        <p>In this lab, you created the reusable medallion foundation and published the instructor-led Claims star schema:</p>
+        <ul>
+          <li>Raw source files were preserved as Bronze Delta outputs with technical metadata.</li>
+          <li>Healthcare fields were cleaned, typed, conformed, and enriched in Silver.</li>
+          <li>Gold claims measures were derived at a monthly dimensional grain.</li>
+          <li>The Claims star schema was loaded into Autonomous AI Lakehouse through the AIDP external catalog.</li>
+          <li>SQL checks confirmed populated tables, valid dimension relationships, and readable business results.</li>
+          <li>The AIDP Workflow task graph shows how the notebook sequence becomes a repeatable incremental medallion pipeline.</li>
+        </ul>
+        <div class="next"><strong>Next lab</strong><p>Use the validated Claims star schema to build the instructor-led Oracle Analytics Cloud workbook. Facility Access Daily remains the participant DIY modeling and dashboard challenge.</p></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

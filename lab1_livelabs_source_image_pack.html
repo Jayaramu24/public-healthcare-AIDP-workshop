@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 1 LiveLabs Source Image Pack</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --line: #e2e5e9;
+        --muted: #5f6368;
+        --text: #1f1f1f;
+        --accent: #c74634;
+        --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: inherit; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 18px 22px;
+        background: #202124;
+        color: #fff;
+      }
+
+      .topbar strong { font-size: 1rem; }
+      .topbar span { color: rgba(255,255,255,0.78); font-size: 0.9rem; }
+
+      .wrap {
+        width: min(1440px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .intro,
+      .task-section {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .intro {
+        margin-bottom: 20px;
+        padding: 22px 24px;
+      }
+
+      .task-section + .task-section {
+        margin-top: 20px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1, h2, h3, p {
+        margin-top: 0;
+      }
+
+      h1 { margin-bottom: 10px; font-size: 2rem; }
+      h2 { margin-bottom: 8px; font-size: 1.35rem; }
+      h3 { margin-bottom: 6px; font-size: 1rem; }
+
+      .intro p,
+      .section-head p,
+      .meta,
+      .note,
+      .caption {
+        color: var(--muted);
+      }
+
+      .section-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .content {
+        padding: 22px;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .image-card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .image-head {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfbfc;
+      }
+
+      .meta {
+        font-size: 0.9rem;
+      }
+
+      .image-shell {
+        background: #f0f2f5;
+      }
+
+      .image-shell img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .caption {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+
+      code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef2f7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      .note {
+        margin-top: 14px;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 980px) {
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>Lab 1 LiveLabs Source Image Pack</strong><br />
+        <span>Built from the actual LiveLabs Lab 1 image URLs, not the local mixed asset cache</span>
+      </div>
+      <a href="lab1_full_image_manifest.md" style="color:#fff;">Open manifest</a>
+    </header>
+
+    <div class="wrap">
+      <section class="intro">
+        <p class="eyebrow">Clean Source Review</p>
+        <h1>Actual images extracted from the LiveLabs Lab 1 page</h1>
+        <p>
+          This document is built from the real image URLs found on the public LiveLabs page for <code>Lab 1: Set Up OCI Resources</code>. It should help you validate the correct screenshots task by task without the old local-image crossover problem.
+        </p>
+        <p>
+          I have excluded the generic header logos and the translation-help icons from the main Lab 1 task sections below.
+        </p>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 1</p>
+          <h2>Create Compartment</h2>
+          <p>These are the actual screenshots referenced in the LiveLabs compartment-creation sequence.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>comp-1.png</code></h3><div class="meta">Alt: Compartments</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-1.png" alt="Compartments" /></div><div class="caption">Compartments page / starting point.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>comp-2.png</code></h3><div class="meta">Alt: Compartments</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-2.png" alt="Compartments" /></div><div class="caption">Create compartment action step.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>comp-3.png</code></h3><div class="meta">Alt: Compartments</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-3.png" alt="Compartments" /></div><div class="caption">Compartment creation form.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>comp-4.png</code></h3><div class="meta">Alt: Compartments</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/comp-4.png" alt="Compartments" /></div><div class="caption">Created compartment confirmation/resulting view.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 2</p>
+          <h2>Provision ATP Instance</h2>
+          <p>These are the actual screenshots used for the source ATP setup path in the LiveLabs page.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>ai-database.png</code></h3><div class="meta">Alt: Navigate to AI Database</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/ai-database.png" alt="Navigate to AI Database" /></div><div class="caption">Navigation into Autonomous AI Database.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>atp-setup.png</code></h3><div class="meta">Alt: ATP Setup</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/atp-setup.png" alt="ATP Setup" /></div><div class="caption">ATP creation screen.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>atp-set-storage.png</code></h3><div class="meta">Alt: ATP Storage</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/atp-set-storage.png" alt="ATP Storage" /></div><div class="caption">ATP storage sizing step.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>atp-set-password.png</code></h3><div class="meta">Alt: ATP Password</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/atp-set-password.png" alt="ATP Password" /></div><div class="caption">ATP password and access configuration step.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 3</p>
+          <h2>Create Source_XX Schema</h2>
+          <p>LiveLabs uses a single screenshot here for entering Database Actions / SQL from the ATP instance.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>atp-sql.png</code></h3><div class="meta">Alt: ATP SQL</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/atp-sql.png" alt="ATP SQL" /></div><div class="caption">ATP Database Actions / SQL entry point.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 4</p>
+          <h2>Add REST capabilities to Source_XX Schema</h2>
+          <p>These are the source-schema user-management and REST setup screenshots from LiveLabs.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>atp-db-users.png</code></h3><div class="meta">Alt: Database Users</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/atp-db-users.png" alt="Database Users" /></div><div class="caption">Database users page for the ATP source schema.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-source2.jpg</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-source2.jpg" alt="Enable REST" /></div><div class="caption">Enable REST action for the source schema user.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-source3.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-source3.png" alt="Enable REST" /></div><div class="caption">REST enable confirmation / follow-on step.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>unlimited-quota2.png</code></h3><div class="meta">Alt: Set Quota</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/unlimited-quota2.png" alt="Set Quota" /></div><div class="caption">Quota setting step for the source schema.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>unlimited-quota3.png</code></h3><div class="meta">Alt: Set Quota</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/unlimited-quota3.png" alt="Set Quota" /></div><div class="caption">Quota confirmation / apply-changes view.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 5</p>
+          <h2>Log in to SQL Developer as Source_XX Schema</h2>
+          <p>These are the source-schema login and fallback-access screenshots used in LiveLabs.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>source-data-sign-in1.png</code></h3><div class="meta">Alt: Sign in Source_XX Schema</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/source-data-sign-in1.png" alt="Sign in Source_XX Schema" /></div><div class="caption">Sign-in screen for the source schema user.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>source-data-sign-in-21.png</code></h3><div class="meta">Alt: Access REST Source_XX</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/source-data-sign-in-21.png" alt="Access REST Source_XX" /></div><div class="caption">Alternate / fallback access path for the source schema.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 6</p>
+          <h2>Provision Autonomous AI Lakehouse</h2>
+          <p>These are the actual LiveLabs AI Lakehouse setup screenshots.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>ai-database.png</code></h3><div class="meta">Alt: AI Database</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/ai-database.png" alt="AI Database" /></div><div class="caption">Navigation into Autonomous AI Database for Lakehouse setup.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>create-aidp-db.png</code></h3><div class="meta">Alt: Create AI Database</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-db.png" alt="Create AI Database" /></div><div class="caption">AI Lakehouse creation screen, first view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>create-aidp-db-2.png</code></h3><div class="meta">Alt: Create AI Database</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-db-2.png" alt="Create AI Database" /></div><div class="caption">AI Lakehouse creation screen, second view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>sql-developer.png</code></h3><div class="meta">Alt: SQL Developer</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sql-developer.png" alt="SQL Developer" /></div><div class="caption">Database Actions / SQL entry point after AI Lakehouse provisioning.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 8</p>
+          <h2>Add REST capabilities to GOLD_XX Schema</h2>
+          <p>These are the Gold-schema REST enablement screenshots from LiveLabs.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-gold2.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-gold2.png" alt="Enable REST" /></div><div class="caption">Gold schema user-management / REST entry view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-gold3.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-gold3.png" alt="Enable REST" /></div><div class="caption">Enable REST action for the Gold schema user.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-gold4.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-gold4.png" alt="Enable REST" /></div><div class="caption">REST enable confirmation / next step for the Gold schema user.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-gold5.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-gold5.png" alt="Enable REST" /></div><div class="caption">Edit Gold user / continuation step.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>enable-rest-gold6.png</code></h3><div class="meta">Alt: Enable REST</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/enable-rest-gold6.png" alt="Enable REST" /></div><div class="caption">Quota or final confirmation state for Gold user setup.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 9</p>
+          <h2>Log in to SQL Developer as GOLD_XX Schema</h2>
+          <p>These are the Gold-schema sign-in and fallback-access screenshots used in the LiveLabs flow.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>sign-in-gold3.png</code></h3><div class="meta">Alt: Sign in Gold_XX Schema</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sign-in-gold3.png" alt="Sign in Gold_XX Schema" /></div><div class="caption">Gold schema sign-in path, first view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>sign-in-gold4.png</code></h3><div class="meta">Alt: Sign in Gold_XX Schema</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sign-in-gold4.png" alt="Sign in Gold_XX Schema" /></div><div class="caption">Gold schema sign-in path, second view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>sign-in-gold2.png</code></h3><div class="meta">Alt: Sign in Gold_XX Schema</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/sign-in-gold2.png" alt="Sign in Gold_XX Schema" /></div><div class="caption">Gold schema sign-in screen.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>access-rest-gold1.png</code></h3><div class="meta">Alt: Access REST Gold_XX</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/access-rest-gold1.png" alt="Access REST Gold_XX" /></div><div class="caption">Alternate / fallback access path for the Gold schema.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 10</p>
+          <h2>Provision AI Data Platform Instance</h2>
+          <p>These are the actual LiveLabs AIDP provisioning screenshots.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>create-aidp.png</code></h3><div class="meta">Alt: AI Data Platform</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp.png" alt="AI Data Platform" /></div><div class="caption">Navigation into AI Data Platform.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>create-aidp-2.png</code></h3><div class="meta">Alt: Create AIDP</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-aidp-2.png" alt="Create AIDP" /></div><div class="caption">Create AI Data Platform instance screen.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>aidp-standard-policies-1.png</code></h3><div class="meta">Alt: Add Standard Policies</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-standard-policies-1.png" alt="Add Standard Policies" /></div><div class="caption">Standard policies step, first view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>aidp-standard-policies-2.png</code></h3><div class="meta">Alt: Add Standard Policies</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-standard-policies-2.png" alt="Add Standard Policies" /></div><div class="caption">Standard policies step, second view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>aidp-standard-policies-3.png</code></h3><div class="meta">Alt: Add Standard Policies</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-standard-policies-3.png" alt="Add Standard Policies" /></div><div class="caption">Standard policies confirmation / third view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>aidp-optional-policies-1.png</code></h3><div class="meta">Alt: Add Optional Policies</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-optional-policies-1.png" alt="Add Optional Policies" /></div><div class="caption">Optional policies step, first view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>aidp-optional-policies-2.png</code></h3><div class="meta">Alt: Add Optional Policies</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/aidp-optional-policies-2.png" alt="Add Optional Policies" /></div><div class="caption">Optional policies step, second view.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 11</p>
+          <h2>Set Up Object Storage</h2>
+          <p>These are the actual Object Storage screenshots from the LiveLabs Lab 1 page.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-1.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-1.png" alt="Create OS Bucket" /></div><div class="caption">Navigate to Object Storage / Buckets.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-2.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-2.png" alt="Create OS Bucket" /></div><div class="caption">Create bucket action.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-3.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-3.png" alt="Create OS Bucket" /></div><div class="caption">Bucket creation form.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-4.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-4.png" alt="Create OS Bucket" /></div><div class="caption">Open the created bucket.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-7.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-7.png" alt="Create OS Bucket" /></div><div class="caption">Bucket details / namespace view.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-5.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-5.png" alt="Create OS Bucket" /></div><div class="caption">Objects / create new folder path.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>os-buckets-6.png</code></h3><div class="meta">Alt: Create OS Bucket</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/os-buckets-6.png" alt="Create OS Bucket" /></div><div class="caption">Folder creation form or confirmation step.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="task-section">
+        <div class="section-head">
+          <p class="eyebrow">Task 12</p>
+          <h2>Provision Analytics Cloud Instance</h2>
+          <p>These are the actual OAC provisioning screenshots from the LiveLabs Lab 1 page.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <div class="image-card"><div class="image-head"><h3><code>oac.png</code></h3><div class="meta">Alt: Analytics Cloud</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/oac.png" alt="Analytics Cloud" /></div><div class="caption">Navigation into Analytics Cloud.</div></div>
+            <div class="image-card"><div class="image-head"><h3><code>create-oac.png</code></h3><div class="meta">Alt: Create OAC</div></div><div class="image-shell"><img src="https://oracle-livelabs.github.io/analytics-ai/aidp-lakehouse/source-setup/images/create-oac.png" alt="Create OAC" /></div><div class="caption">Create OAC instance screen.</div></div>
+          </div>
+          <p class="note">This pack now reflects the real screenshot sequence found on the LiveLabs Lab 1 page, rather than the older mixed local asset set.</p>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

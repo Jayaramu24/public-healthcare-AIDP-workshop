@@ -14,6 +14,8 @@
 # - optional registered model artifact
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - gold_stage_base
 # - model_version
 # - experiment_name
@@ -72,9 +74,16 @@ except ImportError:
 
 # -----------------------------------------------------------------------------
 # 2. Configure Gold-stage input, experiment names, and scoring metadata.
-# The Gold-stage path should match the mounted AIDP volume used in Labs 1-4.
+# The Gold-stage path should match the same participant run area used in the
+# Bronze, Silver, and Gold notebooks.
 # -----------------------------------------------------------------------------
-gold_stage_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol/gold_stage"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+gold_stage_base = f"{volume_base}/workshop_runs/{participant_id}/gold_stage"
 model_version = "claims_denial_risk_v1"
 experiment_name = "MPHA Claims Denial Risk Prediction"
 mlflow_run_name = f"{model_version}_baseline"

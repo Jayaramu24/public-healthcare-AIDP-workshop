@@ -15,9 +15,11 @@ Use this bundle with `workshop_guide.pdf` when testing the workshop without the 
 ## Suggested test order
 
 1. Upload the raw CSV, JSON, spatial, and document files to the Object Storage folders described in the PDF guide.
-2. Import the Bronze, Silver, Gold, AI Lakehouse load, and ML notebooks into the AIDP workspace.
-3. Run the SQL schema scripts needed for the Claims star schema and optional Facilities star schema.
-4. Run the notebooks in the workshop sequence.
-5. Validate the Claims star schema using `sql/claims_star_validation.sql`.
-6. For the Round 2 extension, run `sql/create_ai_lakehouse_claims_context_extension.sql`, then run the Silver and Gold context extension notebooks, and validate with `sql/claims_context_extension_validation.sql`.
-7. Use the workflow files only after the individual notebooks have been tested successfully.
+2. In AIDP, use one shared workspace and one folder per participant under `Participants/<participant_id>`.
+3. Place the notebooks in the participant folder being tested.
+4. In Autonomous AI Lakehouse, create or confirm the assigned participant schema, such as `MPHA_P17`, then run `sql/admin_prepare_participant_claims_star_schemas.sql` as `ADMIN` for the full classroom setup.
+5. Refresh the AIDP external catalog `goldailh` and confirm the participant schema is visible.
+6. Run Bronze, Silver, Gold staging, and AI Lakehouse load notebooks in the workshop sequence. Set `participant_id`, `target_catalog = "goldailh"`, and the assigned `target_schema` before running.
+7. Validate the Claims star schema using `sql/claims_star_validation.sql`.
+8. For the Round 2 extension, run `sql/create_ai_lakehouse_claims_context_extension.sql`, then run the Silver and Gold context extension notebooks, and validate with `sql/claims_context_extension_validation.sql`.
+9. Use the workflow files only after the individual notebooks have been tested successfully.

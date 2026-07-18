@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab 1 Screenshot Mockup - Public Healthcare AIDP Workshop</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --line: #e2e5e9;
+        --muted: #5f6368;
+        --text: #1f1f1f;
+        --accent: #c74634;
+        --accent-soft: #fde9e4;
+        --green: #167c52;
+        --blue: #2f6fb2;
+        --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: var(--blue); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 18px 22px;
+        background: #202124;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .topbar strong { font-size: 1rem; }
+      .topbar span { color: rgba(255,255,255,0.76); font-size: 0.9rem; }
+
+      .wrap {
+        width: min(1280px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .intro, .section {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .intro {
+        margin-bottom: 20px;
+        padding: 22px 24px;
+      }
+
+      .section + .section { margin-top: 20px; }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1, h2, h3, h4, p { margin-top: 0; }
+      h1 { margin-bottom: 10px; font-size: 2rem; }
+      h2 { margin-bottom: 8px; font-size: 1.35rem; }
+      h3 { margin-bottom: 8px; font-size: 1.02rem; }
+
+      .intro p, .section-head p { color: var(--muted); max-width: 980px; }
+      .section-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: #eef2f7;
+        color: var(--muted);
+        font-size: 0.84rem;
+        font-weight: 600;
+      }
+
+      .pill.admin { background: #fde9e4; color: #9f2f24; }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 290px 1fr;
+        min-height: 720px;
+      }
+
+      .sidebar {
+        border-right: 1px solid var(--line);
+        background: #fafafa;
+        padding: 14px 12px 18px;
+      }
+
+      .sidebar-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        padding: 4px 6px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .burger {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+      }
+
+      .side-list { display: grid; gap: 7px; }
+      .side-item, .side-subitem {
+        padding: 8px 10px;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+      .side-item.active, .side-subitem.active {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 600;
+      }
+      .side-group {
+        margin-left: 10px;
+        padding-left: 10px;
+        border-left: 2px solid #eceff3;
+      }
+
+      .main { background: #fff; }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+      .toolbar-title { font-weight: 700; }
+      .toolbar-meta { color: var(--muted); font-size: 0.9rem; }
+
+      .content { padding: 24px; }
+      .article { max-width: 900px; }
+      .article p, .article li { color: #374151; }
+      .article ol, .article ul { padding-left: 20px; }
+
+      .task-block {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .task-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfbfc;
+      }
+
+      .task-title { font-weight: 700; }
+      .task-meta { color: var(--muted); font-size: 0.86rem; }
+      .task-body { padding: 16px; }
+
+      .note {
+        margin: 14px 0 0;
+        padding: 12px 14px;
+        border-left: 4px solid var(--green);
+        background: #eef9f2;
+        border-radius: 6px;
+      }
+
+      .screenshot-card {
+        margin-top: 16px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .screenshot-frame { position: relative; background: #f0f2f5; }
+      .screenshot-frame img { display: block; width: 100%; height: auto; }
+
+      .overlay {
+        position: absolute;
+        max-width: 260px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.97);
+        border: 1px solid rgba(199, 70, 52, 0.26);
+        box-shadow: 0 8px 20px rgba(16, 24, 40, 0.1);
+        font-size: 0.8rem;
+        line-height: 1.35;
+      }
+
+      .overlay strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--accent);
+      }
+
+      .tl { top: 20px; left: 20px; }
+      .tr { top: 20px; right: 20px; }
+      .bl { bottom: 22px; left: 22px; }
+      .br { bottom: 22px; right: 22px; }
+      .mr { top: 46%; right: 22px; transform: translateY(-50%); }
+
+      .caption {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef2f7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      @media (max-width: 980px) {
+        .shell { grid-template-columns: 1fr; }
+        .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>Lab 1 Screenshot Mockup</strong><br />
+        <span>Public Healthcare AIDP Workshop · review this before updating the full workshop</span>
+      </div>
+      <a href="livelabs_full_workshop_preview.html" style="color:#fff;">Back to full preview</a>
+    </header>
+
+    <div class="wrap">
+      <section class="intro">
+        <p class="eyebrow">Focused Review</p>
+        <h1>Lab 1 visual mockup using the screenshot plan</h1>
+        <p>
+          This page is only for validating the screenshot treatment for <strong>Lab 1: Set Up Core Resources</strong>. It uses the selected LiveLabs-style setup images and replaces the captions and callout text with Public Healthcare AIDP Workshop names, paths, and schema references.
+        </p>
+        <div class="pill-row">
+          <span class="pill admin">Admin-led setup</span>
+          <span class="pill">AIDP</span>
+          <span class="pill">AI Lakehouse</span>
+          <span class="pill">Object Storage</span>
+          <span class="pill">OAC</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="eyebrow">Lab 1</p>
+          <h2>Set Up Core Resources</h2>
+          <p>
+            The setup flow below is ordered as: AIDP, AI Lakehouse, Object Storage, and OAC. That keeps the workshop page calmer and more aligned with the execution story we want participants to follow later.
+          </p>
+        </div>
+
+        <div class="shell">
+          <aside class="sidebar">
+            <div class="sidebar-head">
+              <div class="burger">≡</div>
+              <div>
+                <div style="font-weight:700;">Public Healthcare AIDP Workshop</div>
+                <div style="color:var(--muted);font-size:0.85rem;">Lab 1 navigation</div>
+              </div>
+            </div>
+            <div class="side-list">
+              <div class="side-item">Introduction</div>
+              <div class="side-item">Getting Started</div>
+              <div class="side-item active">Lab 1: Set Up Core Resources</div>
+              <div class="side-group">
+                <div class="side-subitem active">Task 1: Create AIDP Instance</div>
+                <div class="side-subitem">Task 2: Create AI Lakehouse</div>
+                <div class="side-subitem">Task 3: Create Workshop Bucket</div>
+                <div class="side-subitem">Task 4: Create OAC Instance</div>
+              </div>
+              <div class="side-item">Lab 2: Build Bronze and Silver</div>
+            </div>
+          </aside>
+
+          <main class="main">
+            <div class="toolbar">
+              <div class="toolbar-title">Lab 1: Set Up Core Resources</div>
+              <div class="toolbar-meta">Admin-led · Estimated time: 45 to 60 minutes</div>
+            </div>
+
+            <div class="content">
+              <article class="article">
+                <h3>Task 1: Create the shared AIDP instance</h3>
+                <p>
+                  Begin by opening Oracle AI Data Platform and creating the shared workshop engineering environment. This is where participants will later run the Bronze and Silver notebooks.
+                </p>
+
+                <div class="task-block">
+                  <div class="task-head">
+                    <div>
+                      <div class="task-title">Navigate to AIDP and create the workshop instance</div>
+                      <div class="task-meta">Admin step · platform setup</div>
+                    </div>
+                    <span class="pill admin">Admin</span>
+                  </div>
+                  <div class="task-body">
+                    <ol>
+                      <li>Open <code>Analytics &amp; AI</code> and go to <code>AI Data Platform</code>.</li>
+                      <li>Create the shared instance <code>mpha-aidp</code>.</li>
+                      <li>Create the shared workspace <code>mpha-workshop-ws</code>.</li>
+                      <li>Add the standard policies required for access to Object Storage and workshop services.</li>
+                    </ol>
+
+                    <div class="screenshot-card">
+                      <div class="screenshot-frame">
+                        <img src="assets/oci_agent_lab/aidp_catalogs.png" alt="AIDP navigation reference" />
+                        <div class="overlay tl">
+                          <strong>Start in AI Data Platform</strong>
+                          Open <code>Analytics &amp; AI</code> and select <code>AI Data Platform</code> for the MPHA workshop environment.
+                        </div>
+                        <div class="overlay br">
+                          <strong>Workshop platform target</strong>
+                          This environment will host the Bronze and Silver processing steps for claims, facility operations, public-health, JSON events, and spatial inputs.
+                        </div>
+                      </div>
+                      <div class="caption">Light-overlay version for the AIDP navigation step.</div>
+                    </div>
+
+                    <div class="screenshot-card">
+                      <div class="screenshot-frame">
+                        <img src="assets/oci_agent_lab/aidp_workflow.png" alt="AIDP creation / workflow reference" />
+                        <div class="overlay tl">
+                          <strong>Workshop AIDP instance</strong>
+                          Create instance <code>mpha-aidp</code> and workspace <code>mpha-workshop-ws</code>.
+                        </div>
+                        <div class="overlay tr">
+                          <strong>Policy setup</strong>
+                          Add the standard policies needed for Object Storage access and shared workshop execution.
+                        </div>
+                        <div class="overlay br">
+                          <strong>Later workshop use</strong>
+                          Participants will attach the shared Spark cluster and run <code>aidp_bronze_pyspark.py</code> and <code>aidp_silver_pyspark.py</code> here.
+                        </div>
+                      </div>
+                      <div class="caption">Heavier-overlay version for the AIDP creation step, where the original labels need stronger reinterpretation.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 style="margin-top:24px;">Task 2: Create the shared AI Lakehouse instance</h3>
+                <p>
+                  The guided Gold path in this workshop publishes the Claims star schema to Autonomous AI Lakehouse. This is a shared admin setup step before any participant validation or OAC work begins.
+                </p>
+
+                <div class="task-block">
+                  <div class="task-head">
+                    <div>
+                      <div class="task-title">Provision AI Lakehouse and prepare the Gold-serving schema</div>
+                      <div class="task-meta">Admin step · gold-serving setup</div>
+                    </div>
+                    <span class="pill admin">Admin</span>
+                  </div>
+                  <div class="task-body">
+                    <ol>
+                      <li>Open <code>Oracle AI Database</code> and go to <code>Autonomous AI Database</code>.</li>
+                      <li>Create the workshop Lakehouse instance with workload type <code>Lakehouse</code>.</li>
+                      <li>Open <code>Database Actions</code> and go to <code>SQL</code>.</li>
+                      <li>Create or confirm the Gold-serving schema, for example <code>MPHA_GOLD_OWNER</code>.</li>
+                    </ol>
+
+                    <div class="screenshot-card">
+                      <div class="screenshot-frame">
+                        <img src="assets/oci_agent_lab/oci_create_sql_tool_reference.png" alt="AI Lakehouse / SQL reference" />
+                        <div class="overlay tl">
+                          <strong>Autonomous AI Lakehouse target</strong>
+                          Create the workshop AI Lakehouse instance, for example <code>mpha-ailh</code>, using workload type <code>Lakehouse</code>.
+                        </div>
+                        <div class="overlay mr">
+                          <strong>Database Actions</strong>
+                          Open <code>Database Actions</code> and use <code>SQL</code> for schema creation and later validation queries.
+                        </div>
+                        <div class="overlay br">
+                          <strong>Gold-serving schema</strong>
+                          Prepare the schema that will receive the Claims star schema, such as <code>MPHA_GOLD_OWNER</code>.
+                        </div>
+                      </div>
+                      <div class="caption">Mocked treatment for the AI Lakehouse provisioning and SQL entry step.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 style="margin-top:24px;">Task 3: Create the workshop Object Storage bucket and folder structure</h3>
+                <p>
+                  This is the most important setup screenshot block for new participants because it directly explains where the raw, Bronze, Silver, Gold, and vector assets live.
+                </p>
+
+                <div class="task-block">
+                  <div class="task-head">
+                    <div>
+                      <div class="task-title">Create <code>mpha-workshop-bucket</code> and the workshop prefixes</div>
+                      <div class="task-meta">Admin step · storage landing zone</div>
+                    </div>
+                    <span class="pill admin">Admin</span>
+                  </div>
+                  <div class="task-body">
+                    <ol>
+                      <li>Create the bucket <code>mpha-workshop-bucket</code>.</li>
+                      <li>Note the Object Storage namespace for later volume setup.</li>
+                      <li>Create the prefixes for raw, medallion, dimensional Gold, and vector content.</li>
+                    </ol>
+
+                    <div class="screenshot-card">
+                      <div class="screenshot-frame">
+                        <img src="assets/oci_agent_lab/aidp_ai_agent_flow.png" alt="Object Storage setup reference" />
+                        <div class="overlay tl">
+                          <strong>Workshop bucket</strong>
+                          Create the shared bucket <code>mpha-workshop-bucket</code> in the workshop compartment.
+                        </div>
+                        <div class="overlay tr">
+                          <strong>Namespace note</strong>
+                          Record the Object Storage namespace. It will be used when creating AIDP landing volumes.
+                        </div>
+                        <div class="overlay bl">
+                          <strong>Folder structure</strong>
+                          Create <code>mpha/raw/</code>, <code>mpha/raw_json/</code>, <code>mpha/raw_spatial/</code>, <code>mpha/documents/</code>, <code>mpha/bronze/</code>, <code>mpha/silver/</code>.
+                        </div>
+                        <div class="overlay br">
+                          <strong>Serving and vector paths</strong>
+                          Also create <code>mpha/gold_stage/</code>, <code>mpha/gold_dimensional/</code>, and <code>mpha/vector/</code>.
+                        </div>
+                      </div>
+                      <div class="caption">Heavy-overlay treatment for the bucket and folder setup step, since the workshop-specific paths matter a lot here.</div>
+                    </div>
+
+                    <div class="note">
+                      If this visual direction feels right, we should use the same screenshot block in the final Lab 1 page and keep the folder list exactly as shown here.
+                    </div>
+                  </div>
+                </div>
+
+                <h3 style="margin-top:24px;">Task 4: Create the shared OAC instance</h3>
+                <p>
+                  OAC is provisioned once for the guided Claims workbook path. Participants should see clearly that OAC is used for the Claims star schema walkthrough, while Facility Access Daily remains their own dashboard challenge afterward.
+                </p>
+
+                <div class="task-block">
+                  <div class="task-head">
+                    <div>
+                      <div class="task-title">Create OAC for the guided Claims workbook</div>
+                      <div class="task-meta">Admin step · analytics setup</div>
+                    </div>
+                    <span class="pill admin">Admin</span>
+                  </div>
+                  <div class="task-body">
+                    <ol>
+                      <li>Open <code>Analytics Cloud</code> in the workshop compartment.</li>
+                      <li>Create the shared OAC instance, for example <code>mphaoac</code>.</li>
+                      <li>Use it later to connect to the Claims star schema in the Gold-serving AI Lakehouse schema.</li>
+                    </ol>
+
+                    <div class="screenshot-card">
+                      <div class="screenshot-frame">
+                        <img src="assets/oac_dashboard_lab/oac_reference_layout.png" alt="OAC setup reference" />
+                        <div class="overlay tl">
+                          <strong>Workshop OAC instance</strong>
+                          Create the shared OAC instance, for example <code>mphaoac</code>.
+                        </div>
+                        <div class="overlay br">
+                          <strong>Purpose of this instance</strong>
+                          This OAC environment will host the guided Claims workbook. Participants build the Facility Access Daily dashboard separately after the walkthrough.
+                        </div>
+                      </div>
+                      <div class="caption">Light-to-medium overlay treatment for the OAC provisioning purpose step.</div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </main>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

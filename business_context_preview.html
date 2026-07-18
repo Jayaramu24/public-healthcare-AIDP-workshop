@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MPHA Business Context Preview</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --ink: #202124;
+        --muted: #59606a;
+        --line: #e2e5e9;
+        --accent: #c74634;
+        --accent-soft: #fde9e4;
+        --green: #18794e;
+        --teal: #0f766e;
+        --blue: #3569b7;
+        --amber: #b36b00;
+        --shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      .topbar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        background: #202124;
+        color: #fff;
+      }
+
+      .brand {
+        font-weight: 700;
+      }
+
+      .preview-note {
+        color: #d9dce1;
+        font-size: 0.9rem;
+      }
+
+      .page {
+        width: min(1180px, calc(100vw - 36px));
+        margin: 28px auto 56px;
+      }
+
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .hero-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+        gap: 28px;
+        padding: 34px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 14px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+
+      .lead {
+        max-width: 760px;
+        color: #3f454d;
+        font-size: 1.06rem;
+      }
+
+      .public-health-visual {
+        align-self: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 0;
+        background: #fff;
+        box-shadow: 0 10px 24px rgba(16, 24, 40, 0.07);
+        overflow: hidden;
+      }
+
+      .public-health-visual img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .public-health-visual figcaption {
+        padding: 10px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .storyboard {
+        display: grid;
+        grid-template-columns: minmax(250px, 0.95fr) 72px minmax(250px, 1.05fr);
+        gap: 18px;
+        padding: 26px 34px;
+        align-items: stretch;
+      }
+
+      .lane {
+        display: grid;
+        gap: 12px;
+      }
+
+      .lane-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 2px;
+      }
+
+      .lane-title h2 {
+        margin: 0;
+      }
+
+      .label {
+        border-radius: 999px;
+        padding: 5px 10px;
+        background: #f1f3f5;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .problem-card,
+      .capability-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: #fff;
+      }
+
+      .problem-card {
+        border-left: 4px solid var(--accent);
+      }
+
+      .capability-card {
+        border-left: 4px solid var(--blue);
+      }
+
+      .problem-card p,
+      .capability-card p {
+        color: var(--muted);
+        font-size: 0.91rem;
+        margin-bottom: 0;
+      }
+
+      .bridge {
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .bridge-line {
+        width: 2px;
+        height: 100%;
+        min-height: 220px;
+        background: linear-gradient(var(--accent), var(--blue));
+      }
+
+      .bridge-text {
+        position: absolute;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 10px;
+        background: #fff;
+        box-shadow: 0 8px 18px rgba(16, 24, 40, 0.07);
+      }
+
+      .build-strip {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        padding: 0 34px 30px;
+      }
+
+      .build-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: #fff;
+      }
+
+      .build-card::before {
+        content: attr(data-step);
+        display: inline-block;
+        margin-bottom: 10px;
+        border-radius: 999px;
+        padding: 4px 8px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+
+      .build-card strong {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .build-card span {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .build-heading {
+        padding: 0 34px 14px;
+      }
+
+      .build-heading h2 {
+        margin-bottom: 4px;
+      }
+
+      .build-heading p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .footer-callout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .footer-callout p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .pill-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .pill {
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: #f1f3f5;
+        color: #374151;
+        font-size: 0.84rem;
+        font-weight: 700;
+      }
+
+      @media (max-width: 960px) {
+        .hero-head,
+        .storyboard,
+        .footer-callout {
+          grid-template-columns: 1fr;
+        }
+
+        .bridge {
+          min-height: 64px;
+        }
+
+        .bridge-line {
+          width: 100%;
+          height: 2px;
+          min-height: 2px;
+        }
+
+        .build-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .pill-stack {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">Public Healthcare AIDP Workshop</div>
+      <div class="preview-note">Preview only - first section concept</div>
+    </header>
+
+    <main class="page">
+      <section class="hero" aria-label="Business-first workshop introduction preview">
+        <div class="hero-head">
+          <div>
+            <p class="eyebrow">Business Context</p>
+            <h1>MPHA turns healthcare operating pressure into trusted insights and guided action</h1>
+            <p class="lead">
+              Metro Public Health Authority needs to improve claims transparency, reduce denial leakage,
+              monitor disbursements, track membership and provider accreditation, and turn policy guidance
+              into faster operational decisions. This workshop shows how Oracle AI Data Platform,
+              Autonomous AI Lakehouse, Oracle Analytics Cloud, machine learning, and AI agents work together
+              to deliver that operating model.
+            </p>
+          </div>
+          <figure class="public-health-visual">
+            <img src="assets/public_healthcare_context.png" alt="Illustration of a public healthcare network with service areas, clinic access, community members, insights, and copilot capabilities" />
+            <figcaption>Public healthcare context: service areas, facilities, members, claims signals, and guided action.</figcaption>
+          </figure>
+        </div>
+
+        <div class="storyboard">
+          <div class="lane">
+            <div class="lane-title">
+              <h2>Business problems</h2>
+              <span class="label">Why MPHA cares</span>
+            </div>
+            <div class="problem-card">
+              <h3>Claims transparency and denial leakage</h3>
+              <p>Leaders need to know which districts, programs, and claim types are driving denied claims.</p>
+            </div>
+            <div class="problem-card">
+              <h3>Disbursement and payment visibility</h3>
+              <p>Finance teams need to see where submitted amounts are not converting into paid disbursements.</p>
+            </div>
+            <div class="problem-card">
+              <h3>Membership and provider accountability</h3>
+              <p>Operations teams need to monitor coverage, accreditation, and service-area risk together.</p>
+            </div>
+            <div class="problem-card">
+              <h3>Policy guidance is hard to operationalize</h3>
+              <p>Claims reviewers need playbook guidance without manually searching long policy documents.</p>
+            </div>
+          </div>
+
+          <div class="bridge" aria-hidden="true">
+            <div class="bridge-line"></div>
+            <div class="bridge-text">Maps to</div>
+          </div>
+
+          <div class="lane">
+            <div class="lane-title">
+              <h2>Insights and agent capabilities</h2>
+              <span class="label">What the platform enables</span>
+            </div>
+            <div class="capability-card">
+              <h3>Claims Executive Overview</h3>
+              <p>OAC shows KPIs, trends, denial hotspots, district views, claim-type analysis, and Assistant responses.</p>
+            </div>
+            <div class="capability-card">
+              <h3>Spatial and facility access insight</h3>
+              <p>Service-area and facility views help teams decide where operational pressure needs intervention.</p>
+            </div>
+            <div class="capability-card">
+              <h3>Denial risk scoring</h3>
+              <p>ML prioritizes claims that are more likely to be denied or require operational review.</p>
+            </div>
+            <div class="capability-card">
+              <h3>Claims and Policy Copilot</h3>
+              <p>AIDP agents combine SQL over the Claims star schema with RAG over the MPHA playbook.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="build-heading">
+          <h2>What participants build in the workshop</h2>
+          <p>The hands-on path turns the business context into working data, analytics, ML, and agent capabilities.</p>
+        </div>
+
+        <div class="build-strip" aria-label="Workshop build path">
+          <div class="build-card" data-step="Foundation">
+            <strong>Raw healthcare data</strong>
+            <span>CSV, JSONL, GeoJSON, and document inputs land in Object Storage.</span>
+          </div>
+          <div class="build-card" data-step="Medallion">
+            <strong>AIDP medallion layers</strong>
+            <span>Bronze and Silver datasets make the healthcare data governed and reusable.</span>
+          </div>
+          <div class="build-card" data-step="Gold model">
+            <strong>AI Lakehouse star schema</strong>
+            <span>The Claims star schema becomes the trusted Gold serving layer.</span>
+          </div>
+          <div class="build-card" data-step="Insights">
+            <strong>OAC executive dashboard</strong>
+            <span>Participants build the MPHA Claims Command Center and validate Assistant prompts.</span>
+          </div>
+          <div class="build-card" data-step="ML and agents">
+            <strong>ML and agent extensions</strong>
+            <span>Optional labs add denial scoring, RAG knowledge base, and copilot orchestration.</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-callout">
+        <p>
+          Proposed first-section rhythm: business problems first, insight and agent outcomes second,
+          workshop build path third. The rest of the lab sequence can then start with Getting Started.
+        </p>
+        <div class="pill-stack">
+          <span class="pill">Claims</span>
+          <span class="pill">Disbursement</span>
+          <span class="pill">Membership</span>
+          <span class="pill">Provider accreditation</span>
+          <span class="pill">Policy copilot</span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

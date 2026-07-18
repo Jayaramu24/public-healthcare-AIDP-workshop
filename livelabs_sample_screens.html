@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LiveLabs Sample Screens - Public Healthcare AIDP Workshop</title>
+    <style>
+      :root {
+        --bg: #f5f6f7;
+        --panel: #ffffff;
+        --line: #e2e5e9;
+        --muted: #5f6368;
+        --text: #1f1f1f;
+        --accent: #c74634;
+        --accent-soft: #fde9e4;
+        --blue: #2f6fb2;
+        --shadow: 0 14px 34px rgba(16, 24, 40, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+
+      .topbar {
+        padding: 18px 22px;
+        background: #202124;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .topbar strong {
+        font-size: 1rem;
+      }
+
+      .topbar span {
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.9rem;
+      }
+
+      .wrap {
+        width: min(1240px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .intro {
+        margin-bottom: 22px;
+        padding: 22px 24px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+        font-size: 1.9rem;
+      }
+
+      .intro p {
+        max-width: 920px;
+        color: var(--muted);
+      }
+
+      .sample-grid {
+        display: grid;
+        gap: 22px;
+      }
+
+      .sample {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .sample-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .sample-head h2 {
+        margin-bottom: 6px;
+        font-size: 1.28rem;
+      }
+
+      .sample-head p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .mock-shell {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        min-height: 720px;
+        background: #fff;
+      }
+
+      .mock-sidebar {
+        border-right: 1px solid var(--line);
+        background: #fafafa;
+        padding: 14px 12px 18px;
+      }
+
+      .mock-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        padding: 4px 6px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .burger {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+      }
+
+      .sidebar-list {
+        display: grid;
+        gap: 7px;
+      }
+
+      .sidebar-item,
+      .sidebar-subitem {
+        padding: 8px 10px;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 0.93rem;
+      }
+
+      .sidebar-item.active,
+      .sidebar-subitem.active {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .sidebar-subgroup {
+        margin-left: 10px;
+        padding-left: 10px;
+        border-left: 2px solid #eceff3;
+      }
+
+      .mock-main {
+        padding: 0;
+        background: #fff;
+      }
+
+      .mock-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .mock-toolbar-title {
+        font-weight: 700;
+      }
+
+      .toolbar-actions {
+        display: flex;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .mock-content {
+        padding: 24px;
+      }
+
+      .article {
+        max-width: 860px;
+      }
+
+      .article h3 {
+        margin: 22px 0 10px;
+        font-size: 1.02rem;
+      }
+
+      .article p,
+      .article li {
+        color: #374151;
+      }
+
+      .article ul,
+      .article ol {
+        padding-left: 20px;
+      }
+
+      .quote {
+        margin: 16px 0;
+        padding: 12px 14px;
+        border-left: 4px solid var(--accent);
+        background: #faf4f2;
+        border-radius: 6px;
+      }
+
+      .screenshot-card {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .screenshot-frame {
+        position: relative;
+        background: #f0f2f5;
+      }
+
+      .screenshot-frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .callout-tag {
+        position: absolute;
+        max-width: 220px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(199, 70, 52, 0.26);
+        box-shadow: 0 8px 20px rgba(16, 24, 40, 0.1);
+        font-size: 0.8rem;
+        line-height: 1.35;
+      }
+
+      .callout-tag strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--accent);
+      }
+
+      .callout-a {
+        top: 24px;
+        right: 24px;
+      }
+
+      .callout-b {
+        bottom: 24px;
+        left: 24px;
+      }
+
+      .callout-c {
+        top: 22px;
+        left: 22px;
+      }
+
+      .callout-d {
+        bottom: 24px;
+        right: 24px;
+      }
+
+      .caption {
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      code {
+        padding: 0.12em 0.35em;
+        border-radius: 4px;
+        background: #eef2f7;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      @media (max-width: 980px) {
+        .mock-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .mock-sidebar {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>LiveLabs Sample Screens</strong><br />
+        <span>Public Healthcare AIDP Workshop preview only</span>
+      </div>
+      <a href="index.html" style="color: #fff;">Back to workshop page</a>
+    </header>
+
+    <div class="wrap">
+      <section class="intro">
+        <p class="eyebrow">Preview</p>
+        <h1>Two sample screens before we update the full workshop</h1>
+        <p>
+          These samples borrow the same overall LiveLabs pedagogy and reading shell: collapsible left navigation, focused main article on the right, calm section intros, and screenshot-led task guidance. For this preview, the visible labels, datasets, and table names have been changed to match the Public Healthcare AIDP Workshop.
+        </p>
+      </section>
+
+      <div class="sample-grid">
+        <section class="sample">
+          <div class="sample-head">
+            <h2>Sample Screen 1 - Introduction page</h2>
+            <p>This shows how the opening page can look more like LiveLabs while still using your healthcare-specific business context, services, and learning path.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight: 700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">Workshop navigation</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item active">Introduction</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem active">About this Workshop</div>
+                  <div class="sidebar-subitem">Objectives</div>
+                  <div class="sidebar-subitem">Lab Sequence</div>
+                </div>
+                <div class="sidebar-item">Getting Started</div>
+                <div class="sidebar-item">Lab 1: Set Up Core Resources</div>
+                <div class="sidebar-item">Lab 2: Build Bronze and Silver</div>
+                <div class="sidebar-item">Lab 3: Publish Claims Star Schema</div>
+                <div class="sidebar-item">Lab 4: Analyze in OAC</div>
+                <div class="sidebar-item">Optional Labs</div>
+                <div class="sidebar-item">Need Help?</div>
+              </div>
+            </aside>
+
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Public Healthcare AIDP Workshop</div>
+                <div class="toolbar-actions">
+                  <span>Translate</span>
+                  <span>Help</span>
+                </div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Introduction</h2>
+                  <h3>About this Workshop</h3>
+                  <p>
+                    Welcome to <strong>Public Healthcare AIDP Workshop</strong>. This guided workshop helps you build a modern healthcare analytics pipeline on Oracle Cloud using <strong>Oracle AI Data Platform</strong>, <strong>Autonomous AI Lakehouse</strong>, and <strong>Oracle Analytics Cloud</strong>.
+                  </p>
+                  <p>
+                    You will work through the full lakehouse path for Metro Public Health Authority, starting from raw public-health and claims inputs, refining them through Bronze and Silver layers, publishing a <strong>Claims star schema</strong> to AI Lakehouse, and visualizing the guided business story in OAC.
+                  </p>
+                  <div class="quote"><strong>Estimated Workshop Time:</strong> 3 hours for the core labs</div>
+                  <h3>Objectives</h3>
+                  <ul>
+                    <li>Understand the healthcare lakehouse architecture in Oracle Cloud</li>
+                    <li>Build Bronze and Silver layers in AIDP from raw healthcare sources</li>
+                    <li>Publish the Claims star schema to Autonomous AI Lakehouse</li>
+                    <li>Create a guided OAC dashboard with filters, maps, and assistant prompts</li>
+                  </ul>
+                  <h3>Lab Sequence</h3>
+                  <ul>
+                    <li><strong>Lab 1:</strong> Set Up Core Resources</li>
+                    <li><strong>Lab 2:</strong> Build Bronze and Silver</li>
+                    <li><strong>Lab 3:</strong> Publish Claims Star Schema</li>
+                    <li><strong>Lab 4:</strong> Analyze in OAC</li>
+                  </ul>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+
+        <section class="sample">
+          <div class="sample-head">
+            <h2>Sample Screen 2 - Screenshot-led task page</h2>
+            <p>This shows the pattern I suggest for step pages: keep the LiveLabs reading structure, but use your workshop-specific names and table labels around the screenshot rather than exposing unrelated original names.</p>
+          </div>
+          <div class="mock-shell">
+            <aside class="mock-sidebar">
+              <div class="mock-header">
+                <div class="burger">≡</div>
+                <div>
+                  <div style="font-weight: 700;">Public Healthcare AIDP Workshop</div>
+                  <div style="color: var(--muted); font-size: 0.85rem;">Lab 2 preview</div>
+                </div>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-item">Introduction</div>
+                <div class="sidebar-item">Getting Started</div>
+                <div class="sidebar-item active">Lab 2: Build Bronze and Silver</div>
+                <div class="sidebar-subgroup">
+                  <div class="sidebar-subitem">Introduction</div>
+                  <div class="sidebar-subitem active">Task 2: Launch AIDP Workspace and Notebook</div>
+                  <div class="sidebar-subitem">Task 3: Run Bronze Notebook</div>
+                  <div class="sidebar-subitem">Task 4: Run Silver Notebook</div>
+                </div>
+                <div class="sidebar-item">Lab 3: Publish Claims Star Schema</div>
+              </div>
+            </aside>
+
+            <main class="mock-main">
+              <div class="mock-toolbar">
+                <div class="mock-toolbar-title">Lab 2: Build Bronze and Silver</div>
+                <div class="toolbar-actions">
+                  <span>Prev</span>
+                  <span>Next</span>
+                </div>
+              </div>
+              <div class="mock-content">
+                <article class="article">
+                  <h2>Task 2: Launch AIDP Workspace and Notebook</h2>
+                  <p>
+                    In this task, you will open the shared AIDP workspace and confirm the notebook structure used in this workshop. The same screenshot style can be preserved, but the visible explanation and callouts will use the healthcare workshop folder names.
+                  </p>
+                  <ol>
+                    <li>Open the shared workspace prepared by the facilitator.</li>
+                    <li>Confirm the notebook folders <code>01_bronze</code>, <code>02_silver</code>, and <code>03_gold</code>.</li>
+                    <li>Open the Bronze notebook first and attach the shared Spark cluster.</li>
+                  </ol>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oci_agent_lab/aidp_notebooks_folder.png" alt="AIDP notebook folder reference" />
+                      <div class="callout-tag callout-c">
+                        <strong>Healthcare notebook folders</strong>
+                        Use <code>01_bronze</code>, <code>02_silver</code>, <code>03_gold</code>, <code>04_ml</code>, and <code>05_agent</code> for this workshop.
+                      </div>
+                      <div class="callout-tag callout-d">
+                        <strong>Workshop-specific notebook focus</strong>
+                        Participants begin with <code>aidp_bronze_pyspark.py</code>, then move to <code>aidp_silver_pyspark.py</code>.
+                      </div>
+                    </div>
+                    <div class="caption">
+                      Sample of how we can keep the original screenshot style but relabel the explanation for the Public Healthcare AIDP Workshop.
+                    </div>
+                  </div>
+
+                  <div class="screenshot-card">
+                    <div class="screenshot-frame">
+                      <img src="assets/oac_dashboard_lab/oac_reference_layout.png" alt="OAC reference layout" />
+                      <div class="callout-tag callout-a">
+                        <strong>Claims star schema workbook</strong>
+                        Guided dashboard tabs would be labeled <code>Claims Overview</code>, <code>Denial Analysis</code>, and <code>Program Performance</code>.
+                      </div>
+                      <div class="callout-tag callout-b">
+                        <strong>Healthcare assistant grounding</strong>
+                        Assistant prompts would reference <code>mpha_fact_claims_monthly</code>, district filters, program filters, and the MPHA playbook.
+                      </div>
+                    </div>
+                    <div class="caption">
+                      Sample of the OAC-style screenshot treatment using this workshop’s table names and guided workbook flow rather than the original banking demo labels.
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </main>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>

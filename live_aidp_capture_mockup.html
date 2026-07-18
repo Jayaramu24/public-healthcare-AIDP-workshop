@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live AIDP Capture Review - Public Healthcare AIDP Workshop</title>
+    <style>
+      :root {
+        --bg: #f5f6f8;
+        --panel: #ffffff;
+        --line: #dfe4ea;
+        --text: #1f2937;
+        --muted: #667085;
+        --accent: #c74634;
+        --shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      a { color: inherit; }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 24px;
+        background: #202124;
+        color: #fff;
+      }
+
+      .topbar strong { font-size: 1rem; }
+      .topbar span { color: rgba(255, 255, 255, 0.78); font-size: 0.92rem; }
+
+      .wrap {
+        width: min(1880px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .intro {
+        padding: 22px 24px;
+        margin-bottom: 22px;
+      }
+
+      .section + .section { margin-top: 22px; }
+
+      .section-head {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .content { padding: 22px; }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      h1, h2, p { margin-top: 0; }
+      h1 { margin-bottom: 10px; font-size: 2rem; }
+      h2 { margin-bottom: 6px; font-size: 1.3rem; }
+      p { color: #334155; }
+      .muted { color: var(--muted); }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: #eef6ff;
+        color: #245ea6;
+        font-size: 0.88rem;
+        font-weight: 600;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      .card-head {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+        background: #fbfcfd;
+      }
+
+      .card-head strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+      }
+
+      .card-head span {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .image-shell {
+        background: #eef2f6;
+      }
+
+      .image-shell img {
+        display: block;
+        width: 100%;
+        height: auto;
+        image-rendering: auto;
+      }
+
+      .caption {
+        padding: 14px 16px 16px;
+        border-top: 1px solid var(--line);
+        color: #475467;
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 1100px) {
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>Public Healthcare AIDP Workshop</strong><br />
+        <span>Live AIDP capture review built from the logged-in workshop environment</span>
+      </div>
+      <a href="environment_setup_mockup.html" style="color:#fff;">Environment mock-up</a>
+    </header>
+
+    <div class="wrap">
+      <section class="panel intro">
+        <p class="eyebrow">Clean Review Pack</p>
+        <h1>Full-screen AIDP captures only</h1>
+        <p class="muted">
+          This page uses high-resolution captures from the logged-in AIDP environment. Each image preserves the full visible application screen so the navigation context and workshop code remain readable.
+        </p>
+        <div class="status">Using 2200 x 1600 full-screen captures</div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <p class="eyebrow">Step 1</p>
+          <h2>Landing and workspace entry</h2>
+          <p class="muted">These are the first screens we can reliably use to orient workshop participants in the live environment.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <article class="card">
+              <div class="card-head">
+                <strong>AIDP Home</strong>
+                <span><code>live_aidp_screens_hires/home_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/home_hires.png" alt="AIDP home page" />
+              </div>
+              <div class="caption">
+                Use this as the starting screen for the workshop flow. It clearly shows the left navigation, recent items, and the main AIDP workbench tiles.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Participant Workspace Root</strong>
+                <span><code>live_aidp_screens_hires/workspace_root_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/workspace_root_hires.png" alt="Workspace root" />
+              </div>
+              <div class="caption">
+                This screen is good for showing the notebook structure participants will work with: Bronze, Silver, Gold, ML, Agent, and AI Lakehouse load folders.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <p class="eyebrow">Step 2</p>
+          <h2>Catalog and volume navigation</h2>
+          <p class="muted">These screens now show the catalog path and the volume-backed medallion folders without the earlier clipping problem.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <article class="card">
+              <div class="card-head">
+                <strong>Master Catalog</strong>
+                <span><code>live_aidp_screens_hires/master_catalog_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/master_catalog_hires.png" alt="Master catalog" />
+              </div>
+              <div class="caption">
+                Shows the standard and external catalogs together and is a strong screen for explaining how the workshop uses both AIDP-managed assets and AI Lakehouse assets.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Standard Catalog</strong>
+                <span><code>live_aidp_screens_hires/standard_catalog_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/standard_catalog_hires.png" alt="Standard catalog" />
+              </div>
+              <div class="caption">
+                This is the clean catalog-level screen for <code>e2eindustrydemos</code>, which can be used when introducing the workshop-owned catalog path.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Default Schema</strong>
+                <span><code>live_aidp_screens_hires/default_schema_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/default_schema_hires.png" alt="Default schema" />
+              </div>
+              <div class="caption">
+                Useful for explaining that the schema contains tables, volumes, knowledge bases, and model assets used across the workshop.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Volumes</strong>
+                <span><code>live_aidp_screens_hires/volumes_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/volumes_hires.png" alt="Volumes list" />
+              </div>
+              <div class="caption">
+                This shows the external volume object that stores the raw, bronze, silver, gold stage, and vector folders for the medallion flow.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Volume Folder Structure</strong>
+                <span><code>live_aidp_screens_hires/volume_contents_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/volume_contents_hires.png" alt="Volume folder structure" />
+              </div>
+              <div class="caption">
+                This is the cleanest live screen for the medallion folders. It clearly shows <code>Bronze</code>, <code>RawData</code>, <code>Silver</code>, <code>gold_stage</code>, and <code>vector</code>.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <p class="eyebrow">Step 3</p>
+          <h2>Medallion notebook execution</h2>
+          <p class="muted">The notebook sequence now shows the participant journey from raw ingestion through refined data and business-ready Gold outputs.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <article class="card">
+              <div class="card-head">
+                <strong>Bronze Notebook</strong>
+                <span><code>live_aidp_screens_hires/bronze_notebook_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/bronze_notebook_hires.png" alt="Bronze notebook" />
+              </div>
+              <div class="caption">
+                This screen is good for the notebook-based workshop steps because it shows the file path, editor area, and the actual Bronze code in a readable layout.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Silver Notebook</strong>
+                <span><code>live_aidp_screens_hires/silver_notebook_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/silver_notebook_hires.png" alt="Silver transformation notebook" />
+              </div>
+              <div class="caption">
+                Shows the healthcare cleansing, conformance, deduplication, and derived-column logic together with the successful writes to the Silver volume folders.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Gold Notebook</strong>
+                <span><code>live_aidp_screens_hires/gold_notebook_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/gold_notebook_hires.png" alt="Gold aggregation notebook" />
+              </div>
+              <div class="caption">
+                Shows the business-ready aggregation logic for membership, provider accreditation, facility operations, and claims-oriented measures produced from Silver data.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Claims Star Schema Load Notebook</strong>
+                <span><code>live_aidp_screens_hires/ailh_load_notebook_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/ailh_load_notebook_hires.png" alt="Claims star schema load notebook" />
+              </div>
+              <div class="caption">
+                Shows the final participant step that builds dimension and fact data frames and writes the claims star schema into Autonomous AI Lakehouse through the connected external catalog.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel section">
+        <div class="section-head">
+          <p class="eyebrow">Step 4</p>
+          <h2>Autonomous AI Lakehouse external catalog</h2>
+          <p class="muted">These screens connect the notebook load to its target catalog, target schema, and the resulting claims star schema tables.</p>
+        </div>
+        <div class="content">
+          <div class="gallery">
+            <article class="card">
+              <div class="card-head">
+                <strong>External Catalog in Master Catalog</strong>
+                <span><code>live_aidp_screens_hires/external_catalog_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/external_catalog_hires.png" alt="AI Lakehouse external catalog in Master Catalog" />
+              </div>
+              <div class="caption">
+                Identifies <code>goldailh</code> as the active Oracle Autonomous AI Lakehouse external catalog alongside the AIDP standard catalog.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>External Catalog Schema</strong>
+                <span><code>live_aidp_screens_hires/external_catalog_schema_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/external_catalog_schema_hires.png" alt="External catalog schema list" />
+              </div>
+              <div class="caption">
+                Shows the participant target schema <code>e2eaidpuser</code> inside <code>goldailh</code> before opening the generated tables.
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <strong>Claims Star Schema Tables</strong>
+                <span><code>live_aidp_screens_hires/external_schema_tables_hires.png</code></span>
+              </div>
+              <div class="image-shell">
+                <img src="live_aidp_screens_hires/external_schema_tables_hires.png" alt="Claims star schema tables in AI Lakehouse" />
+              </div>
+              <div class="caption">
+                Confirms that <code>mpha_fact_claims_monthly</code> and its supporting date, district, facility, member, program, claim type, age group, and accreditation dimensions are visible in AI Lakehouse.
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

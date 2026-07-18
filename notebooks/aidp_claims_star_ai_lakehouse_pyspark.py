@@ -7,9 +7,9 @@
 #
 # Inputs and outputs:
 # - Inputs:
-# - silver_district
-# - silver_claims_membership_disbursement
-# - pre-created AI Lakehouse target tables
+# - Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
+# - Pre-created Claims star schema tables in the assigned AI Lakehouse schema, such as `goldailh.MPHA_P17`
+# - AIDP external catalog refresh completed so the participant schema is visible under `goldailh`
 # - Outputs:
 # - mpha_dim_date
 # - mpha_dim_district
@@ -18,6 +18,8 @@
 # - mpha_fact_claims_monthly
 #
 # Important parameters participants may change:
+# - volume_base
+# - participant_id
 # - silver_base
 # - target_catalog
 # - target_schema
@@ -35,7 +37,7 @@
 # - Designed for safe reruns. Existing natural keys are read from target tables and only new keys are inserted.
 #
 # Common errors and troubleshooting:
-# - Target schema not found: confirm external catalog, schema, and AIDP connection.
+# - Target schema not found: refresh the `goldailh` external catalog in AIDP and confirm the assigned schema, for example `MPHA_P17`, is visible.
 # - Required table missing: run the Claims star schema DDL before this notebook.
 # - Executor memory failure: use the validated 1G driver/executor memory setting from the workshop troubleshooting notes.
 # - Table does not support truncate: do not truncate from Spark; use the idempotent append pattern.
@@ -68,12 +70,23 @@ from pyspark.sql.window import Window
 
 # -----------------------------------------------------------------------------
 # 1. Configure source and target catalog values.
-# Update these before running in a new tenancy. The target catalog must point to
-# the connected Autonomous AI Lakehouse external catalog in AIDP.
+# All participants read their own Silver output from workshop_runs/<participant_id>.
+# Each participant writes to their assigned AI Lakehouse schema, for example
+# MPHA_P01 through MPHA_P17. The validated smoke test used MPHA_P17.
 # -----------------------------------------------------------------------------
-silver_base = "oci://<bucket>@<namespace>/mpha/silver"
-target_catalog = "MPHA_AILH_CAT"
-target_schema = "MPHA_GOLD_OWNER"
+volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+target_catalog = "goldailh"
+target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Example: MPHA_P17.
+
+if target_schema == "REPLACE_WITH_YOUR_AILH_SCHEMA":
+    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, for example MPHA_P17.")
+
 table_prefix = "mpha"
 write_mode = "append"
 
