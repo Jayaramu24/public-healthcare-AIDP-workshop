@@ -2001,9 +2001,24 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
           <div class="duration">Download and reference</div>
         </div>
         <p>
-          Keep this section near the end so participants first understand the business problem and flow, then download only what they need for execution.
+          Participants should download the workshop execution pack and upload the notebooks into their assigned AIDP participant folder. Individual notebook and SQL links below are for preview/reference only because GitHub may open them as code.
         </p>
         <div class="task-grid">
+          <div class="task">
+            <strong>Workshop execution pack</strong>
+            <p>Primary participant download containing notebooks, PySpark sources, SQL scripts, workflow files, and a README-first instruction file.</p>
+            <p><a href="asset_viewer.html?file=downloads/mpha_workshop_execution_pack.zip&amp;label=MPHA%20workshop%20execution%20pack&amp;kind=download">Download workshop execution pack</a></p>
+          </div>
+          <div class="task">
+            <strong>Notebooks only</strong>
+            <p>Backup download containing only the AIDP notebook files and PySpark notebook source files.</p>
+            <p><a href="asset_viewer.html?file=downloads/mpha_notebooks_only.zip&amp;label=MPHA%20notebooks%20only&amp;kind=download">Download notebooks only</a></p>
+          </div>
+          <div class="task">
+            <strong>SQL scripts only</strong>
+            <p>Backup download containing Autonomous AI Lakehouse setup, Claims star schema, context extension, and validation SQL scripts.</p>
+            <p><a href="asset_viewer.html?file=downloads/mpha_sql_scripts_only.zip&amp;label=MPHA%20SQL%20scripts%20only&amp;kind=download">Download SQL scripts only</a></p>
+          </div>
           <div class="task">
             <strong>Core guides</strong>
             <p>Downloadable PDF execution guide for facilitators and participants.</p>
@@ -2022,27 +2037,26 @@ FETCH FIRST :TOP_N ROWS ONLY</code></pre>
             <p><a href="asset_viewer.html?file=downloads/public_healthcare_aidp_workshop_offline_test_bundle.zip&amp;label=Public%20healthcare%20AIDP%20offline%20execution%20bundle&amp;kind=download">Download offline execution bundle</a></p>
           </div>
           <div class="task">
-            <strong>Notebook assets</strong>
-            <p>Separate notebooks for Bronze, Silver, Gold staging, direct Claims star schema publishing, Round 2 context enrichment, ML scoring, and workflow execution.</p>
+            <strong>Notebook previews</strong>
+            <p>Preview selected notebook assets in the browser. For execution, use the notebook ZIP or the workshop execution pack.</p>
             <p>
-              <a href="asset_viewer.html?file=notebooks/aidp_bronze_pyspark.py&amp;label=Bronze%20notebook&amp;kind=code">Bronze</a><br />
-              <a href="asset_viewer.html?file=notebooks/aidp_silver_pyspark.py&amp;label=Silver%20notebook&amp;kind=code">Silver</a><br />
-              <a href="asset_viewer.html?file=notebooks/aidp_claims_star_ai_lakehouse_pyspark.py&amp;label=Claims%20star%20schema%20to%20AI%20Lakehouse&amp;kind=code">Claims direct load</a><br />
-              <a href="asset_viewer.html?file=notebooks/02B_Silver_Claims_Context_Extension.ipynb&amp;label=Round%202%20Silver%20context%20extension&amp;kind=code">Round 2 Silver context notebook</a><br />
-              <a href="asset_viewer.html?file=notebooks/03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb&amp;label=Round%202%20Gold%20context%20AI%20Lakehouse%20extension&amp;kind=code">Round 2 Gold context notebook</a><br />
-              <a href="asset_viewer.html?file=notebooks/aidp_ml_claims_denial_risk_pyspark.py&amp;label=Claims%20ML%20notebook&amp;kind=code">ML scoring</a><br />
-              <a href="asset_viewer.html?file=workflows/aidp_incremental_medallion_workflow.md&amp;label=AIDP%20Incremental%20Medallion%20Workflow&amp;kind=markdown">Incremental workflow runbook</a>
+              <a href="asset_viewer.html?file=notebooks/01_Bronze_Public_Healthcare.ipynb&amp;label=Preview%20Bronze%20notebook&amp;kind=code">Preview Bronze notebook</a><br />
+              <a href="asset_viewer.html?file=notebooks/02_Silver_Public_Healthcare.ipynb&amp;label=Preview%20Silver%20notebook&amp;kind=code">Preview Silver notebook</a><br />
+              <a href="asset_viewer.html?file=notebooks/04_Claims_Star_AI_Lakehouse_Load.ipynb&amp;label=Preview%20Claims%20AI%20Lakehouse%20load%20notebook&amp;kind=code">Preview Claims AI Lakehouse load notebook</a><br />
+              <a href="asset_viewer.html?file=notebooks/02B_Silver_Claims_Context_Extension.ipynb&amp;label=Preview%20Round%202%20Silver%20context%20extension&amp;kind=code">Preview Round 2 Silver context notebook</a><br />
+              <a href="asset_viewer.html?file=notebooks/03B_Gold_Claims_Context_AI_Lakehouse_Extension.ipynb&amp;label=Preview%20Round%202%20Gold%20context%20AI%20Lakehouse%20extension&amp;kind=code">Preview Round 2 Gold context notebook</a><br />
+              <a href="asset_viewer.html?file=workflows/aidp_incremental_medallion_workflow.md&amp;label=Preview%20AIDP%20Incremental%20Medallion%20Workflow&amp;kind=markdown">Preview incremental workflow runbook</a>
             </p>
           </div>
           <div class="task">
-            <strong>Gold schema and validation</strong>
-            <p>Separated SQL for Claims star schema, Facility Access structures, and focused validation checks.</p>
+            <strong>SQL previews</strong>
+            <p>Preview selected SQL scripts in the browser. For execution, use the SQL ZIP or the workshop execution pack.</p>
             <p>
-              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_star_schema.sql&amp;label=Claims%20star%20schema%20SQL&amp;kind=code">Claims star schema SQL</a><br />
-              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_context_extension.sql&amp;label=Claims%20context%20extension%20SQL&amp;kind=code">Claims context extension SQL</a><br />
-              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_facilities_star_schema.sql&amp;label=Facilities%20star%20schema%20SQL&amp;kind=code">Facilities star schema SQL</a><br />
-              <a href="asset_viewer.html?file=sql/claims_star_validation.sql&amp;label=Claims%20star%20validation%20SQL&amp;kind=code">Claims validation SQL pack</a><br />
-              <a href="asset_viewer.html?file=sql/claims_context_extension_validation.sql&amp;label=Claims%20context%20extension%20validation%20SQL&amp;kind=code">Context extension validation SQL pack</a>
+              <a href="asset_viewer.html?file=sql/admin_prepare_participant_claims_star_schemas.sql&amp;label=Preview%20participant%20Claims%20schema%20admin%20SQL&amp;kind=code">Preview participant schema admin SQL</a><br />
+              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_star_schema.sql&amp;label=Preview%20Claims%20star%20schema%20SQL&amp;kind=code">Preview Claims star schema SQL</a><br />
+              <a href="asset_viewer.html?file=sql/create_ai_lakehouse_claims_context_extension.sql&amp;label=Preview%20Claims%20context%20extension%20SQL&amp;kind=code">Preview Claims context extension SQL</a><br />
+              <a href="asset_viewer.html?file=sql/claims_star_validation.sql&amp;label=Preview%20Claims%20star%20validation%20SQL&amp;kind=code">Preview Claims validation SQL pack</a><br />
+              <a href="asset_viewer.html?file=sql/claims_context_extension_validation.sql&amp;label=Preview%20Claims%20context%20extension%20validation%20SQL&amp;kind=code">Preview context extension validation SQL pack</a>
             </p>
           </div>
           <div class="task">

@@ -2,6 +2,8 @@
 
 Use this bundle with `workshop_guide.pdf` when testing the workshop without the GitHub Pages site.
 
+If you are using the GitHub Pages site, prefer `downloads/mpha_workshop_execution_pack.zip` for notebooks, SQL scripts, workflow files, and `README_FIRST.md`. The individual notebook and SQL links on the site are preview/reference links; GitHub may open them as code.
+
 ## Included folders
 
 - `data/raw/` - five CSV source datasets for claims, membership, disbursement, facility operations, provider accreditation, district health profile, and population health.
@@ -16,7 +18,7 @@ Use this bundle with `workshop_guide.pdf` when testing the workshop without the 
 
 1. Upload the raw CSV, JSON, spatial, and document files to the Object Storage folders described in the PDF guide.
 2. In AIDP, use one shared workspace and one folder per participant under `Participants/<participant_id>`.
-3. Place the notebooks in the participant folder being tested.
+3. Place the notebooks from the execution pack or `notebooks/` folder in the participant folder being tested.
 4. In Autonomous AI Lakehouse, create or confirm the assigned participant schema, such as `MPHA_P17`, then run `sql/admin_prepare_participant_claims_star_schemas.sql` as `ADMIN` for the full classroom setup.
 5. Refresh the AIDP external catalog `goldailh` and confirm the participant schema is visible.
 6. Run Bronze, Silver, Gold staging, and AI Lakehouse load notebooks in the workshop sequence. Set `participant_id`, `target_catalog = "goldailh"`, and the assigned `target_schema` before running.

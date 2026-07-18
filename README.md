@@ -24,15 +24,18 @@ The end-to-end flow moves from raw operational data into a medallion architectur
 2. Use the single end-to-end runbook for facilitation: [workshop_single_flow.html](workshop_single_flow.html)
 3. Use the formatted workshop guide for delivery: [workshop_guide.pdf](workshop_guide.pdf)
 4. Review the detailed hands-on instructions: [workshop_guide.md](workshop_guide.md)
-5. Run the notebooks in this order:
+5. Download the execution pack for workshop files: [downloads/mpha_workshop_execution_pack.zip](downloads/mpha_workshop_execution_pack.zip)
+6. Upload notebooks from the pack into the assigned AIDP participant folder, then run them in this order:
 - [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)
 - [notebooks/aidp_silver_pyspark.py](notebooks/aidp_silver_pyspark.py)
 - [notebooks/aidp_gold_pyspark.py](notebooks/aidp_gold_pyspark.py)
 - [notebooks/aidp_claims_star_ai_lakehouse_pyspark.py](notebooks/aidp_claims_star_ai_lakehouse_pyspark.py)
-6. Use the Gold schema SQL in AI Lakehouse:
+7. Use SQL scripts from the execution pack in AI Lakehouse:
    - [sql/create_ai_lakehouse_claims_star_schema.sql](sql/create_ai_lakehouse_claims_star_schema.sql)
    - [sql/create_ai_lakehouse_facilities_star_schema.sql](sql/create_ai_lakehouse_facilities_star_schema.sql)
    - [sql/create_ai_lakehouse_dimensional_gold_schema.sql](sql/create_ai_lakehouse_dimensional_gold_schema.sql)
+
+Individual notebook and SQL links in GitHub are preview/reference links. For execution, download the ZIP pack and upload or run the files from the extracted folder.
 
 ## AIDP Setup Order
 
@@ -146,6 +149,16 @@ Useful references:
 ## Notebook Sequence
 
 Use the Spark assets as separate notebooks in Oracle AI Data Platform:
+
+Primary download:
+
+- [downloads/mpha_workshop_execution_pack.zip](downloads/mpha_workshop_execution_pack.zip)  
+  Contains notebooks, PySpark notebook sources, SQL scripts, workflow files, and `README_FIRST.md`.
+
+Backup focused downloads:
+
+- [downloads/mpha_notebooks_only.zip](downloads/mpha_notebooks_only.zip)
+- [downloads/mpha_sql_scripts_only.zip](downloads/mpha_sql_scripts_only.zip)
 
 - [notebooks/aidp_bronze_pyspark.py](notebooks/aidp_bronze_pyspark.py)  
   Loads raw datasets and writes Bronze Delta tables.

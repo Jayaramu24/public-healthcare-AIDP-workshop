@@ -239,7 +239,8 @@ Open the AI Lakehouse external schema and confirm the Claims star schema tables 
    - In AIDP, create `Shared` and `Participants`.
    - Under `Participants`, create one folder per participant, for example `Participants/17_Jayaram_Krishnamachar`.
    - Place the latest commented notebooks in each participant folder before the workshop: `01_Bronze_Public_Healthcare.ipynb`, `02_Silver_Public_Healthcare.ipynb`, `03_Gold_Public_Healthcare.ipynb`, and `04_Claims_Star_AI_Lakehouse_Load.ipynb`.
-   - Keep the downloadable notebook bundle as a backup, not the normal classroom path.
+   - Keep `downloads/mpha_workshop_execution_pack.zip` and `downloads/mpha_notebooks_only.zip` as backup downloads if a participant folder must be rebuilt.
+   - Treat individual notebook and SQL links on the GitHub Pages site as preview/reference links only; GitHub may open them as code rather than downloading them.
 
 ![AIDP workspace root with workshop folders](live_aidp_screens_lab4_style/workspace_root_lab4style.png)
 
