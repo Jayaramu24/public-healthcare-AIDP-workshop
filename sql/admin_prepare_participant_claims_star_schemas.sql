@@ -2,7 +2,7 @@
 -- Admin setup: prepare participant AI Lakehouse schemas for AIDP Claims star schema loads.
 --
 -- Run this script as ADMIN in Autonomous AI Lakehouse Database Actions.
--- It creates the Claims star schema tables in MPHA_P01 through MPHA_P17 if missing,
+-- It creates the Claims star schema tables in MPHA_P01 through MPHA_P21 if missing,
 -- gives each participant quota on DATA, and grants the AIDP external catalog user
 -- SELECT and INSERT so AIDP Spark notebooks can publish Gold tables.
 --
@@ -12,7 +12,7 @@
 set define off
 
 declare
-  c_participant_count constant pls_integer := 17;
+  c_participant_count constant pls_integer := 21;
   c_aidp_catalog_user constant varchar2(128) := 'E2EAIDPUSER';
   l_schema varchar2(128);
 

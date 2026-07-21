@@ -95,9 +95,55 @@ write_mode = "append"
 # 2. Shared helpers.
 # Namespace validation catches missing external-catalog setup before any rows are
 # written, and `write_catalog_table` avoids duplicate inserts on rerun.
+# The validation helpers show participants exactly what was staged to Delta and
+# what was inserted into AI Lakehouse.
 # -----------------------------------------------------------------------------
+validation_log = []
+
+
+def display_or_show(frame, rows=10, truncate=False):
+    """Use notebook display when available, otherwise fall back to Spark show."""
+    try:
+        display(frame.limit(rows))
+    except Exception:
+        frame.show(rows, truncate=truncate)
+
+
 def read_delta(name):
     return spark.read.format("delta").load(f"{silver_base}/{name}")
+
+
+def write_delta_with_validation(frame, name, sample_rows=10):
+    """Write Gold Delta output, read it back, and record row-count evidence."""
+    target_path = f"{gold_stage_base}/{name}"
+    source_rows = frame.count()
+
+    frame.write.format("delta").mode("overwrite").save(target_path)
+
+    written_frame = spark.read.format("delta").load(target_path)
+    target_rows = written_frame.count()
+
+    validation_log.append(
+        (
+            "Gold Delta",
+            name,
+            source_rows,
+            target_rows,
+            target_rows,
+            target_path,
+            "Validated by reading the written Delta folder back into Spark",
+        )
+    )
+
+    print(f"Layer       : Gold Delta")
+    print(f"Object      : {name}")
+    print(f"Source rows : {source_rows}")
+    print(f"Target rows : {target_rows}")
+    print(f"Target path : {target_path}")
+    print("Sample rows from the written target:")
+    display_or_show(written_frame, rows=sample_rows)
+
+    return written_frame
 
 
 def target_table(name):
@@ -130,14 +176,48 @@ def validate_target_tables(required_tables):
 def write_catalog_table(frame, name, columns, key_columns):
     table_name = target_table(name)
     ordered = frame.select(*columns)
+    source_rows = ordered.count()
+    before_rows = spark.table(table_name).count()
     existing_keys = spark.table(table_name).select(*key_columns).dropDuplicates()
     new_rows = ordered.join(existing_keys, key_columns, "left_anti")
     new_row_count = new_rows.count()
     if new_row_count == 0:
+        validation_log.append(
+            (
+                "AI Lakehouse",
+                table_name,
+                source_rows,
+                0,
+                before_rows,
+                table_name,
+                "No new rows inserted because the natural keys already exist",
+            )
+        )
         print(f"No new rows to write for {table_name}")
+        print(f"Existing target rows: {before_rows}")
+        print("Sample rows from the current target table:")
+        display_or_show(spark.table(table_name), rows=10)
         return
     new_rows.write.mode(write_mode).insertInto(table_name)
+    after_rows = spark.table(table_name).count()
+    inserted_rows = after_rows - before_rows
+    validation_log.append(
+        (
+            "AI Lakehouse",
+            table_name,
+            source_rows,
+            inserted_rows,
+            after_rows,
+            table_name,
+            "Validated by comparing target table row counts before and after insert",
+        )
+    )
     print(f"Wrote {new_row_count} new rows to {table_name}")
+    print(f"Before rows : {before_rows}")
+    print(f"After rows  : {after_rows}")
+    print(f"Inserted    : {inserted_rows}")
+    print("Sample rows from the target table after insert:")
+    display_or_show(spark.table(table_name), rows=10)
 
 
 # -----------------------------------------------------------------------------
@@ -284,7 +364,10 @@ gold_district_claims_context = (
 # This gives participants a file-based checkpoint even if AI Lakehouse loading is
 # skipped or retried.
 # -----------------------------------------------------------------------------
-gold_district_claims_context.write.format("delta").mode("overwrite").save(f"{gold_stage_base}/gold_district_claims_context")
+gold_district_claims_context_written = write_delta_with_validation(
+    gold_district_claims_context,
+    "gold_district_claims_context",
+)
 print(f"Wrote Gold context Delta output to {gold_stage_base}/gold_district_claims_context")
 
 
@@ -376,7 +459,24 @@ if write_to_ai_lakehouse:
 # -----------------------------------------------------------------------------
 # 9. Final validation display.
 # Sorting by priority score makes the highest-impact districts visible
-# immediately after the notebook completes.
+# immediately after the notebook completes. The validation summary then lists
+# every target written by this notebook with row-count evidence.
 # -----------------------------------------------------------------------------
 print("Round 2 Gold context complete.")
-gold_district_claims_context.orderBy(F.desc("claims_context_priority_score")).show(25, truncate=False)
+gold_district_claims_context_written.orderBy(F.desc("claims_context_priority_score")).show(25, truncate=False)
+
+validation_summary = spark.createDataFrame(
+    validation_log,
+    [
+        "layer",
+        "object_name",
+        "source_rows",
+        "rows_written_or_inserted",
+        "target_rows_after_write",
+        "target_location",
+        "validation_status",
+    ],
+)
+
+print("Notebook validation summary:")
+display_or_show(validation_summary, rows=20, truncate=False)

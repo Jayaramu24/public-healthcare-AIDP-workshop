@@ -223,7 +223,7 @@ Open the external volume and confirm the workshop folder structure is visible th
 
 6. Create the AI Lakehouse catalog, user, and Claims target schema.
    - Create the AIDP external catalog connection `goldailh` to Autonomous AI Lakehouse.
-   - In Autonomous AI Lakehouse Database Actions, create participant users such as `MPHA_P01` through `MPHA_P17`.
+   - In Autonomous AI Lakehouse Database Actions, create participant users such as `MPHA_P01` through `MPHA_P21`.
    - For each participant user, enable DW Role, OML, Graph, and REST API.
    - Set quota on tablespace `DATA` to at least `1G`.
    - Run `sql/admin_prepare_participant_claims_star_schemas.sql` as `ADMIN` to create the Claims star schema tables in every participant schema and grant `SELECT`/`INSERT` access to the AIDP external catalog user `E2EAIDPUSER`.
@@ -566,7 +566,7 @@ Participants: you can skip this section and join once the facilitator confirms t
    - Sign in as `ADMIN`.
    - Open the left navigation, then go to `Administration -> Database Users`.
    - Click `+ Create User`.
-   - Create participant users such as `MPHA_P01` through `MPHA_P17`.
+   - Create participant users such as `MPHA_P01` through `MPHA_P21`.
    - Assign strong temporary passwords and enable `Web Access`.
    - Set `Quota on tablespace DATA`:
      - participant quota: `1G`
@@ -576,7 +576,7 @@ Participants: you can skip this section and join once the facilitator confirms t
    - Set quota on tablespace `DATA` high enough for workshop loading. For the direct AIDP Claims star schema notebook path, `1G` is a practical minimum; use `2G` to `5G` for facilitator or shared schemas when you want more headroom.
    - Copy the Database Actions URL from the user card and share it with the participant together with the username and temporary password.
 3. Create the Claims star schema target tables in each participant schema.
-   - Use `sql/admin_prepare_participant_claims_star_schemas.sql` when preparing the full classroom because it creates the five Claims star schema tables for `MPHA_P01` through `MPHA_P17`, applies quota, and grants the AIDP external catalog user `E2EAIDPUSER` the permissions required for Spark inserts.
+   - Use `sql/admin_prepare_participant_claims_star_schemas.sql` when preparing the full classroom because it creates the five Claims star schema tables for `MPHA_P01` through `MPHA_P21`, applies quota, and grants the AIDP external catalog user `E2EAIDPUSER` the permissions required for Spark inserts.
    - Use `sql/create_ai_lakehouse_claims_star_schema.sql` only when preparing a single schema manually.
    - Use the assigned participant schema, such as `MPHA_P17`.
    - Confirm these tables exist before participants run the direct-load notebook:
@@ -631,8 +631,8 @@ Alternative loading path:
 
 Recommended workshop pattern:
 
-- use participant schemas such as `MPHA_P01` through `MPHA_P17` for hands-on Claims star schema loading, then connect OAC to the validated participant or facilitator schema selected for the class
-- create separate participant users such as `MPHA_P01` to `MPHA_P17` for hands-on SQL checks and learning exercises
+- use participant schemas such as `MPHA_P01` through `MPHA_P21` for hands-on Claims star schema loading, then connect OAC to the validated participant or facilitator schema selected for the class
+- create separate participant users such as `MPHA_P01` to `MPHA_P21` for hands-on SQL checks and learning exercises
 
 Why these settings matter:
 

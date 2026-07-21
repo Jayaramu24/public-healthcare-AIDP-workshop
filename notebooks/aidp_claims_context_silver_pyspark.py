@@ -71,14 +71,60 @@ silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
 
 
 # -----------------------------------------------------------------------------
-# 2. Shared Delta read/write helpers.
+# 2. Shared Delta read/write and validation helpers.
+# The write helper deliberately reads the target path back after each save.
+# This gives participants immediate proof of:
+# - which path was written
+# - how many rows were sent to the write
+# - how many rows are available in the target folder after the write
+# - a small sample of the rows that downstream notebooks will read
 # -----------------------------------------------------------------------------
+validation_log = []
+
+
+def display_or_show(frame, rows=10, truncate=False):
+    """Use notebook display when available, otherwise fall back to Spark show."""
+    try:
+        display(frame.limit(rows))
+    except Exception:
+        frame.show(rows, truncate=truncate)
+
+
 def read_delta(name):
     return spark.read.format("delta").load(f"{bronze_base}/{name}")
 
 
-def write_delta(frame, name):
-    frame.write.format("delta").mode("overwrite").save(f"{silver_base}/{name}")
+def write_delta(frame, name, sample_rows=10):
+    """Write a Delta table, read it back, and record a participant validation row."""
+    target_path = f"{silver_base}/{name}"
+    source_rows = frame.count()
+
+    frame.write.format("delta").mode("overwrite").save(target_path)
+
+    written_frame = spark.read.format("delta").load(target_path)
+    target_rows = written_frame.count()
+
+    validation_log.append(
+        (
+            "Silver Delta",
+            name,
+            source_rows,
+            target_rows,
+            target_rows,
+            target_path,
+            "Validated by reading the written Delta folder back into Spark",
+        )
+    )
+
+    print(f"Layer       : Silver Delta")
+    print(f"Object      : {name}")
+    print(f"Source rows : {source_rows}")
+    print(f"Target rows : {target_rows}")
+    print(f"Target path : {target_path}")
+    print("Sample rows from the written target:")
+    display_or_show(written_frame, rows=sample_rows)
+
+    return written_frame
 
 
 # -----------------------------------------------------------------------------
@@ -328,13 +374,33 @@ silver_operations_access_context = (
 
 # -----------------------------------------------------------------------------
 # 10. Persist and display a compact validation summary.
-# The group-by output gives the instructor an immediate smoke test after the
-# notebook finishes.
+# The write helper has already read the target back and shown sample rows.
+# The group-by output gives the instructor an immediate smoke test, and the
+# validation summary table makes row movement explicit for participants.
 # -----------------------------------------------------------------------------
-write_delta(silver_operations_access_context, "silver_operations_access_context")
+silver_operations_access_context_written = write_delta(
+    silver_operations_access_context,
+    "silver_operations_access_context",
+)
 
 print("Round 2 Silver context complete.")
 print(f"Wrote silver_operations_access_context to {silver_base}/silver_operations_access_context")
-silver_operations_access_context.groupBy("district_name", "capacity_pressure_band", "spatial_access_band").count().orderBy(
+silver_operations_access_context_written.groupBy("district_name", "capacity_pressure_band", "spatial_access_band").count().orderBy(
     "district_name", "capacity_pressure_band", "spatial_access_band"
 ).show(50, truncate=False)
+
+validation_summary = spark.createDataFrame(
+    validation_log,
+    [
+        "layer",
+        "object_name",
+        "source_rows",
+        "rows_written_or_inserted",
+        "target_rows_after_write",
+        "target_location",
+        "validation_status",
+    ],
+)
+
+print("Notebook validation summary:")
+display_or_show(validation_summary, rows=20, truncate=False)

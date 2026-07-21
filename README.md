@@ -48,7 +48,7 @@ The workshop now follows Oracle's AIDP quick-start flow, contextualized for the 
 5. Create the standard Object Storage-backed catalog `e2eindustrydemos.default`
 6. Create external volume `e2eindustrydemovol` mapped to the Object Storage `mpha` prefix
 7. Create the external Autonomous AI Lakehouse catalog `goldailh`
-8. Create participant AI Lakehouse schemas such as `MPHA_P01` through `MPHA_P17`, apply quota, create Claims star schema tables, grant `E2EAIDPUSER`, and refresh the external catalog
+8. Create participant AI Lakehouse schemas such as `MPHA_P01` through `MPHA_P21`, apply quota, create Claims star schema tables, grant `E2EAIDPUSER`, and refresh the external catalog
 9. Organize participant notebook folders under `Participants/<participant_id>`
 10. Run the medallion notebooks in order
 
