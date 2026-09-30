@@ -1,43 +1,63 @@
-# PARTICIPANT NOTEBOOK GUIDE
-# 02B Silver Extension - Add JSON and Spatial Context
+# %% [markdown]
+# # Before you run: your assigned environment
 #
-# What this section does and why it matters:
-# - Parses JSON facility capacity events, flattens GeoJSON service-area features, joins reference data, and creates a Silver operations/access context table.
-# - Why it matters: This shows progressive enhancement: MPHA can add new operational signals after the original Claims dashboard is live without rebuilding the original Claims star schema.
+# Use your preloaded notebook when available. If restoring this common download,
+# copy the exact administrator-assigned values into its setup cell:
+# `participant_id`, `volume_base` (shared raw input) and `output_base` (your own
+# output volume). In the Lakehouse notebooks and notebook 99 also set
+# `target_catalog` and `target_schema`. Do not infer paths from your name or copy
+# another participant's values from a screenshot. The administrator must enforce
+# access permissions; string validation is not a security boundary.
 #
-# Inputs and outputs:
-# - Inputs:
+# Notebook filenames do not change when lab numbers change. Run 01, 02, 03 and 04
+# in order. Then follow the guide for 02B/03B, 05, the workflow and agents.
+# Notebook 99 contains on-demand read-only inspection examples.
+#
+# Bronze/Silver/Gold overwrite only the assigned output snapshot. Lakehouse loads
+# append missing keys and are safe to repeat with unchanged source/reference data;
+# they do not update existing measures or implement general CDC. Do not change
+# dimension members or source snapshots without a reviewed loading strategy.
+#
+# This common download changes configuration only, not the tested transformation
+# logic. A restore into a different tenancy still requires its readiness and
+# execution checks. Use Python as notebook default; select SQL only for SQL cells.
+
+# %% [markdown]
+# # 02B Silver Extension - Add JSON and Spatial Context
+#
+# ## What this section does and why it matters
+# Parses JSON facility capacity events, flattens GeoJSON service-area features, joins reference data, and creates a Silver operations/access context table.
+#
+# **Why it matters:** This shows progressive enhancement: MPHA can add new operational signals after the original Claims dashboard is live without rebuilding the original Claims star schema.
+#
+# ## Inputs and outputs
+#
+# **Inputs**
 # - bronze_facility_capacity_events
 # - bronze_healthcare_service_areas_geojson
 # - bronze_facility_provider_master
 # - bronze_district_health_profile
-# - Outputs:
+#
+# **Outputs**
 # - silver_operations_access_context
 #
-# Important parameters participants may change:
-# - volume_base
-# - participant_id
-# - bronze_base
-# - silver_base
+# ## Important parameters participants may change
+# - `volume_base`
+# - `participant_id`
+# - `bronze_base`
+# - `silver_base`
+
+# %% [markdown]
+# ## Plain-language explanation before the code
+# Run the code cells from top to bottom. The early cells configure paths and helpers, the middle cells build or transform the data, and the final cells write outputs and display validation evidence.
 #
-# Plain-language explanation before the code:
-# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
-#
-# Expected row counts or displayed results:
-# - The validation display should show 5 district-level records in the workshop sample
-# - Displayed fields include capacity_pressure_band, spatial_access_band, residents_per_facility, access_gap_score, and operations_access_risk_score
-#
-# Safe rerun behaviour:
-# - Safe for reruns. The Silver extension output is overwritten without changing the original Claims star schema flow.
-#
-# Common errors and troubleshooting:
-# - Missing JSON/GeoJSON Bronze tables: rerun Bronze and confirm the additional raw formats were uploaded.
-# - Null spatial fields: inspect GeoJSON properties and district identifiers.
-# - Array-to-CSV issues do not apply here because this notebook writes Delta, not CSV.
-#
-# What you learned:
-# - You learned how to extend an existing lakehouse product with JSON and spatial signals while keeping the original Claims flow stable.
-# END PARTICIPANT NOTEBOOK GUIDE
+# Keep the parameter values aligned with the Object Storage bucket, AIDP volume, external catalog, and schema prepared in Lab 0. If you change an input path, rerun the upstream notebook before rerunning this one.
+
+# %% [markdown]
+# ## Code section - Imports and setup
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # Public Healthcare AIDP Workshop
 # Round 2 extension notebook: Bronze JSON + Spatial -> Silver operations/access context.
 #
@@ -55,78 +75,63 @@
 from pyspark.sql import functions as F
 
 
+# %% [markdown]
+# ## Code section - Configure mounted AIDP volume paths
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 1. Configure mounted AIDP volume paths.
 # This extension reads Bronze JSON and GeoJSON outputs and writes a new Silver
 # context table without changing the original Claims star schema flow.
 # -----------------------------------------------------------------------------
-volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
-participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+volume_base = "REPLACE_WITH_SHARED_RAW_VOLUME"
+# Copy the exact mounted paths from the administrator's configuration sheet.
+# Shared input and personal outputs must be separate; never write into raw.
+output_base = "REPLACE_WITH_YOUR_OUTPUT_VOLUME"
+if "REPLACE_" in volume_base or "REPLACE_" in output_base:
+    raise ValueError("Set volume_base and output_base from your assigned configuration.")
+if not volume_base.startswith("/Volumes/") or not output_base.startswith("/Volumes/"):
+    raise ValueError("Use the exact /Volumes/ mounts supplied by the administrator.")
+volume_base = volume_base.rstrip("/")
+output_base = output_base.rstrip("/")
+if output_base == volume_base or output_base.startswith(volume_base + "/"):
+    raise ValueError("Output must be your separate personal volume, not shared raw.")
+print("Input volume:", volume_base, "Personal outputs:", output_base)
+
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Exact assigned folder name.
 
 if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
     raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
 
-bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
-silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+bronze_base = f"{output_base}/bronze"
+silver_base = f"{output_base}/silver"
 
 
+# %% [markdown]
+# ## Code section - Shared Delta read/write helpers
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
-# 2. Shared Delta read/write and validation helpers.
-# The write helper deliberately reads the target path back after each save.
-# This gives participants immediate proof of:
-# - which path was written
-# - how many rows were sent to the write
-# - how many rows are available in the target folder after the write
-# - a small sample of the rows that downstream notebooks will read
+# 2. Shared Delta read/write helpers.
+# Keep writes simple in the main flow. Participants can use the separate
+# on-demand validation notebook when they want to inspect sample rows, row counts,
+# or distinct values from a written layer.
 # -----------------------------------------------------------------------------
-validation_log = []
-
-
-def display_or_show(frame, rows=10, truncate=False):
-    """Use notebook display when available, otherwise fall back to Spark show."""
-    try:
-        display(frame.limit(rows))
-    except Exception:
-        frame.show(rows, truncate=truncate)
-
-
 def read_delta(name):
     return spark.read.format("delta").load(f"{bronze_base}/{name}")
 
 
-def write_delta(frame, name, sample_rows=10):
-    """Write a Delta table, read it back, and record a participant validation row."""
-    target_path = f"{silver_base}/{name}"
-    source_rows = frame.count()
-
-    frame.write.format("delta").mode("overwrite").save(target_path)
-
-    written_frame = spark.read.format("delta").load(target_path)
-    target_rows = written_frame.count()
-
-    validation_log.append(
-        (
-            "Silver Delta",
-            name,
-            source_rows,
-            target_rows,
-            target_rows,
-            target_path,
-            "Validated by reading the written Delta folder back into Spark",
-        )
-    )
-
-    print(f"Layer       : Silver Delta")
-    print(f"Object      : {name}")
-    print(f"Source rows : {source_rows}")
-    print(f"Target rows : {target_rows}")
-    print(f"Target path : {target_path}")
-    print("Sample rows from the written target:")
-    display_or_show(written_frame, rows=sample_rows)
-
-    return written_frame
+def write_delta(frame, name):
+    frame.write.format("delta").mode("overwrite").save(f"{silver_base}/{name}")
 
 
+# %% [markdown]
+# ## Code section - Load Bronze sources for Round 2 context enrichment
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 3. Load Bronze sources for Round 2 context enrichment.
 # Capacity events come from JSONL; service areas come from GeoJSON; facility and
@@ -138,6 +143,11 @@ bronze_facility_provider = read_delta("bronze_facility_provider_master")
 bronze_district = read_delta("bronze_district_health_profile")
 
 
+# %% [markdown]
+# ## Code section - Create conformed facility and district reference tables
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 4. Create conformed facility and district reference tables.
 # These lookups prevent repeated casting and keep the enrichment joins readable.
@@ -171,6 +181,11 @@ district_ref = (
 )
 
 
+# %% [markdown]
+# ## Code section - Parse JSON capacity events into operational signals
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 5. Parse JSON capacity events into operational signals.
 # This section flattens triage counts, counts supply alerts, and labels pressure
@@ -223,6 +238,11 @@ capacity_events = (
 )
 
 
+# %% [markdown]
+# ## Code section - Flatten GeoJSON features and flag spatial quality
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 6. Flatten GeoJSON features and flag spatial quality.
 # The geometry is retained as GeoJSON text while each feature is tagged as
@@ -247,6 +267,11 @@ spatial_features = (
 )
 
 
+# %% [markdown]
+# ## Code section - Aggregate spatial features to district access context
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 7. Aggregate spatial features to district access context.
 # These counts support map-style questions such as coverage gaps and mapped
@@ -264,6 +289,11 @@ spatial_district_context = (
 )
 
 
+# %% [markdown]
+# ## Code section - Calculate district-level access-gap indicators
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 8. Calculate district-level access-gap indicators.
 # Residents per facility, catchment coverage, and deprivation combine into a
@@ -310,6 +340,11 @@ district_access_context = (
 )
 
 
+# %% [markdown]
+# ## Code section - Build the final Silver operations/access context table
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 9. Build the final Silver operations/access context table.
 # This table combines JSON event pressure and spatial access signals at the
@@ -372,35 +407,38 @@ silver_operations_access_context = (
 )
 
 
+# %% [markdown]
+# ## Code section - Persist and display a compact smoke-test summary
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
-# 10. Persist and display a compact validation summary.
-# The write helper has already read the target back and shown sample rows.
-# The group-by output gives the instructor an immediate smoke test, and the
-# validation summary table makes row movement explicit for participants.
+# 10. Persist and display a compact smoke-test summary.
+# Use the on-demand validation notebook if you want to inspect raw rows, target
+# row counts, or distinct values after this write.
 # -----------------------------------------------------------------------------
-silver_operations_access_context_written = write_delta(
-    silver_operations_access_context,
-    "silver_operations_access_context",
-)
+write_delta(silver_operations_access_context, "silver_operations_access_context")
 
 print("Round 2 Silver context complete.")
 print(f"Wrote silver_operations_access_context to {silver_base}/silver_operations_access_context")
-silver_operations_access_context_written.groupBy("district_name", "capacity_pressure_band", "spatial_access_band").count().orderBy(
+silver_operations_access_context.groupBy("district_name", "capacity_pressure_band", "spatial_access_band").count().orderBy(
     "district_name", "capacity_pressure_band", "spatial_access_band"
 ).show(50, truncate=False)
 
-validation_summary = spark.createDataFrame(
-    validation_log,
-    [
-        "layer",
-        "object_name",
-        "source_rows",
-        "rows_written_or_inserted",
-        "target_rows_after_write",
-        "target_location",
-        "validation_status",
-    ],
-)
 
-print("Notebook validation summary:")
-display_or_show(validation_summary, rows=20, truncate=False)
+# %% [markdown]
+# ## Expected row counts or displayed results
+# - The validation display should show 5 district-level records in the workshop sample
+# - Displayed fields include capacity_pressure_band, spatial_access_band, residents_per_facility, access_gap_score, and operations_access_risk_score
+#
+# ## Safe rerun behaviour
+# Safe for reruns. The Silver extension output is overwritten without changing the original Claims star schema flow.
+#
+# ## Common errors and troubleshooting
+# - Missing JSON/GeoJSON Bronze tables: rerun Bronze and confirm the additional raw formats were uploaded.
+# - Null spatial fields: inspect GeoJSON properties and district identifiers.
+# - Array-to-CSV issues do not apply here because this notebook writes Delta, not CSV.
+
+# %% [markdown]
+# ## What you learned
+# You learned how to extend an existing lakehouse product with JSON and spatial signals while keeping the original Claims flow stable.

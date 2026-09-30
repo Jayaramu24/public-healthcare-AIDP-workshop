@@ -1,40 +1,21 @@
-# README FIRST - MPHA Workshop Execution Pack
+# Public Healthcare AIDP workshop - execution pack
 
-Use this pack when preparing or running the Public Healthcare AIDP workshop.
+Use the HTML/PDF guide for the required lab sequence; OAC is at the end.
 
-## What to use first
+1. Start from your preloaded participant folder. Restore only missing notebooks.
+2. If restoring, unzip this pack, use AIDP Upload in your own named folder, and
+   set the configuration values from participant_configuration.md in each file.
+3. Run notebooks 01 -> 02 -> 03 -> 04 manually; validate the Claims star schema.
+4. Run 02B and 03B after the context DDL/admin catalog-refresh handoff.
+5. Run 05 for historical train/test/evaluate/score/reload; register its real fitted model.
+6. Build the five-task workflow only after manual runs pass. RAG/agent testing is separate.
+7. Use 99 only when you want sample rows, persisted counts or distinct values.
 
-1. Download the workshop execution pack from the Workshop Assets page.
-2. Unzip it on your laptop.
-3. Upload the notebooks into the assigned AIDP participant folder, for example:
+Notebook numbers identify files, not labs. SQL files run in Oracle Database
+Actions as the assigned schema owner, not ADMIN. Do not grant wide privileges,
+truncate tables or overwrite other participants' output. The supplied loader
+is safe for same-input reruns, not general CDC or changing dimension keys.
 
-   `E2EAIDPIndustryDemos/Participants/<participant_id>/`
-
-4. Attach the shared Spark compute:
-
-   `E2EAIDPIndustrydemos`
-
-5. Run notebooks in this order:
-
-   - `01_Bronze_Public_Healthcare.ipynb`
-   - `02_Silver_Public_Healthcare.ipynb`
-   - `03_Gold_Public_Healthcare.ipynb`
-   - `04_Claims_Star_AI_Lakehouse_Load.ipynb`
-
-6. Set `participant_id` and, where required, `target_schema` before running.
-
-## SQL scripts
-
-Use the SQL scripts in `sql/` from Autonomous AI Lakehouse Database Actions or the approved SQL execution surface.
-
-Recommended core scripts:
-
-- `admin_prepare_participant_claims_star_schemas.sql`
-- `create_ai_lakehouse_claims_star_schema.sql`
-- `claims_star_validation.sql`
-- `create_ai_lakehouse_claims_context_extension.sql`
-- `claims_context_extension_validation.sql`
-
-## Preview links on GitHub
-
-Individual notebook and SQL links on the website are for preview/reference. GitHub may open them as code. For workshop execution, download the ZIP pack and upload the files into AIDP.
+The pack deliberately excludes obsolete ML, Kafka/GoldenGate and bulk-admin
+scripts. ML scores stay in your volume; no automatic ML score serving in OAC.
+See VALIDATION_NOTES.md for verified evidence and remaining readiness checks.

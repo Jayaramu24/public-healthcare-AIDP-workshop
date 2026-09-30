@@ -1,0 +1,500 @@
+# %% [markdown]
+# # Before you run: your assigned environment
+#
+# Use your preloaded notebook when available. If restoring this common download,
+# copy the exact administrator-assigned values into its setup cell:
+# `participant_id`, `volume_base` (shared raw input) and `output_base` (your own
+# output volume). In the Lakehouse notebooks and notebook 99 also set
+# `target_catalog` and `target_schema`. Do not infer paths from your name or copy
+# another participant's values from a screenshot. The administrator must enforce
+# access permissions; string validation is not a security boundary.
+#
+# Notebook filenames do not change when lab numbers change. Run 01, 02, 03 and 04
+# in order. Then follow the guide for 02B/03B, 05, the workflow and agents.
+# Notebook 99 contains on-demand read-only inspection examples.
+#
+# Bronze/Silver/Gold overwrite only the assigned output snapshot. Lakehouse loads
+# append missing keys and are safe to repeat with unchanged source/reference data;
+# they do not update existing measures or implement general CDC. Do not change
+# dimension members or source snapshots without a reviewed loading strategy.
+#
+# This common download changes configuration only, not the tested transformation
+# logic. A restore into a different tenancy still requires its readiness and
+# execution checks. Use Python as notebook default; select SQL only for SQL cells.
+
+# %% [markdown]
+# # 03 Gold - Prepare Business-Ready Serving Outputs
+#
+# ## What this section does and why it matters
+# Aggregates Silver data into Gold-stage outputs that support facility operations, public-health, claims, disbursement, membership, accreditation, JSON event, spatial, and document use cases.
+#
+# **Why it matters:** Gold expresses the business decisions MPHA can make from trusted data, and it provides the staging layer for AI Lakehouse and analytics assets.
+#
+# ## Inputs and outputs
+#
+# **Inputs**
+# - Silver Delta folders from the Silver notebook
+#
+# **Outputs**
+# - Gold-stage CSV folders under `<output_base>/gold_stage` including claims summary, disbursement summary, membership summary, provider accreditation, facility access daily, spatial access insights, and executive overview
+#
+# ## Important parameters participants may change
+# - `volume_base`
+# - `participant_id`
+# - `silver_base`
+# - `gold_stage_base`
+# - `gold_snapshot_date`
+
+# %% [markdown]
+# ## Plain-language explanation before the code
+# Run the code cells from top to bottom. The early cells configure paths and helpers, the middle cells build or transform the data, and the final cells write outputs and display validation evidence.
+#
+# Keep the parameter values aligned with the Object Storage bucket, AIDP volume, external catalog, and schema prepared in Lab 0. If you change an input path, rerun the upstream notebook before rerunning this one.
+
+# %% [markdown]
+# ## Code section - Imports and setup
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# Public Healthcare AIDP Workshop
+# Gold notebook: Silver Delta tables -> Gold-serving stage files for AI Lakehouse and OAC.
+#
+# Run `aidp_silver_pyspark.py` first so the Silver tables exist.
+
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+from pyspark.sql.types import ArrayType, MapType, StructType
+
+
+# %% [markdown]
+# ## Code section - Configure Silver input and Gold-stage output paths
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 1. Configure Silver input and Gold-stage output paths.
+# Gold-stage files are intentionally compact CSV outputs because they can be
+# inspected easily and loaded into AI Lakehouse or OAC. Use the same
+# participant_id used in Bronze and Silver so your Gold-stage files are isolated
+# from every other participant.
+# -----------------------------------------------------------------------------
+volume_base = "REPLACE_WITH_SHARED_RAW_VOLUME"
+# Copy the exact mounted paths from the administrator's configuration sheet.
+# Shared input and personal outputs must be separate; never write into raw.
+output_base = "REPLACE_WITH_YOUR_OUTPUT_VOLUME"
+if "REPLACE_" in volume_base or "REPLACE_" in output_base:
+    raise ValueError("Set volume_base and output_base from your assigned configuration.")
+if not volume_base.startswith("/Volumes/") or not output_base.startswith("/Volumes/"):
+    raise ValueError("Use the exact /Volumes/ mounts supplied by the administrator.")
+volume_base = volume_base.rstrip("/")
+output_base = output_base.rstrip("/")
+if output_base == volume_base or output_base.startswith(volume_base + "/"):
+    raise ValueError("Output must be your separate personal volume, not shared raw.")
+print("Input volume:", volume_base, "Personal outputs:", output_base)
+
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Exact assigned folder name.
+
+if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
+    raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
+
+silver_base = f"{output_base}/silver"
+gold_stage_base = f"{output_base}/gold_stage"
+gold_snapshot_date = F.to_date(F.lit("2025-06-30"))
+
+
+# %% [markdown]
+# ## Code section - Shared read/write helpers
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 2. Shared read/write helpers.
+# CSV cannot store Spark arrays, maps, or structs directly, so nested fields are
+# converted to JSON text before staging.
+# -----------------------------------------------------------------------------
+def read_delta(name):
+    return spark.read.format("delta").load(f"{silver_base}/{name}")
+
+
+def write_stage_csv(frame, name):
+    csv_ready = frame
+    for field in csv_ready.schema.fields:
+        if isinstance(field.dataType, (ArrayType, MapType, StructType)):
+            csv_ready = csv_ready.withColumn(field.name, F.to_json(F.col(field.name)))
+    csv_ready.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{gold_stage_base}/{name}")
+
+
+# %% [markdown]
+# ## Code section - Load all Silver tables needed for Gold analytics
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 3. Load all Silver tables needed for Gold analytics.
+# These inputs combine payer-side claims, provider accreditation, facility
+# operations, population health, JSON event context, and spatial context.
+# -----------------------------------------------------------------------------
+silver_district = read_delta("silver_district")
+silver_facility_provider = read_delta("silver_facility_provider")
+silver_facility_day = read_delta("silver_facility_day")
+silver_population_health_week = read_delta("silver_population_health_week")
+silver_district_health_week = read_delta("silver_district_health_week")
+silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
+silver_provider_accreditation = read_delta("silver_provider_accreditation")
+silver_facility_capacity_event = read_delta("silver_facility_capacity_event")
+silver_spatial_feature = read_delta("silver_spatial_feature")
+
+
+# %% [markdown]
+# ## Code section - Gold facility-access daily view
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 4. Gold facility-access daily view.
+# This supports the DIY Facility Access Daily challenge and basic operations
+# analytics without changing the Claims star schema.
+# -----------------------------------------------------------------------------
+gold_facility_access_daily = (
+    silver_facility_day.alias("f")
+    .join(
+        silver_facility_provider.select("facility_id", "facility_name", "district_name", "provider_id", "provider_name").alias("p"),
+        "facility_id",
+        "left",
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Gold public-health and immunization equity views
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 5. Gold public-health and immunization equity views.
+# `gold_district_public_health_weekly` already contains district attributes from
+# Silver, while the immunization view adds deprivation and age context.
+# -----------------------------------------------------------------------------
+# `silver_district_health_week` already carries district attributes from the
+# Silver-layer conformance join, so keep it as-is and avoid reintroducing
+# duplicate columns such as `district_name`.
+gold_district_public_health_weekly = silver_district_health_week
+
+gold_immunization_equity_weekly = silver_population_health_week.join(
+    silver_district.select("district_id", "district_name", "deprivation_index", "elderly_pct"),
+    "district_id",
+    "left",
+)
+
+
+# %% [markdown]
+# ## Code section - Gold claims summary at analytics grain
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 6. Gold claims summary at analytics grain.
+# This is the source for the guided Claims star schema fact table and
+# exposes denial, approval, payment, and processing-time measures.
+# -----------------------------------------------------------------------------
+gold_claims_summary = (
+    silver_claims_membership_disbursement.withColumn(
+        "service_month",
+        F.to_date(F.date_format(F.col("service_date"), "yyyy-MM-01")),
+    )
+    .groupBy("service_month", "district_id", "program_code", "coverage_program", "claim_type", "service_category", "diagnosis_group")
+    .agg(
+        F.count("*").alias("claims_submitted"),
+        F.sum(F.when(F.col("claim_status") == "Approved", 1).otherwise(0)).alias("approved_claims"),
+        F.sum(F.when(F.col("claim_status") == "Denied", 1).otherwise(0)).alias("denied_claims"),
+        F.sum(F.when(F.col("claim_status") == "Pending", 1).otherwise(0)).alias("pending_claims"),
+        F.round(F.sum("submitted_amount"), 2).alias("total_submitted_amount"),
+        F.round(F.sum("approved_amount"), 2).alias("total_approved_amount"),
+        F.round(F.sum("paid_amount"), 2).alias("total_paid_amount"),
+        F.round(F.avg("processing_days"), 1).alias("avg_processing_days"),
+    )
+    .withColumn(
+        "denial_rate",
+        F.round(F.col("denied_claims") / F.greatest(F.col("claims_submitted"), F.lit(1)), 4),
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Gold disbursement summary
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 7. Gold disbursement summary.
+# This gives the workshop the disbursement flavor requested in the raw-data and
+# dashboard storyline.
+# -----------------------------------------------------------------------------
+gold_disbursement_summary = (
+    silver_claims_membership_disbursement.withColumn(
+        "disbursement_month",
+        F.to_date(F.date_format(F.coalesce(F.col("disbursement_date"), F.col("service_date")), "yyyy-MM-01")),
+    )
+    .groupBy("disbursement_month", "district_id", "program_code", "coverage_program", "payee_type")
+    .agg(
+        F.countDistinct("disbursement_id").alias("disbursement_records"),
+        F.sum(F.when(F.col("payment_status") == "Paid", 1).otherwise(0)).alias("paid_records"),
+        F.sum(F.when(F.col("payment_status") == "Pending", 1).otherwise(0)).alias("pending_records"),
+        F.sum(F.when(F.col("payment_status") == "Failed", 1).otherwise(0)).alias("failed_records"),
+        F.round(F.sum("disbursement_amount"), 2).alias("total_disbursement_amount"),
+        F.round(F.avg("payment_cycle_days"), 1).alias("avg_payment_cycle_days"),
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Gold membership snapshot
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 8. Gold membership snapshot.
+# This aggregates member eligibility and risk-segment context without exposing
+# member-level details in the dashboard layer.
+# -----------------------------------------------------------------------------
+membership_snapshot = silver_claims_membership_disbursement.select(
+    "member_id",
+    "district_id",
+    "program_code",
+    "coverage_program",
+    "age_group",
+    "risk_segment",
+    "chronic_condition_flag",
+    "eligibility_status",
+    "renewal_due_date",
+)
+
+gold_membership_summary = (
+    membership_snapshot.withColumn("snapshot_month", F.lit("2025-06-01").cast("date"))
+    .groupBy("snapshot_month", "district_id", "program_code", "coverage_program", "age_group", "risk_segment", "chronic_condition_flag")
+    .agg(
+        F.countDistinct("member_id").alias("members"),
+        F.countDistinct(F.when(F.col("eligibility_status") == "Active", F.col("member_id"))).alias("active_members"),
+        F.countDistinct(
+            F.when(
+                F.datediff(F.col("renewal_due_date"), F.col("snapshot_month")).between(0, 60),
+                F.col("member_id"),
+            )
+        ).alias("renewal_due_within_60_days"),
+        F.countDistinct(
+            F.when(
+                (F.col("risk_segment").isin("High", "Rising")) | (F.col("chronic_condition_flag") == "Y"),
+                F.col("member_id"),
+            )
+        ).alias("high_risk_members"),
+        F.countDistinct(F.when(F.col("eligibility_status") != "Active", F.col("member_id"))).alias("inactive_or_suspended_members"),
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Gold provider-accreditation snapshot
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 9. Gold provider-accreditation snapshot.
+# This view keeps the accreditation score, status, corrective actions, and
+# expiry pressure available for OAC and ML enrichment.
+# -----------------------------------------------------------------------------
+gold_provider_accreditation_summary = (
+    silver_provider_accreditation.withColumn("snapshot_date", gold_snapshot_date)
+    .select(
+        "snapshot_date",
+        "district_id",
+        "district_name",
+        "facility_id",
+        "facility_name",
+        "provider_id",
+        "provider_name",
+        "accreditation_body",
+        "accreditation_status",
+        "accreditation_level",
+        "accreditation_score",
+        "corrective_action_count",
+        "days_to_expiry",
+        "accreditation_pressure_band",
+        "specialty_scope",
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Latest JSON capacity event per facility
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 10. Latest JSON capacity event per facility.
+# This turns event-style operational data into a small, latest-state context
+# table that can be joined into ML or OAC extensions.
+# -----------------------------------------------------------------------------
+latest_capacity_window = Window.partitionBy("facility_id").orderBy(F.col("event_timestamp").desc())
+gold_capacity_event_latest = (
+    silver_facility_capacity_event.withColumn("facility_event_rank", F.row_number().over(latest_capacity_window))
+    .filter(F.col("facility_event_rank") == 1)
+    .drop("facility_event_rank")
+)
+
+
+# %% [markdown]
+# ## Code section - Spatial access insights
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 11. Spatial access insights.
+# GeoJSON service-area features are summarized to district-level access signals
+# such as residents per facility and suggested access actions.
+# -----------------------------------------------------------------------------
+latest_district_window = Window.partitionBy("district_id").orderBy(F.col("week_start_date").desc())
+latest_district_pressure = (
+    silver_district_health_week.withColumn("district_week_rank", F.row_number().over(latest_district_window))
+    .filter(F.col("district_week_rank") == 1)
+    .drop("district_week_rank")
+)
+
+district_facility_footprint = (
+    silver_facility_provider.groupBy("district_id")
+    .agg(
+        F.countDistinct("facility_id").alias("facility_count"),
+        F.countDistinct("provider_id").alias("provider_count"),
+    )
+)
+
+district_catchments = (
+    silver_spatial_feature.filter(F.col("source_layer") == "facility_catchment")
+    .groupBy("district_id")
+    .agg(F.countDistinct("facility_id").alias("catchment_count"))
+)
+
+gold_spatial_access_insights = (
+    latest_district_pressure.join(district_facility_footprint, "district_id", "left")
+    .join(district_catchments, "district_id", "left")
+    .withColumn("facility_count", F.coalesce(F.col("facility_count"), F.lit(1)))
+    .withColumn("catchment_count", F.coalesce(F.col("catchment_count"), F.col("facility_count")))
+    .withColumn("residents_per_facility", F.round(F.col("population") / F.col("facility_count"), 0))
+    .withColumn(
+        "avg_travel_distance_km",
+        F.round(
+            F.greatest(
+                F.lit(0.8),
+                F.col("deprivation_index") * F.lit(1.8) + F.col("residents_per_facility") / F.lit(75000.0),
+            ),
+            2,
+        ),
+    )
+    .withColumn(
+        "recommended_action",
+        F.when(
+            (F.col("public_health_pressure_index") >= 45) | (F.col("residents_per_facility") >= 30000),
+            F.lit("Prioritize mobile clinic sessions and outreach routing"),
+        )
+        .when(
+            (F.col("public_health_pressure_index") >= 35) | (F.col("avg_travel_distance_km") >= 1.5),
+            F.lit("Review catchment coverage and extend community clinic hours"),
+        )
+        .otherwise(F.lit("Maintain standard catchment monitoring")),
+    )
+    .select(
+        "district_id",
+        "district_name",
+        "public_health_pressure_index",
+        "facility_count",
+        "provider_count",
+        "catchment_count",
+        "residents_per_facility",
+        "avg_travel_distance_km",
+        "recommended_action",
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Executive overview metrics
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 12. Executive overview metrics.
+# This lightweight summary is useful for a quick workbook or SQL sanity check.
+# -----------------------------------------------------------------------------
+gold_executive_overview = (
+    silver_facility_day.agg(
+        F.lit("2025 H1").alias("reporting_period"),
+        (F.sum("outpatient_visits") + F.sum("emergency_arrivals")).alias("total_visits"),
+        F.round(F.avg("avg_ed_wait_minutes"), 1).alias("avg_ed_wait_minutes"),
+        F.sum(F.when(F.col("high_occupancy_flag") == "Y", 1).otherwise(0)).alias("high_occupancy_days"),
+        F.round(F.avg("access_risk_score"), 1).alias("avg_access_risk_score"),
+    )
+)
+
+
+# %% [markdown]
+# ## Code section - Write all Gold-stage outputs
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 13. Write all Gold-stage outputs.
+# The Claims star schema load notebook consumes the claims-oriented outputs;
+# optional labs can consume the context and ML-ready outputs.
+# -----------------------------------------------------------------------------
+gold_tables = {
+    "gold_facility_access_daily": gold_facility_access_daily,
+    "gold_district_public_health_weekly": gold_district_public_health_weekly,
+    "gold_immunization_equity_weekly": gold_immunization_equity_weekly,
+    "gold_claims_summary": gold_claims_summary,
+    "gold_disbursement_summary": gold_disbursement_summary,
+    "gold_membership_summary": gold_membership_summary,
+    "gold_provider_accreditation_summary": gold_provider_accreditation_summary,
+    "gold_capacity_event_latest": gold_capacity_event_latest,
+    "gold_spatial_access_insights": gold_spatial_access_insights,
+    "gold_executive_overview": gold_executive_overview,
+}
+
+
+# %% [markdown]
+# ## Code section - Handoff checkpoint
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
+# -----------------------------------------------------------------------------
+# 14. Handoff checkpoint.
+# After this notebook succeeds, run the Claims star schema AI Lakehouse load
+# notebook or inspect the staged CSV outputs directly.
+# -----------------------------------------------------------------------------
+for table_name, frame in gold_tables.items():
+    write_stage_csv(frame, table_name)
+    print(f"Staged {table_name} under {gold_stage_base}/{table_name}")
+
+
+print(
+    "Gold staging complete. Load the dimensional AI Lakehouse model with sql/create_ai_lakehouse_claims_star_schema.sql."
+)
+
+
+# %% [markdown]
+# ## Expected row counts or displayed results
+# - gold_claims_summary: about 622 rows
+# - gold_facility_access_daily: 1,810 rows
+# - gold_immunization_equity_weekly: 780 rows
+# - gold_spatial_access_insights: 5 rows
+# - gold_executive_overview: 5 rows
+#
+# ## Safe rerun behaviour
+# Safe for reruns. Gold-stage CSV folders are overwritten, so consumers should refresh or reload after rerunning.
+#
+# ## Common errors and troubleshooting
+# - CSV datasource array/map errors: nested columns must be converted to JSON text before writing.
+# - Duplicate district columns: use the provided selected columns and avoid rejoining district attributes already present in Silver.
+# - Missing Silver table: rerun Silver and verify silver_base.
+
+# %% [markdown]
+# ## What you learned
+# You learned how business-ready Gold outputs are shaped from trusted Silver data for dashboards, ML, and AI Lakehouse publishing.

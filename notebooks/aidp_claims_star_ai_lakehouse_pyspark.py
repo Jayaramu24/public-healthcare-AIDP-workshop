@@ -1,55 +1,74 @@
-# PARTICIPANT NOTEBOOK GUIDE
-# 04 Claims Star Schema - Publish Gold to AI Lakehouse
+# %% [markdown]
+# # Before you run: your assigned environment
 #
-# What this section does and why it matters:
-# - Builds Date, District, Coverage Program, Claim Type dimensions and the monthly Claims fact, then inserts only new rows into the connected AI Lakehouse external catalog.
-# - Why it matters: This is the governed business data product used by OAC, OAC Assistant, ML features, and the Claims SQL Agent.
+# Use your preloaded notebook when available. If restoring this common download,
+# copy the exact administrator-assigned values into its setup cell:
+# `participant_id`, `volume_base` (shared raw input) and `output_base` (your own
+# output volume). In the Lakehouse notebooks and notebook 99 also set
+# `target_catalog` and `target_schema`. Do not infer paths from your name or copy
+# another participant's values from a screenshot. The administrator must enforce
+# access permissions; string validation is not a security boundary.
 #
-# Inputs and outputs:
-# - Inputs:
-# - Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
+# Notebook filenames do not change when lab numbers change. Run 01, 02, 03 and 04
+# in order. Then follow the guide for 02B/03B, 05, the workflow and agents.
+# Notebook 99 contains on-demand read-only inspection examples.
+#
+# Bronze/Silver/Gold overwrite only the assigned output snapshot. Lakehouse loads
+# append missing keys and are safe to repeat with unchanged source/reference data;
+# they do not update existing measures or implement general CDC. Do not change
+# dimension members or source snapshots without a reviewed loading strategy.
+#
+# This common download changes configuration only, not the tested transformation
+# logic. A restore into a different tenancy still requires its readiness and
+# execution checks. Use Python as notebook default; select SQL only for SQL cells.
+
+# %% [markdown]
+# # 04 Claims Star Schema - Publish Gold to AI Lakehouse
+#
+# ## What this section does and why it matters
+# Builds Date, District, Coverage Program, Claim Type dimensions and the monthly Claims fact, then inserts only new rows into the connected AI Lakehouse external catalog.
+#
+# **Why it matters:** This is the governed business data product used by OAC, OAC Assistant, ML features, and the Claims SQL Agent.
+#
+# ## Inputs and outputs
+#
+# **Inputs**
+# - Participant Silver Delta folders under `<output_base>/silver`
 # - Pre-created Claims star schema tables in the assigned AI Lakehouse schema, such as `goldailh.MPHA_P17`
 # - AIDP external catalog refresh completed so the participant schema is visible under `goldailh`
-# - Outputs:
+#
+# **Outputs**
 # - mpha_dim_date
 # - mpha_dim_district
 # - mpha_dim_coverage_program
 # - mpha_dim_claim_type
 # - mpha_fact_claims_monthly
 #
-# Important parameters participants may change:
-# - volume_base
-# - participant_id
-# - silver_base
-# - target_catalog
-# - target_schema
-# - table_prefix
-# - write_mode
+# ## Important parameters participants may change
+# - `volume_base`
+# - `participant_id`
+# - `silver_base`
+# - `target_catalog`
+# - `target_schema`
+# - `table_prefix`
+# - `write_mode`
+
+# %% [markdown]
+# ## Plain-language explanation before the code
+# Run the code cells from top to bottom. The early cells configure paths and helpers, the middle cells build or transform the data, and the final cells write outputs and display validation evidence.
 #
-# Plain-language explanation before the code:
-# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
-#
-# Expected row counts or displayed results:
-# - mpha_fact_claims_monthly: about 622 rows on first successful load
-# - dimension row counts should be non-zero, and the validation SQL should return zero orphan rows
-#
-# Safe rerun behaviour:
-# - Designed for safe reruns. Existing natural keys are read from target tables and only new keys are inserted.
-#
-# Common errors and troubleshooting:
-# - Target schema not found: refresh the `goldailh` external catalog in AIDP and confirm the assigned schema, for example `MPHA_P17`, is visible.
-# - Required table missing: run the Claims star schema DDL before this notebook.
-# - Executor memory failure: use the validated 1G driver/executor memory setting from the workshop troubleshooting notes.
-# - Table does not support truncate: do not truncate from Spark; use the idempotent append pattern.
-#
-# What you learned:
-# - You learned how AIDP can publish a governed Claims star schema directly into AI Lakehouse while remaining safe for repeat execution.
-# END PARTICIPANT NOTEBOOK GUIDE
+# Keep the parameter values aligned with the Object Storage bucket, AIDP volume, external catalog, and schema prepared in Lab 0. If you change an input path, rerun the upstream notebook before rerunning this one.
+
+# %% [markdown]
+# ## Code section - Imports and setup
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # Public Healthcare AIDP Workshop
 # Claims star schema notebook: Silver Delta tables -> connected Autonomous AI Lakehouse external catalog tables.
 #
 # Purpose:
-# - Build the instructor-led Claims star schema directly inside AIDP
+# - Build the guided Claims star schema directly inside AIDP
 # - Write the star schema tables to the connected external AI Lakehouse catalog
 # - Keep participants inside the AIDP notebook flow instead of switching to manual SQL loading
 #
@@ -68,29 +87,55 @@ from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
 
+# %% [markdown]
+# ## Code section - Configure source and target catalog values
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 1. Configure source and target catalog values.
 # All participants read their own Silver output from workshop_runs/<participant_id>.
 # Each participant writes to their assigned AI Lakehouse schema, for example
 # MPHA_P01 through MPHA_P17. The validated smoke test used MPHA_P17.
 # -----------------------------------------------------------------------------
-volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
-participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+volume_base = "REPLACE_WITH_SHARED_RAW_VOLUME"
+# Copy the exact mounted paths from the administrator's configuration sheet.
+# Shared input and personal outputs must be separate; never write into raw.
+output_base = "REPLACE_WITH_YOUR_OUTPUT_VOLUME"
+if "REPLACE_" in volume_base or "REPLACE_" in output_base:
+    raise ValueError("Set volume_base and output_base from your assigned configuration.")
+if not volume_base.startswith("/Volumes/") or not output_base.startswith("/Volumes/"):
+    raise ValueError("Use the exact /Volumes/ mounts supplied by the administrator.")
+volume_base = volume_base.rstrip("/")
+output_base = output_base.rstrip("/")
+if output_base == volume_base or output_base.startswith(volume_base + "/"):
+    raise ValueError("Output must be your separate personal volume, not shared raw.")
+print("Input volume:", volume_base, "Personal outputs:", output_base)
+
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Exact assigned folder name.
 
 if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
     raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
 
-silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
-target_catalog = "goldailh"
-target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Example: MPHA_P17.
+silver_base = f"{output_base}/silver"
+target_catalog = "REPLACE_WITH_YOUR_AILH_CATALOG"
+target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Assigned schema; not a screenshot example.
 
 if target_schema == "REPLACE_WITH_YOUR_AILH_SCHEMA":
-    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, for example MPHA_P17.")
+    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, from your configuration sheet.")
 
 table_prefix = "mpha"
 write_mode = "append"
 
+if "REPLACE_" in target_catalog or "REPLACE_" in target_schema:
+    raise ValueError("Set your assigned external catalog and schema before continuing.")
 
+
+# %% [markdown]
+# ## Code section - Shared helpers
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 2. Shared helpers.
 # `write_catalog_table` appends only rows that do not already exist by the
@@ -141,6 +186,11 @@ def write_catalog_table(frame, name, columns, key_columns):
     print(f"Wrote {new_row_count} new rows to {table_name}")
 
 
+# %% [markdown]
+# ## Code section - Load the Silver sources used for the Claims star schema
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 3. Load the Silver sources used for the Claims star schema.
 # District is used as a dimension; the claims-membership-disbursement table is
@@ -150,6 +200,11 @@ silver_district = read_delta("silver_district")
 silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
 
 
+# %% [markdown]
+# ## Code section - Validate the external AI Lakehouse schema before doing any writes
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 4. Validate the external AI Lakehouse schema before doing any writes.
 # Failing early gives a clear error if the schema or required tables were not
@@ -166,6 +221,12 @@ validate_target_tables(
     ]
 )
 
+
+# %% [markdown]
+# ## Code section - Add service-month grain to the claims source
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 5. Add service-month grain to the claims source.
 # The final fact table is monthly by district, coverage program, and claim type.
@@ -176,6 +237,11 @@ claims_with_service_month = silver_claims_membership_disbursement.withColumn(
 )
 
 
+# %% [markdown]
+# ## Code section - Build the Date dimension from all claim lifecycle dates
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 6. Build the Date dimension from all claim lifecycle dates.
 # Including enrollment, renewal, service, receipt, and disbursement dates makes
@@ -193,6 +259,11 @@ date_values = (
 )
 
 
+# %% [markdown]
+# ## Code section - Build dimension tables
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 7. Build dimension tables.
 # Surrogate keys are generated deterministically from sorted business keys so
@@ -281,6 +352,11 @@ dim_claim_type = (
 )
 
 
+# %% [markdown]
+# ## Code section - Prepare lookup tables for fact-key resolution
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 8. Prepare lookup tables for fact-key resolution.
 # These are not written directly; they map business columns to dimension keys.
@@ -301,6 +377,11 @@ claim_type_lookup = dim_claim_type.select(
 )
 
 
+# %% [markdown]
+# ## Code section - Build the monthly Claims fact table
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 9. Build the monthly Claims fact table.
 # The fact table carries the dashboard measures: submitted, approved, denied,
@@ -362,6 +443,11 @@ fact_claims_monthly = (
 )
 
 
+# %% [markdown]
+# ## Code section - Write dimensions first, then the fact table
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 10. Write dimensions first, then the fact table.
 # This order keeps referential intent clear for participants inspecting the
@@ -448,3 +534,22 @@ write_catalog_table(
 
 
 print("Claims star schema write complete in the connected Autonomous AI Lakehouse catalog.")
+
+
+# %% [markdown]
+# ## Expected row counts or displayed results
+# - mpha_fact_claims_monthly: about 622 rows on first successful load
+# - dimension row counts should be non-zero, and the validation SQL should return zero orphan rows
+#
+# ## Safe rerun behaviour
+# Designed for safe reruns. Existing natural keys are read from target tables and only new keys are inserted.
+#
+# ## Common errors and troubleshooting
+# - Target schema not found: refresh the `goldailh` external catalog in AIDP and confirm the assigned schema, for example `MPHA_P17`, is visible.
+# - Required table missing: run the Claims star schema DDL before this notebook.
+# - Executor memory failure: use the validated 1G driver/executor memory setting from the workshop troubleshooting notes.
+# - Table does not support truncate: do not truncate from Spark; use the idempotent append pattern.
+
+# %% [markdown]
+# ## What you learned
+# You learned how AIDP can publish a governed Claims star schema directly into AI Lakehouse while remaining safe for repeat execution.

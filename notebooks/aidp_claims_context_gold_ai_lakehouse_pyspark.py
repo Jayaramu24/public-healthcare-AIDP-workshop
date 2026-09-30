@@ -1,50 +1,70 @@
-# PARTICIPANT NOTEBOOK GUIDE
-# 03B Gold Extension - Publish District Claims Context
+# %% [markdown]
+# # Before you run: your assigned environment
 #
-# What this section does and why it matters:
-# - Aggregates Silver operations/access context and claims metrics to district-month grain, writes Gold context, and optionally inserts new rows into AI Lakehouse.
-# - Why it matters: This gives OAC and Assistant new district-level context for explaining why denial hotspots may align with capacity pressure or spatial access gaps.
+# Use your preloaded notebook when available. If restoring this common download,
+# copy the exact administrator-assigned values into its setup cell:
+# `participant_id`, `volume_base` (shared raw input) and `output_base` (your own
+# output volume). In the Lakehouse notebooks and notebook 99 also set
+# `target_catalog` and `target_schema`. Do not infer paths from your name or copy
+# another participant's values from a screenshot. The administrator must enforce
+# access permissions; string validation is not a security boundary.
 #
-# Inputs and outputs:
-# - Inputs:
-# - Participant Silver Delta folders under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
+# Notebook filenames do not change when lab numbers change. Run 01, 02, 03 and 04
+# in order. Then follow the guide for 02B/03B, 05, the workflow and agents.
+# Notebook 99 contains on-demand read-only inspection examples.
+#
+# Bronze/Silver/Gold overwrite only the assigned output snapshot. Lakehouse loads
+# append missing keys and are safe to repeat with unchanged source/reference data;
+# they do not update existing measures or implement general CDC. Do not change
+# dimension members or source snapshots without a reviewed loading strategy.
+#
+# This common download changes configuration only, not the tested transformation
+# logic. A restore into a different tenancy still requires its readiness and
+# execution checks. Use Python as notebook default; select SQL only for SQL cells.
+
+# %% [markdown]
+# # 03B Gold Extension - Publish District Claims Context
+#
+# ## What this section does and why it matters
+# Aggregates Silver operations/access context and claims metrics to district-month grain, writes Gold context, and optionally inserts new rows into AI Lakehouse.
+#
+# **Why it matters:** This gives OAC and Assistant new district-level context for explaining why denial hotspots may align with capacity pressure or spatial access gaps.
+#
+# ## Inputs and outputs
+#
+# **Inputs**
+# - Participant Silver Delta folders under `<output_base>/silver`
 # - silver_operations_access_context
 # - silver_claims_membership_disbursement
 # - mpha_fact_district_claims_context target table in the assigned AI Lakehouse schema
-# - Outputs:
+#
+# **Outputs**
 # - gold_district_claims_context
 # - mpha_fact_district_claims_context
 # - mpha_claims_district_context_v
 #
-# Important parameters participants may change:
-# - volume_base
-# - participant_id
-# - silver_base
-# - gold_stage_base
-# - target_catalog
-# - target_schema
-# - table_prefix
-# - write_to_ai_lakehouse
-# - write_mode
+# ## Important parameters participants may change
+# - `volume_base`
+# - `participant_id`
+# - `silver_base`
+# - `gold_stage_base`
+# - `target_catalog`
+# - `target_schema`
+# - `table_prefix`
+# - `write_to_ai_lakehouse`
+# - `write_mode`
+
+# %% [markdown]
+# ## Plain-language explanation before the code
+# Run the code cells from top to bottom. The early cells configure paths and helpers, the middle cells build or transform the data, and the final cells write outputs and display validation evidence.
 #
-# Plain-language explanation before the code:
-# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
-#
-# Expected row counts or displayed results:
-# - The workshop sample inserts about 5 district-month context rows
-# - Validation display should show priority score, denial rate, occupancy, wait pressure, and access gap fields
-#
-# Safe rerun behaviour:
-# - Designed for safe reruns. The notebook writes the Delta output and inserts only target keys that do not already exist.
-#
-# Common errors and troubleshooting:
-# - Extension target table missing: run create_ai_lakehouse_claims_context_extension.sql first.
-# - Target schema not found: check target_catalog and target_schema.
-# - No new rows message: expected when rerunning after a successful insert.
-#
-# What you learned:
-# - You learned how to add a new AI Lakehouse context table beside an existing star schema without disrupting the original dashboard.
-# END PARTICIPANT NOTEBOOK GUIDE
+# Keep the parameter values aligned with the Object Storage bucket, AIDP volume, external catalog, and schema prepared in Lab 0. If you change an input path, rerun the upstream notebook before rerunning this one.
+
+# %% [markdown]
+# ## Code section - Imports and setup
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # Public Healthcare AIDP Workshop
 # Round 2 extension notebook: Silver operations/access context -> Gold district Claims context -> AI Lakehouse.
 #
@@ -65,85 +85,67 @@
 from pyspark.sql import functions as F
 
 
+# %% [markdown]
+# ## Code section - Configure mounted paths and AI Lakehouse target
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 1. Configure mounted paths and AI Lakehouse target.
 # The Gold context table is an extension fact table that sits beside the
 # existing Claims star schema rather than replacing it.
 # -----------------------------------------------------------------------------
-volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
-participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 17_Jayaram_Krishnamachar.
+volume_base = "REPLACE_WITH_SHARED_RAW_VOLUME"
+# Copy the exact mounted paths from the administrator's configuration sheet.
+# Shared input and personal outputs must be separate; never write into raw.
+output_base = "REPLACE_WITH_YOUR_OUTPUT_VOLUME"
+if "REPLACE_" in volume_base or "REPLACE_" in output_base:
+    raise ValueError("Set volume_base and output_base from your assigned configuration.")
+if not volume_base.startswith("/Volumes/") or not output_base.startswith("/Volumes/"):
+    raise ValueError("Use the exact /Volumes/ mounts supplied by the administrator.")
+volume_base = volume_base.rstrip("/")
+output_base = output_base.rstrip("/")
+if output_base == volume_base or output_base.startswith(volume_base + "/"):
+    raise ValueError("Output must be your separate personal volume, not shared raw.")
+print("Input volume:", volume_base, "Personal outputs:", output_base)
+
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Exact assigned folder name.
 
 if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
     raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
 
-silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
-gold_stage_base = f"{volume_base}/workshop_runs/{participant_id}/gold_stage"
+silver_base = f"{output_base}/silver"
+gold_stage_base = f"{output_base}/gold_stage"
 
 # Update these three values if your external catalog, schema, or table prefix differ.
-target_catalog = "goldailh"
-target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Example: MPHA_P17.
+target_catalog = "REPLACE_WITH_YOUR_AILH_CATALOG"
+target_schema = "REPLACE_WITH_YOUR_AILH_SCHEMA"  # Assigned schema; not a screenshot example.
 
 if target_schema == "REPLACE_WITH_YOUR_AILH_SCHEMA":
-    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, for example MPHA_P17.")
+    raise ValueError("Set target_schema to your assigned AI Lakehouse schema, from your configuration sheet.")
 
 table_prefix = "mpha"
 write_to_ai_lakehouse = True
 write_mode = "append"
 
+if "REPLACE_" in target_catalog or "REPLACE_" in target_schema:
+    raise ValueError("Set your assigned external catalog and schema before continuing.")
 
+
+# %% [markdown]
+# ## Code section - Shared helpers
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 2. Shared helpers.
 # Namespace validation catches missing external-catalog setup before any rows are
 # written, and `write_catalog_table` avoids duplicate inserts on rerun.
-# The validation helpers show participants exactly what was staged to Delta and
-# what was inserted into AI Lakehouse.
+# Use the separate on-demand validation notebook when you want to inspect sample
+# rows, row counts, or distinct values after writes.
 # -----------------------------------------------------------------------------
-validation_log = []
-
-
-def display_or_show(frame, rows=10, truncate=False):
-    """Use notebook display when available, otherwise fall back to Spark show."""
-    try:
-        display(frame.limit(rows))
-    except Exception:
-        frame.show(rows, truncate=truncate)
-
-
 def read_delta(name):
     return spark.read.format("delta").load(f"{silver_base}/{name}")
-
-
-def write_delta_with_validation(frame, name, sample_rows=10):
-    """Write Gold Delta output, read it back, and record row-count evidence."""
-    target_path = f"{gold_stage_base}/{name}"
-    source_rows = frame.count()
-
-    frame.write.format("delta").mode("overwrite").save(target_path)
-
-    written_frame = spark.read.format("delta").load(target_path)
-    target_rows = written_frame.count()
-
-    validation_log.append(
-        (
-            "Gold Delta",
-            name,
-            source_rows,
-            target_rows,
-            target_rows,
-            target_path,
-            "Validated by reading the written Delta folder back into Spark",
-        )
-    )
-
-    print(f"Layer       : Gold Delta")
-    print(f"Object      : {name}")
-    print(f"Source rows : {source_rows}")
-    print(f"Target rows : {target_rows}")
-    print(f"Target path : {target_path}")
-    print("Sample rows from the written target:")
-    display_or_show(written_frame, rows=sample_rows)
-
-    return written_frame
 
 
 def target_table(name):
@@ -176,50 +178,21 @@ def validate_target_tables(required_tables):
 def write_catalog_table(frame, name, columns, key_columns):
     table_name = target_table(name)
     ordered = frame.select(*columns)
-    source_rows = ordered.count()
-    before_rows = spark.table(table_name).count()
     existing_keys = spark.table(table_name).select(*key_columns).dropDuplicates()
     new_rows = ordered.join(existing_keys, key_columns, "left_anti")
     new_row_count = new_rows.count()
     if new_row_count == 0:
-        validation_log.append(
-            (
-                "AI Lakehouse",
-                table_name,
-                source_rows,
-                0,
-                before_rows,
-                table_name,
-                "No new rows inserted because the natural keys already exist",
-            )
-        )
         print(f"No new rows to write for {table_name}")
-        print(f"Existing target rows: {before_rows}")
-        print("Sample rows from the current target table:")
-        display_or_show(spark.table(table_name), rows=10)
         return
     new_rows.write.mode(write_mode).insertInto(table_name)
-    after_rows = spark.table(table_name).count()
-    inserted_rows = after_rows - before_rows
-    validation_log.append(
-        (
-            "AI Lakehouse",
-            table_name,
-            source_rows,
-            inserted_rows,
-            after_rows,
-            table_name,
-            "Validated by comparing target table row counts before and after insert",
-        )
-    )
     print(f"Wrote {new_row_count} new rows to {table_name}")
-    print(f"Before rows : {before_rows}")
-    print(f"After rows  : {after_rows}")
-    print(f"Inserted    : {inserted_rows}")
-    print("Sample rows from the target table after insert:")
-    display_or_show(spark.table(table_name), rows=10)
 
 
+# %% [markdown]
+# ## Code section - Load the Round 2 Silver context and claims source
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 3. Load the Round 2 Silver context and claims source.
 # The context table contains JSON/spatial enrichment; claims supply the monthly
@@ -229,6 +202,11 @@ silver_operations_access_context = read_delta("silver_operations_access_context"
 silver_claims_membership_disbursement = read_delta("silver_claims_membership_disbursement")
 
 
+# %% [markdown]
+# ## Code section - Aggregate operations/access context to district-month grain
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 4. Aggregate operations/access context to district-month grain.
 # This is the bridge from event-level facility context to the monthly Claims
@@ -259,6 +237,11 @@ operations_monthly = (
 )
 
 
+# %% [markdown]
+# ## Code section - Aggregate claims to the same district-month grain
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 5. Aggregate claims to the same district-month grain.
 # The measures here align the context extension with the existing Claims
@@ -284,6 +267,11 @@ claims_monthly = (
 )
 
 
+# %% [markdown]
+# ## Code section - Build the Gold district Claims context table
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 6. Build the Gold district Claims context table.
 # The priority score blends claims performance, capacity pressure, diversion
@@ -359,18 +347,25 @@ gold_district_claims_context = (
 )
 
 
+# %% [markdown]
+# ## Code section - Stage the Gold context output to Delta
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 7. Stage the Gold context output to Delta.
 # This gives participants a file-based checkpoint even if AI Lakehouse loading is
 # skipped or retried.
 # -----------------------------------------------------------------------------
-gold_district_claims_context_written = write_delta_with_validation(
-    gold_district_claims_context,
-    "gold_district_claims_context",
-)
+gold_district_claims_context.write.format("delta").mode("overwrite").save(f"{gold_stage_base}/gold_district_claims_context")
 print(f"Wrote Gold context Delta output to {gold_stage_base}/gold_district_claims_context")
 
 
+# %% [markdown]
+# ## Code section - Optionally load the extension fact into AI Lakehouse
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 8. Optionally load the extension fact into AI Lakehouse.
 # The existing Date and District dimensions are reused so the workbook can add
@@ -456,27 +451,33 @@ if write_to_ai_lakehouse:
     )
 
 
+# %% [markdown]
+# ## Code section - Final validation display
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 9. Final validation display.
 # Sorting by priority score makes the highest-impact districts visible
-# immediately after the notebook completes. The validation summary then lists
-# every target written by this notebook with row-count evidence.
+# immediately after the notebook completes.
 # -----------------------------------------------------------------------------
 print("Round 2 Gold context complete.")
-gold_district_claims_context_written.orderBy(F.desc("claims_context_priority_score")).show(25, truncate=False)
+gold_district_claims_context.orderBy(F.desc("claims_context_priority_score")).show(25, truncate=False)
 
-validation_summary = spark.createDataFrame(
-    validation_log,
-    [
-        "layer",
-        "object_name",
-        "source_rows",
-        "rows_written_or_inserted",
-        "target_rows_after_write",
-        "target_location",
-        "validation_status",
-    ],
-)
 
-print("Notebook validation summary:")
-display_or_show(validation_summary, rows=20, truncate=False)
+# %% [markdown]
+# ## Expected row counts or displayed results
+# - The workshop sample inserts about 5 district-month context rows
+# - Validation display should show priority score, denial rate, occupancy, wait pressure, and access gap fields
+#
+# ## Safe rerun behaviour
+# Designed for safe reruns. The notebook writes the Delta output and inserts only target keys that do not already exist.
+#
+# ## Common errors and troubleshooting
+# - Extension target table missing: run create_ai_lakehouse_claims_context_extension.sql first.
+# - Target schema not found: check target_catalog and target_schema.
+# - No new rows message: expected when rerunning after a successful insert.
+
+# %% [markdown]
+# ## What you learned
+# You learned how to add a new AI Lakehouse context table beside an existing star schema without disrupting the original dashboard.

@@ -1,0 +1,26 @@
+{
+  "downloads/mpha_notebooks_only.zip": {
+    "bytes": 44093,
+    "sha256": "6f12a386a9b7eb333ae65c2289fd3e0e4b5addbe7d11d94bff46912565f3c14c"
+  },
+  "downloads/mpha_sql_scripts_only.zip": {
+    "bytes": 7738,
+    "sha256": "b5bac89b4cc29440b7fe0d4db41d7de27ea8f906a5744b997abc7448db716f71"
+  },
+  "downloads/mpha_workshop_execution_pack.zip": {
+    "bytes": 55911,
+    "sha256": "953320d9f998cf687d49db921bd68e2d9d7d0a8d11094d118861a124dfc5f5c5"
+  },
+  "downloads/offline_review_bundle.zip": {
+    "bytes": 22162076,
+    "sha256": "edb9ff7acd8bf7e32e84e0928095e1cf6cfaf066da28fc0289988f7904a87ca3"
+  },
+  "downloads/public_healthcare_aidp_workshop_offline_test_bundle.zip": {
+    "bytes": 22162076,
+    "sha256": "edb9ff7acd8bf7e32e84e0928095e1cf6cfaf066da28fc0289988f7904a87ca3"
+  },
+  "downloads/public_healthcare_raw_data_bundle.zip": {
+    "bytes": 160692,
+    "sha256": "16573b283ec0b041391395a2a5ee9c8ac012fe567e3509b484abe24417ab2954"
+  }
+}

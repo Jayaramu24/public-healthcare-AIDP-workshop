@@ -1,41 +1,61 @@
-# PARTICIPANT NOTEBOOK GUIDE
-# 02 Silver - Conform MPHA Operational Context
+# %% [markdown]
+# # Before you run: your assigned environment
 #
-# What this section does and why it matters:
-# - Reads Bronze Delta folders, types and cleans raw fields, standardizes entities, derives operational flags, and publishes reusable Silver Delta tables.
-# - Why it matters: Silver is where MPHA decides whether the data can be trusted across claims, provider, facility, membership, public-health, JSON, and spatial use cases.
+# Use your preloaded notebook when available. If restoring this common download,
+# copy the exact administrator-assigned values into its setup cell:
+# `participant_id`, `volume_base` (shared raw input) and `output_base` (your own
+# output volume). In the Lakehouse notebooks and notebook 99 also set
+# `target_catalog` and `target_schema`. Do not infer paths from your name or copy
+# another participant's values from a screenshot. The administrator must enforce
+# access permissions; string validation is not a security boundary.
 #
-# Inputs and outputs:
-# - Inputs:
+# Notebook filenames do not change when lab numbers change. Run 01, 02, 03 and 04
+# in order. Then follow the guide for 02B/03B, 05, the workflow and agents.
+# Notebook 99 contains on-demand read-only inspection examples.
+#
+# Bronze/Silver/Gold overwrite only the assigned output snapshot. Lakehouse loads
+# append missing keys and are safe to repeat with unchanged source/reference data;
+# they do not update existing measures or implement general CDC. Do not change
+# dimension members or source snapshots without a reviewed loading strategy.
+#
+# This common download changes configuration only, not the tested transformation
+# logic. A restore into a different tenancy still requires its readiness and
+# execution checks. Use Python as notebook default; select SQL only for SQL cells.
+
+# %% [markdown]
+# # 02 Silver - Conform MPHA Operational Context
+#
+# ## What this section does and why it matters
+# Reads Bronze Delta folders, types and cleans raw fields, standardizes entities, derives operational flags, and publishes reusable Silver Delta tables.
+#
+# **Why it matters:** Silver is where MPHA decides whether the data can be trusted across claims, provider, facility, membership, public-health, JSON, and spatial use cases.
+#
+# ## Inputs and outputs
+#
+# **Inputs**
 # - Bronze Delta folders from the Bronze notebook
-# - Outputs:
-# - Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables under `/Volumes/e2eindustrydemos/default/e2eindustrydemovol/workshop_runs/{participant_id}/silver`
 #
-# Important parameters participants may change:
-# - volume_base
-# - participant_id
-# - bronze_base
-# - silver_base
-# - risk_reference_date
+# **Outputs**
+# - Silver district, facility/provider, facility-day, population-health, claims, accreditation, JSON capacity, spatial feature, and document-context tables under `<output_base>/silver`
 #
-# Plain-language explanation before the code:
-# - Read the guide first, then run the code from top to bottom. The early code configures paths and helpers, the middle code builds or transforms data, and the final code writes outputs and prints validation evidence.
+# ## Important parameters participants may change
+# - `volume_base`
+# - `participant_id`
+# - `bronze_base`
+# - `silver_base`
+# - `risk_reference_date`
+
+# %% [markdown]
+# ## Plain-language explanation before the code
+# Run the code cells from top to bottom. The early cells configure paths and helpers, the middle cells build or transform the data, and the final cells write outputs and display validation evidence.
 #
-# Expected row counts or displayed results:
-# - Silver row counts should broadly match source grains: 5 districts, 10 facilities, 1,810 facility-days, 780 weekly population rows, and 1,400 claims rows
-# - Derived displays should show access risk, public-health pressure, denial rates, accreditation bands, JSON capacity fields, and spatial access context
-#
-# Safe rerun behaviour:
-# - Safe for repeat classroom runs. Silver outputs are overwritten from Bronze, so downstream notebooks should be rerun after a Silver rerun.
-#
-# Common errors and troubleshooting:
-# - Missing Bronze table: rerun Bronze and verify bronze_base.
-# - Unexpected nulls after casts: inspect raw CSV values and confirm headers were not modified.
-# - Duplicate or ambiguous columns: keep the selected Silver joins and aliases unchanged.
-#
-# What you learned:
-# - You learned how raw operational signals become trusted, typed, and reusable Silver data products.
-# END PARTICIPANT NOTEBOOK GUIDE
+# Keep the parameter values aligned with the Object Storage bucket, AIDP volume, external catalog, and schema prepared in Lab 0. If you change an input path, rerun the upstream notebook before rerunning this one.
+
+# %% [markdown]
+# ## Code section - Imports and setup
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # Public Healthcare AIDP Workshop
 # Silver notebook: Bronze Delta tables -> typed, conformed Silver Delta tables in AIDP.
 #
@@ -44,6 +64,11 @@
 from pyspark.sql import functions as F
 
 
+# %% [markdown]
+# ## Code section - Configure Bronze input and Silver output paths
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 1. Configure Bronze input and Silver output paths.
 # Silver is where raw strings and nested JSON become typed, business-friendly
@@ -51,17 +76,35 @@ from pyspark.sql import functions as F
 # used in the Bronze notebook so this notebook reads your Bronze output and
 # writes your own Silver output.
 # -----------------------------------------------------------------------------
-volume_base = "/Volumes/e2eindustrydemos/default/e2eindustrydemovol"
-participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Example: 01_TFI_Allan_FM or 02_TF1_Joselito_BDC.
+volume_base = "REPLACE_WITH_SHARED_RAW_VOLUME"
+# Copy the exact mounted paths from the administrator's configuration sheet.
+# Shared input and personal outputs must be separate; never write into raw.
+output_base = "REPLACE_WITH_YOUR_OUTPUT_VOLUME"
+if "REPLACE_" in volume_base or "REPLACE_" in output_base:
+    raise ValueError("Set volume_base and output_base from your assigned configuration.")
+if not volume_base.startswith("/Volumes/") or not output_base.startswith("/Volumes/"):
+    raise ValueError("Use the exact /Volumes/ mounts supplied by the administrator.")
+volume_base = volume_base.rstrip("/")
+output_base = output_base.rstrip("/")
+if output_base == volume_base or output_base.startswith(volume_base + "/"):
+    raise ValueError("Output must be your separate personal volume, not shared raw.")
+print("Input volume:", volume_base, "Personal outputs:", output_base)
+
+participant_id = "REPLACE_WITH_YOUR_PARTICIPANT_ID"  # Exact assigned folder name.
 
 if participant_id == "REPLACE_WITH_YOUR_PARTICIPANT_ID":
     raise ValueError("Set participant_id to your AIDP participant folder name before running this notebook.")
 
-bronze_base = f"{volume_base}/workshop_runs/{participant_id}/bronze"
-silver_base = f"{volume_base}/workshop_runs/{participant_id}/silver"
+bronze_base = f"{output_base}/bronze"
+silver_base = f"{output_base}/silver"
 risk_reference_date = F.to_date(F.lit("2025-06-30"))
 
 
+# %% [markdown]
+# ## Code section - Shared helpers
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 2. Shared helpers.
 # `safe_rate` avoids divide-by-zero errors while still returning a numeric value
@@ -79,6 +122,11 @@ def safe_rate(numerator, denominator):
     return F.when(F.col(denominator) > 0, F.col(numerator) / F.col(denominator)).otherwise(F.lit(0.0))
 
 
+# %% [markdown]
+# ## Code section - Load all Bronze inputs produced by the Bronze notebook
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 3. Load all Bronze inputs produced by the Bronze notebook.
 # The JSON capacity events and GeoJSON service areas remain nested until their
@@ -93,6 +141,11 @@ bronze_facility_capacity_events = read_delta("bronze_facility_capacity_events")
 bronze_healthcare_service_areas_geojson = read_delta("bronze_healthcare_service_areas_geojson")
 
 
+# %% [markdown]
+# ## Code section - Conform district reference data
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 4. Conform district reference data.
 # This becomes the common district lookup for facility, claims, population, and
@@ -111,6 +164,12 @@ silver_district = (
     .dropDuplicates(["district_id"])
 )
 
+
+# %% [markdown]
+# ## Code section - Conform facilities, providers, and accreditation attributes
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 5. Conform facilities, providers, and accreditation attributes.
 # The join to district adds local public-health context to each provider row.
@@ -142,6 +201,12 @@ silver_facility_provider = (
     .dropDuplicates(["facility_id"])
 )
 
+
+# %% [markdown]
+# ## Code section - Clean daily facility operations and derive access-risk signals
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 6. Clean daily facility operations and derive access-risk signals.
 # This step standardizes negative or out-of-range operational measures and
@@ -200,6 +265,12 @@ silver_facility_day = (
     )
 )
 
+
+# %% [markdown]
+# ## Code section - Clean population-health weekly measures
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 7. Clean population-health weekly measures.
 # These fields support equity and public-health pressure calculations.
@@ -223,6 +294,12 @@ silver_population_health_week = (
     .withColumn("immunization_no_show_rate", F.round(safe_rate("missed_appointments", "appointments_booked"), 4))
 )
 
+
+# %% [markdown]
+# ## Code section - Aggregate district-week public-health pressure
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 8. Aggregate district-week public-health pressure.
 # The pressure index blends positivity, appointment no-shows, deprivation, and
@@ -258,6 +335,12 @@ silver_district_health_week = (
     )
 )
 
+
+# %% [markdown]
+# ## Code section - Clean claims, membership, and disbursement data
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 9. Clean claims, membership, and disbursement data.
 # This is the main payer-side table used by the Claims star schema and ML lab.
@@ -301,6 +384,12 @@ silver_claims_membership_disbursement = (
     .dropDuplicates(["claim_id"])
 )
 
+
+# %% [markdown]
+# ## Code section - Derive provider-accreditation pressure
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 10. Derive provider-accreditation pressure.
 # `days_to_expiry` and corrective actions turn accreditation metadata into a
@@ -333,6 +422,12 @@ silver_provider_accreditation = (
     )
 )
 
+
+# %% [markdown]
+# ## Code section - Parse the JSON facility-capacity events
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 11. Parse the JSON facility-capacity events.
 # Nested triage counts and supply alerts become structured columns that can be
@@ -363,6 +458,12 @@ silver_facility_capacity_event = (
     )
 )
 
+
+# %% [markdown]
+# ## Code section - Flatten GeoJSON service-area features
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 12. Flatten GeoJSON service-area features.
 # The geometry is retained as GeoJSON text so it can be loaded into spatial
@@ -379,6 +480,12 @@ silver_spatial_feature = (
     )
 )
 
+
+# %% [markdown]
+# ## Code section - Register all Silver outputs in one write map
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 13. Register all Silver outputs in one write map.
 # Keeping the write list together makes it easy to audit what this notebook
@@ -397,6 +504,11 @@ silver_tables = {
 }
 
 
+# %% [markdown]
+# ## Code section - Persist Silver Delta tables and print the completion handoff
+# This code cell implements the step named above. Read the comments in the cell first, then run it and compare the output with the expected validation notes at the end of the notebook.
+
+# %%
 # -----------------------------------------------------------------------------
 # 14. Persist Silver Delta tables and print the completion handoff.
 # -----------------------------------------------------------------------------
@@ -408,3 +520,21 @@ for table_name, frame in silver_tables.items():
 print(
     "Silver layer complete. Use your document-vector tooling to create silver_playbook_chunk if you want playbook chunks stored beside the Delta outputs."
 )
+
+
+# %% [markdown]
+# ## Expected row counts or displayed results
+# - Silver row counts should broadly match source grains: 5 districts, 10 facilities, 1,810 facility-days, 780 weekly population rows, and 1,400 claims rows
+# - Derived displays should show access risk, public-health pressure, denial rates, accreditation bands, JSON capacity fields, and spatial access context
+#
+# ## Safe rerun behaviour
+# Safe for repeat classroom runs. Silver outputs are overwritten from Bronze, so downstream notebooks should be rerun after a Silver rerun.
+#
+# ## Common errors and troubleshooting
+# - Missing Bronze table: rerun Bronze and verify bronze_base.
+# - Unexpected nulls after casts: inspect raw CSV values and confirm headers were not modified.
+# - Duplicate or ambiguous columns: keep the selected Silver joins and aliases unchanged.
+
+# %% [markdown]
+# ## What you learned
+# You learned how raw operational signals become trusted, typed, and reusable Silver data products.

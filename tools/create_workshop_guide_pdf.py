@@ -407,6 +407,7 @@ def add_image(story: list, image_path: Path, caption: str, available_width: floa
         )
     )
     story.append(Spacer(1, 8))
+    frame.splitByRow = 0
     story.append(frame)
     story.append(Spacer(1, 9))
 
@@ -485,7 +486,7 @@ def render_list(story: list, node: Node, styles: dict[str, ParagraphStyle], orde
 
 
 def render_figure(story: list, node: Node, styles: dict[str, ParagraphStyle], available_width: float) -> None:
-    img_nodes = [child for child in direct_children(node, "img")]
+    img_nodes = [child for child in iter_nodes(node) if child.tag == "img"]
     if not img_nodes:
         return
     img = img_nodes[0]
