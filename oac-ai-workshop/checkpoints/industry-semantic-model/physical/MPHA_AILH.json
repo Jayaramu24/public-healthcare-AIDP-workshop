@@ -1,0 +1,29 @@
+{
+  "database" : {
+    "name" : "MPHA_AILH",
+    "description" : "Healthcare claims star source in AILH. Verified private model save rehearsal.",
+    "databaseType" : "ORACLE_ADW",
+    "connectionPools" : [ {
+      "name" : "New Connection Pool_1",
+      "connection" : "'system'.'semmodel'",
+      "remoteConnection" : false,
+      "maxConnections" : 10,
+      "requiresFullyQualifedTableNames" : true,
+      "connectionTimeout" : 5,
+      "connectionTimeoutUnit" : "MINUTES",
+      "multithreaded" : true,
+      "supportParams" : true,
+      "isolationLevel" : "default",
+      "writeBackConfig" : {
+        "dbSupportsUnicode" : false,
+        "bulkInsertBufferSize" : 10240,
+        "transactionBoundary" : 1000,
+        "tempTablePrefix" : "TT"
+      }
+    } ],
+    "virtualPrivateDatabase" : false,
+    "crmMetadataTables" : false,
+    "allowDirectDatabaseRequests" : false,
+    "allowPopulateQueries" : false
+  }
+}

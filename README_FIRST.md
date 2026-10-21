@@ -19,3 +19,6 @@ is safe for same-input reruns, not general CDC or changing dimension keys.
 The pack deliberately excludes obsolete ML, Kafka/GoldenGate and bulk-admin
 scripts. ML scores stay in your volume; no automatic ML score serving in OAC.
 See VALIDATION_NOTES.md for verified evidence and remaining readiness checks.
+
+
+Lab 8 now links to the three-hour OAC AI program. The separate `downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip` contains its HTML/Markdown guide, screenshots and Claude MCP artifacts; it is included in the offline review bundle. Extract it and open `oac-ai-workshop/index.html`. Client configuration and participant access are pre-work.

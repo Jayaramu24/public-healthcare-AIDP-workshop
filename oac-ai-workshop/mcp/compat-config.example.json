@@ -1,0 +1,14 @@
+{
+  "nodePath": "/ABSOLUTE/PATH/TO/node",
+  "oracleBridgePath": "/ABSOLUTE/oac-mcp-connect/oac-mcp-connect.js",
+  "oracleBridgeConfig": "/ABSOLUTE/WORKSHOP/mcp/oracle-bridge.json",
+  "oacUrl": "https://YOUR_OAC_HOST",
+  "savePolicy": {
+    "parentId": "ACTUAL_DISCOVERED_PRIVATE_FOLDER_ID",
+    "createNames": [
+      "MPHA_MCP_Executive_HTML_Pxx",
+      "MPHA_MCP_Executive_Native_Pxx"
+    ],
+    "replaceIds": []
+  }
+}

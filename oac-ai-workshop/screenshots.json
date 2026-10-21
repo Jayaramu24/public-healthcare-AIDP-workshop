@@ -1,0 +1,1082 @@
+[
+  {
+    "file": "images/01-find-claimstar.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "c8ecfb2e7d44bda4ddeafe74b029aec6dcb853b2ccc8702933c7ee57dc1f2fcd",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-00-start",
+        "caption": "Home search for the original ClaimStar_KJ dataset at 1920 \u00d7 1080."
+      }
+    ]
+  },
+  {
+    "file": "images/02-dataset-actions.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "3b595ff7220ab3833cfc0d68692efe3e1138546cc657eb708418b0e8e074068c",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Dataset actions. Use Open; the editor Save As route is the tested recovery from the failed Duplicate request."
+      }
+    ]
+  },
+  {
+    "file": "images/04-preview-settings-enabled.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "97f786ad19c5731b7f3bfd675d8f7a2ff84a2c691feddfe3219b749f8b1ed442",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "document": "FACILITATOR.md",
+        "caption": "Data Flow AI preview settings enabled during preparation"
+      },
+      {
+        "document": "FACILITATOR.md",
+        "caption": "Preview prerequisites enabled"
+      }
+    ]
+  },
+  {
+    "file": "images/07-save-dataset-workshop-copy.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ff8d0042c02496d6fc228fd9ebf7a0f52775efeac0fb221d5b00c12bb495c2f9",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Editor Save As used to create the rehearsal base. Participants use ClaimStar_Pxx instead of ClaimStar_WS_Base."
+      }
+    ]
+  },
+  {
+    "file": "images/08-workshop-base-saved.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "c8ce842bdbd11be27dd2e31add2a63be08d8c2c486749115311d1ef37c7bc198",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Successful saved base copy. Always check the heading after Save As."
+      }
+    ]
+  },
+  {
+    "file": "images/10-catalog-description-before.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ae27fcee83ecad8f039c1426d0ec29d8fa66f3e6b4bf7e8e8e4c6ca3e007b228",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-02-catalog",
+        "caption": "General inspector for the isolated workshop base before description generation."
+      }
+    ]
+  },
+  {
+    "file": "images/11-catalog-ai-description-result.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "b8deb05302f87db3a94d4fced10512fe633cf697a1713204abb2f45f9374c18f",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-02-catalog",
+        "caption": "Actual generated description on the base copy; it was saved during preparation."
+      }
+    ]
+  },
+  {
+    "file": "images/12-assistant-index-settings.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "87b2f377ed4bc5b2dbf757a539962b933b8b1b1e1f293cbcd56083fc4ea00694",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "Assistant and Homepage Search configuration on the copied dataset."
+      }
+    ]
+  },
+  {
+    "file": "images/14-index-scope.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "9e4d6a5b8b7473925b9ead74eb8b4058b249bf84ceedbec56ccbcb75adb472d4",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "The base scope was expanded from 19 to 20 fields to include the helper."
+      }
+    ]
+  },
+  {
+    "file": "images/15-dataset-assistant-rename.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "9f8288f224c4da8b023e2872e1af96f6bf0d26ab2253a6ac6f76ef307cc9e8c9",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Column Rename settings before generation on ClaimStar_WS_Base."
+      }
+    ]
+  },
+  {
+    "file": "images/16-dataset-ai-name-suggestions.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "6e9d65e8aaf239c110f0678dc7712c05526c070cf643f0dc3c1a0f6a130943c5",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Generated name suggestions. Review the change before applying it."
+      }
+    ]
+  },
+  {
+    "file": "images/17-review-reject-counts-as-attributes.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "80fd15ec20410800a2e9e428846d68148e743d2f084e85235a02b22cb2e9e0fb",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-01-dataset-assistant",
+        "caption": "Actual Treat As suggestions that should be rejected for the claims analysis."
+      }
+    ]
+  },
+  {
+    "file": "images/18-generate-empty-ai-descriptions.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "83b4819ab51bcfdeb4a43a9465163826dcb508c698d27bb6e23d38ef6048d23e",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "Generate menu with Only empty attributes selected as the intended action."
+      }
+    ]
+  },
+  {
+    "file": "images/19-generated-helper-description-review.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "eaa92631d56a4e8a95a711e6cb98158b7082505229c56f7d61b97d66f0ecd57a",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "Generated helper text before the grain correction. Review this critically."
+      }
+    ]
+  },
+  {
+    "file": "images/19b-reviewed-metric-descriptions.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "df3d8a99f6e3c010f97d46245ca0e8d53a4a3de7855c553a40657686c8ea7df2",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "Reviewed metadata after the correction, including the ratio and rounded-mean guidance."
+      }
+    ]
+  },
+  {
+    "file": "images/19c-index-initiated.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "30c9e85de0ba7f18bba3abf41d746aa8003c8ceb696e8ecc53b999b7a4ad527b",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-03-enrichments",
+        "caption": "OAC confirmation that the reviewed dataset index was initiated."
+      }
+    ]
+  },
+  {
+    "file": "images/20-new-workbook.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "93a79e87e84aef5cbc2e6f6f0c0c842e5587bbb513868ffe6ac0c8f57e6689bf",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "New workbook created from the isolated dataset."
+      }
+    ]
+  },
+  {
+    "file": "images/21-workbook-assistant-ready.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "a158f97fec7a9dc7f32e42ee041afea66d8dadaba233bc1e70a952088900279c",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "Assistant panel ready for a typed question."
+      }
+    ]
+  },
+  {
+    "file": "images/22-assistant-generated-chart.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "bbc226395d2e602d1e3237717d979bfdc9ddcbb6ee275b64fe04fed70db94ae5",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "Actual generated district claims chart and explanation."
+      }
+    ]
+  },
+  {
+    "file": "images/23-add-assistant-chart-to-canvas.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "d4b9f1e5dc6d36160a481ebd2fdeee20a75e9f6e4b8c4594b8bb3199b6d009b7",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "Generated chart action used to add the visualization to the canvas."
+      }
+    ]
+  },
+  {
+    "file": "images/24-chart-on-canvas.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "15e9a87b8b5e76c0870dd6708b5a56cb626fc077e083e925a4aaf0fdd46e50ba",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "The chart on the workbook canvas before the calculation and narrative labs."
+      }
+    ]
+  },
+  {
+    "file": "images/25-expression-assistant-prompt.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "914629eb7cf733e1dd78d029a2eaa5e9bf8de7540565834baa55958a304b0c61",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-05-expression",
+        "caption": "Expression Assistant request in the calculation editor."
+      }
+    ]
+  },
+  {
+    "file": "images/26-expression-ai-error.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "41a9e3030d2dedbe39fe724e544dd7df7c8b12e2eaf88d030ca1ca86bcc9d658",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-05-expression",
+        "caption": "Actual tenant generation error. This is a known rehearsal limitation, not a successful AI output."
+      }
+    ]
+  },
+  {
+    "file": "images/27-denial-rate-calculation-validated.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "bcc73fdd1dc232af071d897a54d5fb336f68f1be4f54a8d5800548c74a14299b",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-05-expression",
+        "caption": "The fully qualified fallback expression passed OAC validation."
+      }
+    ]
+  },
+  {
+    "file": "images/28-denial-rate-kpi-percent.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "139162262d5725165f476bea8e7b15b1d216cdfd65a81f46edb2f0a492745835",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-05-expression",
+        "caption": "Percent formatting and the 8.64% aggregate denial-rate checkpoint."
+      }
+    ]
+  },
+  {
+    "file": "images/31-data-flow-input.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "187abb9f1017925760a28c9ad45d2bc3b753dd4860a7da45976bac40e0466acc",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Prepared flow with its input selected. The other nodes are the completed reference; a new participant flow initially has only the input."
+      }
+    ]
+  },
+  {
+    "file": "images/33-data-flow-aggregate-reviewed.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "5f49a5c1ec63c58c9b988835bf064bf675e14a5e84fada1623a83db3b22341a2",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Verified Aggregate step with six sums and the two grouping fields."
+      }
+    ]
+  },
+  {
+    "file": "images/34-flow-denial-expression.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "09298652b5ff4b4cd72b0fd73ceb2820456c93b9abc08b87aac13652c49b0870",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Generated ratio expression after the aggregation."
+      }
+    ]
+  },
+  {
+    "file": "images/35-flow-weighted-expression.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "85734d8186ba8296b8cc72255a935cb05654aebeee51cf9e034f54734e7325c1",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Generated approximate weighted-processing expression."
+      }
+    ]
+  },
+  {
+    "file": "images/36-flow-save-dataset.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "94d595111e7ee4993774b3f710c446c62355e6a7d82275d4a5cfac1e9723e7fa",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Prepared Save Dataset node uses Dataset Storage. Participants must replace the seed output name with Claims_Rollup_Pxx."
+      }
+    ]
+  },
+  {
+    "file": "images/37-rollup-output-thirty-rows.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "871da830c09621ff8360a2b9fef3049865a1c31cb09bb482fbb184de0bc009c1",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Actual output dataset with 30 rows and 10 columns."
+      }
+    ]
+  },
+  {
+    "file": "images/39-data-flow-history-completed.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ab88e68c9121056742dcc7d6292242a70e5fc2ff62d3a744e2e786ab6b806862",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-06-dataflow",
+        "caption": "Actual flow run history showing Completed and a 22-second duration."
+      }
+    ]
+  },
+  {
+    "file": "images/44-semantic-connection-form-ready.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "e8c6308cd4f511c83312ccf9e971d7dfa5b8ddfc517b53005d41786092a79e5f",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "document": "SEMANTIC_SAVE_REPRO.md",
+        "caption": "Original System connection preparation"
+      }
+    ]
+  },
+  {
+    "file": "images/45-semantic-connection-claims-tables.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "5f75557c6aee5fa6bd94886ce813ecbf7090f083c4617de0cc25ef850b012272",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "document": "SEMANTIC_SAVE_REPRO.md",
+        "caption": "Original connection exposes claims tables"
+      }
+    ]
+  },
+  {
+    "file": "images/46-semantic-save-error-fresh-workspace.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "23bcb63231f29063dc5b8fc4cdef4cc9659e4d11f00f44cb0142937482e73a48",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "document": "SEMANTIC_SAVE_REPRO.md",
+        "caption": "Fresh workspace save error"
+      },
+      {
+        "document": "PREPARATION_STATUS.md",
+        "caption": "Fresh workspace save error"
+      }
+    ]
+  },
+  {
+    "file": "images/50-duplicate-chart-for-narrative.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "7b63fa8fa5306b1b148f60856d8b4b2ea2cd2706f57f69df5eb31ea564372063",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Duplicate Visualization under the chart Edit menu."
+      }
+    ]
+  },
+  {
+    "file": "images/51-select-language-narrative.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "92959ad4d0740b4c9e10e88f2d24df34d2d6afca71a3f2f6d8877e229e83bba5",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Language Narrative in the visualization type picker."
+      }
+    ]
+  },
+  {
+    "file": "images/52-language-narrative-factual.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ae34b969bae0d0415ef59ba17d690470f35ff80cd0281cf909ca022a83051432",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Factual narrative generated from district claims volumes."
+      }
+    ]
+  },
+  {
+    "file": "images/53-narrative-properties.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "24a8c46525b3a48ac5d3e92cb02e43e6073830f9362fba04002bed67c38becf8",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Narrative properties including Tones and Level of detail."
+      }
+    ]
+  },
+  {
+    "file": "images/54-language-narrative-business.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "f3d032e0e6a8f9335000fccc6b484648f9d9cfeda0f11769961824ec60fb2f6b",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Actual Business-tone output in the workbook."
+      }
+    ]
+  },
+  {
+    "file": "images/55-save-workbook-seed.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "2a8ba5206978b505eb12c4062fb9de3729afe84388dfb054459d9c6e8420f8c2",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Saving the reusable rehearsal workbook. Participants use Claims_AI_Pxx."
+      }
+    ]
+  },
+  {
+    "file": "images/56-workbook-seed-saved.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "941bf222fce152ceb1f0dbf8e9f025deefc3f47f6bcc39d2123899b27739cce7",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-08-narrative",
+        "caption": "Saved MPHA_Claims_AI_Workshop_Seed containing the chart, denial KPI, and narrative."
+      }
+    ]
+  },
+  {
+    "file": "images/57-assistant-after-metadata-refresh.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "73cf164e8b297a61cf6ea0575da9c5352f15be2236f9804b404eb9c2dce859b6",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-04-workbook",
+        "caption": "Successful district chart response after the final metadata refresh, with the saved workbook visible behind the drawer."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/01-claude-free.jpg",
+    "width": 2400,
+    "height": 1600,
+    "sha256": "aa22e4ae8d1a7574ff64a6fd88ec5a868912042aa8747acb012c91c637947b43",
+    "source": "Native Claude Desktop screenshot",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Claude Desktop Free account used in the live rehearsal. Plan limits can change; no paid upgrade or API key was used."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/03-dataset-discovery.jpg",
+    "width": 2400,
+    "height": 1600,
+    "sha256": "92c48ba505161f0fd21bbe8f726f0d8a85852aba90120cf9a963e748fed15712",
+    "source": "Native Claude Desktop screenshot",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Actual Claude MCP catalog discovery found the two relevant claims datasets."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/04-oac-mcp-connect.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "b56ceb47dd94e8241edfa27cbc94ac42002a6098273d9b80ec50d14ab7ceec28",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Actual Origami OAC profile Developer Options and MCP Connect setup at 1920 \u00d7 1080."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/05-html-executive-overview.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "c6e0b6f416bfd4511adc6f1e5c64b7cef38a0e97a8eb563f247331ba0436f196",
+    "source": "Reviewed local HTML in browser",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Reviewed HTML executive overview used as the visual reference for the native workbook."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/06-html-district-filter.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "5795ce550163eb7ad0a779ac0e21858fc440683f9c6673c4064c8c14af6e4ba0",
+    "source": "Reviewed local HTML in browser",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Central City selection in the reviewed HTML: all visual components and KPI cards respond."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/07-oac-iframe-gallery.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ae6ee7c2390175e3b20e445c1383f3134703c4404366b2a31fee950262176d47",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "The actual OAC visualization gallery exposes iframe. SRCDOC accepts the reviewed self-contained HTML."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/08-claude-generated-html.jpg",
+    "width": 2400,
+    "height": 1600,
+    "sha256": "b948f8303a64faceb6126d0982584dcf2943bbb51ca59c72ce8edf5cfc380531",
+    "source": "Native Claude Desktop screenshot",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "The original HTML artifact generated by Claude after its bounded MCP query. Local review refined the delivered version without repeated Claude requests."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/09-claude-compat-running.jpg",
+    "width": 2400,
+    "height": 1600,
+    "sha256": "4fd954dc069cfd4eb7c1c70e544cf5f967d362441355002f20110205c254d2a7",
+    "source": "Native Claude Desktop screenshot",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Verified Running status after the local compatibility helper was configured. This native desktop capture is 2400 \u00d7 1600."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/10-claude-two-workbooks-saved.jpg",
+    "width": 2400,
+    "height": 1600,
+    "sha256": "d2be2816d76fd09c514ee34fb38ef7cab597d5412591acc912c9526c3803b14b",
+    "source": "Native Claude Desktop screenshot",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Actual Claude MCP save results: both private workbooks created successfully, status ok (200)."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/11-oac-iframe-dashboard.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "75ec82a293f65aaaddedb63fd7ce27d5924a1d2f82927afcb12c496fc260fe33",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Saved HTML workbook opened in OAC: the reviewed HTML renders inside its iframe."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/12-oac-iframe-filter.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ce7bda3ba35e8078a3130be5d24741e5984b876c3dbd979129c470876b3a9846",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Central City inside the OAC iframe: 413 submitted, 84.75% approved, 10.17% denied and 252,227.62 paid."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/13-oac-native-dashboard.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "5ca2b0cf266e9f2e7ea0c3c17f081fa18da1645f7c9d99116c00dc09e45c04ad",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Reopened native OAC workbook after validation: four tiles, two charts and the corrected district summary match the HTML reference."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/14-oac-native-filter.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "6314793f573444267231e4df141339fa5fa2d4fdb9949e79a28495de2bf228e9",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Native Central City result matches the iframe. OAC displays paid as 2,52,227.62 under this account locale; the amount equals 252,227.62."
+      }
+    ]
+  },
+  {
+    "file": "images/claude-mcp/15-oac-native-filter-dialog.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "f4cac54533dcb2428daa485a47d14c77de1dc2f918016ea4b47e646f02d81749",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-09-mcp-claude",
+        "caption": "Native OAC District filter: select Central City, then click outside the popup to apply. Clear selections to restore all districts."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/01-save-reopen-verified.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "cbd819d91c8c876ee2800321929aab06b0e373f9ba9edaeffa5fd364d6656b6d",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Initial physical database name and description persisted after save and reopen."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/02-semmodel-claims-source.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "8b0a8bdb213560d45000fee79c79c2f9129656b6a679b0c744ab1bf82556708b",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Existing semmodel connection exposes the ORIGAMI_P01 claims source tables."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/04-import-five-tables-dialog.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "cea5b770236a94d870e3d7830a4fb00a799017b78fe3693379b862d00f886894",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Correct import selection: all five tables have actual selection checkmarks."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/05-align-database-type.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "8c542ded67c8c478350dae3606ddac12c5ad950b1080dcd8254ae769846e44d3",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "OAC offered to align the database type with the imported Autonomous AI Lakehouse source."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/06-five-physical-tables.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "fc7430cc79ea91ab7a4e450257a24f5daee0d62312fe50dacab0dcb0f2a03338",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "All five physical source tables imported. Always verify the actual final table count."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/07-date-join-configured.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "1f7993a8a6f6afcb3cf3f2f088a9d3cd4125fe08c5db7d24bfa318b1ae5b831f",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Configured date relationship uses differently named fact and dimension date keys."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/08-four-physical-joins-saved.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "3d0638f586315f10fa7b302efc73371ec399d6f909e02acc31d1781ef9bc49e6",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "The four fact-to-dimension joins were explicitly created and saved successfully."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/09-logical-star.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "e6f7a7820705c7e3e49170743af121e446dae91c45ebf5fd8b4c992b7009f1dc",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "The imported logical fact, four dimensions and four logical joins before business table renaming."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/10-ai-column-names-reviewed.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "e5d45d040c2a2b534fe0985738e9c130187ccfae355fad7adbabdaec86dbfc95",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Actual fact naming rehearsal: seven additive measures accepted; four identifiers and two stored segment statistics excluded."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/11-additive-measure-aggregation.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "dbd888a9300985c807cd0daaa51aa1470a762d77068ac59ff062cb0a667458f0",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "The seven additive claims counts and monetary totals use Sum. Keys and stored segment statistics are not reporting measures."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/12-denial-expression-validated.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "02d3ffe2ee71de2dc62b1938aa076dbe7afdb3feb089a1df8419fd808a478ded",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Actual token-based guarded denial calculation validated successfully in the expression editor."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/13-ai-table-description-generated.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "f738d7a7f6b3959a80f8c172b50a6e11993d117aab2aa4a6b2442763fc82c8f9",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Actual generated table description before reviewer adds grain and metric rules."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/14-ai-column-description-generated.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "20287e7ece99ce450c41cbf0c25fb0915e46c52099d7e2bbcfa659298802201c",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Actual generated column description identifies the denominator and zero-denominator behavior."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/15-consistency-zero-errors.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "afa161410b6c25b3e15908854e1cc8b126280f3225bef682ac30d1fe969aceb0",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "All-object consistency check completed with warnings included: zero errors, zero warnings, zero hidden warnings."
+      },
+      {
+        "document": "INDUSTRY_SEMANTIC_DEMO.md",
+        "caption": "Clean consistency result"
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/16-physical-source-preview.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "b97864867d147a45063fdff404fbdca1c544e4568d8f5a1eb87cf6d5c745c061",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Successful source preview through semmodel. OAC explicitly labels the preview as sampled data."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/17-export-private-model.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "b8d8c34570e67de270ba27e3ebdb981c92d3551f4aee472ebcbbe453ff96217b",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Actual private-model archive export dialog. The resulting downloaded SMML archive was inspected locally."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/18-repeatable-dimension-naming.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ba32e82f45d9cae808e363f39d61f5637e37202ac5abfe0a1308d6b6e85ea936",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Rehearsed live naming path. The key suggestion is excluded; Cancel preserves this exercise for the customer session."
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/19-completed-model-reopened.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "72f2d4f11245f35b2afd1f57bd427a42570b7d2b4c1ad8c720c6c2c758ad32ec",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Reopened completed private model with five persisted presentation folders. This is the starting point for the instructor demonstration."
+      },
+      {
+        "document": "INDUSTRY_SEMANTIC_DEMO.md",
+        "caption": "Completed model reopened"
+      }
+    ]
+  },
+  {
+    "file": "images/industry-semantic/20-reviewed-metadata-reopened.jpg",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "fc8eb94f4f7a1bbe77a5f0a2a4c0851896b8022a9d0e4f1d7276ab8a001257f3",
+    "source": "Live OAC screenshot captured through browser automation",
+    "edited": false,
+    "usage": [
+      {
+        "lab": "lab-07-semantic",
+        "caption": "Reviewed denial-ratio metadata and all eight reporting measures persisted after closing and reopening the completed model."
+      }
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+-- NOT YET EXECUTED SUCCESSFULLY. These are acceptance checks for ORIGAMI_P01.
+-- Run as the intended semantic source user in an approved database SQL client.
+-- SELECT only; no DDL, DML, grants, or credential changes.
+-- Compare results with the verified ORIGAMI_ADMIN02 baseline; do not assume equality.
+-- A query through the separate MaxicareWorkshop dataset connection returned a
+-- generic OAC request error. That does not establish whether these data match.
+
+-- 1. Compare with baseline: 622 rows / 622 grains / 1400 submitted /
+-- 1214 approved / 121 denied / 65 pending / 896370.39 paid /
+-- 19025.2 approximate processing numerator / 8.6429 percent / 13.5894 days.
+SELECT COUNT(*) AS FACT_ROWS,
+       COUNT(DISTINCT SERVICE_MONTH_DATE_KEY || ':' || DISTRICT_KEY || ':' ||
+                      PROGRAM_KEY || ':' || CLAIM_TYPE_KEY) AS DISTINCT_GRAIN,
+       SUM(CLAIMS_SUBMITTED) AS SUBMITTED,
+       SUM(APPROVED_CLAIMS) AS APPROVED,
+       SUM(DENIED_CLAIMS) AS DENIED,
+       SUM(PENDING_CLAIMS) AS PENDING,
+       SUM(TOTAL_PAID_AMOUNT) AS PAID,
+       SUM(AVG_PROCESSING_DAYS * CLAIMS_SUBMITTED) AS PROCESSING_NUMERATOR,
+       ROUND(100 * SUM(DENIED_CLAIMS) / NULLIF(SUM(CLAIMS_SUBMITTED), 0), 4)
+           AS DENIAL_PERCENT,
+       ROUND(SUM(AVG_PROCESSING_DAYS * CLAIMS_SUBMITTED) /
+             NULLIF(SUM(CLAIMS_SUBMITTED), 0), 4) AS WEIGHTED_DAYS_APPROX
+FROM ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY;
+
+-- 2. Compare with baseline: 622 joined / 2025-01-01 / 2025-06-01 /
+-- zero missing dimensions / zero status mismatches / zero zero-denominator rows.
+SELECT COUNT(*) AS JOINED_ROWS,
+       TO_CHAR(MIN(D.FULL_DATE), 'YYYY-MM-DD') AS FIRST_MONTH,
+       TO_CHAR(MAX(D.FULL_DATE), 'YYYY-MM-DD') AS LAST_MONTH,
+       SUM(CASE WHEN D.DATE_KEY IS NULL OR X.DISTRICT_KEY IS NULL
+                     OR P.PROGRAM_KEY IS NULL OR C.CLAIM_TYPE_KEY IS NULL
+                THEN 1 ELSE 0 END) AS MISSING_DIMENSION_ROWS,
+       SUM(CASE WHEN F.CLAIMS_SUBMITTED = F.APPROVED_CLAIMS + F.DENIED_CLAIMS
+                                          + F.PENDING_CLAIMS
+                THEN 0 ELSE 1 END) AS STATUS_MISMATCH_ROWS,
+       SUM(CASE WHEN F.CLAIMS_SUBMITTED = 0 THEN 1 ELSE 0 END)
+           AS ZERO_SUBMITTED_ROWS
+FROM ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY F
+LEFT JOIN ORIGAMI_P01.MPHA_DIM_DATE D
+  ON F.SERVICE_MONTH_DATE_KEY = D.DATE_KEY
+LEFT JOIN ORIGAMI_P01.MPHA_DIM_DISTRICT X
+  ON F.DISTRICT_KEY = X.DISTRICT_KEY
+LEFT JOIN ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM P
+  ON F.PROGRAM_KEY = P.PROGRAM_KEY
+LEFT JOIN ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE C
+  ON F.CLAIM_TYPE_KEY = C.CLAIM_TYPE_KEY;
+
+-- 3. Each dimension's row count must equal its distinct key count.
+-- Verify null keys separately if any dimension is missing a validated PK.
+SELECT 'DATE' AS DIMENSION_NAME, COUNT(*) AS ROWS_TOTAL,
+       COUNT(DISTINCT DATE_KEY) AS DISTINCT_KEYS
+FROM ORIGAMI_P01.MPHA_DIM_DATE
+UNION ALL
+SELECT 'DISTRICT', COUNT(*), COUNT(DISTINCT DISTRICT_KEY)
+FROM ORIGAMI_P01.MPHA_DIM_DISTRICT
+UNION ALL
+SELECT 'PROGRAM', COUNT(*), COUNT(DISTINCT PROGRAM_KEY)
+FROM ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM
+UNION ALL
+SELECT 'CLAIM_TYPE', COUNT(*), COUNT(DISTINCT CLAIM_TYPE_KEY)
+FROM ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE;

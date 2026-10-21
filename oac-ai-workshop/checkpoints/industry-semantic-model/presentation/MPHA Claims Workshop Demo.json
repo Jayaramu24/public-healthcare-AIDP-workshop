@@ -1,0 +1,18 @@
+{
+  "subjectArea" : {
+    "name" : "MPHA Claims Workshop Demo",
+    "description" : "Private instructor demo of claims operations metadata. Counts, monetary totals and a guarded denial ratio; no patient-level analytics or currency assumptions.",
+    "sourceBusinessModel" : "businessModel:MPHA Claims",
+    "tableOrder" : [ {
+      "name" : "presentationTable:MPHA Claims Workshop Demo.Claim Classification"
+    }, {
+      "name" : "presentationTable:MPHA Claims Workshop Demo.Claims Metrics"
+    }, {
+      "name" : "presentationTable:MPHA Claims Workshop Demo.Coverage Program"
+    }, {
+      "name" : "presentationTable:MPHA Claims Workshop Demo.District"
+    }, {
+      "name" : "presentationTable:MPHA Claims Workshop Demo.Service Period"
+    } ]
+  }
+}

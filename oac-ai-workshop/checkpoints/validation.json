@@ -1,0 +1,46 @@
+{
+  "source": "CSV downloaded from completed original OAC data flow, not a recreated fixture",
+  "date": "2026-10-19",
+  "rows": 30,
+  "columns": 10,
+  "unique_district_month_grains": 30,
+  "totals": {
+    "Claims Submitted Sum": "1400",
+    "Approved Claims Sum": "1214",
+    "Denied Claims Sum": "121",
+    "Pending Claims Sum": "65",
+    "Total Paid Amount Sum": "896370.39",
+    "Processing Days Total Approx Sum": "19025.2"
+  },
+  "overall_denial_ratio": "0.08642857142857142857142857143",
+  "weighted_processing_days_approx": "13.58942857142857142857142857",
+  "checks_passed": [
+    "row count",
+    "column count",
+    "unique grain",
+    "six totals",
+    "row-level status reconciliation",
+    "all denial ratio rows",
+    "all weighted duration rows"
+  ],
+  "industry_semantic_demo": {
+    "date": "2026-10-20",
+    "model": "MPHA_Claims_Semantic_Demo",
+    "save_reopen": "passed",
+    "assistant_names": "generated and seven fact renames saved",
+    "assistant_table_description": "generated, reviewed and saved",
+    "assistant_column_description": "generated, reviewed and saved",
+    "consistency_errors": 0,
+    "consistency_warnings": 0,
+    "physical_preview": "sampled data returned",
+    "deployment": "not performed",
+    "export": "archive downloaded and inspected"
+  },
+  "not_tested": [
+    "15\u201320 concurrent users",
+    "participant permissions",
+    "Industry ORIGAMI_P01 full-source totals and deployed semantic queries",
+    "reset archive round-trip import",
+    "successful Expression Assistant generation"
+  ]
+}

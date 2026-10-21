@@ -1,0 +1,7 @@
+{
+  "businessModel" : {
+    "name" : "MPHA Claims",
+    "description" : "Monthly claims operations by service period, district, coverage program and claim classification.",
+    "disable" : false
+  }
+}

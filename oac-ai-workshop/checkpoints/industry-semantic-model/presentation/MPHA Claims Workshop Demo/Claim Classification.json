@@ -1,0 +1,18 @@
+{
+  "presentationTable" : {
+    "name" : "Claim Classification",
+    "presentationColumns" : [ {
+      "name" : "CLAIM_TYPE_KEY",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claim Classification.CLAIM_TYPE_KEY"
+    }, {
+      "name" : "CLAIM_TYPE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claim Classification.CLAIM_TYPE"
+    }, {
+      "name" : "SERVICE_CATEGORY",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claim Classification.SERVICE_CATEGORY"
+    }, {
+      "name" : "DIAGNOSIS_GROUP",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claim Classification.DIAGNOSIS_GROUP"
+    } ]
+  }
+}

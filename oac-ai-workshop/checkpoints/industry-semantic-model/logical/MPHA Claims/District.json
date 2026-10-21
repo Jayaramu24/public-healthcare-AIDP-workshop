@@ -1,0 +1,131 @@
+{
+  "logicalTable" : {
+    "name" : "District",
+    "description" : "District geography attributes. One row per district key; population context remains outside the claims fact model.",
+    "type" : "DIMENSION",
+    "logicalColumns" : [ {
+      "name" : "DISTRICT_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.DISTRICT_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DISTRICT_ID",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.DISTRICT_ID" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DISTRICT_NAME",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.DISTRICT_NAME" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "POPULATION",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.POPULATION" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DEPRIVATION_INDEX",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.DEPRIVATION_INDEX" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "ELDERLY_PCT",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.ELDERLY_PCT" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "CHRONIC_CONDITION_PCT",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.CHRONIC_CONDITION_PCT" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "MEDIAN_INCOME_USD",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DISTRICT",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.MEDIAN_INCOME_USD" ]
+          }
+        } ]
+      }
+    } ],
+    "logicalTableSources" : [ {
+      "name" : "MPHA_DIM_DISTRICT",
+      "disable" : false,
+      "tableMapping" : {
+        "tables" : [ "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT" ]
+      },
+      "combineWithOtherFragments" : false,
+      "enableFragmentSelection" : false,
+      "distinctValues" : false
+    } ],
+    "primaryKey" : [ "DISTRICT_KEY" ]
+  }
+}

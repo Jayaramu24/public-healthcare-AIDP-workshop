@@ -1,0 +1,89 @@
+{
+  "logicalTable" : {
+    "name" : "Coverage Program",
+    "description" : "Coverage program, program code, program type and funding source. One row per program key.",
+    "type" : "DIMENSION",
+    "logicalColumns" : [ {
+      "name" : "PROGRAM_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_COVERAGE_PROGRAM",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.PROGRAM_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "PROGRAM_CODE",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_COVERAGE_PROGRAM",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.PROGRAM_CODE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "COVERAGE_PROGRAM",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_COVERAGE_PROGRAM",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.COVERAGE_PROGRAM" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "PROGRAM_TYPE",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_COVERAGE_PROGRAM",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.PROGRAM_TYPE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "FUNDING_SOURCE",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_COVERAGE_PROGRAM",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.FUNDING_SOURCE" ]
+          }
+        } ]
+      }
+    } ],
+    "logicalTableSources" : [ {
+      "name" : "MPHA_DIM_COVERAGE_PROGRAM",
+      "disable" : false,
+      "tableMapping" : {
+        "tables" : [ "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM" ]
+      },
+      "combineWithOtherFragments" : false,
+      "enableFragmentSelection" : false,
+      "distinctValues" : false
+    } ],
+    "primaryKey" : [ "PROGRAM_KEY" ]
+  }
+}

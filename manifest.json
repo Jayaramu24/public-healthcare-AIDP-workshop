@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "workshop_guide.pdf",
-      "rows": 24,
+      "rows": 89,
       "grain": "PDF page"
     },
     {
@@ -287,6 +287,30 @@
       "path": "data/gold_dimensional/fact_provider_accreditation.csv",
       "rows": 10,
       "grain": "provider accreditation fact"
+    },
+    {
+      "path": "oac-ai-workshop/index.html",
+      "rows": 12,
+      "grain": "180-minute OAC AI workshop agenda block"
+    },
+    {
+      "path": "oac-ai-workshop/images",
+      "rows": 76,
+      "grain": "Original OAC/Claude/HTML screenshot"
+    },
+    {
+      "path": "oac-ai-workshop/mcp/MPHA_MCP_Executive_Native.workbook.json",
+      "rows": 1,
+      "grain": "Native OAC workbook definition recreated from HTML"
     }
-  ]
+  ],
+  "oac_ai_module": {
+    "updated": "2026-10-21",
+    "workshop_section": "lab8",
+    "minutes": 180,
+    "screenshot_count": 76,
+    "path": "oac-ai-workshop/index.html",
+    "download": "downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip",
+    "data": "Synthetic MPHA claims; existing source unchanged"
+  }
 }

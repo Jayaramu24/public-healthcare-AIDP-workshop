@@ -7,6 +7,7 @@ from html import escape, unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Iterable
+from urllib.parse import urljoin, urlsplit
 
 from PIL import Image as PILImage
 from reportlab.lib import colors
@@ -151,6 +152,9 @@ def inline_markup(node: Node | str) -> str:
     if node.tag == "code":
         return f'<font name="Courier" color="#245EA6">{inner}</font>'
     if node.tag == "a":
+        href = urljoin("https://jayaramu24.github.io/public-healthcare-AIDP-workshop/", node.attrs.get("href", ""))
+        if urlsplit(href).scheme in {"https", "http"}:
+            return f'<link href="{escape(href, quote=True)}" color="#1A5A96">{inner}</link>'
         return f'<font color="#1A5A96">{inner}</font>'
     return inner
 
@@ -544,6 +548,10 @@ def render_node(story: list, node: Node, styles: dict[str, ParagraphStyle], avai
             story.append(Preformatted(wrap_code(code), styles["code"], maxLineLength=100))
             story.append(Spacer(1, 8))
         return
+
+    # Keep the added MCP heading with its walkthrough and first screenshot.
+    if node.tag == "div" and node.attrs.get("id") == "lab8-mcp-claude":
+        story.append(PageBreak())
 
     # Divs, spans, articles, and other layout nodes are structural in the HTML.
     for child in node.children:

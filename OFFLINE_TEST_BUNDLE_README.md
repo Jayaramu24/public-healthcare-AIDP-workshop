@@ -25,3 +25,8 @@ If you are using the GitHub Pages site, prefer `downloads/mpha_workshop_executio
 7. Validate the Claims star schema using `sql/claims_star_validation.sql`.
 8. For the Round 2 extension, run `sql/create_ai_lakehouse_claims_context_extension.sql`, then run the Silver and Gold context extension notebooks, and validate with `sql/claims_context_extension_validation.sql`.
 9. Use the workflow files only after the individual notebooks have been tested successfully.
+
+
+## OAC AI companion
+
+The updated offline bundle also includes `downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip`. Extract it, then open `oac-ai-workshop/index.html` for the three-hour Lab 8 program. Screenshots, formulas, checkpoints, semantic demo source and MCP HTML/native JSON are available offline; actual OAC/Claude execution needs the assigned online services and approved accounts.

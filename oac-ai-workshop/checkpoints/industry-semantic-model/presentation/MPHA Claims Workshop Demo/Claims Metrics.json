@@ -1,0 +1,32 @@
+{
+  "presentationTable" : {
+    "name" : "Claims Metrics",
+    "description" : "Tracks claims submissions, approvals, denials, pending counts, monetary totals and denial ratio. Grain: service month, district, coverage program and claim type. Counts and amounts use SUM; Claims Denial Ratio divides aggregated denied by aggregated submitted and returns NULL for a zero denominator. Currency is unspecified. Claims operations only; no patient-level clinical outcomes.",
+    "presentationColumns" : [ {
+      "name" : "Claims Submitted",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Claims Submitted"
+    }, {
+      "name" : "Approved Claims",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Approved Claims"
+    }, {
+      "name" : "Denied Claims",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Denied Claims"
+    }, {
+      "name" : "Pending Claims",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Pending Claims"
+    }, {
+      "name" : "Total Submitted Amount",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Total Submitted Amount"
+    }, {
+      "name" : "Total Approved Amount",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Total Approved Amount"
+    }, {
+      "name" : "Total Paid Amount",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Total Paid Amount"
+    }, {
+      "name" : "Claims Denial Ratio",
+      "description" : "Claims denial ratio is aggregated denied claims divided by aggregated submitted claims. Returns NULL if no claims were submitted. Stored as a fraction; format as a percentage. Do not sum or average stored segment rates.",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Claims Metrics.Claims Denial Ratio"
+    } ]
+  }
+}

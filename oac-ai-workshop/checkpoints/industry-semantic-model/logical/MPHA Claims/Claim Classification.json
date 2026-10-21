@@ -1,0 +1,75 @@
+{
+  "logicalTable" : {
+    "name" : "Claim Classification",
+    "description" : "Claim type, diagnosis group and service category. Aggregated operational classifications; no patient-level clinical inference.",
+    "type" : "DIMENSION",
+    "logicalColumns" : [ {
+      "name" : "CLAIM_TYPE_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_CLAIM_TYPE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE.CLAIM_TYPE_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "CLAIM_TYPE",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_CLAIM_TYPE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE.CLAIM_TYPE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "SERVICE_CATEGORY",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_CLAIM_TYPE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE.SERVICE_CATEGORY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DIAGNOSIS_GROUP",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_CLAIM_TYPE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE.DIAGNOSIS_GROUP" ]
+          }
+        } ]
+      }
+    } ],
+    "logicalTableSources" : [ {
+      "name" : "MPHA_DIM_CLAIM_TYPE",
+      "disable" : false,
+      "tableMapping" : {
+        "tables" : [ "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE" ]
+      },
+      "combineWithOtherFragments" : false,
+      "enableFragmentSelection" : false,
+      "distinctValues" : false
+    } ],
+    "primaryKey" : [ "CLAIM_TYPE_KEY" ]
+  }
+}

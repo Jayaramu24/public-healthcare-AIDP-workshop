@@ -1,0 +1,20 @@
+Rehearsal dataset reference only. For participant datasets insert actual OAC data-element tokens.
+If constructing a reference explicitly, use Home > dataset Actions > Inspect > General > Object ID > Copy.
+Replace the ENTIRE object ID inside XSA(...) with your copied ID, including its quoted namespace and dataset name.
+Example shape only: XSA('your-namespace'.'ClaimStar_Pxx')."MPHA_OAC_STAR_CLAIMS"."Denied Claims"
+Keep the source table name and unchanged friendly column names. Validate in OAC before saving.
+
+Claims Denial Rate Workshop
+CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Claims Submitted") = 0 THEN NULL
+ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Denied Claims") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Claims Submitted") END
+
+Weighted Processing Days Approx
+CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Claims Submitted") = 0 THEN NULL
+ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Processing Days Total Approx") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')."MPHA_OAC_STAR_CLAIMS"."Claims Submitted") END
+
+Data flow expressions AFTER aggregation
+Denied Claims Sum / NULLIF(Claims Submitted Sum, 0)
+Processing Days Total Approx Sum / NULLIF(Claims Submitted Sum, 0)
+
+Format the denial ratio as Percent once. Keep processing duration in days and label Approx.
+The denial workbook formula and both data-flow expressions were validated in OAC. The second workbook formula is the equivalent extension and was not added to the new seed workbook.

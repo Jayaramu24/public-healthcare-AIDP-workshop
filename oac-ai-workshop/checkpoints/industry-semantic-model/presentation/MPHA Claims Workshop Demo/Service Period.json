@@ -1,0 +1,33 @@
+{
+  "presentationTable" : {
+    "name" : "Service Period",
+    "presentationColumns" : [ {
+      "name" : "DATE_KEY",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.DATE_KEY"
+    }, {
+      "name" : "FULL_DATE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.FULL_DATE"
+    }, {
+      "name" : "CALENDAR_YEAR",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.CALENDAR_YEAR"
+    }, {
+      "name" : "CALENDAR_QUARTER",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.CALENDAR_QUARTER"
+    }, {
+      "name" : "MONTH_NUMBER",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.MONTH_NUMBER"
+    }, {
+      "name" : "MONTH_NAME",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.MONTH_NAME"
+    }, {
+      "name" : "WEEK_START_DATE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.WEEK_START_DATE"
+    }, {
+      "name" : "DAY_OF_WEEK",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.DAY_OF_WEEK"
+    }, {
+      "name" : "IS_WEEK_START",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Service Period.IS_WEEK_START"
+    } ]
+  }
+}

@@ -1,0 +1,335 @@
+{
+  "criteria": {
+    "columns": {
+      "children": [
+        {
+          "columnID": "Submitted",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Claims submitted"
+            }
+          }
+        },
+        {
+          "columnID": "Approved",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Approved Claims\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Approved claims"
+            }
+          }
+        },
+        {
+          "columnID": "Denied",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Denied Claims\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Denied claims"
+            }
+          }
+        },
+        {
+          "columnID": "Pending",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Pending Claims\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Pending claims"
+            }
+          }
+        },
+        {
+          "columnID": "Paid",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Total Paid Amount\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Total paid"
+            }
+          }
+        },
+        {
+          "columnID": "ProcessingNumerator",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Processing Days Total Approx\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Processing-days numerator (approx)"
+            }
+          }
+        },
+        {
+          "columnID": "District",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "District"
+            }
+          }
+        },
+        {
+          "columnID": "ServiceMonth",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Service Month\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Service month"
+            }
+          }
+        },
+        {
+          "columnID": "ApprovalRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Approved Claims\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Approval %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "DenialRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Denied Claims\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Denial %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "WeightedDays",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Processing Days Total Approx\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Weighted days (approx)"
+            }
+          },
+          "userExpression": true
+        }
+      ]
+    },
+    "criteriaConfig": {
+      "_version": "1.0.2",
+      "settings": {}
+    },
+    "subjectArea": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')",
+    "type": "saw:simpleCriteria",
+    "children": []
+  },
+  "datasources": {
+    "children": [
+      {
+        "subjectArea": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')"
+      }
+    ]
+  },
+  "layouts": {
+    "children": [
+      {
+        "layoutProps": {
+          "customProps": {
+            "text": "{\"_version\":\"1.0.1\",\"oracle.bi.tech.layout.split\":{\"layoutMinSize\":{\"width\":\"100%\",\"height\":531},\"_version\":\"1.0.0\"},\"dimensionFitType\":{\"width\":\"container\",\"height\":\"content\"}}"
+          }
+        },
+        "name": "layout1",
+        "type": "oracle.bi.tech.layout.freeForm",
+        "children": [
+          {
+            "content": {
+              "viewName": "view!1",
+              "type": "view"
+            },
+            "left": "0",
+            "top": "0",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "1648px",
+                "height": "950px"
+              }
+            },
+            "zIndex": 1
+          }
+        ]
+      }
+    ]
+  },
+  "views": {
+    "children": [
+      {
+        "type": "saw:canvas",
+        "viewName": "canvas!1",
+        "rootLayoutName": "layout1",
+        "canvasConfig": {
+          "_version": "1.0.6",
+          "settings": {}
+        },
+        "canvasProps": {
+          "displayFormat": {
+            "formatSpec": {
+              "width": "1648",
+              "height": "950"
+            }
+          },
+          "fitContents": "none",
+          "style": {
+            "background": {
+              "type": "custom",
+              "color": "#faf6ec"
+            }
+          }
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.iframe",
+        "viewName": "view!1",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "oracle.bi.tech.iframe": {
+              "_version": "1.0.0",
+              "settings": {
+                "sourceType": "SRCDOC",
+                "frameSrc": "<!DOCTYPE html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>MPHA Claims | Executive Overview</title>\n<style>\n:root{--bg:#faf6ec;--card:#fffdf7;--ink:#14284b;--mute:#5b6b85;--teal:#0f8b8d;--coral:#e8624f;--line:#e4dcc8}\n*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Segoe UI,Arial,sans-serif;padding:28px}\n.w{max-width:1600px;margin:auto}h1{font-size:30px;margin:0 0 6px}\n.tag{display:inline-block;font-size:12px;background:#f0e8d2;border-radius:10px;padding:3px 10px;color:var(--mute)}\n.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}\nselect{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px}\n.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}\n.c{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}\n.c small{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.04em}\n.c b{display:block;font-size:38px;margin-top:8px}\n.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;margin-bottom:14px}\nh2{font-size:17px;margin:0 0 12px}svg{width:100%;height:auto;display:block}\ntext{fill:var(--ink);font-size:10px}.m{fill:var(--mute)}\ntable{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--line)}\nth:first-child,td:first-child{text-align:left}th{color:var(--mute);font-weight:600}tr.s td{background:#e6f3f1;font-weight:600}\n.n{font-size:11px;color:var(--mute);margin-top:10px}\n</style></head><body><div class=\"w\">\n<div class=\"top\"><div><h1>MPHA Claims | Executive Overview</h1><span class=\"tag\">Jan–Jun 2025 · Synthetic data · Snapshot via OAC MCP</span></div>\n<label>District <select id=\"sel\"></select></label></div>\n<div class=\"k\" id=\"k\"></div>\n<div class=\"g\"><div class=\"c\"><h2>Monthly claims submitted</h2><div id=\"l\"></div></div>\n<div class=\"c\"><h2>Denied claims by district</h2><div id=\"b\"></div></div></div>\n<div class=\"c\"><h2>District summary</h2><div style=\"overflow-x:auto\"><table id=\"t\"></table></div></div>\n<p class=\"n\">Source: OAC dataset ClaimStar_WS_Base, table MPHA_OAC_STAR_CLAIMS; 30 rows (6 months × 5 districts), summed by Service Month and District Name. Approval % = approved ÷ submitted; denial % = denied ÷ submitted, both from summed counts (undefined when no submissions). Paid is shown without a currency. Approximate weighted days = summed processing-days numerator ÷ submitted. Snapshot queried 20 October 2026; the HTML does not refresh from OAC. District selection filters every visual.</p>\n</div>\n<script type=\"application/json\" id=\"d\">{\"cols\":[\"month\",\"district\",\"submitted\",\"approved\",\"denied\",\"pending\",\"paid\",\"procDays\"],\"rows\":[\n[\"2025-01\",\"Central City\",66,58,5,3,43829.42,908.6],[\"2025-01\",\"East River\",57,43,14,0,28613,789.5],[\"2025-01\",\"North Borough\",45,38,4,3,25302.3,654.9],[\"2025-01\",\"South Lakes\",47,42,3,2,42769.41,657.1],[\"2025-01\",\"West Hills\",29,27,2,0,32675.18,402.1],\n[\"2025-02\",\"Central City\",61,54,4,3,39014.31,813.4],[\"2025-02\",\"East River\",48,44,3,1,21537.79,588.8],[\"2025-02\",\"North Borough\",45,42,2,1,26514.62,598.1],[\"2025-02\",\"South Lakes\",39,36,1,2,20002.61,585],[\"2025-02\",\"West Hills\",20,15,3,2,11696.42,270],\n[\"2025-03\",\"Central City\",79,67,9,3,55635.18,1019.5],[\"2025-03\",\"East River\",36,31,4,1,30046.54,514.2],[\"2025-03\",\"North Borough\",44,36,4,4,25614.56,601.7],[\"2025-03\",\"South Lakes\",48,43,3,2,38294.7,718],[\"2025-03\",\"West Hills\",33,31,0,2,8764.45,462.1],\n[\"2025-04\",\"Central City\",73,55,10,8,34981.04,1137.1],[\"2025-04\",\"East River\",56,49,5,2,32595.9,732.3],[\"2025-04\",\"North Borough\",37,33,1,3,21039.55,464],[\"2025-04\",\"South Lakes\",42,37,3,2,13281.53,542],[\"2025-04\",\"West Hills\",28,24,3,1,41661.66,376],\n[\"2025-05\",\"Central City\",81,71,7,3,43133.7,1112.2],[\"2025-05\",\"East River\",48,38,5,5,20021.1,664.6],[\"2025-05\",\"North Borough\",46,41,3,2,29732.93,591.2],[\"2025-05\",\"South Lakes\",47,42,3,2,18361.28,685.5],[\"2025-05\",\"West Hills\",41,38,3,0,34022.94,505],\n[\"2025-06\",\"Central City\",53,45,7,1,35633.97,637],[\"2025-06\",\"East River\",42,33,6,3,37187.19,598.3],[\"2025-06\",\"North Borough\",38,35,1,2,15156.46,472.7],[\"2025-06\",\"South Lakes\",41,39,1,1,45493.56,544.1],[\"2025-06\",\"West Hills\",30,27,2,1,23757.09,380.2]]}</script>\n<script>\nconst D=JSON.parse(document.getElementById('d').textContent).rows.map(r=>({m:r[0],d:r[1],s:r[2],a:r[3],x:r[4],p:r[5],$:r[6],h:r[7]}));\nconst DS=[...new Set(D.map(r=>r.d))].sort(),MS=[...new Set(D.map(r=>r.m))].sort();\nconst ML=[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\"],$=id=>document.getElementById(id);\nconst sum=(a,k)=>a.reduce((t,r)=>t+r[k],0),pct=(n,d)=>d>0?(100*n/d).toFixed(2)+\"%\":\"—\";\nconst f=n=>Math.round(n).toLocaleString(\"en-US\"), money=n=>n.toLocaleString(\"en-US\",{minimumFractionDigits:2,maximumFractionDigits:2});\nconst sel=$(\"sel\");sel.innerHTML='<option value=\"\">All districts</option>'+DS.map(d=>`<option>${d}</option>`).join(\"\");\nfunction render(){const v=sel.value,rows=v?D.filter(r=>r.d===v):D;\nconst s=sum(rows,\"s\");\n$(\"k\").innerHTML=[[\"Claims submitted\",f(s)],[\"Approval %\",pct(sum(rows,\"a\"),s)],[\"Denial %\",pct(sum(rows,\"x\"),s)],[\"Total paid\",money(sum(rows,\"$\"))]].map(x=>`<div class=\"c\"><small>${x[0]}</small><b style=\"${x[0]==\"Denial %\"?\"color:var(--coral)\":\"\"}\">${x[1]}</b></div>`).join(\"\");\nconst ys=MS.map(m=>sum(rows.filter(r=>r.m===m),\"s\")),mx=Math.max(...ys,1),X=i=>60+i*(280/5),Y=y=>130-y/mx*105;\nlet g=\"\";for(let i=0;i<=4;i++){const y=130-i*26.25;g+=`<line x1=\"60\" x2=\"340\" y1=\"${y}\" y2=\"${y}\" stroke=\"#e4dcc8\"/><text class=\"m\" x=\"50\" y=\"${y+3}\" text-anchor=\"end\">${f(mx*i/4)}</text>`}\ng+=`<polyline fill=\"none\" stroke=\"#0f8b8d\" stroke-width=\"2.5\" points=\"${ys.map((y,i)=>X(i)+\",\"+Y(y)).join(\" \")}\"/>`;\nys.forEach((y,i)=>{g+=`<circle cx=\"${X(i)}\" cy=\"${Y(y)}\" r=\"3.5\" fill=\"#0f8b8d\"/><text x=\"${X(i)}\" y=\"${Y(y)-8}\" text-anchor=\"middle\">${y}</text><text class=\"m\" x=\"${X(i)}\" y=\"146\" text-anchor=\"middle\">${ML[i]}</text>`});\n$(\"l\").innerHTML=`<svg viewBox=\"0 0 360 155\" role=\"img\" aria-label=\"Monthly submitted claims\">${g}</svg>`;\nconst selected=v?[v]:DS;const dn=selected.map(d=>[d,sum(D.filter(r=>r.d===d),\"x\")]),bm=Math.max(...dn.map(x=>x[1]),1);\n$(\"b\").innerHTML=`<svg viewBox=\"0 0 360 155\" role=\"img\" aria-label=\"Denied claims by district\">${dn.map((x,i)=>{const w=x[1]/bm*190,y=8+i*29,on=!v||v===x[0];return `<text x=\"92\" y=\"${y+14}\" text-anchor=\"end\" style=\"font-weight:${v===x[0]?700:400}\">${x[0]}</text><rect x=\"100\" y=\"${y}\" width=\"${w}\" height=\"20\" rx=\"3\" fill=\"#e8624f\" opacity=\"${on?1:.3}\"/><text x=\"${106+w}\" y=\"${y+14}\">${x[1]}</text>`}).join(\"\")}</svg>`;\n$(\"t\").innerHTML=\"<tr><th>District</th><th>Submitted</th><th>Approval %</th><th>Denial %</th><th>Paid</th><th>Weighted days (approx)</th></tr>\"+selected.map(d=>{const q=D.filter(r=>r.d===d),n=sum(q,\"s\");return `<tr class=\"${v===d?\"s\":\"\"}\"><td>${d}</td><td>${f(n)}</td><td>${pct(sum(q,\"a\"),n)}</td><td>${pct(sum(q,\"x\"),n)}</td><td>${money(sum(q,\"$\"))}</td><td>${n?(sum(q,\"h\")/n).toFixed(2):\"—\"}</td></tr>`}).join(\"\")}\nsel.onchange=render;render();\n</script></body></html>\n"
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#faf6ec"
+                },
+                "border": {
+                  "type": "none"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "currentView": 0
+  },
+  "parameters": {
+    "_version": "1.0.5"
+  },
+  "reportConfig": {
+    "_version": "1.0.9",
+    "settings": {
+      "oracle.bi.tech.shapeSchemeService": {
+        "_version": "1.0.0",
+        "settings": {
+          "version": "1.0.3",
+          "generation": 0,
+          "domains": {
+            "[\"obitech.category.value\",\"categoricalSchemes\",\"[]\"]": {
+              "generation": 0,
+              "valueMap": {},
+              "type": "categoricalSchemes",
+              "scheme": null,
+              "nextIndex": 0
+            }
+          }
+        }
+      },
+      "oracle.bi.tech.colorSchemeService": {
+        "_version": "1.0.0",
+        "settings": {
+          "version": "1.0.3",
+          "generation": 1,
+          "colorDomains": {
+            "[\"obitech.colorcategory.value\",\"categoricalSchemes\",\"[]\"]": {
+              "generation": 0,
+              "colorMap": {
+                "7f9_3d3a6558843aacf7e96a476cec": "#0f8b8d"
+              },
+              "coloringType": "categoricalSchemes",
+              "colorScheme": null,
+              "noRepeat": true,
+              "hierarchical": false,
+              "nextIndex": 1
+            }
+          },
+          "customColors": [
+            "#0f8b8d"
+          ]
+        }
+      },
+      "projectSettings": {
+        "_version": "1.0.0",
+        "settings": {
+          "dsxWorkbookID": "5b14364d118f452ab3eaca2fd4782ee3",
+          "autoSaveEnabled": false
+        }
+      }
+    }
+  },
+  "eventWiring": {
+    "children": []
+  },
+  "projectVersion": 1168
+}

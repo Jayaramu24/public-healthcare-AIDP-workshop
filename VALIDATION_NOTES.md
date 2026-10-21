@@ -26,8 +26,7 @@ synthetic. Lab 0 is administrator-owned; participant access remains scoped.
 - Fresh Database Users/privilege and participant-permission form screenshots
   remain a documentation follow-up. Existing result screens do not show all
   creation fields. Follow administrator instructions rather than copying names.
-- Browser visual QA of the revised sidebar remains pending; static links and
-  scripts were checked, and the PDF was rendered and inspected.
+- Lab 8 navigation, runbook links and screenshot loading were checked in the browser during the OAC integration; the updated PDF pages were rendered and inspected.
 
 ## Boundaries
 - Snapshot overwrites and missing-key append are not CDC and do not handle
@@ -38,3 +37,12 @@ synthetic. Lab 0 is administrator-owned; participant access remains scoped.
   actions and claims decisions remain human-owned.
 - Facility Access Daily is an independent design challenge, not a supplied or
   verified end-to-end Facility loader.
+
+
+## OAC AI module integrated 21 October 2026
+
+- The new three-hour program is linked from Lab 8, README, downloads and the single-flow/Markdown guide. It includes 76 unedited screenshots: 71 browser captures at 1920 x 1080 and five native Claude captures at 2400 x 1600.
+- Actual rehearsal on 19-20 October verified dataset naming/type recommendations, catalog descriptions, reviewed AI metadata/indexing, workbook charts, a completed rollup flow, narratives and the Industry Analytics semantic metadata demo. Expression Assistant generation failed; the manual expression produced 8.64%.
+- Claude Desktop Free discovered the claims datasets, queried 30 district-month rows and generated HTML. Two private workbooks were created through MCP. The HTML iframe and native visuals matched totals and Central City filters; district ratios were corrected to their explicit aggregation grain before delivery.
+- The native workbook source, HTML snapshot and local compatibility helper are teaching artifacts. They need actual destination dataset references and template compatibility checks when moved between accounts/tenants. No authentication runtime or Oracle utility is redistributed.
+- Publication does not establish participant permissions, repair the original semantic-save defect, deploy the Industry model, or validate 15-20 concurrent authors. See [module status](oac-ai-workshop/PREPARATION_STATUS.md) for remaining gates.

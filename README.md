@@ -16,13 +16,22 @@ All labs are required. Administrators prepare Lab 0; participants follow:
 5. The Lab 4A five-task workflow exercise
 6. RAG knowledge base and Claims copilot (Labs 5 and 6)
 7. Facility Access Daily design challenge
-8. AI Powered Business Analytics
+8. [AI Powered Business Analytics - OAC AI and Claude MCP](https://jayaramu24.github.io/public-healthcare-AIDP-workshop/#lab8)
 
 Deployment names in screenshots are illustrative. Use the administrator-assigned
 workspace, participant folder, raw/output volumes, catalogs, schema and compute.
 
+## OAC AI workshop in Lab 8
+
+[Open the three-hour OAC AI runbook](oac-ai-workshop/index.html) or [download the complete OAC package](downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip).
+
+The prepared program covers the eight OAC AI capabilities and an added Claude MCP exercise: dataset discovery, executive HTML, OAC iframe embedding and native workbook JSON recreated from the HTML reference. It includes 76 original screenshots and metric checkpoints. Semantic Modeler is an instructor demo in Industry Analytics; other feature labs remain hands-on. Client setup is pre-work. Expression Assistant has a validated manual fallback. See [facilitator instructions](oac-ai-workshop/FACILITATOR.md) and [rehearsal evidence and readiness gates](oac-ai-workshop/PREPARATION_STATUS.md).
+
+The previous OAC connection/dataset exercise remains a foundation reference within Lab 8; the earlier AIDP lab sequence is unchanged.
+
 ## Downloads
 
+- [OAC AI workshop package](downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip)
 - [Screenshot-based PDF guide](workshop_guide.pdf)
 - [Execution pack: notebooks, SQL and handoff instructions](downloads/mpha_workshop_execution_pack.zip)
 - [Eight notebooks](downloads/mpha_notebooks_only.zip)

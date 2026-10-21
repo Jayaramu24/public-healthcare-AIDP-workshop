@@ -1,0 +1,254 @@
+{
+  "logicalTable" : {
+    "name" : "Claims Metrics",
+    "description" : "Monthly claims aggregates at service month, district, coverage program and claim type grain. Counts and monetary totals are additive. Stored segment averages and rates are excluded from reporting measures. Currency is not specified in the source.",
+    "type" : "FACT",
+    "logicalColumns" : [ {
+      "name" : "SERVICE_MONTH_DATE_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.SERVICE_MONTH_DATE_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DISTRICT_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.DISTRICT_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "PROGRAM_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.PROGRAM_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "CLAIM_TYPE_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.CLAIM_TYPE_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "Claims Submitted",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.CLAIMS_SUBMITTED" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Approved Claims",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.APPROVED_CLAIMS" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Denied Claims",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.DENIED_CLAIMS" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Pending Claims",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.PENDING_CLAIMS" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Total Submitted Amount",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.TOTAL_SUBMITTED_AMOUNT" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Total Approved Amount",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.TOTAL_APPROVED_AMOUNT" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "Total Paid Amount",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.TOTAL_PAID_AMOUNT" ]
+          }
+        } ]
+      },
+      "aggregation" : {
+        "rule" : "SUM"
+      }
+    }, {
+      "name" : "AVG_PROCESSING_DAYS",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.AVG_PROCESSING_DAYS" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DENIAL_RATE",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_FACT_CLAIMS_MONTHLY",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.DENIAL_RATE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "Claims Denial Ratio",
+      "description" : "Ratio of aggregated denied claims to aggregated submitted claims. Returns NULL for a zero denominator. Format this fraction as a percentage.",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "LOGICAL_COLUMNS",
+        "logicalExpression" : {
+          "expressionTemplate" : "CASE WHEN %1  = 0 THEN NULL ELSE 1.0 * %2  / %1  END",
+          "expressionObjects" : [ "logicalColumn:MPHA Claims.Claims Metrics.Claims Submitted", "logicalColumn:MPHA Claims.Claims Metrics.Denied Claims" ]
+        }
+      }
+    } ],
+    "logicalTableSources" : [ {
+      "name" : "MPHA_FACT_CLAIMS_MONTHLY",
+      "disable" : false,
+      "tableMapping" : {
+        "tables" : [ "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY" ]
+      },
+      "combineWithOtherFragments" : false,
+      "enableFragmentSelection" : false,
+      "distinctValues" : false
+    } ],
+    "joins" : [ {
+      "rightTable" : "logicalTable:MPHA Claims.Claim Classification",
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE",
+      "drivingTable" : "None"
+    }, {
+      "rightTable" : "logicalTable:MPHA Claims.Service Period",
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE",
+      "drivingTable" : "None"
+    }, {
+      "rightTable" : "logicalTable:MPHA Claims.District",
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE",
+      "drivingTable" : "None"
+    }, {
+      "rightTable" : "logicalTable:MPHA Claims.Coverage Program",
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE",
+      "drivingTable" : "None"
+    } ]
+  }
+}

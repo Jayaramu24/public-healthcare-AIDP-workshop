@@ -12,15 +12,23 @@
     "sha256": "953320d9f998cf687d49db921bd68e2d9d7d0a8d11094d118861a124dfc5f5c5"
   },
   "downloads/offline_review_bundle.zip": {
-    "bytes": 22162076,
-    "sha256": "edb9ff7acd8bf7e32e84e0928095e1cf6cfaf066da28fc0289988f7904a87ca3"
+    "bytes": 31070897,
+    "sha256": "207ee81030ee7e253863c87f2804126075e19f93cef12b34f4172305f05996b2"
   },
   "downloads/public_healthcare_aidp_workshop_offline_test_bundle.zip": {
-    "bytes": 22162076,
-    "sha256": "edb9ff7acd8bf7e32e84e0928095e1cf6cfaf066da28fc0289988f7904a87ca3"
+    "bytes": 31070897,
+    "sha256": "207ee81030ee7e253863c87f2804126075e19f93cef12b34f4172305f05996b2"
   },
   "downloads/public_healthcare_raw_data_bundle.zip": {
     "bytes": 160692,
     "sha256": "16573b283ec0b041391395a2a5ee9c8ac012fe567e3509b484abe24417ab2954"
+  },
+  "downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip": {
+    "bytes": 8704019,
+    "sha256": "4acc3e7918438bf40a50b2fed44e2e78b600da8150de36e4ae544cd47ce1fded"
+  },
+  "workshop_guide.pdf": {
+    "bytes": 27886058,
+    "sha256": "d061d19587cab0bb1aaadb17b23ce9440e1846d073e82ce82908f8812da597ad"
   }
 }

@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-20",
+  "model": "MPHA_Claims_Semantic_Demo",
+  "instance": "Industry Analytics",
+  "workspace_id": "ea90db2a-459e-4d03-8500-a48bec8ba68c",
+  "export_sha256": "5de037d42f1a31b413e506d49ffb58e47b2b268a194d111f138ee4a9d6879bd7",
+  "source_connection": "'system'.'semmodel'",
+  "source_schema": "ORIGAMI_P01",
+  "physical_tables": 5,
+  "logical_tables": 5,
+  "presentation_tables": 5,
+  "logical_fact_joins": 4,
+  "additive_sum_measures": [
+    "Claims Submitted",
+    "Approved Claims",
+    "Denied Claims",
+    "Pending Claims",
+    "Total Submitted Amount",
+    "Total Approved Amount",
+    "Total Paid Amount"
+  ],
+  "reporting_measures": [
+    "Claims Submitted",
+    "Approved Claims",
+    "Denied Claims",
+    "Pending Claims",
+    "Total Submitted Amount",
+    "Total Approved Amount",
+    "Total Paid Amount",
+    "Claims Denial Ratio"
+  ],
+  "ratio_definition": {
+    "derivedFrom": "LOGICAL_COLUMNS",
+    "logicalExpression": {
+      "expressionTemplate": "CASE WHEN %1  = 0 THEN NULL ELSE 1.0 * %2  / %1  END",
+      "expressionObjects": [
+        "logicalColumn:MPHA Claims.Claims Metrics.Claims Submitted",
+        "logicalColumn:MPHA Claims.Claims Metrics.Denied Claims"
+      ]
+    }
+  },
+  "ui_checks": [
+    "completed model saved and reopened",
+    "AI fact naming generated and seven renames applied",
+    "AI dimension naming preview generated and canceled to preserve replay",
+    "AI table and column descriptions generated, reviewed and saved",
+    "all-object consistency with warnings included: 0 errors, 0 warnings",
+    "physical fact sampled preview returned data",
+    "archive export downloaded and inspected"
+  ],
+  "credential_fields_found": 0,
+  "not_verified": [
+    "full ORIGAMI_P01 totals and dimension completeness",
+    "deployed subject-area queries",
+    "reset archive round-trip import",
+    "concurrent participant capacity"
+  ],
+  "deployed": false
+}

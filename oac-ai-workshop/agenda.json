@@ -1,0 +1,74 @@
+[
+  {
+    "lab": "lab-00-start",
+    "title": "Lab 0 Get ready for the MPHA workshop",
+    "minutes": 10,
+    "status": "Required"
+  },
+  {
+    "lab": "lab-01-dataset-assistant",
+    "title": "Lab 1 Prepare a dataset with Dataset Assistant",
+    "minutes": 15,
+    "status": "Verified with review exercise"
+  },
+  {
+    "lab": "lab-02-catalog",
+    "title": "Lab 2 Generate a catalog description",
+    "minutes": 10,
+    "status": "Verified"
+  },
+  {
+    "lab": "lab-03-enrichments",
+    "title": "Lab 3 Enrich the metadata used by AI",
+    "minutes": 10,
+    "status": "Verified"
+  },
+  {
+    "lab": "lab-04-workbook",
+    "title": "Lab 4 Build a chart with Workbook Assistant",
+    "minutes": 20,
+    "status": "Verified"
+  },
+  {
+    "lab": "lab-05-expression",
+    "title": "Lab 5 Validate a denial-rate calculation",
+    "minutes": 15,
+    "status": "AI error with verified fallback"
+  },
+  {
+    "lab": "break",
+    "title": "Take a ten minute break",
+    "minutes": 10,
+    "status": "Pause"
+  },
+  {
+    "lab": "lab-06-dataflow",
+    "title": "Lab 6 Build and run a rollup with Data Flow Assistant",
+    "minutes": 25,
+    "status": "Verified"
+  },
+  {
+    "lab": "lab-07-semantic",
+    "title": "Lab 7 Watch the Semantic Modeler Assistant demo",
+    "minutes": 15,
+    "status": "Verified instructor demo \u00b7 Industry Analytics"
+  },
+  {
+    "lab": "lab-08-narrative",
+    "title": "Lab 8 Add and challenge a Language Narrative",
+    "minutes": 15,
+    "status": "Verified with wording review"
+  },
+  {
+    "lab": "lab-09-mcp-claude",
+    "title": "Lab 9 Create executive dashboards with Claude and OAC MCP",
+    "minutes": 30,
+    "status": "Verified \u00b7 Claude Free + two saved OAC workbooks"
+  },
+  {
+    "lab": "lab-09-capstone",
+    "title": "Finish with a claims analysis checkpoint",
+    "minutes": 5,
+    "status": "Required"
+  }
+]

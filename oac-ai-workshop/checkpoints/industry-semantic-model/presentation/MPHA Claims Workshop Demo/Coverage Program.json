@@ -1,0 +1,21 @@
+{
+  "presentationTable" : {
+    "name" : "Coverage Program",
+    "presentationColumns" : [ {
+      "name" : "PROGRAM_KEY",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Coverage Program.PROGRAM_KEY"
+    }, {
+      "name" : "PROGRAM_CODE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Coverage Program.PROGRAM_CODE"
+    }, {
+      "name" : "COVERAGE_PROGRAM",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Coverage Program.COVERAGE_PROGRAM"
+    }, {
+      "name" : "PROGRAM_TYPE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Coverage Program.PROGRAM_TYPE"
+    }, {
+      "name" : "FUNDING_SOURCE",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.Coverage Program.FUNDING_SOURCE"
+    } ]
+  }
+}

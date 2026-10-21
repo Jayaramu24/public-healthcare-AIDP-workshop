@@ -1,0 +1,36 @@
+{
+  "prepared_from": "Actual OAC MCP resources/read on private authoring and validation workbooks",
+  "html_reference": "MPHA_Executive_Overview.html",
+  "html_sha256": "77e0c26d8fb34f58c3a7a877a7fb1e8e10ce3d1b6778df8362ba5b1c5aac3d54",
+  "palette": {
+    "background": "#faf6ec",
+    "card": "#fffdf7",
+    "ink": "#14284b",
+    "muted": "#5b6b85",
+    "teal": "#0f8b8d",
+    "coral": "#e8624f",
+    "border": "#e4dcc8"
+  },
+  "canvas": {
+    "width": 1648,
+    "height": 950
+  },
+  "native_visuals": [
+    "4 KPI tiles",
+    "monthly line",
+    "district horizontal bar",
+    "district summary table",
+    "native text heading and source note"
+  ],
+  "dataset": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')",
+  "projectVersion": 1168,
+  "scope": "Private /My Folders/MPHA_AI_Workshop; create new demo names only",
+  "validation": "Both new private workbooks created by Claude MCP; rendered in OAC; aggregate totals and Central City filters verified; corrected saved native JSON read back.",
+  "differences": [
+    "Native district filter lives in OAC filter bar; HTML selector lives inside iframe.",
+    "HTML is an embedded static snapshot; native visuals query OAC.",
+    "Native spacing, chart axes and typography depend on supported OAC rendering.",
+    "Native amounts use the account locale digit grouping (896,370.39 = 8,96,370.39)."
+  ],
+  "district_table": "Separate explicit SUM(... BY District Name) ratio expressions preserve table grain; aggregate KPI expressions remain distinct."
+}

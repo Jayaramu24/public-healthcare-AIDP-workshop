@@ -1,0 +1,31 @@
+{
+  "physicalTable" : {
+    "name" : "MPHA_DIM_CLAIM_TYPE",
+    "sourceType" : "TABLE",
+    "physicalColumns" : [ {
+      "name" : "CLAIM_TYPE_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : false
+    }, {
+      "name" : "CLAIM_TYPE",
+      "dataType" : "VARCHAR",
+      "length" : 40,
+      "nullable" : true
+    }, {
+      "name" : "SERVICE_CATEGORY",
+      "dataType" : "VARCHAR",
+      "length" : 80,
+      "nullable" : true
+    }, {
+      "name" : "DIAGNOSIS_GROUP",
+      "dataType" : "VARCHAR",
+      "length" : 80,
+      "nullable" : true
+    } ],
+    "caching" : {
+      "enable" : true,
+      "expiryTime" : 0
+    }
+  }
+}

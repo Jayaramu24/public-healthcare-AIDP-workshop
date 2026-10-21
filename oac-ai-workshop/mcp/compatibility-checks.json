@@ -1,0 +1,14 @@
+{
+  "result": "passed",
+  "scope": "Offline local compatibility helper only; no OAC access or catalog changes",
+  "checks": [
+    "advertised content object schema",
+    "stringified content normalized before forwarding",
+    "reject other name",
+    "reject other folder",
+    "reject connection write",
+    "reject unapproved write",
+    "reject unapproved replacement",
+    "read-only calls forwarded"
+  ]
+}

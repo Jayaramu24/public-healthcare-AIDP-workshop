@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-20",
+  "account_plan": "Claude Desktop Free",
+  "bridge": "Oracle oac-mcp-connect 1.5.0.0.0, official OAC download, local stdio",
+  "compatibility_helper": "Normalizes content string to object and restricts the two approved save targets; Oracle bridge unchanged",
+  "claude_task_requests": 5,
+  "request_accounting": [
+    "catalog discovery",
+    "bounded query and HTML artifact",
+    "first save attempt stopped INVALID_INPUT",
+    "small correction attempt stopped INVALID_INPUT",
+    "fresh conversation after local compatibility repair: both creates succeeded"
+  ],
+  "workbooks": [
+    {
+      "name": "MPHA_MCP_Executive_HTML",
+      "id": "L3VzZXJzL2pheWFyYW0ua3Jpc2huYW1hY2hhckBvcmFjbGUuY29tL01QSEFfQUlfV29ya3Nob3AvTVBIQV9NQ1BfRXhlY3V0aXZlX0hUTUw",
+      "path": "/@Catalog/users/jayaram.krishnamachar@oracle.com/MPHA_AI_Workshop/MPHA_MCP_Executive_HTML",
+      "viewUrl": "https://origamioac-ax8pbfw1r0gu-0q.analytics.ap-singapore-2.ocp.oraclecloud.com/ui/dv/?pageid=visualAnalyzer&reportmode=full&reportpath=%2F%40Catalog%2Fusers%2Fjayaram.krishnamachar%40oracle.com%2FMPHA_AI_Workshop%2FMPHA_MCP_Executive_HTML",
+      "create_via": "Claude MCP save_catalog_content",
+      "create_status": "ok 200"
+    },
+    {
+      "name": "MPHA_MCP_Executive_Native",
+      "id": "L3VzZXJzL2pheWFyYW0ua3Jpc2huYW1hY2hhckBvcmFjbGUuY29tL01QSEFfQUlfV29ya3Nob3AvTVBIQV9NQ1BfRXhlY3V0aXZlX05hdGl2ZQ",
+      "path": "/@Catalog/users/jayaram.krishnamachar@oracle.com/MPHA_AI_Workshop/MPHA_MCP_Executive_Native",
+      "viewUrl": "https://origamioac-ax8pbfw1r0gu-0q.analytics.ap-singapore-2.ocp.oraclecloud.com/ui/dv/?pageid=visualAnalyzer&reportmode=full&reportpath=%2F%40Catalog%2Fusers%2Fjayaram.krishnamachar%40oracle.com%2FMPHA_AI_Workshop%2FMPHA_MCP_Executive_Native",
+      "create_via": "Claude MCP save_catalog_content",
+      "create_status": "ok 200"
+    }
+  ],
+  "readback": "Both catalog content resources retrieved; delivered JSON is saved content",
+  "native_refinement": "Approved existing native ID refined via MCP without Claude tokens; explicit district aggregation, native percentage formats and readable table font",
+  "checks": {
+    "html_snapshot_rows": 30,
+    "original_segment_rows": 622,
+    "period": "2025-01-01 inclusive to 2025-07-01 exclusive",
+    "default": {
+      "submitted": 1400,
+      "approval_percent": "86.71",
+      "denial_percent": "8.64",
+      "paid": "896370.39"
+    },
+    "central_city": {
+      "submitted": 413,
+      "approval_percent": "84.75",
+      "denial_percent": "10.17",
+      "paid": "252227.62",
+      "weighted_days_approx": "13.63"
+    },
+    "native_district_rows": "all five rows match reviewed HTML, including rates and weighted duration",
+    "iframe_selector": "Central City updates all four KPIs, monthly line, bars and summary",
+    "native_filter": "Central City updates all four KPIs, monthly line, bar and summary; one table row",
+    "persistence": "Native reopened after MCP refinement; corrected values persisted"
+  },
+  "limits": [
+    "Native and HTML spacing/axes/font metrics differ within OAC supported visuals",
+    "Native uses account locale digit grouping; no currency assumed",
+    "HTML is a dated embedded snapshot, not a live MCP connection",
+    "Dataset access and client setup for participant accounts not rehearsed",
+    "No 15–20-user load test; Claude Free quotas not guaranteed",
+    "Cross-tenant JSON import requires actual dataset/template adaptation"
+  ]
+}

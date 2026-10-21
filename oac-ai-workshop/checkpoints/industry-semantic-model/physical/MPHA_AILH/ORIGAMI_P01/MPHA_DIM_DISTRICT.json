@@ -1,0 +1,51 @@
+{
+  "physicalTable" : {
+    "name" : "MPHA_DIM_DISTRICT",
+    "sourceType" : "TABLE",
+    "physicalColumns" : [ {
+      "name" : "DISTRICT_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : false
+    }, {
+      "name" : "DISTRICT_ID",
+      "dataType" : "VARCHAR",
+      "length" : 10,
+      "nullable" : true
+    }, {
+      "name" : "DISTRICT_NAME",
+      "dataType" : "VARCHAR",
+      "length" : 80,
+      "nullable" : true
+    }, {
+      "name" : "POPULATION",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "DEPRIVATION_INDEX",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "ELDERLY_PCT",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "CHRONIC_CONDITION_PCT",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "MEDIAN_INCOME_USD",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    } ],
+    "caching" : {
+      "enable" : true,
+      "expiryTime" : 0
+    }
+  }
+}

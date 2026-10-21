@@ -1,0 +1,30 @@
+{
+  "presentationTable" : {
+    "name" : "District",
+    "presentationColumns" : [ {
+      "name" : "DISTRICT_KEY",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.DISTRICT_KEY"
+    }, {
+      "name" : "DISTRICT_ID",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.DISTRICT_ID"
+    }, {
+      "name" : "DISTRICT_NAME",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.DISTRICT_NAME"
+    }, {
+      "name" : "POPULATION",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.POPULATION"
+    }, {
+      "name" : "DEPRIVATION_INDEX",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.DEPRIVATION_INDEX"
+    }, {
+      "name" : "ELDERLY_PCT",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.ELDERLY_PCT"
+    }, {
+      "name" : "CHRONIC_CONDITION_PCT",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.CHRONIC_CONDITION_PCT"
+    }, {
+      "name" : "MEDIAN_INCOME_USD",
+      "sourceLogicalColumn" : "logicalColumn:MPHA Claims.District.MEDIAN_INCOME_USD"
+    } ]
+  }
+}

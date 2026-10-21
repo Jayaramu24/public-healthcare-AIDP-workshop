@@ -1,0 +1,36 @@
+{
+  "physicalTable" : {
+    "name" : "MPHA_DIM_COVERAGE_PROGRAM",
+    "sourceType" : "TABLE",
+    "physicalColumns" : [ {
+      "name" : "PROGRAM_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : false
+    }, {
+      "name" : "PROGRAM_CODE",
+      "dataType" : "VARCHAR",
+      "length" : 12,
+      "nullable" : true
+    }, {
+      "name" : "COVERAGE_PROGRAM",
+      "dataType" : "VARCHAR",
+      "length" : 80,
+      "nullable" : true
+    }, {
+      "name" : "PROGRAM_TYPE",
+      "dataType" : "VARCHAR",
+      "length" : 80,
+      "nullable" : true
+    }, {
+      "name" : "FUNDING_SOURCE",
+      "dataType" : "VARCHAR",
+      "length" : 100,
+      "nullable" : true
+    } ],
+    "caching" : {
+      "enable" : true,
+      "expiryTime" : 0
+    }
+  }
+}

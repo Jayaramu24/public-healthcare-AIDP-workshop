@@ -1,0 +1,113 @@
+{
+  "physicalTable" : {
+    "name" : "MPHA_FACT_CLAIMS_MONTHLY",
+    "sourceType" : "TABLE",
+    "physicalColumns" : [ {
+      "name" : "SERVICE_MONTH_DATE_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "DISTRICT_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "PROGRAM_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "CLAIM_TYPE_KEY",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "CLAIMS_SUBMITTED",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "APPROVED_CLAIMS",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "DENIED_CLAIMS",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "PENDING_CLAIMS",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "TOTAL_SUBMITTED_AMOUNT",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "TOTAL_APPROVED_AMOUNT",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "TOTAL_PAID_AMOUNT",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "AVG_PROCESSING_DAYS",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    }, {
+      "name" : "DENIAL_RATE",
+      "dataType" : "NUMERIC",
+      "length" : 0,
+      "nullable" : true
+    } ],
+    "caching" : {
+      "enable" : true,
+      "expiryTime" : 0
+    },
+    "joins" : [ {
+      "rightTable" : "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE",
+      "useJoinExpression" : false,
+      "joinConditions" : [ {
+        "leftColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.SERVICE_MONTH_DATE_KEY",
+        "rightColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.DATE_KEY"
+      } ],
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE"
+    }, {
+      "rightTable" : "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT",
+      "useJoinExpression" : false,
+      "joinConditions" : [ {
+        "leftColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.DISTRICT_KEY",
+        "rightColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DISTRICT.DISTRICT_KEY"
+      } ],
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE"
+    }, {
+      "rightTable" : "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM",
+      "useJoinExpression" : false,
+      "joinConditions" : [ {
+        "leftColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.PROGRAM_KEY",
+        "rightColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_COVERAGE_PROGRAM.PROGRAM_KEY"
+      } ],
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE"
+    }, {
+      "rightTable" : "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE",
+      "useJoinExpression" : false,
+      "joinConditions" : [ {
+        "leftColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_FACT_CLAIMS_MONTHLY.CLAIM_TYPE_KEY",
+        "rightColumn" : "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_CLAIM_TYPE.CLAIM_TYPE_KEY"
+      } ],
+      "joinType" : "INNER",
+      "cardinality" : "MANY_TO_ONE"
+    } ]
+  }
+}

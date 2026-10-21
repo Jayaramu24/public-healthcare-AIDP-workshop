@@ -1,0 +1,16 @@
+{
+  "mcpServers": [
+    {
+      "url": "https://YOUR_OAC_HOST",
+      "default": true,
+      "browserAuthMode": "system",
+      "sync": true,
+      "stateDir": "/ABSOLUTE/PRIVATE/oac-mcp-state",
+      "includeExperimental": true,
+      "mcpEnabledTools": "oracle_analytics-search_catalog,oracle_analytics-find_matching_datasources,oracle_analytics-describe_data,oracle_analytics-execute_oac_ansi_sql,oracle_analytics-execute_logical_sql,oracle_analytics-save_catalog_content",
+      "allowedFileRoots": [
+        "/ABSOLUTE/WORKSHOP/mcp"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,692 @@
+[
+  {
+    "file": "FACILITATOR.md",
+    "bytes": 13869,
+    "sha256": "d100fcba80f5b7bea462554467bbc2347eea372ce87bd3fdde3843b5ae74188d"
+  },
+  {
+    "file": "GIT_INTEGRATION.md",
+    "bytes": 1372,
+    "sha256": "8e32ec9776892f25b2deaf6522e0984f8eed7d75bcbe658253c98dc82e7c2eed"
+  },
+  {
+    "file": "INDUSTRY_SEMANTIC_DEMO.md",
+    "bytes": 4099,
+    "sha256": "1310825cbc226db605dd040227693f27be7796e4cb83b89c2da6a1d24c602ba0"
+  },
+  {
+    "file": "PREPARATION_STATUS.md",
+    "bytes": 11340,
+    "sha256": "7e80e7f962f641b4bc0848d45312b400f27aded6290d4422611eef8d1af02148"
+  },
+  {
+    "file": "README.md",
+    "bytes": 4755,
+    "sha256": "876a4fbbbea2bcb975c3f002843a4aa516cdf16d17f25c7fb1d0451ee2925f6d"
+  },
+  {
+    "file": "SEMANTIC_SAVE_REPRO.md",
+    "bytes": 2894,
+    "sha256": "3841ca51e51b447964a2b9bbb895f00ba89f7d1c7d58e17cd6c38480844b4501"
+  },
+  {
+    "file": "SOURCES.md",
+    "bytes": 9201,
+    "sha256": "042fa38645a6ea7849e1d1fe48462021c99450dd7407585c958ee18d96b07457"
+  },
+  {
+    "file": "agenda.json",
+    "bytes": 1855,
+    "sha256": "ea13203737ef63e1c3b2cf0eaedf5b453017bae75d78fc00e217e89cc12d6c4f"
+  },
+  {
+    "file": "checkpoints/MPHA_Claims_Rollup_Seed.csv",
+    "bytes": 2823,
+    "sha256": "b62de6eb903d77aca7a23bd60b777e978d82aa02eb3ea1d7218fe18db803fffa"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims/Claim Classification.json",
+    "bytes": 2576,
+    "sha256": "38d3a8ed18fca13a6cd6eb3489da606233b26a81eae6557623c4881062259390"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims/Claims Metrics.json",
+    "bytes": 8914,
+    "sha256": "5ccaf6603de3782c86f4e358ee474f1d47a45f1dff0786186fd5ea30d01f76bb"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims/Coverage Program.json",
+    "bytes": 3080,
+    "sha256": "0991a2a32fa3756fd370412c6c72a4664a06a6a0ce52a0cb11274f20c5f56115"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims/District.json",
+    "bytes": 4452,
+    "sha256": "391b0bdeb8ddad1b1c63f9325f9439c14fa83413084a2226621d295ceae08caa"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims/Service Period.json",
+    "bytes": 4836,
+    "sha256": "cc6f2c377e16890d586e5bd077b131ff5a01004a918fc1c22873978c98ea2639"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/logical/MPHA Claims.json",
+    "bytes": 200,
+    "sha256": "c076df17634e69027b32c49b1cf6f10c3b8251b859ffe01341027a4584551c88"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01/MPHA_DIM_CLAIM_TYPE.json",
+    "bytes": 658,
+    "sha256": "5a45dc58467f5cfdc138c51be714e87d3d705ba369979689e2851dfd04a34d5f"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01/MPHA_DIM_COVERAGE_PROGRAM.json",
+    "bytes": 778,
+    "sha256": "fab9ba4dc19f08c2d5b01ab3c4218c70dd3929177f776b4d1f2598579e7c4277"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01/MPHA_DIM_DATE.json",
+    "bytes": 1215,
+    "sha256": "12ea8f51f0ad889ccabc11768e2f1be5f16a43115ce472dcef13b1a6982d300e"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01/MPHA_DIM_DISTRICT.json",
+    "bytes": 1120,
+    "sha256": "40f0733e594074990256fba6cc98e71068b8b11c76110fd1cdb69c85ef2e5ffb"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01/MPHA_FACT_CLAIMS_MONTHLY.json",
+    "bytes": 3451,
+    "sha256": "462f2859ab68af9e0f474e6f92ca735b8a55bc5b0af8d53743ef07a79f070758"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH/ORIGAMI_P01.json",
+    "bytes": 49,
+    "sha256": "e89e1b550ddcb26f80525189eed85fecc56987edaadb1e5a203115022f2c7a4c"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/physical/MPHA_AILH.json",
+    "bytes": 921,
+    "sha256": "9db30ce25365a0643617fb370fdee5e5fb1ca3c844534a552e3d3baf78ae3dab"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo/Claim Classification.json",
+    "bytes": 643,
+    "sha256": "a744ff0f5188b9fdaec5bd84e5f56fc18b1cf7367becb8675f56086807c95df7"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo/Claims Metrics.json",
+    "bytes": 1839,
+    "sha256": "804f9f9122a2488ca6c353d54e4b91ecb2247bde317bea8af5760da07fedb3b1"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo/Coverage Program.json",
+    "bytes": 747,
+    "sha256": "e5440a2c91fc788b12d77cacc21ac3ff6210aea686941231b04a5b578edc369b"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo/District.json",
+    "bytes": 1081,
+    "sha256": "369bea797ff006ca3a9db01654f1e2de3321e8e74955a9c2b34fabcc081eb85e"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo/Service Period.json",
+    "bytes": 1227,
+    "sha256": "9a339567be4e7ec0643f0b0eddad826b62ce528ad9908d495e4b6423f4d2b509"
+  },
+  {
+    "file": "checkpoints/industry-semantic-model/presentation/MPHA Claims Workshop Demo.json",
+    "bytes": 757,
+    "sha256": "c923870b23700de64c92590a81cf0f061f0612f7840c1972e53a34451fdfda57"
+  },
+  {
+    "file": "checkpoints/package-verification.json",
+    "bytes": 303,
+    "sha256": "f65b3d332945215faa4fd2bd7fc382480f25ebc047d7b55308f589b7eebacc78"
+  },
+  {
+    "file": "checkpoints/semantic-model-verification.json",
+    "bytes": 1914,
+    "sha256": "5fe0bab1d64c9603100c0419085638e6c7baf6f7d5eaf666638282f5acb87dfa"
+  },
+  {
+    "file": "checkpoints/validation.json",
+    "bytes": 1549,
+    "sha256": "6b520388d50db047f604a03069251709956049dfbbe7d581f64911eab19b6653"
+  },
+  {
+    "file": "images/01-find-claimstar.jpg",
+    "bytes": 51259,
+    "sha256": "c8ecfb2e7d44bda4ddeafe74b029aec6dcb853b2ccc8702933c7ee57dc1f2fcd"
+  },
+  {
+    "file": "images/02-dataset-actions.jpg",
+    "bytes": 60408,
+    "sha256": "3b595ff7220ab3833cfc0d68692efe3e1138546cc657eb708418b0e8e074068c"
+  },
+  {
+    "file": "images/04-preview-settings-enabled.jpg",
+    "bytes": 72945,
+    "sha256": "97f786ad19c5731b7f3bfd675d8f7a2ff84a2c691feddfe3219b749f8b1ed442"
+  },
+  {
+    "file": "images/07-save-dataset-workshop-copy.jpg",
+    "bytes": 293702,
+    "sha256": "ff8d0042c02496d6fc228fd9ebf7a0f52775efeac0fb221d5b00c12bb495c2f9"
+  },
+  {
+    "file": "images/08-workshop-base-saved.jpg",
+    "bytes": 417432,
+    "sha256": "c8ce842bdbd11be27dd2e31add2a63be08d8c2c486749115311d1ef37c7bc198"
+  },
+  {
+    "file": "images/10-catalog-description-before.jpg",
+    "bytes": 113504,
+    "sha256": "ae27fcee83ecad8f039c1426d0ec29d8fa66f3e6b4bf7e8e8e4c6ca3e007b228"
+  },
+  {
+    "file": "images/11-catalog-ai-description-result.jpg",
+    "bytes": 115242,
+    "sha256": "b8deb05302f87db3a94d4fced10512fe633cf697a1713204abb2f45f9374c18f"
+  },
+  {
+    "file": "images/12-assistant-index-settings.jpg",
+    "bytes": 93612,
+    "sha256": "87b2f377ed4bc5b2dbf757a539962b933b8b1b1e1f293cbcd56083fc4ea00694"
+  },
+  {
+    "file": "images/14-index-scope.jpg",
+    "bytes": 116307,
+    "sha256": "9e4d6a5b8b7473925b9ead74eb8b4058b249bf84ceedbec56ccbcb75adb472d4"
+  },
+  {
+    "file": "images/15-dataset-assistant-rename.jpg",
+    "bytes": 381909,
+    "sha256": "9f8288f224c4da8b023e2872e1af96f6bf0d26ab2253a6ac6f76ef307cc9e8c9"
+  },
+  {
+    "file": "images/16-dataset-ai-name-suggestions.jpg",
+    "bytes": 381805,
+    "sha256": "6e9d65e8aaf239c110f0678dc7712c05526c070cf643f0dc3c1a0f6a130943c5"
+  },
+  {
+    "file": "images/17-review-reject-counts-as-attributes.jpg",
+    "bytes": 366295,
+    "sha256": "80fd15ec20410800a2e9e428846d68148e743d2f084e85235a02b22cb2e9e0fb"
+  },
+  {
+    "file": "images/18-generate-empty-ai-descriptions.jpg",
+    "bytes": 136595,
+    "sha256": "83b4819ab51bcfdeb4a43a9465163826dcb508c698d27bb6e23d38ef6048d23e"
+  },
+  {
+    "file": "images/19-generated-helper-description-review.jpg",
+    "bytes": 152365,
+    "sha256": "eaa92631d56a4e8a95a711e6cb98158b7082505229c56f7d61b97d66f0ecd57a"
+  },
+  {
+    "file": "images/19b-reviewed-metric-descriptions.jpg",
+    "bytes": 155226,
+    "sha256": "df3d8a99f6e3c010f97d46245ca0e8d53a4a3de7855c553a40657686c8ea7df2"
+  },
+  {
+    "file": "images/19c-index-initiated.jpg",
+    "bytes": 128304,
+    "sha256": "30c9e85de0ba7f18bba3abf41d746aa8003c8ceb696e8ecc53b999b7a4ad527b"
+  },
+  {
+    "file": "images/20-new-workbook.jpg",
+    "bytes": 149047,
+    "sha256": "93a79e87e84aef5cbc2e6f6f0c0c842e5587bbb513868ffe6ac0c8f57e6689bf"
+  },
+  {
+    "file": "images/21-workbook-assistant-ready.jpg",
+    "bytes": 94219,
+    "sha256": "a158f97fec7a9dc7f32e42ee041afea66d8dadaba233bc1e70a952088900279c"
+  },
+  {
+    "file": "images/22-assistant-generated-chart.jpg",
+    "bytes": 133945,
+    "sha256": "bbc226395d2e602d1e3237717d979bfdc9ddcbb6ee275b64fe04fed70db94ae5"
+  },
+  {
+    "file": "images/23-add-assistant-chart-to-canvas.jpg",
+    "bytes": 155314,
+    "sha256": "d4b9f1e5dc6d36160a481ebd2fdeee20a75e9f6e4b8c4594b8bb3199b6d009b7"
+  },
+  {
+    "file": "images/24-chart-on-canvas.jpg",
+    "bytes": 101340,
+    "sha256": "15e9a87b8b5e76c0870dd6708b5a56cb626fc077e083e925a4aaf0fdd46e50ba"
+  },
+  {
+    "file": "images/25-expression-assistant-prompt.jpg",
+    "bytes": 119082,
+    "sha256": "914629eb7cf733e1dd78d029a2eaa5e9bf8de7540565834baa55958a304b0c61"
+  },
+  {
+    "file": "images/26-expression-ai-error.jpg",
+    "bytes": 114508,
+    "sha256": "41a9e3030d2dedbe39fe724e544dd7df7c8b12e2eaf88d030ca1ca86bcc9d658"
+  },
+  {
+    "file": "images/27-denial-rate-calculation-validated.jpg",
+    "bytes": 118981,
+    "sha256": "bcc73fdd1dc232af071d897a54d5fb336f68f1be4f54a8d5800548c74a14299b"
+  },
+  {
+    "file": "images/28-denial-rate-kpi-percent.jpg",
+    "bytes": 103538,
+    "sha256": "139162262d5725165f476bea8e7b15b1d216cdfd65a81f46edb2f0a492745835"
+  },
+  {
+    "file": "images/31-data-flow-input.jpg",
+    "bytes": 263358,
+    "sha256": "187abb9f1017925760a28c9ad45d2bc3b753dd4860a7da45976bac40e0466acc"
+  },
+  {
+    "file": "images/33-data-flow-aggregate-reviewed.jpg",
+    "bytes": 160996,
+    "sha256": "5f49a5c1ec63c58c9b988835bf064bf675e14a5e84fada1623a83db3b22341a2"
+  },
+  {
+    "file": "images/34-flow-denial-expression.jpg",
+    "bytes": 205054,
+    "sha256": "09298652b5ff4b4cd72b0fd73ceb2820456c93b9abc08b87aac13652c49b0870"
+  },
+  {
+    "file": "images/35-flow-weighted-expression.jpg",
+    "bytes": 206645,
+    "sha256": "85734d8186ba8296b8cc72255a935cb05654aebeee51cf9e034f54734e7325c1"
+  },
+  {
+    "file": "images/36-flow-save-dataset.jpg",
+    "bytes": 213480,
+    "sha256": "94d595111e7ee4993774b3f710c446c62355e6a7d82275d4a5cfac1e9723e7fa"
+  },
+  {
+    "file": "images/37-rollup-output-thirty-rows.jpg",
+    "bytes": 312565,
+    "sha256": "871da830c09621ff8360a2b9fef3049865a1c31cb09bb482fbb184de0bc009c1"
+  },
+  {
+    "file": "images/39-data-flow-history-completed.jpg",
+    "bytes": 147666,
+    "sha256": "ab88e68c9121056742dcc7d6292242a70e5fc2ff62d3a744e2e786ab6b806862"
+  },
+  {
+    "file": "images/44-semantic-connection-form-ready.jpg",
+    "bytes": 83161,
+    "sha256": "e8c6308cd4f511c83312ccf9e971d7dfa5b8ddfc517b53005d41786092a79e5f"
+  },
+  {
+    "file": "images/45-semantic-connection-claims-tables.jpg",
+    "bytes": 80874,
+    "sha256": "5f75557c6aee5fa6bd94886ce813ecbf7090f083c4617de0cc25ef850b012272"
+  },
+  {
+    "file": "images/46-semantic-save-error-fresh-workspace.jpg",
+    "bytes": 44197,
+    "sha256": "23bcb63231f29063dc5b8fc4cdef4cc9659e4d11f00f44cb0142937482e73a48"
+  },
+  {
+    "file": "images/50-duplicate-chart-for-narrative.jpg",
+    "bytes": 110895,
+    "sha256": "7b63fa8fa5306b1b148f60856d8b4b2ea2cd2706f57f69df5eb31ea564372063"
+  },
+  {
+    "file": "images/51-select-language-narrative.jpg",
+    "bytes": 136823,
+    "sha256": "92959ad4d0740b4c9e10e88f2d24df34d2d6afca71a3f2f6d8877e229e83bba5"
+  },
+  {
+    "file": "images/52-language-narrative-factual.jpg",
+    "bytes": 132455,
+    "sha256": "ae34b969bae0d0415ef59ba17d690470f35ff80cd0281cf909ca022a83051432"
+  },
+  {
+    "file": "images/53-narrative-properties.jpg",
+    "bytes": 138639,
+    "sha256": "24a8c46525b3a48ac5d3e92cb02e43e6073830f9362fba04002bed67c38becf8"
+  },
+  {
+    "file": "images/54-language-narrative-business.jpg",
+    "bytes": 139199,
+    "sha256": "f3d032e0e6a8f9335000fccc6b484648f9d9cfeda0f11769961824ec60fb2f6b"
+  },
+  {
+    "file": "images/55-save-workbook-seed.jpg",
+    "bytes": 135023,
+    "sha256": "2a8ba5206978b505eb12c4062fb9de3729afe84388dfb054459d9c6e8420f8c2"
+  },
+  {
+    "file": "images/56-workbook-seed-saved.jpg",
+    "bytes": 143147,
+    "sha256": "941bf222fce152ceb1f0dbf8e9f025deefc3f47f6bcc39d2123899b27739cce7"
+  },
+  {
+    "file": "images/57-assistant-after-metadata-refresh.jpg",
+    "bytes": 182460,
+    "sha256": "73cf164e8b297a61cf6ea0575da9c5352f15be2236f9804b404eb9c2dce859b6"
+  },
+  {
+    "file": "images/claude-mcp/01-claude-free.jpg",
+    "bytes": 110428,
+    "sha256": "aa22e4ae8d1a7574ff64a6fd88ec5a868912042aa8747acb012c91c637947b43"
+  },
+  {
+    "file": "images/claude-mcp/03-dataset-discovery.jpg",
+    "bytes": 417890,
+    "sha256": "92c48ba505161f0fd21bbe8f726f0d8a85852aba90120cf9a963e748fed15712"
+  },
+  {
+    "file": "images/claude-mcp/04-oac-mcp-connect.jpg",
+    "bytes": 124316,
+    "sha256": "b56ceb47dd94e8241edfa27cbc94ac42002a6098273d9b80ec50d14ab7ceec28"
+  },
+  {
+    "file": "images/claude-mcp/05-html-executive-overview.jpg",
+    "bytes": 127660,
+    "sha256": "c6e0b6f416bfd4511adc6f1e5c64b7cef38a0e97a8eb563f247331ba0436f196"
+  },
+  {
+    "file": "images/claude-mcp/06-html-district-filter.jpg",
+    "bytes": 100046,
+    "sha256": "5795ce550163eb7ad0a779ac0e21858fc440683f9c6673c4064c8c14af6e4ba0"
+  },
+  {
+    "file": "images/claude-mcp/07-oac-iframe-gallery.jpg",
+    "bytes": 134679,
+    "sha256": "ae6ee7c2390175e3b20e445c1383f3134703c4404366b2a31fee950262176d47"
+  },
+  {
+    "file": "images/claude-mcp/08-claude-generated-html.jpg",
+    "bytes": 543885,
+    "sha256": "b948f8303a64faceb6126d0982584dcf2943bbb51ca59c72ce8edf5cfc380531"
+  },
+  {
+    "file": "images/claude-mcp/09-claude-compat-running.jpg",
+    "bytes": 252697,
+    "sha256": "4fd954dc069cfd4eb7c1c70e544cf5f967d362441355002f20110205c254d2a7"
+  },
+  {
+    "file": "images/claude-mcp/10-claude-two-workbooks-saved.jpg",
+    "bytes": 332259,
+    "sha256": "d2be2816d76fd09c514ee34fb38ef7cab597d5412591acc912c9526c3803b14b"
+  },
+  {
+    "file": "images/claude-mcp/11-oac-iframe-dashboard.jpg",
+    "bytes": 135870,
+    "sha256": "75ec82a293f65aaaddedb63fd7ce27d5924a1d2f82927afcb12c496fc260fe33"
+  },
+  {
+    "file": "images/claude-mcp/12-oac-iframe-filter.jpg",
+    "bytes": 108343,
+    "sha256": "ce7bda3ba35e8078a3130be5d24741e5984b876c3dbd979129c470876b3a9846"
+  },
+  {
+    "file": "images/claude-mcp/13-oac-native-dashboard.jpg",
+    "bytes": 126949,
+    "sha256": "5ca2b0cf266e9f2e7ea0c3c17f081fa18da1645f7c9d99116c00dc09e45c04ad"
+  },
+  {
+    "file": "images/claude-mcp/14-oac-native-filter.jpg",
+    "bytes": 101043,
+    "sha256": "6314793f573444267231e4df141339fa5fa2d4fdb9949e79a28495de2bf228e9"
+  },
+  {
+    "file": "images/claude-mcp/15-oac-native-filter-dialog.jpg",
+    "bytes": 97593,
+    "sha256": "f4cac54533dcb2428daa485a47d14c77de1dc2f918016ea4b47e646f02d81749"
+  },
+  {
+    "file": "images/industry-semantic/01-save-reopen-verified.jpg",
+    "bytes": 44457,
+    "sha256": "cbd819d91c8c876ee2800321929aab06b0e373f9ba9edaeffa5fd364d6656b6d"
+  },
+  {
+    "file": "images/industry-semantic/02-semmodel-claims-source.jpg",
+    "bytes": 81960,
+    "sha256": "8b0a8bdb213560d45000fee79c79c2f9129656b6a679b0c744ab1bf82556708b"
+  },
+  {
+    "file": "images/industry-semantic/04-import-five-tables-dialog.jpg",
+    "bytes": 105590,
+    "sha256": "cea5b770236a94d870e3d7830a4fb00a799017b78fe3693379b862d00f886894"
+  },
+  {
+    "file": "images/industry-semantic/05-align-database-type.jpg",
+    "bytes": 85494,
+    "sha256": "8c542ded67c8c478350dae3606ddac12c5ad950b1080dcd8254ae769846e44d3"
+  },
+  {
+    "file": "images/industry-semantic/06-five-physical-tables.jpg",
+    "bytes": 50127,
+    "sha256": "fc7430cc79ea91ab7a4e450257a24f5daee0d62312fe50dacab0dcb0f2a03338"
+  },
+  {
+    "file": "images/industry-semantic/07-date-join-configured.jpg",
+    "bytes": 62032,
+    "sha256": "1f7993a8a6f6afcb3cf3f2f088a9d3cd4125fe08c5db7d24bfa318b1ae5b831f"
+  },
+  {
+    "file": "images/industry-semantic/08-four-physical-joins-saved.jpg",
+    "bytes": 71019,
+    "sha256": "3d0638f586315f10fa7b302efc73371ec399d6f909e02acc31d1781ef9bc49e6"
+  },
+  {
+    "file": "images/industry-semantic/09-logical-star.jpg",
+    "bytes": 71216,
+    "sha256": "e6f7a7820705c7e3e49170743af121e446dae91c45ebf5fd8b4c992b7009f1dc"
+  },
+  {
+    "file": "images/industry-semantic/10-ai-column-names-reviewed.jpg",
+    "bytes": 90634,
+    "sha256": "e5d45d040c2a2b534fe0985738e9c130187ccfae355fad7adbabdaec86dbfc95"
+  },
+  {
+    "file": "images/industry-semantic/11-additive-measure-aggregation.jpg",
+    "bytes": 79161,
+    "sha256": "dbd888a9300985c807cd0daaa51aa1470a762d77068ac59ff062cb0a667458f0"
+  },
+  {
+    "file": "images/industry-semantic/12-denial-expression-validated.jpg",
+    "bytes": 92598,
+    "sha256": "02d3ffe2ee71de2dc62b1938aa076dbe7afdb3feb089a1df8419fd808a478ded"
+  },
+  {
+    "file": "images/industry-semantic/13-ai-table-description-generated.jpg",
+    "bytes": 61193,
+    "sha256": "f738d7a7f6b3959a80f8c172b50a6e11993d117aab2aa4a6b2442763fc82c8f9"
+  },
+  {
+    "file": "images/industry-semantic/14-ai-column-description-generated.jpg",
+    "bytes": 85849,
+    "sha256": "20287e7ece99ce450c41cbf0c25fb0915e46c52099d7e2bbcfa659298802201c"
+  },
+  {
+    "file": "images/industry-semantic/15-consistency-zero-errors.jpg",
+    "bytes": 48978,
+    "sha256": "afa161410b6c25b3e15908854e1cc8b126280f3225bef682ac30d1fe969aceb0"
+  },
+  {
+    "file": "images/industry-semantic/16-physical-source-preview.jpg",
+    "bytes": 183931,
+    "sha256": "b97864867d147a45063fdff404fbdca1c544e4568d8f5a1eb87cf6d5c745c061"
+  },
+  {
+    "file": "images/industry-semantic/17-export-private-model.jpg",
+    "bytes": 150613,
+    "sha256": "b8d8c34570e67de270ba27e3ebdb981c92d3551f4aee472ebcbbe453ff96217b"
+  },
+  {
+    "file": "images/industry-semantic/18-repeatable-dimension-naming.jpg",
+    "bytes": 71731,
+    "sha256": "ba32e82f45d9cae808e363f39d61f5637e37202ac5abfe0a1308d6b6e85ea936"
+  },
+  {
+    "file": "images/industry-semantic/19-completed-model-reopened.jpg",
+    "bytes": 50904,
+    "sha256": "72f2d4f11245f35b2afd1f57bd427a42570b7d2b4c1ad8c720c6c2c758ad32ec"
+  },
+  {
+    "file": "images/industry-semantic/20-reviewed-metadata-reopened.jpg",
+    "bytes": 81561,
+    "sha256": "fc8eb94f4f7a1bbe77a5f0a2a4c0851896b8022a9d0e4f1d7276ab8a001257f3"
+  },
+  {
+    "file": "index.html",
+    "bytes": 102542,
+    "sha256": "ed26144c4cde1007de603140e3e6eea158fa7629c3ea7b2246e0e4d3f7cef427"
+  },
+  {
+    "file": "labs/break.md",
+    "bytes": 354,
+    "sha256": "a7bd20873f0a2273aa5afedbe663fa5d5ea520325df94917a694dca5befd37f0"
+  },
+  {
+    "file": "labs/lab-00-start.md",
+    "bytes": 3834,
+    "sha256": "a18e8dc9fe477f2ef298273f1ec9f8def2098170493b540b660f3db9b85f119b"
+  },
+  {
+    "file": "labs/lab-01-dataset-assistant.md",
+    "bytes": 4164,
+    "sha256": "b722d35c57858833db43d2382ea845e413858e8881673e05c13fab58b933b633"
+  },
+  {
+    "file": "labs/lab-02-catalog.md",
+    "bytes": 1646,
+    "sha256": "5e3033cd03ca9f311610345bb1d4982398e28df7b7758fbc32c745c38ad58562"
+  },
+  {
+    "file": "labs/lab-03-enrichments.md",
+    "bytes": 4518,
+    "sha256": "5960e3c669f0b858d425f4b35465e349d866d065e545a44b8b7eee963db0ebc2"
+  },
+  {
+    "file": "labs/lab-04-workbook.md",
+    "bytes": 4019,
+    "sha256": "01f459ca19c8106b5f4953ff14699d036804b0122e8bd18b6181c4fea92f77f5"
+  },
+  {
+    "file": "labs/lab-05-expression.md",
+    "bytes": 4029,
+    "sha256": "6b84332d3b56477afe14a1bc881499f07de6ed93313e8c2de6bd4f4072e22004"
+  },
+  {
+    "file": "labs/lab-06-dataflow.md",
+    "bytes": 5817,
+    "sha256": "564790231cb2ca9a8de9e77105cb6a53621071c99adcd42226ec85cbb71e0a5e"
+  },
+  {
+    "file": "labs/lab-07-semantic.md",
+    "bytes": 19446,
+    "sha256": "e9f9e740ed20ee3c347f0538d5a2414dd84690efed178688f53fd7515e00a5df"
+  },
+  {
+    "file": "labs/lab-08-narrative.md",
+    "bytes": 3580,
+    "sha256": "3369d2b99ed6c7bf0bf42df87f9889ad46aae6a87d097014682560bef7519fdb"
+  },
+  {
+    "file": "labs/lab-09-capstone.md",
+    "bytes": 1510,
+    "sha256": "75248355e05c23d80e13eb63e9c810977d8f01115c8109b8d0d69d91f795672f"
+  },
+  {
+    "file": "labs/lab-09-mcp-claude.md",
+    "bytes": 16262,
+    "sha256": "f9d595eb325879611d5461a95b6ceb6005fcdf17d2f9633489813f018d9370d1"
+  },
+  {
+    "file": "mcp/MPHA_Executive_Overview.html",
+    "bytes": 7241,
+    "sha256": "77e0c26d8fb34f58c3a7a877a7fb1e8e10ce3d1b6778df8362ba5b1c5aac3d54"
+  },
+  {
+    "file": "mcp/MPHA_MCP_Executive_HTML.workbook.json",
+    "bytes": 18017,
+    "sha256": "ccbaeac1231394eea048c714ab9b2f522c0953ed4a5429916c770e9058548287"
+  },
+  {
+    "file": "mcp/MPHA_MCP_Executive_Native.workbook.json",
+    "bytes": 69163,
+    "sha256": "eb9b4dceae25e2b5d868e81a1b911c34ac4770eaa29a0938d1b72d34fd25dd5c"
+  },
+  {
+    "file": "mcp/README.md",
+    "bytes": 7000,
+    "sha256": "4cb8d26598bd7a4a1e55e7484f7cdc60e2e11807648fd90d728421e62075c7b4"
+  },
+  {
+    "file": "mcp/claims-mcp-snapshot.json",
+    "bytes": 3816,
+    "sha256": "22f8314dd8978f71706728405a221576156b78c350fd6a747de7ab2fe08c94c0"
+  },
+  {
+    "file": "mcp/claude-desktop.example.json",
+    "bytes": 232,
+    "sha256": "0d891573886b2ca6b3d05d0ed805898d7dad733605e180ff1dfe6904fc8c50fa"
+  },
+  {
+    "file": "mcp/claude-oac-compat.cjs",
+    "bytes": 2053,
+    "sha256": "cf8088b405da50fdcce82ecdb63a3084fc5db1d148be0b77d881f59a5e7688f4"
+  },
+  {
+    "file": "mcp/compat-config.example.json",
+    "bytes": 421,
+    "sha256": "1c498e0f910cd819a21062239eeabba5bf2f249e9f9c7fcc6f20e89fd4844aec"
+  },
+  {
+    "file": "mcp/compatibility-checks.json",
+    "bytes": 411,
+    "sha256": "588b85b94112052adaf90a3bbf654537b283fecbafcc2b8790474beda109d8ec"
+  },
+  {
+    "file": "mcp/design-mapping.json",
+    "bytes": 1519,
+    "sha256": "678d21c36eb7d411dfe2288d0129abc319536c1d8484e34893c5daedb535e3f2"
+  },
+  {
+    "file": "mcp/oracle-bridge.example.json",
+    "bytes": 558,
+    "sha256": "230b7c1631bb8e50da1dca65aae0865af5f3aa7870f8c002385b59102d52be67"
+  },
+  {
+    "file": "mcp/verification.json",
+    "bytes": 3475,
+    "sha256": "d2a1454362789d91a0eaf8ed1f5202eae6ae8a339bc05ced1c64fa0241c23897"
+  },
+  {
+    "file": "screenshots.json",
+    "bytes": 35362,
+    "sha256": "48e43e9d024dbe3196cf511c6dc25537ba12415c5498f6382696aa98fc52534f"
+  },
+  {
+    "file": "scripts/build_model_archive.py",
+    "bytes": 869,
+    "sha256": "179f2a8c1bd5c778518018c6bab6b573f10522168e4ec4cc915319257a01e945"
+  },
+  {
+    "file": "sql/OAC_AILH_Semantic_Model_ReadOnly_Checks.sql",
+    "bytes": 5650,
+    "sha256": "915b40a4d489d393ac03c0eb9500b88ecf80f36b66da8edd7a3abe67c08889bb"
+  },
+  {
+    "file": "sql/ORIGAMI_P01_ReadOnly_Acceptance.sql",
+    "bytes": 3204,
+    "sha256": "f92ea973726fc49688a3e4dd5a7feb4d198d1d65a3ade2eecc169e56e67a7215"
+  },
+  {
+    "file": "sql/workbook_calculations.txt",
+    "bytes": 1766,
+    "sha256": "067511e464993ea3ec51b37ad5a859587d1d067d07c3802b33f9032f336ca91c"
+  },
+  {
+    "file": "verify_package.py",
+    "bytes": 13623,
+    "sha256": "fd0a3e415130fb3efa4116c479fea448fcbce314b4d17746f427ca4d2073d0e5"
+  }
+]

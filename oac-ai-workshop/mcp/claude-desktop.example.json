@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "oac-mcp-connect": {
+      "command": "/ABSOLUTE/PATH/TO/node",
+      "args": [
+        "/ABSOLUTE/WORKSHOP/mcp/claude-oac-compat.cjs",
+        "/ABSOLUTE/WORKSHOP/mcp/compat-config.json"
+      ]
+    }
+  }
+}

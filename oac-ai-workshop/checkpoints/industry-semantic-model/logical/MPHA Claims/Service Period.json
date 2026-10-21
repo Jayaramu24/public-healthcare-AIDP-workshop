@@ -1,0 +1,145 @@
+{
+  "logicalTable" : {
+    "name" : "Service Period",
+    "description" : "Service month date dimension with calendar year, quarter, month and full date. Claims fact joins SERVICE_MONTH_DATE_KEY to DATE_KEY.",
+    "type" : "DIMENSION",
+    "logicalColumns" : [ {
+      "name" : "DATE_KEY",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.DATE_KEY" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "FULL_DATE",
+      "dataType" : "DATETIME",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.FULL_DATE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "CALENDAR_YEAR",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.CALENDAR_YEAR" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "CALENDAR_QUARTER",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.CALENDAR_QUARTER" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "MONTH_NUMBER",
+      "dataType" : "NUMERIC",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.MONTH_NUMBER" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "MONTH_NAME",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.MONTH_NAME" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "WEEK_START_DATE",
+      "dataType" : "DATETIME",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.WEEK_START_DATE" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "DAY_OF_WEEK",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.DAY_OF_WEEK" ]
+          }
+        } ]
+      }
+    }, {
+      "name" : "IS_WEEK_START",
+      "dataType" : "VARCHAR",
+      "writeable" : false,
+      "logicalColumnSource" : {
+        "derivedFrom" : "PHYSICAL_COLUMNS",
+        "physicalMappings" : [ {
+          "logicalTableSource" : "MPHA_DIM_DATE",
+          "physicalExpression" : {
+            "expressionTemplate" : "%1",
+            "expressionObjects" : [ "physicalColumn:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE.IS_WEEK_START" ]
+          }
+        } ]
+      }
+    } ],
+    "logicalTableSources" : [ {
+      "name" : "MPHA_DIM_DATE",
+      "disable" : false,
+      "tableMapping" : {
+        "tables" : [ "physicalTable:MPHA_AILH.ORIGAMI_P01.MPHA_DIM_DATE" ]
+      },
+      "combineWithOtherFragments" : false,
+      "enableFragmentSelection" : false,
+      "distinctValues" : false
+    } ],
+    "primaryKey" : [ "DATE_KEY" ]
+  }
+}
