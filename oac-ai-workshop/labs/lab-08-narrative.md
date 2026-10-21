@@ -1,6 +1,6 @@
-# Lab 8 Add and challenge a Language Narrative
+# Exercise 9: add and challenge Language Narratives
 
-**Time:** 15 minutes  |  **Rehearsal status:** Verified with wording review
+10 minutes · Verified with wording review
 
 You will place a narrative beside the district chart and compare Factual and Business tones. The narrative must stay tied to the selected measures and dimensions; it cannot explain why denials happen from these aggregates alone.
 
@@ -13,15 +13,9 @@ You will place a narrative beside the district chart and compare Factual and Bus
 
 ![Duplicate Visualization under the chart Edit menu.](../images/50-duplicate-chart-for-narrative.jpg)
 
-*Duplicate Visualization under the chart Edit menu.*
-
 ![Language Narrative in the visualization type picker.](../images/51-select-language-narrative.jpg)
 
-*Language Narrative in the visualization type picker.*
-
 ![Factual narrative generated from district claims volumes.](../images/52-language-narrative-factual.jpg)
-
-*Factual narrative generated from district claims volumes.*
 
 ## Task 2 Compare tones
 
@@ -32,11 +26,7 @@ You will place a narrative beside the district chart and compare Factual and Bus
 
 ![Narrative properties including Tones and Level of detail.](../images/53-narrative-properties.jpg)
 
-*Narrative properties including Tones and Level of detail.*
-
 ![Actual Business-tone output in the workbook.](../images/54-language-narrative-business.jpg)
-
-*Actual Business-tone output in the workbook.*
 
 ## Task 3 Verify the wording and save
 
@@ -47,11 +37,7 @@ You will place a narrative beside the district chart and compare Factual and Bus
 
 ![Saving the reusable rehearsal workbook. Participants use Claims_AI_Pxx.](../images/55-save-workbook-seed.jpg)
 
-*Saving the reusable rehearsal workbook. Participants use Claims_AI_Pxx.*
-
 ![Saved MPHA_Claims_AI_Workshop_Seed containing the chart, denial KPI, and narrative.](../images/56-workbook-seed-saved.jpg)
-
-*Saved MPHA_Claims_AI_Workshop_Seed containing the chart, denial KPI, and narrative.*
 
 ## Checkpoint
 
@@ -60,5 +46,3 @@ A narrative sits beside the district chart; the denial KPI still displays 8.64%.
 [Oracle hands-on tutorial for narrative authoring](https://docs.oracle.com/en/cloud/paas/analytics-cloud/tutorial-add-language-narrative-visualization/)
 
 [Oracle documentation for narrative limitations](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/language-narrative-visualization.html)
-
-[Back to workshop contents](../README.md)

@@ -1,6 +1,8 @@
-# Lab 7 Watch the Semantic Modeler Assistant demo
+# Optional final demo: Semantic Modeler Assistant in Industry Analytics
 
-**Time:** 15 minutes  |  **Rehearsal status:** Verified instructor demo · Industry Analytics
+Optional · 15 minutes · Verified instructor demo · Industry Analytics
+
+> Time permitting only, after all core analytics and MCP work. Allow an additional 15 minutes or use as a follow-up demo; the 180-minute completion gate does not require it. The instructor uses Industry Analytics / semmodel. Participants stay in their hands-on environment.
 
 Delivery choice agreed with the workshop owner: the instructor demonstrates Semantic Modeler in Industry Analytics; participants watch and remain in their existing workshop accounts. The seven other feature labs retain their hands-on format. This slot demonstrates AI-assisted naming and descriptions on a prepared claims model. Building all three layers is facilitator preparation outside the 15-minute slot.
 
@@ -27,8 +29,6 @@ Delivery choice agreed with the workshop owner: the instructor demonstrates Sema
 
 ![Reopened completed private model with five persisted presentation folders. This is the starting point for the instructor demonstration.](../images/industry-semantic/19-completed-model-reopened.jpg)
 
-*Reopened completed private model with five persisted presentation folders. This is the starting point for the instructor demonstration.*
-
 ## Task 2 Tour the prepared star and measure rules — minutes 2–4
 
 1. In Physical Layer, open MPHA_AILH → Tables. Show the fact and four dimensions and the four Many to One Inner joins. Point out the differently named service-month date key.
@@ -37,11 +37,7 @@ Delivery choice agreed with the workshop owner: the instructor demonstrates Sema
 
 ![The four fact-to-dimension joins were explicitly created and saved successfully.](../images/industry-semantic/08-four-physical-joins-saved.jpg)
 
-*The four fact-to-dimension joins were explicitly created and saved successfully.*
-
 ![The seven additive claims counts and monetary totals use Sum. Keys and stored segment statistics are not reporting measures.](../images/industry-semantic/11-additive-measure-aggregation.jpg)
-
-*The seven additive claims counts and monetary totals use Sum. Keys and stored segment statistics are not reporting measures.*
 
 ## Task 3 Generate business names live — minutes 4–8
 
@@ -52,11 +48,7 @@ Delivery choice agreed with the workshop owner: the instructor demonstrates Sema
 
 ![Rehearsed live naming path. The key suggestion is excluded; Cancel preserves this exercise for the customer session.](../images/industry-semantic/18-repeatable-dimension-naming.jpg)
 
-*Rehearsed live naming path. The key suggestion is excluded; Cancel preserves this exercise for the customer session.*
-
 ![Actual fact naming rehearsal: seven additive measures accepted; four identifiers and two stored segment statistics excluded.](../images/industry-semantic/10-ai-column-names-reviewed.jpg)
-
-*Actual fact naming rehearsal: seven additive measures accepted; four identifiers and two stored segment statistics excluded.*
 
 ## Task 4 Generate and review a table description — minutes 8–10
 
@@ -66,8 +58,6 @@ Delivery choice agreed with the workshop owner: the instructor demonstrates Sema
 4. Save, wait for success, and verify the saved text. AI generation is a drafting step; the presenter owns the meaning.
 
 ![Actual generated table description before reviewer adds grain and metric rules.](../images/industry-semantic/13-ai-table-description-generated.jpg)
-
-*Actual generated table description before reviewer adds grain and metric rules.*
 
 ```text
 Tracks claims submissions, approvals, denials, pending counts, monetary totals and denial ratio. Grain: service month, district, coverage program and claim type. Counts and amounts use SUM; Claims Denial Ratio divides aggregated denied by aggregated submitted and returns NULL for a zero denominator. Currency is unspecified. Claims operations only; no patient-level clinical outcomes.
@@ -80,8 +70,6 @@ Tracks claims submissions, approvals, denials, pending counts, monetary totals a
 3. Review the output and replace it with the approved wording below before saving. This keeps the aggregate meaning and formatting convention explicit.
 
 ![Actual generated column description identifies the denominator and zero-denominator behavior.](../images/industry-semantic/14-ai-column-description-generated.jpg)
-
-*Actual generated column description identifies the denominator and zero-denominator behavior.*
 
 ```text
 Claims denial ratio is aggregated denied claims divided by aggregated submitted claims. Returns NULL if no claims were submitted. Stored as a fraction; format as a percentage. Do not sum or average stored segment rates.
@@ -96,11 +84,7 @@ Claims denial ratio is aggregated denied claims divided by aggregated submitted 
 
 ![All-object consistency check completed with warnings included: zero errors, zero warnings, zero hidden warnings.](../images/industry-semantic/15-consistency-zero-errors.jpg)
 
-*All-object consistency check completed with warnings included: zero errors, zero warnings, zero hidden warnings.*
-
 ![Reviewed denial-ratio metadata and all eight reporting measures persisted after closing and reopening the completed model.](../images/industry-semantic/20-reviewed-metadata-reopened.jpg)
-
-*Reviewed denial-ratio metadata and all eight reporting measures persisted after closing and reopening the completed model.*
 
 ## If a live AI request stalls
 
@@ -116,23 +100,13 @@ Allow one bounded retry, then show the matching real screenshot above and explai
 
 ![Initial physical database name and description persisted after save and reopen.](../images/industry-semantic/01-save-reopen-verified.jpg)
 
-*Initial physical database name and description persisted after save and reopen.*
-
 ![Existing semmodel connection exposes the ORIGAMI_P01 claims source tables.](../images/industry-semantic/02-semmodel-claims-source.jpg)
-
-*Existing semmodel connection exposes the ORIGAMI_P01 claims source tables.*
 
 ![Correct import selection: all five tables have actual selection checkmarks.](../images/industry-semantic/04-import-five-tables-dialog.jpg)
 
-*Correct import selection: all five tables have actual selection checkmarks.*
-
 ![OAC offered to align the database type with the imported Autonomous AI Lakehouse source.](../images/industry-semantic/05-align-database-type.jpg)
 
-*OAC offered to align the database type with the imported Autonomous AI Lakehouse source.*
-
 ![All five physical source tables imported. Always verify the actual final table count.](../images/industry-semantic/06-five-physical-tables.jpg)
-
-*All five physical source tables imported. Always verify the actual final table count.*
 
 ## Facilitator preparation B — explicit joins and logical measures
 
@@ -153,11 +127,7 @@ Allow one bounded retry, then show the matching real screenshot above and explai
 
 ![Configured date relationship uses differently named fact and dimension date keys.](../images/industry-semantic/07-date-join-configured.jpg)
 
-*Configured date relationship uses differently named fact and dimension date keys.*
-
 ![The imported logical fact, four dimensions and four logical joins before business table renaming.](../images/industry-semantic/09-logical-star.jpg)
-
-*The imported logical fact, four dimensions and four logical joins before business table renaming.*
 
 1. In Claims Metrics → Columns → Add Column → Create New Column, enter Claims Denial Ratio and press Enter. Switch on Detail view, select the new column, and choose Logical Expression.
 2. Click Open Expression Editor. Insert real column tokens by expanding Claims Metrics and double-clicking Claims Submitted and Denied Claims. Compose the expression below with these tokens; typing a plain three-part quoted name did not resolve in this editor.
@@ -170,8 +140,6 @@ ELSE 1.0 * <Denied Claims token> / <Claims Submitted token> END
 
 ![Actual token-based guarded denial calculation validated successfully in the expression editor.](../images/industry-semantic/12-denial-expression-validated.jpg)
 
-*Actual token-based guarded denial calculation validated successfully in the expression editor.*
-
 ## Facilitator preparation C — presentation, rehearsal and reset
 
 1. Choose Presentation Layer → Create (+) → Create Subject Area. Name it MPHA Claims Workshop Demo, select MPHA Claims as Business Model, and click OK.
@@ -179,20 +147,15 @@ ELSE 1.0 * <Denied Claims token> / <Claims Submitted token> END
 3. Open presentation Claims Metrics → Columns. Select the four technical keys plus AVG_PROCESSING_DAYS and DENIAL_RATE, then Delete and confirm. This removes presentation references only; retain their physical and logical source columns. Verify exactly the eight reporting measures listed in the model inventory.
 4. Run the naming and both description-generation exercises above. Leave Claim Classification raw names unchanged after the naming preview so the live demo starts from the same state. Keep the approved final table and column descriptions saved.
 5. Run consistency with warnings included, then close and reopen the completed model. The exported SMML in checkpoints/industry-semantic-model is an independently inspected record of the saved definitions.
-6. For a separate rehearsal copy, run python3 scripts/build_model_archive.py from the package root, then in Industry Analytics create a new uniquely named model using Import a File and the resulting .zip archive. Bind its pool to the existing semmodel System connection if necessary. Check consistency before using the copy. Archive export was verified; a round-trip import has not been rehearsed.
-7. Use Page Menu → Export → Archive File (.zip) for a fresh private backup. Save to a local folder and verify the archive. Do not include wallets or credentials in the workshop kit, and do not choose Deploy during this demonstration.
+6. Use Page Menu → Export → Archive File (.zip) for a fresh private backup. Save to a local folder and verify the archive. Do not include wallets or credentials in the workshop kit, and do not choose Deploy during this demonstration.
 
 ![Actual private-model archive export dialog. The resulting downloaded SMML archive was inspected locally.](../images/industry-semantic/17-export-private-model.jpg)
-
-*Actual private-model archive export dialog. The resulting downloaded SMML archive was inspected locally.*
 
 ## Source and runtime acceptance boundary
 
 The existing semmodel connection successfully returned sampled live physical fact data, shown below. Full-source totals, dimension completeness and deployed subject-area queries were not tested in Industry Analytics. If extending this slot to runtime analytics, first run sql/ORIGAMI_P01_ReadOnly_Acceptance.sql as the intended source user and reconcile the results. Use the environment owner’s separate approved test deployment process; this private model must not replace the shared Industry Analytics runtime. Do not display the earlier 1,400-claim control total as a verified P01 result.
 
 ![Successful source preview through semmodel. OAC explicitly labels the preview as sampled data.](../images/industry-semantic/16-physical-source-preview.jpg)
-
-*Successful source preview through semmodel. OAC explicitly labels the preview as sampled data.*
 
 [Oracle documentation for System connections](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acmdg/semantic-model-data-source-connections.html)
 
@@ -201,5 +164,3 @@ The existing semmodel connection successfully returned sampled live physical fac
 [Oracle documentation for presentation table descriptions](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acmdg/generate-presentation-table-description.html)
 
 [Oracle documentation for presentation column descriptions](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acmdg/generate-presentation-column-description.html)
-
-[Back to workshop contents](../README.md)

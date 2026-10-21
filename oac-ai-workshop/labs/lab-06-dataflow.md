@@ -1,19 +1,19 @@
-# Lab 6 Build and run a rollup with Data Flow Assistant
+# Exercise 8: Data Flow Assistant with the prepared rollup source
 
-**Time:** 25 minutes  |  **Rehearsal status:** Verified
+15 minutes · Verified
 
-You will turn 622 claims segments into 30 district-month rows and recompute ratios after aggregation. The prepared MPHA_Claims_Rollup_Flow_Seed completed in 22 seconds in this rehearsal. That is an observation from one run, not a concurrency or response-time guarantee.
+Reuse the prepared ClaimStar_WS_Base, which reads the same flattened claims view and already contains Processing Days Total Approx. This isolates the rollup exercise from the optional helper-preparation step. The verified seed produces 30 district-month rows and 10 columns; its observed run took 22 seconds, not a classroom performance guarantee.
+
+> Timebox: 3 minutes input/aggregation, 5 minutes derived-field/output review, 5 minutes execution waves, 2 minutes reconciliation. If construction falls behind, open the prepared MPHA_Claims_Rollup_Flow_Seed and Save As Claims_Rollup_Flow_Pxx before running your own output. Your facilitator must pre-share the seed with read access.
 
 ## Task 1 Create the flow and input
 
-1. At Home, choose Create, then Data Flow. Select your ClaimStar_Pxx dataset and click Add.
+1. At Home choose Create → Data Flow. Select the released prepared ClaimStar_WS_Base and Add. Do not select the new 19-field source for this six-sum reference, because it lacks the approximate numerator.
 2. Save the draft as Claims_Rollup_Flow_Pxx in your own folder.
 3. Open Assistant on the flow toolbar. If it is absent, the facilitator must enable both Data Flow AI preview switches before the event. After activation, allow time for propagation and refresh the saved flow.
 4. Keep one participant’s flow per name. Do not edit the shared seed or run all 20 flows simultaneously.
 
 ![Prepared flow with its input selected. The other nodes are the completed reference; a new participant flow initially has only the input.](../images/31-data-flow-input.jpg)
-
-*Prepared flow with its input selected. The other nodes are the completed reference; a new participant flow initially has only the input.*
 
 ## Task 2 Generate the aggregation
 
@@ -28,8 +28,6 @@ Aggregate the data by Service Month and District Name. Sum Claims Submitted, App
 
 ![Verified Aggregate step with six sums and the two grouping fields.](../images/33-data-flow-aggregate-reviewed.jpg)
 
-*Verified Aggregate step with six sums and the two grouping fields.*
-
 ## Task 3 Generate derived fields after aggregation
 
 ```text
@@ -43,11 +41,7 @@ Add two columns: Claims Denial Ratio equals Denied Claims Sum divided by Claims 
 
 ![Generated ratio expression after the aggregation.](../images/34-flow-denial-expression.jpg)
 
-*Generated ratio expression after the aggregation.*
-
 ![Generated approximate weighted-processing expression.](../images/35-flow-weighted-expression.jpg)
-
-*Generated approximate weighted-processing expression.*
 
 ## Task 4 Save the output and execute
 
@@ -62,11 +56,7 @@ Save the result to a new Oracle Analytics dataset named Claims_Rollup_Pxx.
 
 ![Prepared Save Dataset node uses Dataset Storage. Participants must replace the seed output name with Claims_Rollup_Pxx.](../images/36-flow-save-dataset.jpg)
 
-*Prepared Save Dataset node uses Dataset Storage. Participants must replace the seed output name with Claims_Rollup_Pxx.*
-
 ![Actual flow run history showing Completed and a 22-second duration.](../images/39-data-flow-history-completed.jpg)
-
-*Actual flow run history showing Completed and a 22-second duration.*
 
 ## Task 5 Reconcile the output
 
@@ -77,12 +67,8 @@ Save the result to a new Oracle Analytics dataset named Claims_Rollup_Pxx.
 
 ![Actual output dataset with 30 rows and 10 columns.](../images/37-rollup-output-thirty-rows.jpg)
 
-*Actual output dataset with 30 rows and 10 columns.*
-
 > Concurrency plan: P01–P05 run first, P06–P10 second, P11–P15 third, and P16–P20 fourth. Start the next wave when the previous one completes. All groups can review expressions while waiting. Use the prepared CSV if a participant run cannot complete inside the timebox.
 
 [Oracle documentation for Data Flow Assistant preview](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/use-ai-assistant-create-data-flows.html)
 
 [Oracle documentation for running data flows](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/generate-or-update-dataset-using-data-flow.html)
-
-[Back to workshop contents](../README.md)

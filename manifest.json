@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "workshop_guide.pdf",
-      "rows": 89,
+      "rows": 160,
       "grain": "PDF page"
     },
     {
@@ -290,12 +290,12 @@
     },
     {
       "path": "oac-ai-workshop/index.html",
-      "rows": 12,
+      "rows": 15,
       "grain": "180-minute OAC AI workshop agenda block"
     },
     {
       "path": "oac-ai-workshop/images",
-      "rows": 76,
+      "rows": 84,
       "grain": "Original OAC/Claude/HTML screenshot"
     },
     {
@@ -305,12 +305,16 @@
     }
   ],
   "oac_ai_module": {
-    "updated": "2026-10-21",
+    "updated": "2026-10-22",
     "workshop_section": "lab8",
     "minutes": 180,
-    "screenshot_count": 76,
-    "path": "oac-ai-workshop/index.html",
+    "screenshot_count": 84,
+    "path": "index.html#lab8",
     "download": "downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip",
-    "data": "Synthetic MPHA claims; existing source unchanged"
+    "data": "Synthetic MPHA claims; existing source unchanged",
+    "optional_extensions": [
+      "Dimensional model DIY",
+      "Semantic Modeler instructor demo"
+    ]
   }
 }

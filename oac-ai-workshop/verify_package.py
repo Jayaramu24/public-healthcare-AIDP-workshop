@@ -72,8 +72,8 @@ for origin, value in refs:
         check(target.fragment in parsed.ids, f'Missing HTML anchor: {value}')
 
 agenda = json.loads((ROOT/'agenda.json').read_text())
-check(len(agenda) == 12, 'Agenda must contain 12 blocks including break and MCP lab')
-check(sum(x['minutes'] for x in agenda) == 180, 'Agenda must total 180 minutes')
+check(len(agenda) == 15, 'Agenda must contain 13 core blocks and two optional extensions')
+check(sum(x['minutes'] for x in agenda if not x.get('optional', False)) == 180, 'Core agenda must total 180 minutes')
 for item in agenda:
     check((ROOT/'labs'/f"{item['lab']}.md").exists(), f"Missing lab: {item['lab']}")
 
@@ -214,6 +214,14 @@ check(len(policy['createNames'])==2 and not policy['replaceIds'],'Portable write
 for path in ROOT.rglob('*'):
     if path.is_file():
         check('private-state' not in str(path.relative_to(ROOT)) and path.name not in ('token.json','claude_desktop_config.json','origami-bridge.json'),'Private runtime/config must not be packaged: '+path.name)
+
+# Successful-path evidence must match the delivered workbook bytes.
+check(not any(x['lab']=='lab-home-search' for x in agenda), 'Excluded Home exercise reappeared')
+check(not any('expression-ai-error' in x['file'] or 'home-search' in x['file'] for x in screenshots), 'Failed-run capture included')
+retest=json.loads((mcp/'json-authoring-verification.json').read_text())
+check(hashlib.sha256((mcp/'MPHA_Executive_Native_Candidate.workbook.json').read_bytes()).hexdigest()==retest['candidate_sha256'], 'Candidate differs from live-verified artifact')
+check((mcp/'MPHA_MCP_Executive_Native.workbook.json').read_bytes()==(mcp/'MPHA_Executive_Native_Candidate.workbook.json').read_bytes(), 'Saved native reference differs from verified candidate')
+check('passed' in retest['render_and_district_filter'], 'Native live rendering/filter evidence absent')
 
 manifest_path = ROOT/'package-manifest.json'
 if manifest_path.exists():

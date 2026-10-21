@@ -1,60 +1,67 @@
-# Lab 1 Prepare a dataset with Dataset Assistant
+# Exercise 1: connect to the flattened claims view and review Dataset Assistant
 
-**Time:** 15 minutes  |  **Rehearsal status:** Verified with review exercise
+20 minutes · Verified: fresh source saved; 19 friendly fields
 
-You will create an individual copy, inspect suggested column names, and decide whether suggested attribute and measure types fit the claims model. The source already has friendly names, so reviewing a suggestion is a valid result.
+Reuse the AILH connection already supplied to you. This exercise creates a dataset over the flattened view; no database connection provisioning or join construction is needed.
 
-## Task 1 Create your dataset copy
+## Task 1 Create and save your dataset
 
-1. On the dataset card, open Actions and select Open. Wait for permission checking to finish before choosing an action.
-2. In the transform editor, open the arrow beside Save Dataset and select Save As. During rehearsal this succeeded when the Home Duplicate action returned a server error.
-3. Enter ClaimStar_Pxx. Save in My Folders or a participant folder assigned by the facilitator. Click OK, wait for completion, and verify the editor heading uses your new name.
-4. Confirm 20 data elements are present. The left Preparation Script already contains renames and the Processing Days Total Approx helper. Reuse these prepared steps.
+1. From Home choose Create → Dataset. Select the existing MaxicareWorkshop connection.
+2. Expand ORIGAMI_ADMIN02 and select MPHA_OAC_STAR_CLAIMS. Add only this flattened view to the dataset canvas, then open its data.
+3. Inspect the 622 source rows and 19 columns. Save as MPHA_Claims_Pxx in your own My Folders. Wait for the saved dataset name to appear.
+4. If the view/connection is missing, stop and use the released prepared dataset. Report your Pxx ID and the missing object to the co-facilitator; do not create a new database connection during class.
 
-![Dataset actions. Use Open; the editor Save As route is the tested recovery from the failed Duplicate request.](../images/02-dataset-actions.jpg)
+![Select the pre-existing connection and single flattened view.](../images/revised/01-flattened-source.jpg)
 
-*Dataset actions. Use Open; the editor Save As route is the tested recovery from the failed Duplicate request.*
+![Save the source dataset. Replace the instructor name with MPHA_Claims_Pxx.](../images/revised/02-save-flattened-dataset.jpg)
 
-![Editor Save As used to create the rehearsal base. Participants use ClaimStar_Pxx instead of ClaimStar_WS_Base.](../images/07-save-dataset-workshop-copy.jpg)
+![Saved 19-field flattened claims dataset before name preparation.](../images/revised/03-flattened-dataset-saved.jpg)
 
-*Editor Save As used to create the rehearsal base. Participants use ClaimStar_Pxx instead of ClaimStar_WS_Base.*
+## Task 2 Generate, review and apply column names
 
-![Successful saved base copy. Always check the heading after Save As.](../images/08-workshop-base-saved.jpg)
+1. Open the dataset transform editor. Click the Magic Wand to open Dataset Assistant → Column Rename.
+2. Select Title Case and replace underscore (_) with a space. Click Generate Column Names. Review Current and New before applying.
+3. Apply the reviewed names before creating charts or expressions. Rename Avg Processing Days explicitly to Average Processing Days if needed. Use the mapping below; District Id is an identifier, not a metric.
+4. Save and verify the friendly names. Later renames can break workbook bindings, so complete this step first.
 
-*Successful saved base copy. Always check the heading after Save As.*
+![Dataset Assistant column-rename controls from the successful prepared-base rehearsal.](../images/15-dataset-assistant-rename.jpg)
 
-## Task 2 Generate and review column names
+![Review generated friendly names before applying them. The prepared base includes one extra helper field.](../images/16-dataset-ai-name-suggestions.jpg)
 
-1. In the transform editor, click the Magic Wand icon. This opens Dataset Assistant Table Recommendations.
-2. Keep the Column Rename tab selected. Inspect Case and Replace, then click Generate Column Names.
-3. Compare Current and New. In rehearsal the assistant suggested Approximate Total Processing Days for Processing Days Total Approx. Existing friendly names mostly stayed the same.
-4. For the core exercise, keep the existing names so later prompts match this guide. Close the recommendations without applying the rename. In your own copy you may apply a chosen rename, but then adapt every subsequent prompt and expression.
+| Source column | Prepared name |
+| --- | --- |
+| SERVICE_MONTH | Service Month |
+| DISTRICT_ID | District Id |
+| DISTRICT_NAME | District Name |
+| PROGRAM_CODE | Program Code |
+| COVERAGE_PROGRAM | Coverage Program |
+| PROGRAM_TYPE | Program Type |
+| FUNDING_SOURCE | Funding Source |
+| CLAIM_TYPE | Claim Type |
+| SERVICE_CATEGORY | Service Category |
+| DIAGNOSIS_GROUP | Diagnosis Group |
+| CLAIMS_SUBMITTED | Claims Submitted |
+| APPROVED_CLAIMS | Approved Claims |
+| DENIED_CLAIMS | Denied Claims |
+| PENDING_CLAIMS | Pending Claims |
+| TOTAL_SUBMITTED_AMOUNT | Total Submitted Amount |
+| TOTAL_APPROVED_AMOUNT | Total Approved Amount |
+| TOTAL_PAID_AMOUNT | Total Paid Amount |
+| AVG_PROCESSING_DAYS | Average Processing Days |
+| DENIAL_RATE | Denial Rate |
 
-![Column Rename settings before generation on ClaimStar_WS_Base.](../images/15-dataset-assistant-rename.jpg)
+## Task 3 Review aggregation semantics
 
-*Column Rename settings before generation on ClaimStar_WS_Base.*
+1. Inspect the Treat As recommendations. Keep the four claim counts and the three monetary totals as Measure with Sum. Reject recommendations that turn additive counts into attributes.
+2. Switch to Metadata. Set Average Processing Days and Denial Rate to Attribute / None so a default chart cannot sum them. Keep District Id and other codes as attributes, and Service Month as DateTime.
+3. Save. Confirm 19 fields remain. Do not add the optional weighted numerator to this core dataset.
 
-![Generated name suggestions. Review the change before applying it.](../images/16-dataset-ai-name-suggestions.jpg)
+![Review Treat As recommendations: keep additive claim counts as measures.](../images/17-review-reject-counts-as-attributes.jpg)
 
-*Generated name suggestions. Review the change before applying it.*
+![Reviewed metadata prevents adding stored segment means or rates as Sum measures.](../images/revised/24-non-additive-metadata.jpg)
 
-## Task 3 Review Treat As suggestions
+> The earlier ClaimStar_WS_Base screenshots show the same business names plus Processing Days Total Approx. That extra field is used only by the supplied rollup/MCP reference. It is not a prerequisite for the new flattened-view exercise.
 
-1. Reopen Magic Wand if necessary and choose Treat As.
-2. Inspect the four claim count fields. Rehearsal suggested changing Claims Submitted, Approved Claims, Denied Claims, and Pending Claims from measures to attributes.
-3. Reject that suggestion for this reporting model: these counts must remain additive measures with Sum aggregation. Close the recommendation panel.
-4. Use Metadata view to confirm the counts and monetary totals are measures. Keep Average Processing Days and Denial Rate as non-additive attributes. Save your dataset if you made an intentional correction.
+[Oracle: Dataset Assistant renaming](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/rename-columns-using-ai-assistant.html)
 
-![Actual Treat As suggestions that should be rejected for the claims analysis.](../images/17-review-reject-counts-as-attributes.jpg)
-
-*Actual Treat As suggestions that should be rejected for the claims analysis.*
-
-## Checkpoint
-
-Your own dataset opens with 20 data elements. Claims counts remain Sum measures. You can explain why a plausible AI recommendation can be unsuitable for the business model.
-
-[Oracle documentation for Dataset Assistant renaming](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/rename-columns-using-ai-assistant.html)
-
-[Oracle documentation for column type recommendations](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/change-column-types-using-ai-assistant.html)
-
-[Back to workshop contents](../README.md)
+[Oracle: column type recommendations](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/change-column-types-using-ai-assistant.html)

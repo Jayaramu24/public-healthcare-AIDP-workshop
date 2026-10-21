@@ -40,3 +40,7 @@ workflow execution: interactive variables do not carry between tasks.
 - For the Claude exercise, follow [local MCP setup](oac-ai-workshop/mcp/README.md) before class. Use your own approved client and OAC account, private target folder and unique workbook names. Do not share logins or paste credentials into prompts.
 - Confirm the approved scope for sending synthetic aggregate query results to Claude. Reuse the supplied files to conserve Free-plan allowance. Participants without a configured client still compare the supplied HTML and OAC native results.
 - The three-hour program includes a ten-minute break. Connection provisioning and client installation are outside that timebox. The facilitator must rehearse access with a second account and test classroom capacity.
+
+
+## OAC revision — 22 October 2026
+Lab 8 contains all OAC instructions inline. Reuse the supplied AILH connection and start with flattened MPHA_OAC_STAR_CLAIMS (19  fields). Use the pre-discovered prepared base for Auto Insights, retained successful AI examples and rollup/MCP; make private copies for metadata edits. Auto Insights and column Explain precede Workbook Assistant. Contextual Explain, drill and Forecast are followed by data flows, narratives and HTML-to-native JSON/MCP writes. The guide retains successful19–22 October evidence and omits unsuccessful generation paths. Core 180 minutes excludes dimensional DIY and the final Industry Analytics semantic demo. See [Lab 8](index.html#lab8) and [evidence](oac-ai-workshop/PREPARATION_STATUS.md).

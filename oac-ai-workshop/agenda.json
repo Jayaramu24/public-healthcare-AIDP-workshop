@@ -1,74 +1,107 @@
 [
   {
-    "lab": "lab-00-start",
-    "title": "Lab 0 Get ready for the MPHA workshop",
+    "title": "Launch: claims contract and participant setup",
     "minutes": 10,
-    "status": "Required"
+    "status": "Required",
+    "optional": false,
+    "lab": "lab-00-start"
   },
   {
-    "lab": "lab-01-dataset-assistant",
-    "title": "Lab 1 Prepare a dataset with Dataset Assistant",
-    "minutes": 15,
-    "status": "Verified with review exercise"
-  },
-  {
-    "lab": "lab-02-catalog",
-    "title": "Lab 2 Generate a catalog description",
-    "minutes": 10,
-    "status": "Verified"
-  },
-  {
-    "lab": "lab-03-enrichments",
-    "title": "Lab 3 Enrich the metadata used by AI",
-    "minutes": 10,
-    "status": "Verified"
-  },
-  {
-    "lab": "lab-04-workbook",
-    "title": "Lab 4 Build a chart with Workbook Assistant",
+    "title": "Exercise 1: connect to the flattened claims view and review Dataset Assistant",
     "minutes": 20,
-    "status": "Verified"
+    "status": "Verified: fresh source saved; 19 friendly fields",
+    "optional": false,
+    "lab": "lab-01-dataset-assistant"
   },
   {
-    "lab": "lab-05-expression",
-    "title": "Lab 5 Validate a denial-rate calculation",
-    "minutes": 15,
-    "status": "AI error with verified fallback"
+    "title": "Exercise 2: generate and review catalog descriptions",
+    "minutes": 5,
+    "status": "Verified 19 October: prepared-base generation and persistence",
+    "optional": false,
+    "lab": "lab-02-catalog"
   },
   {
-    "lab": "break",
+    "title": "Exercise 3: generate, review and index AI descriptions",
+    "minutes": 10,
+    "status": "Verified 19 October: missing-field generation, review and indexing",
+    "optional": false,
+    "lab": "lab-03-enrichments"
+  },
+  {
+    "title": "Exercise 4: Auto Insights and one-click column Explain",
+    "minutes": 25,
+    "status": "Verified 22 October: refreshed gallery, focused settings and saved native chart",
+    "optional": false,
+    "lab": "lab-discovery"
+  },
+  {
+    "title": "Exercise 5: compare Workbook Assistant with discovery",
+    "minutes": 10,
+    "status": "Verified 19 October: generated chart, add to canvas, save and post-index retest",
+    "optional": false,
+    "lab": "lab-04-workbook"
+  },
+  {
+    "title": "Exercise 6: create and validate the aggregate denial-rate KPI",
+    "minutes": 10,
+    "status": "Verified: fully qualified calculation validates and displays 8.64%",
+    "optional": false,
+    "lab": "lab-05-expression"
+  },
+  {
     "title": "Take a ten minute break",
     "minutes": 10,
-    "status": "Pause"
+    "status": "Pause",
+    "optional": false,
+    "lab": "break"
   },
   {
-    "lab": "lab-06-dataflow",
-    "title": "Lab 6 Build and run a rollup with Data Flow Assistant",
+    "title": "Exercise 7: Explain Selected, built-in drill and one-click Forecast",
     "minutes": 25,
-    "status": "Verified"
+    "status": "Verified in the saved instructor workbook",
+    "optional": false,
+    "lab": "lab-advanced"
   },
   {
-    "lab": "lab-07-semantic",
-    "title": "Lab 7 Watch the Semantic Modeler Assistant demo",
+    "title": "Exercise 8: Data Flow Assistant with the prepared rollup source",
     "minutes": 15,
-    "status": "Verified instructor demo \u00b7 Industry Analytics"
+    "status": "Verified",
+    "optional": false,
+    "lab": "lab-06-dataflow"
   },
   {
-    "lab": "lab-08-narrative",
-    "title": "Lab 8 Add and challenge a Language Narrative",
-    "minutes": 15,
-    "status": "Verified with wording review"
+    "title": "Exercise 9: add and challenge Language Narratives",
+    "minutes": 10,
+    "status": "Verified with wording review",
+    "optional": false,
+    "lab": "lab-08-narrative"
   },
   {
-    "lab": "lab-09-mcp-claude",
-    "title": "Lab 9 Create executive dashboards with Claude and OAC MCP",
-    "minutes": 30,
-    "status": "Verified \u00b7 Claude Free + two saved OAC workbooks"
+    "title": "Exercise 10: MCP discovery \u2192 HTML \u2192 native JSON \u2192 native OAC charts",
+    "minutes": 25,
+    "status": "Verified 19\u201322 October: Claude discovery/HTML/creates; Codex JSON authoring and Oracle MCP write",
+    "optional": false,
+    "lab": "lab-09-mcp-claude"
   },
   {
-    "lab": "lab-09-capstone",
-    "title": "Finish with a claims analysis checkpoint",
+    "title": "Closeout: validate and share one finding",
     "minutes": 5,
-    "status": "Required"
+    "status": "Required",
+    "optional": false,
+    "lab": "lab-09-capstone"
+  },
+  {
+    "title": "Optional DIY: connect the dimensional model",
+    "minutes": 0,
+    "status": "Optional; outside the 180-minute core",
+    "optional": true,
+    "lab": "lab-dimension-diy"
+  },
+  {
+    "title": "Optional final demo: Semantic Modeler Assistant in Industry Analytics",
+    "minutes": 15,
+    "status": "Verified instructor demo \u00b7 Industry Analytics",
+    "optional": true,
+    "lab": "lab-07-semantic"
   }
 ]

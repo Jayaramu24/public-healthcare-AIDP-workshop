@@ -1,23 +1,19 @@
-# Lab 4 Build a chart with Workbook Assistant
+# Exercise 5: compare Workbook Assistant with discovery
 
-**Time:** 20 minutes  |  **Rehearsal status:** Verified
+10 minutes · Verified 19 October: generated chart, add to canvas, save and post-index retest
 
 You will ask a concrete business question, inspect the generated chart and explanation, and add the chart to your canvas. The rehearsal base returned district volumes that reconcile to 1,400 claims.
 
 ## Task 1 Open Assistant
 
-1. Open your dataset and click Create Workbook. Alternatively, choose Create Workbook from the dataset card Actions.
-2. Click Auto Insights to show the drawer if it is closed, then choose Assistant. The toolbar button toggles the drawer: check the screen before clicking again.
-3. Wait for the Assistant status check. If indexing is still in progress, follow the facilitator’s fallback to the indexed seed.
-4. Use typed English prompts. The rehearsal profile displayed a language support notice; do not change profile settings during the lab.
+1. Continue in Claims_AI_Pxx, created from the released, indexed ClaimStar_WS_Base. Create a blank canvas for the district workload question.
+2. Open the Auto Insights drawer and choose Assistant. Wait for the dataset availability/index check. Use the existing prepared source used in the successful screenshots.
+3. Enter the business prompt below. Compare the response with the chart candidates shown by Auto Insights. This demonstrates prompted analysis after automated chart discovery.
+4. These generation and post-index retest screenshots were captured in the successful 19 October rehearsal. If the live service is unavailable, continue from the saved generated chart in MPHA_Claims_AI_Workshop_Seed, using Save As to your own workbook.
 
 ![New workbook created from the isolated dataset.](../images/20-new-workbook.jpg)
 
-*New workbook created from the isolated dataset.*
-
 ![Assistant panel ready for a typed question.](../images/21-workbook-assistant-ready.jpg)
-
-*Assistant panel ready for a typed question.*
 
 ## Task 2 Generate and verify the chart
 
@@ -32,8 +28,6 @@ Create a bar chart of Claims Submitted by District Name.
 
 ![Actual generated district claims chart and explanation.](../images/22-assistant-generated-chart.jpg)
 
-*Actual generated district claims chart and explanation.*
-
 | District | Claims Submitted | Share |
 | --- | --- | --- |
 | Central City | 413 | 29.50% |
@@ -47,27 +41,21 @@ Create a bar chart of Claims Submitted by District Name.
 
 1. Hover over the generated chart to reveal its chart toolbar. Click Add to Canvas on that toolbar.
 2. Do not confuse Add to Canvas with the Add suggestion button below the response. That button helps compose a follow-up prompt; it does not place the chart on the canvas.
-3. Close the Assistant drawer and confirm the chart is on Canvas 1.
+3. Close the Assistant drawer and confirm the chart is on the new district-claims canvas.
 4. Save the workbook as Claims_AI_Pxx in your own folder. Check the workbook title after saving.
 
 ![Generated chart action used to add the visualization to the canvas.](../images/23-add-assistant-chart-to-canvas.jpg)
 
-*Generated chart action used to add the visualization to the canvas.*
-
 ![The chart on the workbook canvas before the calculation and narrative labs.](../images/24-chart-on-canvas.jpg)
-
-*The chart on the workbook canvas before the calculation and narrative labs.*
 
 ## Checkpoint
 
 Claims_AI_Pxx contains a five-district chart with a total of 1,400 claims. Recovery: open MPHA_Claims_AI_Workshop_Seed and use Save As with your participant name.
 
-The prepared base was tested again after the reviewed metadata and latest index refresh: the district chart prompt returned successfully in the saved workbook. This verifies the facilitator base; each released participant copy still needs its own access and index check.
+> If Assistant generation is unavailable, select Claims Submitted and District Name in Data Elements, then right-click → Create Best Visualization. Choose Bar if necessary. Confirm 413 / 287 / 255 / 264 / 181 and total 1,400. Keep just one district-claims bar for the following drill/explanation exercise.
+
+In the successful 19 October run, this prompt also returned after reviewed metadata was saved and the index refreshed. The screenshot below records that separate post-index test; it is not a claim of a new 22 October response.
 
 ![Successful district chart response after the final metadata refresh, with the saved workbook visible behind the drawer.](../images/57-assistant-after-metadata-refresh.jpg)
 
-*Successful district chart response after the final metadata refresh, with the saved workbook visible behind the drawer.*
-
 [Oracle documentation for Workbook Assistant](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/generate-visualizations-workbooks-oracle-analytics-ai-assistant.html)
-
-[Back to workshop contents](../README.md)

@@ -1,28 +1,28 @@
-# Lab 0 Get ready for the MPHA workshop
+# Launch: claims contract and participant setup
 
-**Time:** 10 minutes  |  **Rehearsal status:** Required
+10 minutes · Required
 
 In this three-hour workshop, experienced analysts use Oracle Analytics Cloud AI features to investigate MPHA healthcare claims. You will prepare metadata, build and validate visualizations, create a rollup data flow, compare narratives with the numbers that support them, and use Claude MCP to discover data and build an HTML overview with a native OAC recreation. MPHA is the synthetic healthcare scenario in the existing workshop kit.
 
-> Updated 20 October 2026: seven AI capabilities have now been exercised successfully. Lab 7 is a 15-minute instructor demonstration in Industry Analytics using the saved MPHA_Claims_Semantic_Demo model and semmodel connection. The seven other AI feature labs remain hands-on in the original workshop OAC environment. Lab 9 adds a Claude Free MCP demonstration with optional preconfigured participant clients and dashboard validation. Expression Assistant generation still uses its validated manual fallback. Participant access, an active workshop instance and a second-account rehearsal remain event readiness gates.
+> Revised 22 October 2026. AILH connectivity is already available. Begin with the flattened MPHA_OAC_STAR_CLAIMS view; do not configure a wallet or rebuild joins in the core workshop. Auto Insights and column Explain precede Workbook Assistant. Forecast, Explain Selected and drill follow the first saved workbook. Dimensional modelling is optional DIY; Semantic Modeler is an optional instructor demo at the very end.
+
+> Evidence comes from successful rehearsals on 19–22 October 2026. Earlier successful AI features are retained with their original screenshots and source names. The fresh 19-field dataset teaches connection and preparation. For Auto Insights use the already discovered ClaimStar_WS_Base; for metadata changes use your own copy of that prepared base. Both read the same flattened claims view.
 
 ## Objectives
 
-- Use ClaimStar_KJ through your own workshop dataset copy.
-- Check AI outputs against known claims totals and aggregation rules.
-- Finish with an individual workbook and a district-month rollup.
-- Recognize the difference between generated metadata, calculated metrics, and a semantic model.
+- Create an individual 19-field dataset from the existing AILH connection and flattened view.
+- Discover suitable charts using Auto Insights, then compare the Workbook Assistant approach.
+- Explain a category, investigate a selected district, drill and forecast. Validate every result against the data contract.
+- Create a district-month rollup and compare HTML with native OAC dashboards created through MCP.
 
 ## Task 1 Sign in and establish your participant identity
 
-1. Open the OAC instance supplied by the facilitator. Use your own assigned account. Keep this guide in a separate browser window.
-2. Use the participant ID supplied in Zoom, P01 through P20. Replace Pxx in every asset name with that ID. Do not use another participant’s name.
-3. At Home, search for ClaimStar_KJ or the released workshop base ClaimStar_WS_Base. Use the dataset card, not a natural-language answer suggestion.
-4. Confirm the facilitator has made the seed available to your account. The rehearsal seed is currently in the facilitator’s private /My Folders/MPHA_AI_Workshop folder. A participant-access test is required before delivery.
+1. Sign in to the facilitator-assigned OAC using your own author account. Keep the workshop open in another Chrome tab.
+2. Use your assigned P01–P20 ID. Create MPHA_Claims_Pxx and Claims_AI_Pxx in your own My Folders. Screenshots use the instructor’s MPHA_OAC_Star_Claims_WS and MPHA_OAC_Analytics_Demo.
+3. Confirm the pre-existing MaxicareWorkshop AILH connection is visible, with permission to read ORIGAMI_ADMIN02.MPHA_OAC_STAR_CLAIMS. Your administrator supplies the equivalent connection/schema if names differ.
+4. The facilitator also releases ClaimStar_WS_Base and prepared workbook/flow seeds before class. That older base uses the same flattened view plus one approximate processing numerator (20 fields); the fresh participant source has 19 fields. Use that prepared base only where explicitly requested.
 
-![Home search for the original ClaimStar_KJ dataset at 1920 × 1080.](../images/01-find-claimstar.jpg)
-
-*Home search for the original ClaimStar_KJ dataset at 1920 × 1080.*
+![Existing MaxicareWorkshop connection: choose the flattened MPHA_OAC_STAR_CLAIMS view. The dimension and fact tables are reserved for optional DIY.](../images/revised/01-flattened-source.jpg)
 
 ## Task 2 Check the data contract
 
@@ -37,12 +37,10 @@ In this three-hour workshop, experienced analysts use Oracle Analytics Cloud AI 
 | Weighted processing days | 19,025.2 ÷ 1,400 = 13.589428… days, displayed as approximately 13.59 |
 | Output rollup grain | 30 district-month rows; six months × five districts |
 
-> Average Processing Days is a rounded segment mean. Processing Days Total Approx reconstructs a numerator as that mean multiplied by Claims Submitted. The resulting weighted mean is approximate. Denial Rate is a stored segment ratio: never sum it, and never average it without the correct denominator.
+> Each row is an aggregated segment, not an individual claim. Sum claim counts and amounts. Never sum Denial Rate or Average Processing Days. The prepared 20-field rollup base has an approximate numerator reconstructed from rounded means; the new 19-field participant source does not contain that helper.
 
 ## Task 3 Use Zoom checkpoints
 
 1. Keep your microphone muted while working and paste prompts from this guide. Use chat for your participant ID and short status messages.
 2. When the facilitator calls a checkpoint, post Pxx green when complete, Pxx amber with the exact blocker when stuck, or Pxx recovered when you used the fallback.
 3. Do not share credentials in chat. If you fall behind for more than two minutes, open the prepared seed and rejoin at the next task.
-
-[Back to workshop contents](../README.md)

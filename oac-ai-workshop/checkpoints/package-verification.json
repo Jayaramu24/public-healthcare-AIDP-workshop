@@ -1,11 +1,11 @@
 {
   "result": "passed",
   "minutes": 180,
-  "agenda_blocks": 12,
-  "screenshots": 76,
-  "screenshots_1920x1080": 71,
+  "agenda_blocks": 15,
+  "screenshots": 84,
+  "screenshots_1920x1080": 79,
   "native_claude_2400x1600": 5,
-  "local_links_checked": 508,
+  "local_links_checked": 405,
   "csv_rows": 30,
   "csv_columns": 10,
   "limits": "Offline checks only; see PREPARATION_STATUS.md for OAC release gates"

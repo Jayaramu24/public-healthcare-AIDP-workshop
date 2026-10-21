@@ -58,7 +58,64 @@
     "Native uses account locale digit grouping; no currency assumed",
     "HTML is a dated embedded snapshot, not a live MCP connection",
     "Dataset access and client setup for participant accounts not rehearsed",
-    "No 15–20-user load test; Claude Free quotas not guaranteed",
+    "No 15\u201320-user load test; Claude Free quotas not guaranteed",
     "Cross-tenant JSON import requires actual dataset/template adaptation"
-  ]
+  ],
+  "retest_2026_10_22": {
+    "author": "Codex local authoring; no Claude request",
+    "date": "2026-10-22",
+    "reference_sha256": "77e0c26d8fb34f58c3a7a877a7fb1e8e10ce3d1b6778df8362ba5b1c5aac3d54",
+    "template": "Previously rendered native OAC workbook, projectVersion 1168",
+    "candidate_sha256": "38712d1dbace08ac7d33831c247234a4f2c0d6e587207e500184e75de99164b7",
+    "design_derived_from_html": {
+      "palette": {
+        "bg": "#faf6ec",
+        "card": "#fffdf7",
+        "ink": "#14284b",
+        "mute": "#5b6b85",
+        "teal": "#0f8b8d",
+        "coral": "#e8624f",
+        "line": "#e4dcc8"
+      },
+      "headings": [
+        "MPHA Claims | Executive Overview",
+        "Monthly claims submitted",
+        "Denied claims by district",
+        "District summary"
+      ],
+      "layout": "4 cards / 2 charts / district table"
+    },
+    "static_checks": "passed",
+    "criteria_and_filters_preserved": true,
+    "native_plugins": {
+      "oracle.bi.tech.textbox": 2,
+      "oracle.bi.tech.ngperformancetile": 4,
+      "oracle.bi.tech.chart.line": 1,
+      "oracle.bi.tech.chart.horizontalbar": 1,
+      "oracle.bi.tech.table": 1
+    },
+    "live_write": "ok 200 via Oracle MCP save_catalog_content; existing approved private target",
+    "render_and_district_filter": "passed in Chrome: all-district KPIs and five-row table; Central City KPIs and one-row table match HTML",
+    "readback": "criteria, views, layouts match generated candidate",
+    "target_name": "MPHA_MCP_Executive_Native",
+    "target_url": "https://origamioac-ax8pbfw1r0gu-0q.analytics.ap-singapore-2.ocp.oraclecloud.com/ui/dv/?pageid=visualAnalyzer&reportmode=full&reportpath=%2F%40Catalog%2Fusers%2Fjayaram.krishnamachar%40oracle.com%2FMPHA_AI_Workshop%2FMPHA_MCP_Executive_Native",
+    "render_checks": {
+      "all_districts": {
+        "submitted": 1400,
+        "approval_percent": "86.71",
+        "denial_percent": "8.64",
+        "paid": "896370.39",
+        "district_rows": 5
+      },
+      "central_city": {
+        "submitted": 413,
+        "approval_percent": "84.75",
+        "denial_percent": "10.17",
+        "paid": "252227.62",
+        "district_rows": 1
+      },
+      "monthly_points": 6
+    },
+    "claude_requests_this_rehearsal": 0
+  }
 }

@@ -37,4 +37,4 @@ The source Preview is sampled. Full P01 totals and dimension completeness remain
 
 Weighted duration remains available in the original hands-on workbook/data-flow labs; it is not part of this semantic starter's reporting measures. No hierarchies, row-level security policy or deployed subject-area query test were added to this 15-minute metadata demonstration.
 
-See [the machine-readable verification record](checkpoints/semantic-model-verification.json). The original save failure remains documented separately in [the historical reproduction record](SEMANTIC_SAVE_REPRO.md). Git files were not changed or pushed.
+See [the machine-readable verification record](checkpoints/semantic-model-verification.json). The successful 20 October rehearsal is included as the final optional instructor demonstration. This verification record describes that private, undeployed model.

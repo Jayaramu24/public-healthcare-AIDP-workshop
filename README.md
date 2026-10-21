@@ -23,11 +23,9 @@ workspace, participant folder, raw/output volumes, catalogs, schema and compute.
 
 ## OAC AI workshop in Lab 8
 
-[Open the three-hour OAC AI runbook](oac-ai-workshop/index.html) or [download the complete OAC package](downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip).
+[Open Lab8](https://jayaramu24.github.io/public-healthcare-AIDP-workshop/#lab8) for the full inline three-hour program and original successful rehearsal screenshots. [Download the offline OAC package](downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip) for local use.
 
-The prepared program covers the eight OAC AI capabilities and an added Claude MCP exercise: dataset discovery, executive HTML, OAC iframe embedding and native workbook JSON recreated from the HTML reference. It includes 76 original screenshots and metric checkpoints. Semantic Modeler is an instructor demo in Industry Analytics; other feature labs remain hands-on. Client setup is pre-work. Expression Assistant has a validated manual fallback. See [facilitator instructions](oac-ai-workshop/FACILITATOR.md) and [rehearsal evidence and readiness gates](oac-ai-workshop/PREPARATION_STATUS.md).
-
-The previous OAC connection/dataset exercise remains a foundation reference within Lab 8; the earlier AIDP lab sequence is unchanged.
+Start from the existing AILH connection and flattened claims view. Explore Auto Insights and column Explain before Workbook Assistant, then validate calculations, Explain Selected, drill and Forecast. Continue with Data Flow Assistant, narratives and MCP HTML-to-native JSON authoring/write. Dimensional modelling is optional DIY; Semantic Modeler is the final optional instructor demo. [Evidence dates and event gates](oac-ai-workshop/PREPARATION_STATUS.md) distinguish earlier successful AI steps from current verification.
 
 ## Downloads
 

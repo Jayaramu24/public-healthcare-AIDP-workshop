@@ -25,7 +25,7 @@
   "dataset": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')",
   "projectVersion": 1168,
   "scope": "Private /My Folders/MPHA_AI_Workshop; create new demo names only",
-  "validation": "Both new private workbooks created by Claude MCP; rendered in OAC; aggregate totals and Central City filters verified; corrected saved native JSON read back.",
+  "validation": "19\u201320 October: Claude MCP created both private workbook targets and both rendered/filter-tested. 22 October: Codex regenerated native candidate from actual HTML, invoked Oracle MCP save, confirmed200OK/readback, rendered and filter-tested all districts and Central City.",
   "differences": [
     "Native district filter lives in OAC filter bar; HTML selector lives inside iframe.",
     "HTML is an embedded static snapshot; native visuals query OAC.",

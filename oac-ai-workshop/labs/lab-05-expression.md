@@ -1,35 +1,16 @@
-# Lab 5 Validate a denial-rate calculation
+# Exercise 6: create and validate the aggregate denial-rate KPI
 
-**Time:** 15 minutes  |  **Rehearsal status:** AI error with verified fallback
+10 minutes · Verified: fully qualified calculation validates and displays 8.64%
 
-You will request an aggregate expression, inspect it, and validate the denominator logic. In this tenant, Expression Assistant returned a generation error in rehearsal, including after explicit dataset selection and simpler prompts. The manual route below was validated and produced the expected 8.64% KPI.
+Create the guarded ratio directly in the calculation editor, using the path that was successfully validated. The result is a native OAC calculation, reused by the KPI and later dashboard checks.
 
-## Task 1 Try Expression Assistant
+> Compute the KPI from summed claim counts. The stored segment Denial Rate is non-additive and must not be summed.
 
-1. In the workbook Data panel, open its Menu and select Create Calculation.
-2. Name the calculation Claims Denial Rate Workshop. If several datasets are present, choose your intended dataset using Pick dataset beside the Assistant input.
-3. Enter the prompt below in the Assistant box and press Enter. Allow the request to finish.
-4. If generation succeeds, inspect the entire expression. If OAC displays the captured generation error, move to Task 2 after one retry. Do not spend the whole timebox retrying.
+## Task 1 Create and validate the calculation
 
-```text
-Calculate the ratio of total Denied Claims to total Claims Submitted. Return NULL when total Claims Submitted is zero. Use a ratio from 0 to 1, not multiplied by 100.
-```
-
-![Expression Assistant request in the calculation editor.](../images/25-expression-assistant-prompt.jpg)
-
-*Expression Assistant request in the calculation editor.*
-
-![Actual tenant generation error. This is a known rehearsal limitation, not a successful AI output.](../images/26-expression-ai-error.jpg)
-
-*Actual tenant generation error. This is a known rehearsal limitation, not a successful AI output.*
-
-## Task 2 Use and validate the fallback
-
-1. Create the formula below in the Expression editor. Insert each field from Data Elements, or use autocomplete if shown; the field references must be fully qualified.
-2. If you need to construct the reference explicitly, open your dataset Actions → Inspect → General in a second tab and copy Object ID. It contains the namespace and dataset name. In the supplied formula file replace the entire rehearsal object ID with your own copied ID, keeping XSA(...), the table MPHA_OAC_STAR_CLAIMS, and the field names.
-3. Do not paste bare field names such as SUM("Denied Claims"). OAC rejected that form because the dataset and table paths were missing.
-4. Click Validate. Continue only when OAC reports Calculation validated, then click Save.
-5. Recovery: Save As the prepared workbook as Claims_AI_Pxx. Its existing calculation refers to the prepared base dataset and already produces 8.64%. Do not change its object ID unless you also replace its data source.
+1. In the Data panel, choose Add Calculation from the menu beside the data-source search box. Name it Claims Denial Rate Workshop.
+2. Build the CASE expression below. Insert Claims Submitted and Denied Claims from Data Elements so OAC supplies the fully qualified dataset and table references. Replace the angle-bracket labels with inserted field tokens; do not paste the labels as literal SQL.
+3. Click Validate. Continue when OAC reports Calculation validated, then click Save. The prepared workbook contains the validated expression if you need to inspect a completed example.
 
 ```text
 CASE WHEN SUM(<Claims Submitted token>) = 0 THEN NULL
@@ -38,23 +19,17 @@ ELSE 1.0 * SUM(<Denied Claims token>) / SUM(<Claims Submitted token>) END
 
 ![The fully qualified fallback expression passed OAC validation.](../images/27-denial-rate-calculation-validated.jpg)
 
-*The fully qualified fallback expression passed OAC validation.*
-
-## Task 3 Create the KPI
+## Task 2 Create the KPI
 
 1. Under My Calculations, right-click Claims Denial Rate Workshop and select Create Best Visualization.
 2. Select the new tile. Open Properties, then Values, expand the calculation, and change Value from Auto to Percent. Keep two decimal places.
 3. Confirm the total displays 8.64%. This is 121 divided by 1,400, formatted as a percentage once.
-4. Save Claims_AI_Pxx. Optionally repeat the calculation using SUM(Processing Days Total Approx) divided by SUM(Claims Submitted), guarded for zero. Label it Weighted Processing Days Approx; the expected total is approximately 13.59 days.
+4. Save Claims_AI_Pxx. The optional approximate weighted-days calculation needs Processing Days Total Approx from the prepared 20-field base; omit it on the 19-field participant source.
 
 ![Percent formatting and the 8.64% aggregate denial-rate checkpoint.](../images/28-denial-rate-kpi-percent.jpg)
-
-*Percent formatting and the 8.64% aggregate denial-rate checkpoint.*
 
 ## Checkpoint
 
 The calculation is validated and the tile displays 8.64%. Changing to district grain must recompute the ratio of totals. Never use SUM(Denial Rate).
 
 [Oracle documentation for Expression Assistant](https://docs.oracle.com/en/cloud/paas/analytics-cloud/acubi/compose-expressions.html)
-
-[Back to workshop contents](../README.md)

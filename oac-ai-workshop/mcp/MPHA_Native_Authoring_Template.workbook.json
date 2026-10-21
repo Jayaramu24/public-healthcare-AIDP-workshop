@@ -1,0 +1,2037 @@
+{
+  "criteria": {
+    "columns": {
+      "children": [
+        {
+          "columnID": "Submitted",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Claims submitted"
+            }
+          }
+        },
+        {
+          "columnID": "Denied",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Denied Claims\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Denied claims"
+            }
+          }
+        },
+        {
+          "columnID": "Paid",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Total Paid Amount\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Total paid"
+            }
+          }
+        },
+        {
+          "columnID": "District",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "District"
+            }
+          }
+        },
+        {
+          "columnID": "ServiceMonth",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Service Month\""
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Service month"
+            }
+          }
+        },
+        {
+          "columnID": "ApprovalRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Approved Claims\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Approval %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "DenialRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Denied Claims\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Denial %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "WeightedDays",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Processing Days Total Approx\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Weighted days (approx)"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "DistrictApprovalRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Approved Claims\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Approval %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "DistrictDenialRatio",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Denied Claims\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Denial %"
+            }
+          },
+          "userExpression": true
+        },
+        {
+          "columnID": "DistrictWeightedDays",
+          "type": "saw:regularColumn",
+          "columnFormula": {
+            "expr": {
+              "type": "sawx:sqlExpression",
+              "expression": "CASE WHEN SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") = 0 THEN NULL ELSE 1.0 * SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Processing Days Total Approx\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") / SUM(XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Claims Submitted\" BY XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\") END"
+            }
+          },
+          "columnHeading": {
+            "caption": {
+              "text": "Weighted days (approx)"
+            }
+          },
+          "userExpression": true
+        }
+      ]
+    },
+    "criteriaConfig": {
+      "_version": "1.0.2",
+      "settings": {}
+    },
+    "subjectArea": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')",
+    "type": "saw:simpleCriteria",
+    "children": []
+  },
+  "datasources": {
+    "children": [
+      {
+        "subjectArea": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base')"
+      }
+    ]
+  },
+  "layouts": {
+    "children": [
+      {
+        "layoutProps": {
+          "customProps": {
+            "text": "{\"_version\":\"1.0.1\",\"oracle.bi.tech.layout.split\":{\"layoutMinSize\":{\"width\":\"100%\",\"height\":531},\"_version\":\"1.0.0\"},\"dimensionFitType\":{\"width\":\"container\",\"height\":\"content\"}}"
+          }
+        },
+        "name": "layout1",
+        "type": "oracle.bi.tech.layout.freeForm",
+        "children": [
+          {
+            "content": {
+              "viewName": "view!1",
+              "type": "view"
+            },
+            "left": "24",
+            "top": "8",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "1600px",
+                "height": "84px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!2",
+              "type": "view"
+            },
+            "left": "24",
+            "top": "100",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "391px",
+                "height": "112px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!3",
+              "type": "view"
+            },
+            "left": "427",
+            "top": "100",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "391px",
+                "height": "112px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!4",
+              "type": "view"
+            },
+            "left": "830",
+            "top": "100",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "391px",
+                "height": "112px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!5",
+              "type": "view"
+            },
+            "left": "1233",
+            "top": "100",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "391px",
+                "height": "112px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!6",
+              "type": "view"
+            },
+            "left": "24",
+            "top": "226",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "794px",
+                "height": "370px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!7",
+              "type": "view"
+            },
+            "left": "830",
+            "top": "226",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "794px",
+                "height": "370px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!8",
+              "type": "view"
+            },
+            "left": "24",
+            "top": "610",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "1600px",
+                "height": "245px"
+              }
+            },
+            "zIndex": 1
+          },
+          {
+            "content": {
+              "viewName": "view!9",
+              "type": "view"
+            },
+            "left": "24",
+            "top": "866",
+            "displayFormat": {
+              "formatSpec": {
+                "width": "1600px",
+                "height": "60px"
+              }
+            },
+            "zIndex": 1
+          }
+        ]
+      }
+    ]
+  },
+  "views": {
+    "children": [
+      {
+        "type": "saw:canvas",
+        "viewName": "canvas!1",
+        "rootLayoutName": "layout1",
+        "canvasConfig": {
+          "_version": "1.0.6",
+          "settings": {}
+        },
+        "canvasProps": {
+          "displayFormat": {
+            "formatSpec": {
+              "width": "1648",
+              "height": "950"
+            }
+          },
+          "fitContents": "none",
+          "style": {
+            "background": {
+              "type": "custom",
+              "color": "#faf6ec"
+            }
+          }
+        },
+        "filterControlCollectionRef": {
+          "name": "canvas!1"
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.textbox",
+        "viewName": "view!1",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "viz:chart": {
+              "textContents": {
+                "caption": {
+                  "text": "<p style=\"margin:0;font-family:Arial,sans-serif;font-size:28px;line-height:1.15;font-weight:700;color:#14284b\">MPHA Claims | Executive Overview<br><span style=\"font-size:12px;font-weight:400;color:#5b6b85\">Jan–Jun 2025 · Synthetic data · Native OAC visuals</span></p>"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#faf6ec"
+                },
+                "border": {
+                  "type": "none"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.ngperformancetile",
+        "viewName": "view!2",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.ngperformancetile"
+            },
+            "viz:chart": {
+              "numberFormatSubmitted": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 0,
+                "maximumFractionDigits": 0,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              }
+            },
+            "viz:ngperformancetile": {
+              "primaryValueStyle": {
+                "font": {
+                  "fontSize": "38px"
+                }
+              },
+              "primaryLabelStyle": {
+                "font": {
+                  "fontSize": "12px"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "Submitted",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              },
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "Submitted",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              }
+            }
+          ]
+        },
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.ngperformancetile",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover"
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "Submitted",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.Submitted",
+                                  "valueColumnID": "Submitted",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.Submitted",
+                                  "valueColumnID": "Submitted",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "physicalDataModelVersion": "2.5"
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.ngperformancetile",
+        "viewName": "view!3",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.ngperformancetile"
+            },
+            "viz:chart": {
+              "numberFormatApprovalRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              }
+            },
+            "viz:ngperformancetile": {
+              "primaryValueStyle": {
+                "font": {
+                  "fontSize": "38px"
+                }
+              },
+              "primaryLabelStyle": {
+                "font": {
+                  "fontSize": "12px"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "ApprovalRatio",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              },
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "ApprovalRatio",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              }
+            }
+          ]
+        },
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.ngperformancetile",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover"
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "ApprovalRatio",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.ApprovalRatio",
+                                  "valueColumnID": "ApprovalRatio",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.ApprovalRatio",
+                                  "valueColumnID": "ApprovalRatio",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "physicalDataModelVersion": "2.5"
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.ngperformancetile",
+        "viewName": "view!4",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.ngperformancetile"
+            },
+            "viz:chart": {
+              "numberFormatDenialRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              }
+            },
+            "viz:ngperformancetile": {
+              "primaryValueStyle": {
+                "font": {
+                  "fontSize": "38px"
+                }
+              },
+              "primaryLabelStyle": {
+                "font": {
+                  "fontSize": "12px"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#e8624f",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "DenialRatio",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              },
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "DenialRatio",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              }
+            }
+          ]
+        },
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.ngperformancetile",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover"
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "DenialRatio",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.DenialRatio",
+                                  "valueColumnID": "DenialRatio",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.DenialRatio",
+                                  "valueColumnID": "DenialRatio",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "physicalDataModelVersion": "2.5"
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.ngperformancetile",
+        "viewName": "view!5",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.ngperformancetile"
+            },
+            "viz:chart": {
+              "numberFormatPaid": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              }
+            },
+            "viz:ngperformancetile": {
+              "primaryValueStyle": {
+                "font": {
+                  "fontSize": "38px"
+                }
+              },
+              "primaryLabelStyle": {
+                "font": {
+                  "fontSize": "12px"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "Paid",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              },
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "Paid",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              }
+            }
+          ]
+        },
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.ngperformancetile",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover"
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "Paid",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.Paid",
+                                  "valueColumnID": "Paid",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.Paid",
+                                  "valueColumnID": "Paid",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "physicalDataModelVersion": "2.5"
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.chart.line",
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "Submitted",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      },
+                      "detail": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "ServiceMonth",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      },
+                      "color": {
+                        "logicalEdgeLayers": [
+                          {
+                            "type": "measure",
+                            "visibility": "hidden",
+                            "userAdded": false,
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              },
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "Submitted",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "viz:chart": {
+              "showTitle": "custom",
+              "legend": {
+                "rendered": "off",
+                "position": "auto"
+              },
+              "xAxis": {
+                "title": null,
+                "titleInput": null,
+                "useTitleValue": "none",
+                "tickLabel": {
+                  "rendered": "on"
+                }
+              },
+              "yAxis": {
+                "title": null,
+                "titleInput": null,
+                "useTitleValue": "none",
+                "tickLabel": {
+                  "rendered": "on"
+                },
+                "format": {
+                  "style": "same_as_measure"
+                }
+              },
+              "y2Axis": {
+                "format": {
+                  "style": "same_as_measure"
+                }
+              }
+            },
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.chart.line"
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "viewName": "view!6",
+        "physicalDataModelVersion": "2.5",
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.chart.line",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover",
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "column",
+                                  "columnID": "ServiceMonth"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "Submitted",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.Submitted",
+                                  "valueColumnID": "Submitted",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.Submitted",
+                                  "valueColumnID": "Submitted",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "viewCaption": {
+          "caption": {
+            "text": "<p style=\"margin:0;font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#14284b\">Monthly claims submitted</p>"
+          }
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.chart.horizontalbar",
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "measures": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "Denied",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      },
+                      "detail": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "District",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      },
+                      "color": {
+                        "logicalEdgeLayers": [
+                          {
+                            "type": "measure",
+                            "visibility": "hidden",
+                            "userAdded": false,
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              },
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "rollover"
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              },
+              "measuresList": {
+                "children": [
+                  {
+                    "columnID": "Denied",
+                    "type": "view",
+                    "name": "MeasureView_0",
+                    "aggRule": "none"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "viz:chart": {
+              "showTitle": "custom",
+              "legend": {
+                "rendered": "off",
+                "position": "auto"
+              },
+              "xAxis": {
+                "title": null,
+                "titleInput": null,
+                "useTitleValue": "none",
+                "tickLabel": {
+                  "rendered": "on"
+                }
+              },
+              "yAxis": {
+                "title": null,
+                "titleInput": null,
+                "useTitleValue": "none",
+                "tickLabel": {
+                  "rendered": "on"
+                },
+                "format": {
+                  "style": "same_as_measure"
+                }
+              },
+              "y2Axis": {
+                "format": {
+                  "style": "same_as_measure"
+                }
+              }
+            },
+            "obitech-autoviz/autoviz": {
+              "innerPluginType": "oracle.bi.tech.chart.horizontalbar"
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            }
+          }
+        },
+        "viewName": "view!7",
+        "physicalDataModelVersion": "2.5",
+        "nestedViews": {
+          "children": [
+            {
+              "position": "embedded",
+              "view": {
+                "type": "saw:pluginView",
+                "pluginType": "oracle.bi.tech.chart.horizontalbar",
+                "viewName": "MeasureView_0",
+                "dataModels": {
+                  "children": [
+                    {
+                      "name": "dm1",
+                      "edges": {
+                        "children": [
+                          {
+                            "axis": "row",
+                            "showColumnHeader": "rollover",
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "column",
+                                  "columnID": "District"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "column",
+                            "showColumnHeader": "rollover",
+                            "dependent": true,
+                            "edgeLayers": {
+                              "children": [
+                                {
+                                  "type": "measure",
+                                  "visibility": "hidden"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "axis": "page"
+                          },
+                          {
+                            "axis": "section"
+                          }
+                        ]
+                      },
+                      "measuresList": {
+                        "children": [
+                          {
+                            "columnID": "Denied",
+                            "type": "column",
+                            "isUsed": true,
+                            "propertyAdditions": {
+                              "children": [
+                                {
+                                  "id": "min.Denied",
+                                  "valueColumnID": "Denied",
+                                  "aggRule": "min",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                },
+                                {
+                                  "id": "max.Denied",
+                                  "valueColumnID": "Denied",
+                                  "aggRule": "max",
+                                  "stacked": false,
+                                  "placement": "first_cell",
+                                  "grainEdge": "none",
+                                  "acrossMeasures": "single"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "physicalDataModelVersion": "2.5"
+              }
+            }
+          ]
+        },
+        "viewCaption": {
+          "caption": {
+            "text": "<p style=\"margin:0;font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#14284b\">Denied claims by district</p>"
+          }
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.table",
+        "viewName": "view!8",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "oracle.bi.tech.table": {
+              "_version": "1.0.1",
+              "settings": {}
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#fffdf7"
+                },
+                "border": {
+                  "type": "round",
+                  "borderColor": "#e4dcc8",
+                  "borderWidth": 1,
+                  "borderStyle": "solid",
+                  "borderRadius": 12
+                },
+                "themeFont": {
+                  "type": "custom",
+                  "primaryColor": "#14284b",
+                  "secondaryColor": "#5b6b85"
+                }
+              }
+            },
+            "viz:chart": {
+              "showTitle": "custom",
+              "numberFormatSubmitted": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 0,
+                "maximumFractionDigits": 0,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "numberFormatDistrictApprovalRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "numberFormatDistrictDenialRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "numberFormatPaid": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "numberFormatDistrictWeightedDays": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "bidvtchart_number_format_DistrictApprovalRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "abbreviationScale": "off",
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "bidvtchart_number_format_DistrictDenialRatio": {
+                "style": "percent",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "abbreviationScale": "off",
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "bidvtchart_number_format_Submitted": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 0,
+                "maximumFractionDigits": 0,
+                "useAbbreviation": false,
+                "abbreviationScale": "off",
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "bidvtchart_number_format_Paid": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "abbreviationScale": "off",
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              },
+              "bidvtchart_number_format_DistrictWeightedDays": {
+                "style": "decimal",
+                "useGrouping": true,
+                "minimumFractionDigits": 2,
+                "maximumFractionDigits": 2,
+                "useAbbreviation": false,
+                "abbreviationScale": "off",
+                "negativeValuesStyle": "default",
+                "bIsNested": true
+              }
+            },
+            "viz:grid": {
+              "labelStyles": {
+                "default": {
+                  "data": {
+                    "font": {
+                      "fontSize": "16px"
+                    }
+                  },
+                  "header": {
+                    "font": {
+                      "fontSize": "14px",
+                      "fontWeight": "bold"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dataModels": {
+          "children": [
+            {
+              "name": "dm1",
+              "logicalDataModel": {
+                "_version": "1.0.0",
+                "settings": {
+                  "logicalDataModel": {
+                    "logicalEdges": {
+                      "row": {
+                        "logicalEdgeLayers": [
+                          {
+                            "columnID": "District",
+                            "type": "column",
+                            "isUsed": true
+                          },
+                          {
+                            "columnID": "Submitted",
+                            "type": "column",
+                            "isUsed": true
+                          },
+                          {
+                            "columnID": "DistrictApprovalRatio",
+                            "type": "column",
+                            "isUsed": true
+                          },
+                          {
+                            "columnID": "DistrictDenialRatio",
+                            "type": "column",
+                            "isUsed": true
+                          },
+                          {
+                            "columnID": "Paid",
+                            "type": "column",
+                            "isUsed": true
+                          },
+                          {
+                            "columnID": "DistrictWeightedDays",
+                            "type": "column",
+                            "isUsed": true
+                          }
+                        ]
+                      }
+                    },
+                    "_settingsVersion": "2.0.1"
+                  },
+                  "ldm_generation": 1
+                }
+              },
+              "edges": {
+                "children": [
+                  {
+                    "axis": "row",
+                    "showColumnHeader": "true",
+                    "edgeLayers": {
+                      "children": [
+                        {
+                          "type": "column",
+                          "columnID": "District"
+                        },
+                        {
+                          "type": "column",
+                          "columnID": "Submitted"
+                        },
+                        {
+                          "type": "column",
+                          "columnID": "DistrictApprovalRatio"
+                        },
+                        {
+                          "type": "column",
+                          "columnID": "DistrictDenialRatio"
+                        },
+                        {
+                          "type": "column",
+                          "columnID": "Paid"
+                        },
+                        {
+                          "type": "column",
+                          "columnID": "DistrictWeightedDays"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "axis": "column",
+                    "showColumnHeader": "rollover",
+                    "dependent": true
+                  },
+                  {
+                    "axis": "page"
+                  },
+                  {
+                    "axis": "section"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "physicalDataModelVersion": "2.5",
+        "viewCaption": {
+          "caption": {
+            "text": "<p style=\"margin:0;font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#14284b\">District summary</p>"
+          }
+        }
+      },
+      {
+        "type": "saw:pluginView",
+        "pluginType": "oracle.bi.tech.textbox",
+        "viewName": "view!9",
+        "viewConfig": {
+          "_version": "1.1.84",
+          "settings": {
+            "viz:chart": {
+              "textContents": {
+                "caption": {
+                  "text": "<p style=\"font-family:Arial,sans-serif;font-size:11px;color:#5b6b85\">Source: ClaimStar_WS_Base · Jan–Jun 2025. OAC queries the dataset when the workbook loads. Approval and denial ratios use summed counts with a zero-denominator guard; approximate weighted days = summed processing-days numerator / submitted. Currency unspecified. Use the District filter above the canvas.</p>"
+                }
+              }
+            },
+            "viz:common": {
+              "style": {
+                "background": {
+                  "type": "custom",
+                  "color": "#faf6ec"
+                },
+                "border": {
+                  "type": "none"
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "currentView": 0
+  },
+  "parameters": {
+    "_version": "1.0.5"
+  },
+  "reportConfig": {
+    "_version": "1.0.9",
+    "settings": {
+      "oracle.bi.tech.shapeSchemeService": {
+        "_version": "1.0.0",
+        "settings": {
+          "version": "1.0.3",
+          "generation": 0,
+          "domains": {
+            "[\"obitech.category.value\",\"categoricalSchemes\",\"[]\"]": {
+              "generation": 0,
+              "valueMap": {},
+              "type": "categoricalSchemes",
+              "scheme": null,
+              "nextIndex": 0
+            }
+          }
+        }
+      },
+      "oracle.bi.tech.colorSchemeService": {
+        "_version": "1.0.0",
+        "settings": {
+          "version": "1.0.3",
+          "generation": 1,
+          "colorDomains": {
+            "[\"obitech.colorcategory.value\",\"categoricalSchemes\",\"[]\"]": {
+              "generation": 0,
+              "colorMap": {
+                "Submitted": "#0f8b8d",
+                "Denied": "#e8624f"
+              },
+              "coloringType": "categoricalSchemes",
+              "colorScheme": null,
+              "noRepeat": true,
+              "hierarchical": false,
+              "nextIndex": 2
+            }
+          },
+          "customColors": [
+            "#0f8b8d",
+            "#e8624f"
+          ]
+        }
+      },
+      "projectSettings": {
+        "_version": "1.0.0",
+        "settings": {
+          "dsxWorkbookID": "5abbcef236fe48fd8613b6a33c822f50",
+          "autoSaveEnabled": false
+        }
+      },
+      "reportenvironment": {
+        "_version": "1.0.0",
+        "settings": {
+          "activeEnvironmentID": "obitech-report.CanvasComponentManager"
+        }
+      }
+    }
+  },
+  "eventWiring": {
+    "children": []
+  },
+  "projectVersion": 1168,
+  "filterControlCollections": {
+    "children": [
+      {
+        "name": "canvas!1",
+        "filterControls": {
+          "children": [
+            {
+              "filterID": "398cbf7e-c777-4727-82d3-d8212928653a",
+              "columnID": "District",
+              "type": "saw:columnFilterControl",
+              "filterControlConfig": {
+                "_version": "1.0.11",
+                "settings": {
+                  "filterModelClassName": "obitech-listfilter/listfilter.ListFilterModel",
+                  "location": "filter_bar"
+                }
+              },
+              "address": 0.0001,
+              "formula": {
+                "expr": {
+                  "children": [],
+                  "type": "sawx:sqlExpression",
+                  "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"District Name\""
+                }
+              },
+              "filterOperator": {
+                "op": "in"
+              },
+              "filterControlDefaultValues": {
+                "children": [],
+                "type": "specificValue"
+              }
+            },
+            {
+              "filterID": "e7d7ccf9-5dfd-4063-97f9-66547381fa19",
+              "type": "saw:expressionFilterControl",
+              "label": {
+                "caption": {
+                  "text": "Jan–Jun 2025"
+                }
+              },
+              "expr": {
+                "children": [],
+                "type": "sawx:sql",
+                "expression": "XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Service Month\" >= DATE '2025-01-01' AND XSA('fd0be44f-fdad-4ab7-a332-5f5641002e25'.'ClaimStar_WS_Base').\"MPHA_OAC_STAR_CLAIMS\".\"Service Month\" < DATE '2025-07-01'"
+              },
+              "filterControlConfig": {
+                "_version": "1.0.11",
+                "settings": {
+                  "filterModelClassName": "obitech-expressionfilter/expressionfilter.ExpressionFilterModel",
+                  "location": "filter_bar"
+                }
+              },
+              "address": 0.0002
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -17,6 +17,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
 from reportlab.platypus import (
     Image,
+    KeepTogether,
     PageBreak,
     Paragraph,
     Preformatted,
@@ -518,10 +519,12 @@ def render_node(story: list, node: Node, styles: dict[str, ParagraphStyle], avai
                 render_node(story, child, styles, available_width, first_lab_seen)
         return
 
-    if node.tag in {"h1", "h2", "h3"}:
+    if node.tag in {"h1", "h2", "h3", "h4"}:
         text = inline_markup(node)
         if text:
-            story.append(Paragraph(text, styles[node.tag]))
+            if node.tag == "h3" and text == "Official References":
+                story.append(PageBreak())
+            story.append(Paragraph(text, styles["h3" if node.tag == "h4" else node.tag]))
         return
 
     if node.tag == "p":
@@ -549,9 +552,21 @@ def render_node(story: list, node: Node, styles: dict[str, ParagraphStyle], avai
             story.append(Spacer(1, 8))
         return
 
-    # Keep the added MCP heading with its walkthrough and first screenshot.
-    if node.tag == "div" and node.attrs.get("id") == "lab8-mcp-claude":
+    # Start each inline OAC exercise on a fresh page for a usable printed runbook.
+    if node.tag == "div" and node.attrs.get("id", "").startswith("lab8-lab-"):
         story.append(PageBreak())
+        figures = [i for i, child in enumerate(node.children) if isinstance(child, Node) and child.tag == "figure"]
+        if figures:
+            final_figure = figures[-1]
+            for child in node.children[:final_figure]:
+                if isinstance(child, Node):
+                    render_node(story, child, styles, available_width, first_lab_seen)
+            ending = []
+            for child in node.children[final_figure:]:
+                if isinstance(child, Node):
+                    render_node(ending, child, styles, available_width, first_lab_seen)
+            story.append(KeepTogether(ending))
+            return
 
     # Divs, spans, articles, and other layout nodes are structural in the HTML.
     for child in node.children:

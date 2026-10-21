@@ -30,3 +30,7 @@ If you are using the GitHub Pages site, prefer `downloads/mpha_workshop_executio
 ## OAC AI companion
 
 The updated offline bundle also includes `downloads/MPHA_OAC_AI_LiveLabs_Runbook.zip`. Extract it, then open `oac-ai-workshop/index.html` for the three-hour Lab 8 program. Screenshots, formulas, checkpoints, semantic demo source and MCP HTML/native JSON are available offline; actual OAC/Claude execution needs the assigned online services and approved accounts.
+
+
+## OAC revision — 22 October 2026
+Lab 8 contains all OAC instructions inline. Reuse the supplied AILH connection and start with flattened MPHA_OAC_STAR_CLAIMS (19  fields). Use the pre-discovered prepared base for Auto Insights, retained successful AI examples and rollup/MCP; make private copies for metadata edits. Auto Insights and column Explain precede Workbook Assistant. Contextual Explain, drill and Forecast are followed by data flows, narratives and HTML-to-native JSON/MCP writes. The guide retains successful19–22 October evidence and omits unsuccessful generation paths. Core 180 minutes excludes dimensional DIY and the final Industry Analytics semantic demo. See [Lab 8](index.html#lab8) and [evidence](oac-ai-workshop/PREPARATION_STATUS.md).

@@ -42,3 +42,7 @@ Aim for three task requests: catalog discovery; one metadata + bounded query + H
 If Claude quota is exhausted, compare the supplied HTML and saved native OAC workbook, validate metrics, and use the documented manual iframe steps. If a save reports success without an ID/URL, perform one exact-name catalog search and use its returned viewUrl; do not invent an artifact URL. If validation fails, stop and inspect the template and dataset references. Do not repeatedly regenerate the dashboard or silently deduplicate query rows.
 
 [Offline compatibility-helper checks](compatibility-checks.json) exercise normalization and write rejection without contacting OAC.
+
+
+## Verified HTML-to-native JSON authoring - 22 October 2026
+Codex used the reviewed HTML palette, headings and four-card/two-chart/table layout together with [the valid native authoring template](MPHA_Native_Authoring_Template.workbook.json) to generate [the candidate](MPHA_Executive_Native_Candidate.workbook.json). The candidate contains real native tiles, line/bar charts, a table and text boxes. Oracle MCP saved it to the approved existing private native workbook with status ok / 200 / replace; readback, rendering and Central City filtering passed. [Authoring and render checks](json-authoring-verification.json) record the actual artifact hashes. Earlier Claude Desktop MCP created the HTML/native workbook pair. No additional Claude task requests were consumed by this retest. Use the full inline exercise for the generation prompt, review and narrowly approved save steps.
